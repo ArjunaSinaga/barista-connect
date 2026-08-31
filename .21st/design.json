@@ -1,0 +1,137 @@
+{
+  "version": 1,
+  "project": {
+    "name": "barista-connect",
+    "productType": null,
+    "stack": [
+      "nextjs",
+      "react",
+      "tailwind-v4"
+    ]
+  },
+  "sources": {
+    "tokens": [
+      "app/globals.css"
+    ],
+    "components": [
+      "components/ui"
+    ],
+    "assets": [],
+    "instructions": [
+      "DESIGN.md",
+      "AGENTS.md",
+      "CLAUDE.md"
+    ]
+  },
+  "design": {
+    "colorMode": "light",
+    "colors": {
+      "--color-cream": {
+        "value": "#f2f0eb",
+        "source": "app/globals.css"
+      },
+      "--color-cream-dark": {
+        "value": "#edebe9",
+        "source": "app/globals.css"
+      },
+      "--color-latte": {
+        "value": "#e6e6e0",
+        "source": "app/globals.css"
+      },
+      "--color-espresso": {
+        "value": "#1e3932",
+        "source": "app/globals.css"
+      },
+      "--color-espresso-soft": {
+        "value": "rgba(0, 0, 0, 0.58)",
+        "source": "app/globals.css"
+      },
+      "--color-caramel": {
+        "value": "#00754a",
+        "source": "app/globals.css"
+      },
+      "--color-caramel-dark": {
+        "value": "#006241",
+        "source": "app/globals.css"
+      },
+      "--color-matcha": {
+        "value": "#00754a",
+        "source": "app/globals.css"
+      },
+      "--color-gold": {
+        "value": "#cba258",
+        "source": "app/globals.css"
+      }
+    },
+    "typography": {
+      "--font-sans": {
+        "value": "var(--font-jakarta), \"SoDoSans\", \"Helvetica Neue\", Helvetica, Arial, sans-serif",
+        "source": "app/globals.css"
+      }
+    },
+    "spacing": {},
+    "radius": {},
+    "shadows": {},
+    "motion": {},
+    "density": "unknown"
+  },
+  "components": {
+    "installed": [
+      "Avatar",
+      "Badge",
+      "Button",
+      "EmptyState",
+      "Field",
+      "Sheet",
+      "Skeleton",
+      "toast",
+      "Toggle"
+    ],
+    "preferredPrimitives": [],
+    "patterns": []
+  },
+  "constraints": {
+    "must": [],
+    "avoid": []
+  },
+  "decisions": [],
+  "evidence": [
+    {
+      "fact": "components.installed",
+      "source": "components/ui"
+    },
+    {
+      "fact": "design.colorMode:light",
+      "source": "app/globals.css"
+    },
+    {
+      "fact": "design.tokens",
+      "source": "app/globals.css"
+    },
+    {
+      "fact": "project.instructions",
+      "source": "AGENTS.md"
+    },
+    {
+      "fact": "project.instructions",
+      "source": "CLAUDE.md"
+    },
+    {
+      "fact": "project.instructions",
+      "source": "DESIGN.md"
+    },
+    {
+      "fact": "project.stack:nextjs",
+      "source": "package.json"
+    },
+    {
+      "fact": "project.stack:react",
+      "source": "package.json"
+    },
+    {
+      "fact": "project.stack:tailwind-v4",
+      "source": "package.json"
+    }
+  ],
+  "generatedAt": "2026-08-31T05:07:53.738Z"
+}

@@ -1,0 +1,94 @@
+{
+  "name": "gym-girl-auto-dual-free",
+  "nodes": [
+    {
+      "name": "Cron Daily 07:00",
+      "type": "n8n-nodes-base.cron",
+      "parameters": { "rule": { "interval": [{ "field": "cronExpression", "expression": "0 7 * * *" }] } },
+      "notes": "Ganti ke 0 7,12,17,20 * * * untuk 4x/hari. Jalur free 100% auto tanpa ModelsLab"
+    },
+    {
+      "name": "Trending Scrape (auto fallback)",
+      "type": "n8n-nodes-base.httpRequest",
+      "parameters": {
+        "url": "https://www.tikwm.com/api/feed/list?count=5",
+        "method": "GET",
+        "options": { "timeout": 10000 },
+        "notes": "Primary tikwm. Jika gagal, route otomatis ambil dari DB influencer_trending_sounds (fallback bank)"
+      }
+    },
+    {
+      "name": "Generate Pollinations Flux (free)",
+      "type": "n8n-nodes-base.httpRequest",
+      "parameters": {
+        "url": "=https://image.pollinations.ai/prompt/{{$json.base_prompt}},{{$json.theme}},photoreal,9:16?width=768&height=1360&seed={{$json.seed}}&model=flux&nologo=true",
+        "method": "GET",
+        "options": { "response": { "response": { "fullResponse": true } } },
+        "notes": "Gratis unlimited, seed-locked. Output URL hot-linkable"
+      }
+    },
+    {
+      "name": "Generate Gemini (free 1500/d)",
+      "type": "n8n-nodes-base.httpRequest",
+      "parameters": {
+        "url": "=https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent?key={{$env.GEMINI_API_KEY}}",
+        "method": "POST",
+        "body": { "contents": [{ "parts": [{ "text": "Same person as reference image, keep face identity 100%, {{$json.prompt}} -- 9:16 768x1360 photoreal" }] }] },
+        "notes": "Varian B untuk compare realism. Reference image di-fetch via inline_data"
+      }
+    },
+    {
+      "name": "FaceSwap 100% Lock (HF Space free)",
+      "type": "n8n-nodes-base.httpRequest",
+      "parameters": {
+        "url": "={{$env.FACE_SWAP_SPACE}}/gradio_api/call/predict",
+        "method": "POST",
+        "body": { "data": ["={{$json.pollinations_url}}", "={{$env.FACE_REF_URL}}"], "fn_index": 0 },
+        "headerParameters": { "parameters": [{ "name": "Authorization", "value": "=Bearer {{$env.HF_TOKEN}}" }] },
+        "notes": "InsightFace inswapper_128 + GPEN restore. Gratis 5min/hari (~15 swaps). ponytail: self-host FaceFusion on Railway jika quota habis"
+      }
+    },
+    {
+      "name": "Poll FaceSwap Result",
+      "type": "n8n-nodes-base.wait",
+      "parameters": { "amount": 15, "unit": "seconds" },
+      "notes": "Poll /gradio_api/call/predict/{{event_id}} sampai COMPLETE. Jika timeout 90s, fallback ke KenBurns"
+    },
+    {
+      "name": "Upload Supabase influencer/",
+      "type": "n8n-nodes-base.httpRequest",
+      "parameters": {
+        "url": "={{$env.SUPABASE_URL}}/storage/v1/object/influencer/posts/{{ $now }}.jpg",
+        "method": "POST",
+        "headerParameters": { "parameters": [{ "name": "Authorization", "value": "=Bearer {{$env.SUPABASE_SERVICE_ROLE_KEY}}" }, { "name": "Content-Type", "value": "image/jpeg" }] },
+        "notes": "Upload final (faceswapped). Varian pollinations+gemini juga di-upload sebagai compare"
+      }
+    },
+    {
+      "name": "IG Publish (auto)",
+      "type": "n8n-nodes-base.httpRequest",
+      "parameters": {
+        "url": "https://graph.facebook.com/v18.0/{{ $env.IG_USER_ID }}/media",
+        "method": "POST",
+        "body": { "image_url": "={{ $json.supabase_public_url }}", "caption": "={{ $json.caption }} {{ $json.hashtags }}" },
+        "notes": "Butuh IG Business + IG_USER_ID + IG_ACCESS_TOKEN. Jika belum set, step ini skip (log saja)"
+      }
+    },
+    {
+      "name": "IG Media Publish",
+      "type": "n8n-nodes-base.httpRequest",
+      "parameters": {
+        "url": "https://graph.facebook.com/v18.0/{{ $env.IG_USER_ID }}/media_publish",
+        "method": "POST",
+        "body": { "creation_id": "={{ $json.ig_creation_id }}", "access_token": "={{$env.IG_ACCESS_TOKEN}}" }
+      }
+    },
+    {
+      "name": "Telegram Notify Compare",
+      "type": "n8n-nodes-base.telegram",
+      "parameters": {
+        "text": "=✅ Gym Girl auto\nA Pollinations: {{ $json.pollinations_url }}\nB Gemini: {{ $json.gemini_url }}\nFinal (face-lock): {{ $json.supabase_public_url }}\nCaption: {{ $json.caption }}\nIG: {{ $json.ig_id || 'skipped (no token)' }}"
+      }
+    }
+  ]
+}
