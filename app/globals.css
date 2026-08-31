@@ -1,58 +1,54 @@
 @import "tailwindcss";
 
-/* Starbucks DESIGN.md — applied */
+/* BaristaConnect — Dark Espresso / Chocolate premium */
 @theme inline {
-  --color-cream: #f2f0eb;
-  --color-cream-dark: #edebe9;
-  --color-latte: #e6e6e0;
-  --color-espresso: #1e3932;
-  --color-espresso-soft: rgba(0, 0, 0, 0.58);
-  --color-caramel: #00754a;
-  --color-caramel-dark: #006241;
-  --color-matcha: #00754a;
-  --color-gold: #cba258;
+  --color-cream: #0f0a08;
+  --color-cream-dark: #1a1210;
+  --color-latte: #2a1f1a;
+  --color-espresso: #fdf6ec;
+  --color-espresso-soft: rgba(253, 246, 236, 0.62);
+  --color-caramel: #c08438;
+  --color-caramel-dark: #a66a24;
+  --color-matcha: #c08438;
+  --color-gold: #e8b86a;
+  --color-bg: #0f0a08;
+  --color-surface: #1c1412;
+  --color-surface-2: #251b19;
+  --color-border: rgba(255,255,255,0.08);
   --font-sans: var(--font-jakarta), "SoDoSans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 body {
-  background-color: var(--color-cream);
+  background: radial-gradient(1200px 600px at 70% -10%, #2a1a0f 0%, transparent 60%),
+              radial-gradient(900px 500px at -10% 30%, #1a2a1a 0%, transparent 55%),
+              var(--color-bg);
   color: var(--color-espresso);
   font-family: var(--font-sans);
 }
 
 @keyframes rise {
-  from {
-    opacity: 0;
-    transform: translateY(12px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
 }
-
-.animate-rise {
-  animation: rise 0.35s ease-out both;
-}
+.animate-rise { animation: rise 0.6s ease-out both; }
 
 @keyframes pulse-dot {
-  0%,
-  100% {
-    box-shadow: 0 0 0 0 rgba(76, 175, 125, 0.45);
-  }
-  50% {
-    box-shadow: 0 0 0 5px rgba(76, 175, 125, 0);
-  }
+  0%,100% { box-shadow: 0 0 0 0 rgba(192,132,56,0.4); }
+  50% { box-shadow: 0 0 0 6px rgba(192,132,56,0); }
 }
+.pulse-dot { animation: pulse-dot 2.2s infinite; }
 
-.pulse-dot {
-  animation: pulse-dot 1.8s infinite;
+@keyframes float {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
 }
+.animate-float { animation: float 5s ease-in-out infinite; }
 
-.no-scrollbar::-webkit-scrollbar {
-  display: none;
-}
-.no-scrollbar {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+.glass {
+  background: rgba(255,255,255,0.06);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.08);
 }
