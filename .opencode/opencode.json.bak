@@ -1,15 +1,13 @@
-﻿{
+{
   "$schema": "https://opencode.ai/config.json",
   "plugin": ["list"],
   "instructions": ["AGENTS.md", ".opencode/skills/task-observer/SKILL.md", ".21st/DESIGN.md"],
   "mcp": {
     "21st": {
-      "type": "remote",
-      "url": "https://21st.dev/api/mcp",
+      "type": "local",
+      "command": ["npx", "-y", "@21st-dev/mcp"],
       "enabled": true,
-      "headers": {
-        "x-api-key": "{env:21ST_API_KEY}"
-      }
+      "env": { "21ST_API_KEY": "{env:21ST_API_KEY}" }
     }
   },
   "lsp": {

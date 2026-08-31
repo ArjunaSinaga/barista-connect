@@ -7,7 +7,7 @@ export const maxDuration = 60;
 
 function checkAuth(req) {
   const secret = process.env.CRON_SECRET;
-  if (!secret) return true;
+  if (!secret) return false;
   const auth = req.headers.get("authorization") || "";
   const qp = req.nextUrl.searchParams.get("secret");
   return auth === `Bearer ${secret}` || qp === secret;

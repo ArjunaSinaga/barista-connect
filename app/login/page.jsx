@@ -30,18 +30,28 @@ function LoginForm() {
 
     setBusy(true);
     try {
-      const supabase = createClient();
+      let supabase;
+      try {
+        supabase = createClient();
+      } catch (e) {
+        toast(e.message, "error");
+        return;
+      }
       const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password,
       });
       if (error) {
-        toast(
-          error.message === "Invalid login credentials"
-            ? "Email atau password salah"
-            : error.message,
-          "error"
-        );
+        const msg = error.message ?? "";
+        if (msg.includes("Failed to fetch") || msg.includes("fetch")) {
+          toast("Gagal terhubung ke Supabase. Cek env di Netlify dan Site URL di Supabase Auth → URL Configuration.", "error");
+        } else {
+          toast(msg === "Invalid login credentials" ? "Email atau password salah" : msg, "error");
+        }
+        return;
+      }
+      if (!data?.user) {
+        toast("Login gagal tanpa session. Cek env/cookie di Netlify (pastikan deploy ulang setelah set env).", "error");
         return;
       }
 

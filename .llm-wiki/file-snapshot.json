@@ -1,0 +1,31 @@
+{
+  "version": 1,
+  "updatedAt": 1788174031577,
+  "files": {
+    "schema.md": {
+      "hash": "6ad767c40e35c6a5786f20120ca1ce08",
+      "size": 28,
+      "mtimeMs": 1788171399198
+    },
+    "wiki/biodata.md": {
+      "hash": "85938d02902f2555403d0ffeccc8409f",
+      "size": 1287,
+      "mtimeMs": 1788173898090
+    },
+    "wiki/index.md": {
+      "hash": "87157b0e6979ec8107a1c901fe4a5423",
+      "size": 111,
+      "mtimeMs": 1788171395686
+    },
+    "wiki/proposal-template.md": {
+      "hash": "becefcdcd7f331fc215abd4dbf00d4f8",
+      "size": 1355,
+      "mtimeMs": 1788174030668
+    },
+    "wiki/schema.md": {
+      "hash": "6c1f244b7844cd959f73e427f1743721",
+      "size": 173,
+      "mtimeMs": 1788171391413
+    }
+  }
+}

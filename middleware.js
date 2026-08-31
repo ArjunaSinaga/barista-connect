@@ -7,7 +7,10 @@ const HOME_BY_ROLE = { owner: "/dashboard/owner", barista: "/dashboard/barista" 
 export async function middleware(request) {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const anon = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-  if (!url || !anon) return NextResponse.next();
+  if (!url || !anon) {
+    console.warn("[middleware] Supabase env kosong — lewati refresh session. Set di Netlify lalu redeploy.");
+    return NextResponse.next();
+  }
 
   let response = NextResponse.next({ request });
   const supabase = createServerClient(url, anon, {

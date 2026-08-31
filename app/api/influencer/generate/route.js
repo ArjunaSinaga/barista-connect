@@ -12,7 +12,7 @@ export const maxDuration = 60;
 
 function authCron(req) {
   const cronSecret = process.env.CRON_SECRET;
-  if (!cronSecret) return true;
+  if (!cronSecret) return false;
   const hdr = req.headers.get("authorization") || "";
   return hdr === `Bearer ${cronSecret}`;
 }
