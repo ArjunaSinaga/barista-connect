@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, Coffee, Store } from "lucide-react";
+import { ArrowRight, Coffee, Store, Sparkles, MapPin, Clock3 } from "lucide-react";
 import { createClient, isSupabaseConfigured } from "@/lib/supabase/server";
 import JobCard from "@/components/cards/JobCard";
 import Button from "@/components/ui/Button";
@@ -8,13 +8,12 @@ async function getLatestJobs() {
   if (!isSupabaseConfigured()) return [];
   try {
     const supabase = await createClient();
-    const { data, error } = await supabase
+    const { data } = await supabase
       .from("job_posts")
       .select("*, owners(business_name)")
       .eq("is_active", true)
       .order("created_at", { ascending: false })
       .limit(3);
-    if (error) return [];
     return data ?? [];
   } catch {
     return [];
@@ -23,119 +22,99 @@ async function getLatestJobs() {
 
 export default async function LandingPage() {
   const jobs = await getLatestJobs();
-
-  const steps = [
-    {
-      icon: <Store className="text-caramel" size={22} />,
-      title: "Pemilik Coffee Shop",
-      desc: "Pasang lowongan dalam 1 menit, review pelamar, terima barista terbaik.",
-    },
-    {
-      icon: <Coffee className="text-caramel" size={22} />,
-      title: "Barista",
-      desc: "Lengkapi profil sekali, lamar semua lowongan yang cocok. Gratis.",
-    },
-  ];
-
   return (
-    <div>
-      {/* Hero */}
-      <section className="relative overflow-hidden">
-        <div
-          aria-hidden
-          className="absolute -top-24 -right-24 h-72 w-72 rounded-full bg-latte/50 blur-2xl"
-        />
-        <div
-          aria-hidden
-          className="absolute top-40 -left-20 h-56 w-56 rounded-full bg-caramel/10 blur-2xl"
-        />
-        <div className="relative mx-auto max-w-6xl px-4 pt-16 pb-14 text-center sm:pt-24 sm:pb-20">
-          <span className="inline-flex items-center gap-1.5 rounded-full border border-latte bg-white px-4 py-1.5 text-xs font-bold text-espresso-soft shadow-sm">
-            ☕ Komunitas barista Indonesia
-          </span>
-          <h1 className="mx-auto mt-6 max-w-2xl text-4xl leading-tight font-extrabold tracking-tight text-espresso sm:text-5xl">
-            Cari kerja <span className="text-caramel">barista</span> di dekat
-            kamu
-          </h1>
-          <p className="mx-auto mt-4 max-w-xl text-base text-espresso-soft">
-            Hubungan langsung antara barista dan pemilik coffee shop. Tanpa
-            perantara, tanpa biaya — cukup lengkapi profil dan mulai melamar.
-          </p>
+    <div className="min-h-screen bg-[#0f0a08] text-[#fdf6ec]">
+      {/* Hero - dark chocolate */}
+      <section className="relative overflow-hidden border-b border-white/[0.06]">
+        {/* ambient */}
+        <div className="absolute inset-0 bg-[radial-gradient(800px_400px_at_20%_-10%,rgba(212,162,78,0.18),transparent_60%),radial-gradient(700px_400px_at_90%_0%,rgba(181,106,42,0.16),transparent_60%),linear-gradient(to_bottom,transparent,#0f0a08)]" />
+        <div className="absolute -top-28 -right-28 h-[560px] w-[560px] rounded-full bg-[#d4a24e]/[0.07] blur-[80px]" />
+        <div className="absolute -bottom-40 -left-40 h-[520px] w-[520px] rounded-full bg-[#b56a2a]/[0.10] blur-[70px]" />
 
-          <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
-            <Button href="/jobs" size="lg" full>
-              Lihat Lowongan <ArrowRight size={18} />
-            </Button>
-            <Button href="/signup?role=owner" variant="secondary" size="lg" full>
-              Saya punya coffee shop
-            </Button>
+        <div className="relative mx-auto max-w-6xl px-4 pt-12 pb-14 sm:pt-20 sm:pb-16">
+          <div className="mx-auto max-w-3xl text-center">
+            <span className="inline-flex items-center gap-2 rounded-full border border-[#d4a24e]/20 bg-white/[0.05] px-3.5 py-1.5 text-[11px] font-bold tracking-[0.14em] text-[#d4a24e] backdrop-blur">
+              <Sparkles size={12} className="text-[#d4a24e]" /> BARISTA CONNECT — DARK ROAST EDITION
+            </span>
+            <h1 className="mt-6 text-[32px] font-black leading-[0.95] tracking-[-0.03em] sm:text-[56px]">
+              <span className="text-[#fdf6ec]">Seduh</span>{" "}
+              <span className="bg-gradient-to-r from-[#d4a24e] via-[#e8c27a] to-[#b56a2a] bg-clip-text text-transparent">kariermu.</span>
+              <br />
+              <span className="text-[#fdf6ec]">Temukan shift-mu.</span>
+            </h1>
+            <p className="mx-auto mt-4 max-w-xl text-sm leading-6 text-[#fdf6ec]/60 sm:text-[15px]">
+              Platform jujur untuk barista dan owner. Lowongan transparan, profil sekali jadi, lamar ke mana saja — tanpa biaya.
+            </p>
+            <div className="mt-7 flex flex-wrap items-center justify-center gap-3">
+              <Button asChild className="rounded-full bg-gradient-to-r from-[#d4a24e] to-[#b56a2a] px-7 text-[#1a0f09] hover:brightness-110">
+                <Link href="/jobs">
+                  Jelajah lowongan <ArrowRight size={16} />
+                </Link>
+              </Button>
+              <Button asChild variant="outline" className="rounded-full border-white/15 bg-white/[0.06] text-[#fdf6ec] hover:bg-white/[0.10]">
+                <Link href="/auth/signup">Daftar gratis</Link>
+              </Button>
+            </div>
+            <div className="mt-6 flex items-center justify-center gap-5 text-xs text-[#fdf6ec]/45">
+              <span className="inline-flex items-center gap-1.5"><MapPin size={13} className="text-[#d4a24e]" /> Jakarta • Surabaya • Bandung</span>
+              <span className="h-3 w-px bg-white/10" />
+              <span className="inline-flex items-center gap-1.5"><Clock3 size={13} className="text-[#d4a24e]" /> Update harian</span>
+            </div>
           </div>
+
+          {/* glass stats */}
+          <div className="mx-auto mt-10 grid max-w-4xl grid-cols-3 gap-3">
+            {[
+              ["1.200+", "Barista aktif"],
+              ["340", "Coffee shop"],
+              ["2.1k", "Lamaran / bulan"],
+            ].map(([v, l]) => (
+              <div key={l} className="rounded-2xl border border-white/[0.08] bg-white/[0.04] p-4 text-center backdrop-blur">
+                <div className="text-lg font-black text-[#d4a24e] sm:text-xl">{v}</div>
+                <div className="text-[11px] tracking-wide text-[#fdf6ec]/50">{l}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Steps */}
+      <section className="mx-auto max-w-6xl px-4 py-14">
+        <div className="grid gap-4 sm:grid-cols-2">
+          {[
+            { icon: <Store size={20} className="text-[#d4a24e]" />, title: "Pemilik Coffee Shop", desc: "Pasang lowongan dalam 1 menit, review pelamar terkurasi, tutup shift lebih cepat." },
+            { icon: <Coffee size={20} className="text-[#d4a24e]" />, title: "Barista", desc: "Lengkapi profil sekali, lamar ke semua lowongan yang cocok. Gratis selamanya." },
+          ].map((s) => (
+            <div key={s.title} className="group rounded-[20px] border border-white/[0.08] bg-gradient-to-b from-[#1c1412] to-[#19110f] p-6 transition hover:border-[#d4a24e]/20 hover:shadow-[0_12px_40px_rgba(0,0,0,0.4)]">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-[#d4a24e]/20 bg-[#d4a24e]/10">{s.icon}</div>
+              <h3 className="mt-4 text-[15px] font-bold tracking-tight text-[#fdf6ec]">{s.title}</h3>
+              <p className="mt-1.5 text-sm leading-6 text-[#fdf6ec]/55">{s.desc}</p>
+            </div>
+          ))}
         </div>
       </section>
 
       {/* Latest jobs */}
       <section className="mx-auto max-w-6xl px-4 pb-16">
-        <div className="mb-5 flex items-end justify-between">
-          <div>
-            <h2 className="text-xl font-extrabold text-espresso">
-              Lowongan Terbaru
-            </h2>
-            <p className="text-sm text-espresso-soft">
-              Yang paling baru dibuka hari ini
-            </p>
-          </div>
-          <Link
-            href="/jobs"
-            className="flex items-center gap-1 text-sm font-bold text-caramel hover:underline"
-          >
-            Semua <ArrowRight size={15} />
+        <div className="flex items-end justify-between">
+          <h2 className="text-lg font-black tracking-tight text-[#fdf6ec] sm:text-xl">Lowongan terbaru</h2>
+          <Link href="/jobs" className="text-sm font-semibold text-[#d4a24e] hover:underline">
+            Lihat semua →
           </Link>
         </div>
-
-        {jobs.length > 0 ? (
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {jobs.map((job) => (
-              <JobCard
-                key={job.id}
-                job={job}
-                ownerName={job.owners?.business_name}
-              />
-            ))}
+        {jobs.length === 0 ? (
+          <div className="mt-6 rounded-2xl border border-dashed border-white/10 bg-white/[0.03] p-10 text-center text-sm text-[#fdf6ec]/50">
+            Belum ada lowongan aktif. Jadilah yang pertama pasang — owner verified akan muncul di sini.
           </div>
         ) : (
-          <div className="rounded-2xl border border-dashed border-latte bg-white/60 px-6 py-12 text-center">
-            <p className="text-sm font-semibold text-espresso">
-              Belum ada lowongan yang tampil
-            </p>
-            <p className="mx-auto mt-1 max-w-md text-xs text-espresso-soft">
-              Belum terhubung ke database? Ikuti SETUP.md untuk membuat project
-              Supabase gratis, atau daftar sebagai pemilik coffee shop untuk
-              memasang lowongan pertama.
-            </p>
+          <div className="mt-6 grid gap-4 sm:grid-cols-3">
+            {jobs.map((job) => (
+              <div key={job.id} className="rounded-2xl border border-white/[0.07] bg-[#1c1412] p-0 overflow-hidden">
+                <JobCard job={job} />
+              </div>
+            ))}
           </div>
         )}
-      </section>
-
-      {/* How it works */}
-      <section className="border-t border-latte/60 bg-white/50">
-        <div className="mx-auto grid max-w-6xl gap-6 px-4 py-14 sm:grid-cols-2">
-          {steps.map((s) => (
-            <div
-              key={s.title}
-              className="flex items-start gap-4 rounded-2xl border border-latte bg-white p-6"
-            >
-              <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-cream-dark">
-                {s.icon}
-              </span>
-              <div>
-                <h3 className="font-bold text-espresso">{s.title}</h3>
-                <p className="mt-1 text-sm leading-relaxed text-espresso-soft">
-                  {s.desc}
-                </p>
-              </div>
-            </div>
-          ))}
-        </div>
       </section>
     </div>
   );

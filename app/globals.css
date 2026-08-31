@@ -1,54 +1,86 @@
 @import "tailwindcss";
 
-/* BaristaConnect — Dark Espresso / Chocolate premium */
 @theme inline {
-  --color-cream: #0f0a08;
-  --color-cream-dark: #1a1210;
-  --color-latte: #2a1f1a;
-  --color-espresso: #fdf6ec;
-  --color-espresso-soft: rgba(253, 246, 236, 0.62);
-  --color-caramel: #c08438;
-  --color-caramel-dark: #a66a24;
-  --color-matcha: #c08438;
-  --color-gold: #e8b86a;
-  --color-bg: #0f0a08;
-  --color-surface: #1c1412;
-  --color-surface-2: #251b19;
-  --color-border: rgba(255,255,255,0.08);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
   --font-sans: var(--font-jakarta), "SoDoSans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
+/* — Dark chocolate theme — */
+:root {
+  --background: #0f0a08;
+  --foreground: #fdf6ec;
+  --color-cream: #0f0a08;
+  --color-cream-dark: #1c1412;
+  --color-latte: #251b19;
+  --color-espresso: #fdf6ec;
+  --color-espresso-soft: rgba(253,246,236,0.62);
+  --color-caramel: #d4a24e;
+  --color-caramel-dark: #b56a2a;
+  --color-matcha: #d4a24e;
+  --color-gold: #d4a24e;
+  --surface: #1c1412;
+  --surface-2: #251b19;
+  --surface-3: #2e221f;
+  --border: rgba(212,162,78,0.14);
+  --border-strong: rgba(212,162,78,0.26);
+}
+
+* { scrollbar-width: thin; scrollbar-color: var(--color-gold) transparent; }
+
 body {
-  background: radial-gradient(1200px 600px at 70% -10%, #2a1a0f 0%, transparent 60%),
-              radial-gradient(900px 500px at -10% 30%, #1a2a1a 0%, transparent 55%),
-              var(--color-bg);
-  color: var(--color-espresso);
-  font-family: var(--font-sans);
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-jakarta), "SoDoSans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
 }
 
-@keyframes rise {
-  from { opacity: 0; transform: translateY(14px); }
-  to { opacity: 1; transform: translateY(0); }
+/* Grain */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+  z-index: 9999;
 }
-.animate-rise { animation: rise 0.6s ease-out both; }
 
-@keyframes pulse-dot {
-  0%,100% { box-shadow: 0 0 0 0 rgba(192,132,56,0.4); }
-  50% { box-shadow: 0 0 0 6px rgba(192,132,56,0); }
-}
-.pulse-dot { animation: pulse-dot 2.2s infinite; }
+/* Hero ambient */
+.bg-espresso { background: var(--background) !important; }
+.bg-cream { background: var(--surface) !important; }
+.bg-latte { background: var(--surface-2) !important; }
+.text-espresso { color: var(--foreground) !important; }
+.text-espresso-soft { color: var(--color-espresso-soft) !important; }
+.border-latte { border-color: var(--border) !important; }
+.bg-caramel { background: linear-gradient(135deg,#d4a24e 0%,#b56a2a 100%) !important; color: #1a0f09 !important; }
+.bg-caramel-dark { background: #b56a2a !important; }
 
-@keyframes float {
-  0%,100% { transform: translateY(0); }
-  50% { transform: translateY(-6px); }
-}
-.animate-float { animation: float 5s ease-in-out infinite; }
-
-.no-scrollbar::-webkit-scrollbar { display: none; }
-.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-
+/* Glass + glow */
 .glass {
-  background: rgba(255,255,255,0.06);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(28,20,18,0.72);
+  backdrop-filter: blur(18px) saturate(1.2);
+  border: 1px solid var(--border);
 }
+.glow-gold {
+  box-shadow: 0 0 40px rgba(212,162,78,0.18), 0 8px 32px rgba(0,0,0,0.6);
+}
+.card-dark {
+  background: linear-gradient(180deg, #1c1412 0%, #19110f 100%);
+  border: 1px solid var(--border);
+}
+.card-dark:hover { border-color: var(--border-strong); }
+
+/* Anim */
+@keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+@keyframes shimmer { 0%{transform:translateX(-100%)} 100%{transform:translateX(200%)} }
+.animate-float { animation: float 6s ease-in-out infinite; }
+.shimmer { position:relative; overflow:hidden; }
+.shimmer::after {
+  content:""; position:absolute; inset:0;
+  background: linear-gradient(90deg, transparent, rgba(212,162,78,0.08), transparent);
+  transform: translateX(-100%);
+  animation: shimmer 3.5s infinite;
+}
+.no-scrollbar::-webkit-scrollbar{display:none}
+.no-scrollbar{ -ms-overflow-style:none; scrollbar-width:none; }
