@@ -85,10 +85,10 @@ function SignupForm() {
 
   return (
     <div className="mx-auto max-w-md px-4 py-12">
-      <h1 className="text-center text-2xl font-extrabold text-espresso">
+      <h1 className="text-center text-2xl font-extrabold text-[#fdf6ec]">
         Buat akun gratis
       </h1>
-      <p className="mt-1 text-center text-sm text-espresso-soft">
+      <p className="mt-1 text-center text-sm text-[#fdf6ec]/60">
         Gabung bersama ribuan barista & coffee shop
       </p>
 
@@ -102,20 +102,20 @@ function SignupForm() {
             className={`flex flex-col items-start rounded-2xl border-2 bg-white p-4 text-left transition-all ${
               role === value
                 ? "border-caramel ring-2 ring-caramel/20"
-                : "border-latte hover:border-caramel/50"
+                : "border-[#e7ddd0] hover:border-[#d4a24e]/50"
             }`}
           >
             <span
               className={`mb-2 flex h-9 w-9 items-center justify-center rounded-xl ${
                 role === value
-                  ? "bg-caramel text-white"
-                  : "bg-cream-dark text-caramel"
+                  ? "bg-[#d4a24e] text-white"
+                  : "bg-[#f2f0eb] text-[#b45309]"
               }`}
             >
               <Icon size={18} />
             </span>
-            <span className="text-sm font-bold text-espresso">{label}</span>
-            <span className="mt-0.5 text-[11px] leading-snug text-espresso-soft">
+            <span className="text-sm font-bold text-[#1c1412]">{label}</span>
+            <span className="mt-0.5 text-[11px] leading-snug text-[#1c1412]/60">
               {desc}
             </span>
           </button>
@@ -148,7 +148,7 @@ function SignupForm() {
         </Button>
       </form>
 
-      <p className="mt-6 text-center text-sm text-espresso-soft">
+      <p className="mt-6 text-center text-sm text-[#fdf6ec]/60">
         Sudah punya akun?{" "}
         <Link href="/login" className="font-bold text-caramel hover:underline">
           Masuk

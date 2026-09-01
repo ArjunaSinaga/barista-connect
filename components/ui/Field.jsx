@@ -5,15 +5,15 @@ export function Input({ label, error, className = "", id, ...props }) {
       {label && (
         <label
           htmlFor={fieldId}
-          className="mb-1.5 block text-sm font-semibold text-espresso"
+          className="mb-1.5 block text-sm font-semibold text-[#fdf6ec]"
         >
           {label}
         </label>
       )}
       <input
         id={fieldId}
-        className={`w-full rounded-xl border bg-white px-4 py-2.5 text-sm outline-none transition-colors placeholder:text-espresso-soft/50 focus:border-caramel focus:ring-2 focus:ring-caramel/20 ${
-          error ? "border-red-400" : "border-latte"
+        className={`w-full rounded-xl border bg-white text-[#1c1412] px-4 py-2.5 text-sm text-[#1c1412] outline-none transition-colors placeholder:text-[#1c1412]/40 focus:border-[#d4a24e] focus:ring-2 focus:ring-[#d4a24e]/20 ${
+          error ? "border-red-400" : "border-[#e7ddd0]"
         } ${className}`}
         {...props}
       />
@@ -28,15 +28,15 @@ export function Textarea({ label, error, className = "", rows = 4, ...props }) {
       {label && (
         <label
           htmlFor={props.name}
-          className="mb-1.5 block text-sm font-semibold text-espresso"
+          className="mb-1.5 block text-sm font-semibold text-[#fdf6ec]"
         >
           {label}
         </label>
       )}
       <textarea
         rows={rows}
-        className={`w-full rounded-xl border bg-white px-4 py-2.5 text-sm outline-none transition-colors placeholder:text-espresso-soft/50 focus:border-caramel focus:ring-2 focus:ring-caramel/20 ${
-          error ? "border-red-400" : "border-latte"
+        className={`w-full rounded-xl border bg-white text-[#1c1412] px-4 py-2.5 text-sm text-[#1c1412] outline-none transition-colors placeholder:text-[#1c1412]/40 focus:border-[#d4a24e] focus:ring-2 focus:ring-[#d4a24e]/20 ${
+          error ? "border-red-400" : "border-[#e7ddd0]"
         } ${className}`}
         {...props}
       />
@@ -51,14 +51,14 @@ export function Select({ label, error, options = [], placeholder, ...props }) {
       {label && (
         <label
           htmlFor={props.name}
-          className="mb-1.5 block text-sm font-semibold text-espresso"
+          className="mb-1.5 block text-sm font-semibold text-[#fdf6ec]"
         >
           {label}
         </label>
       )}
       <select
-        className={`w-full rounded-xl border bg-white px-4 py-2.5 text-sm outline-none transition-colors focus:border-caramel focus:ring-2 focus:ring-caramel/20 ${
-          error ? "border-red-400" : "border-latte"
+        className={`w-full rounded-xl border bg-white text-[#1c1412] px-4 py-2.5 text-sm text-[#1c1412] outline-none transition-colors focus:border-[#d4a24e] focus:ring-2 focus:ring-[#d4a24e]/20 ${
+          error ? "border-red-400" : "border-[#e7ddd0]"
         }`}
         {...props}
       >

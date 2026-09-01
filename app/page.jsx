@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, Coffee, Store, Sparkles, MapPin, Clock3 } from "lucide-react";
+import { ArrowRight, Search, Coffee, Store, Sparkles, MapPin, Clock3 } from "lucide-react";
 import { createClient, isSupabaseConfigured } from "@/lib/supabase/server";
 import JobCard from "@/components/cards/JobCard";
 import Button from "@/components/ui/Button";
@@ -30,6 +30,7 @@ export default async function LandingPage() {
         <div className="absolute inset-0 bg-[radial-gradient(800px_400px_at_20%_-10%,rgba(212,162,78,0.18),transparent_60%),radial-gradient(700px_400px_at_90%_0%,rgba(181,106,42,0.16),transparent_60%),linear-gradient(to_bottom,transparent,#0f0a08)]" />
         <div className="absolute -top-28 -right-28 h-[560px] w-[560px] rounded-full bg-[#d4a24e]/[0.07] blur-[80px]" />
         <div className="absolute -bottom-40 -left-40 h-[520px] w-[520px] rounded-full bg-[#b56a2a]/[0.10] blur-[70px]" />
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.04)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.04)_1px,transparent_1px)] bg-[size:32px_32px] [mask-image:radial-gradient(ellipse_80%_60%_at_50%_0%,black_70%,transparent_110%)] opacity-30" />
 
         <div className="relative mx-auto max-w-6xl px-4 pt-12 pb-14 sm:pt-20 sm:pb-16">
           <div className="mx-auto max-w-3xl text-center">
@@ -38,7 +39,7 @@ export default async function LandingPage() {
             </span>
             <h1 className="mt-6 text-[32px] font-black leading-[0.95] tracking-[-0.03em] sm:text-[56px]">
               <span className="text-[#fdf6ec]">Seduh</span>{" "}
-              <span className="bg-gradient-to-r from-[#d4a24e] via-[#e8c27a] to-[#b56a2a] bg-clip-text text-transparent">kariermu.</span>
+              <span className="text-[#d4a24e]">kariermu.</span>
               <br />
               <span className="text-[#fdf6ec]">Temukan shift-mu.</span>
             </h1>
@@ -55,6 +56,13 @@ export default async function LandingPage() {
                 <Link href="/auth/signup">Daftar gratis</Link>
               </Button>
             </div>
+        <form action="/jobs" method="GET" className="mx-auto mt-8 flex max-w-xl items-center gap-2 rounded-full border border-white/10 bg-white/[0.06] p-1.5 backdrop-blur">
+          <div className="flex flex-1 items-center gap-2 pl-4">
+            <Search size={16} className="shrink-0 text-white/50" />
+            <input name="q" placeholder="Cari role, skill, atau lokasi..." className="h-9 w-full bg-transparent text-sm text-white placeholder:text-white/40 focus:outline-none" />
+          </div>
+          <button type="submit" className="inline-flex h-9 shrink-0 items-center justify-center gap-1.5 rounded-full bg-[#d4a24e] px-6 text-sm font-bold text-[#1c1412] hover:bg-[#c09342]">Cari <ArrowRight size={16} /></button>
+        </form>
             <div className="mt-6 flex items-center justify-center gap-5 text-xs text-[#fdf6ec]/45">
               <span className="inline-flex items-center gap-1.5"><MapPin size={13} className="text-[#d4a24e]" /> Jakarta • Surabaya • Bandung</span>
               <span className="h-3 w-px bg-white/10" />
@@ -98,22 +106,31 @@ export default async function LandingPage() {
       <section className="mx-auto max-w-6xl px-4 pb-16">
         <div className="flex items-end justify-between">
           <h2 className="text-lg font-black tracking-tight text-[#fdf6ec] sm:text-xl">Lowongan terbaru</h2>
-          <Link href="/jobs" className="text-sm font-semibold text-[#d4a24e] hover:underline">
-            Lihat semua →
-          </Link>
+              <Link
+                href="/jobs"
+                className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#d4a24e] hover:underline"
+              >
+                Lihat semua <ArrowRight size={16} />
+              </Link>
         </div>
         {jobs.length === 0 ? (
           <div className="mt-6 rounded-2xl border border-dashed border-white/10 bg-white/[0.03] p-10 text-center text-sm text-[#fdf6ec]/50">
             Belum ada lowongan aktif. Jadilah yang pertama pasang — owner verified akan muncul di sini.
           </div>
         ) : (
-          <div className="mt-6 grid gap-4 sm:grid-cols-3">
-            {jobs.map((job) => (
-              <div key={job.id} className="rounded-2xl border border-white/[0.07] bg-[#1c1412] p-0 overflow-hidden">
-                <JobCard job={job} />
+          <div
+                className={`mt-6 grid gap-4 ${
+                  jobs.length === 1
+                    ? "mx-auto max-w-sm grid-cols-1 place-items-stretch"
+                    : jobs.length === 2
+                      ? "mx-auto max-w-3xl grid-cols-1 place-items-stretch sm:grid-cols-2"
+                      : "sm:grid-cols-2 lg:grid-cols-3"
+                }`}
+              >
+                {jobs.map((job) => (
+                  <JobCard key={job.id} job={job} />
+                ))}
               </div>
-            ))}
-          </div>
         )}
       </section>
     </div>

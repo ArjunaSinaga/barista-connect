@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": 1788174031577,
+  "updatedAt": 1788200103516,
   "files": {
     "schema.md": {
       "hash": "6ad767c40e35c6a5786f20120ca1ce08",
@@ -26,6 +26,11 @@
       "hash": "6c1f244b7844cd959f73e427f1743721",
       "size": 173,
       "mtimeMs": 1788171391413
+    },
+    "wiki/security-audit-2026-08-31.md": {
+      "hash": "4caa373cb41438ebff358eeb8779a1d6",
+      "size": 2579,
+      "mtimeMs": 1788200058098
     }
   }
 }

@@ -1,7 +1,10 @@
-﻿{
+{
   "$schema": "https://opencode.ai/config.json",
-  "plugin": ["list"],
-  "instructions": ["AGENTS.md", ".opencode/skills/task-observer/SKILL.md", ".21st/DESIGN.md"],
+  "instructions": [
+    "AGENTS.md",
+    ".opencode/skills/task-observer/SKILL.md",
+    ".21st/DESIGN.md"
+  ],
   "mcp": {
     "21st": {
       "type": "remote",
@@ -14,9 +17,14 @@
   },
   "lsp": {
     "python": {
-      "command": ["pyright-langserver", "--stdio"],
+      "command": [
+        "pyright-langserver",
+        "--stdio"
+      ],
       "enabled": true,
-      "extensions": [".py"]
+      "extensions": [
+        ".py"
+      ]
     }
   }
 }

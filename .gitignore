@@ -42,3 +42,8 @@ next-env.d.ts
 
 # Netlify local state
 .netlify
+
+.agent/
+.llm-wiki/
+proxy.js
+
