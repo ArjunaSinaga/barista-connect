@@ -79,7 +79,7 @@ export default async function InboxPage() {
             <Link
               key={c.id}
               href={`/messages/${c.id}`}
-              className="flex items-center gap-4 rounded-2xl border border-latte bg-white p-4 shadow-sm transition-shadow hover:shadow-md"
+              className="flex items-center gap-4 rounded-2xl card-dark p-4 shadow-sm transition-shadow hover:shadow-md"
             >
               <Avatar src={counterpart.avatar} name={counterpart.name} size="md" />
               <div className="min-w-0 flex-1">

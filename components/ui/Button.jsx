@@ -6,7 +6,7 @@ const VARIANTS = {
   primary:
     "bg-caramel text-white hover:bg-caramel-dark shadow-sm disabled:bg-caramel/50",
   secondary:
-    "bg-white text-espresso border border-latte hover:border-caramel hover:text-caramel",
+    "card-dark text-espresso border border-latte hover:border-caramel hover:text-caramel",
   ghost: "text-espresso-soft hover:text-caramel hover:bg-cream-dark",
   danger: "bg-red-500 text-white hover:bg-red-600",
   success: "bg-matcha text-white hover:brightness-95",

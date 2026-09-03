@@ -78,7 +78,7 @@ export default function BaristaDirectory({ ownerId }) {
               className={`rounded-full px-3 py-1.5 text-xs font-bold transition-colors ${
                 skills.includes(s)
                   ? "bg-caramel text-white"
-                  : "border border-latte bg-white text-espresso-soft hover:border-caramel hover:text-caramel"
+                  : "border border-latte card-dark text-espresso-soft hover:border-caramel hover:text-caramel"
               }`}
             >
               {s}
@@ -93,7 +93,7 @@ export default function BaristaDirectory({ ownerId }) {
           value={loc}
           onChange={(e) => setLoc(e.target.value)}
           placeholder="cth. Bandung"
-          className="w-full rounded-xl border border-latte bg-white px-4 py-2.5 text-sm outline-none focus:border-caramel focus:ring-2 focus:ring-caramel/20"
+          className="w-full rounded-xl border border-latte bg-white text-[#1c1412] px-4 py-2.5 text-sm outline-none focus:border-caramel focus:ring-2 focus:ring-caramel/20"
         />
       </div>
 
@@ -132,7 +132,7 @@ export default function BaristaDirectory({ ownerId }) {
       <div className="mt-5 flex flex-wrap items-center gap-2">
         <button
           onClick={() => setSheetOpen(true)}
-          className="relative inline-flex items-center gap-2 rounded-xl border border-latte bg-white px-4 py-2.5 text-sm font-bold text-espresso hover:border-caramel hover:text-caramel md:hidden"
+          className="relative inline-flex items-center gap-2 rounded-xl card-dark px-4 py-2.5 text-sm font-bold text-espresso hover:border-caramel hover:text-caramel md:hidden"
         >
           <SlidersHorizontal size={16} /> Filter
           {activeFilters > 0 && (
@@ -147,7 +147,7 @@ export default function BaristaDirectory({ ownerId }) {
           <select
             value={sort}
             onChange={(e) => setSort(e.target.value)}
-            className="rounded-xl border border-latte bg-white px-3 py-2 text-sm font-bold outline-none focus:border-caramel"
+            className="rounded-xl card-dark px-3 py-2 text-sm font-bold outline-none focus:border-caramel"
           >
             <option value="open">Buka kerja dulu</option>
             <option value="exp">Pengalaman tertinggi</option>
@@ -157,7 +157,7 @@ export default function BaristaDirectory({ ownerId }) {
 
       <div className="mt-6 grid gap-6 md:grid-cols-[240px_1fr]">
         {/* desktop sidebar */}
-        <aside className="hidden self-start rounded-2xl border border-latte bg-white p-5 md:sticky md:top-20 md:block">
+        <aside className="hidden self-start rounded-2xl card-dark p-5 md:sticky md:top-20 md:block">
           <p className="mb-4 flex items-center justify-between text-sm font-extrabold text-espresso">
             Filter
             {activeFilters > 0 && (

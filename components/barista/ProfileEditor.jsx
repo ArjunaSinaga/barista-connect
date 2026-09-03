@@ -131,7 +131,7 @@ export default function ProfileEditor({ initial }) {
       <h1 className="text-2xl font-extrabold text-espresso">Profil Saya</h1>
 
       {/* completeness meter */}
-      <div className="rounded-2xl border border-latte bg-white p-5">
+      <div className="rounded-2xl card-dark p-5">
         <div className="flex items-center justify-between text-xs font-bold">
           <span className="text-espresso">Kelengkapan profil</span>
           <span className={completeness >= 6 ? "text-matcha" : "text-caramel"}>
@@ -147,7 +147,7 @@ export default function ProfileEditor({ initial }) {
       </div>
 
       {/* photo */}
-      <div className="flex flex-col items-center rounded-2xl border border-latte bg-white p-6">
+      <div className="flex flex-col items-center rounded-2xl card-dark p-6">
         <div className="relative">
           <Avatar src={photoUrl} name={form.full_name} size="xl" />
           {uploading && (
@@ -175,7 +175,7 @@ export default function ProfileEditor({ initial }) {
       </div>
 
       {/* data diri */}
-      <div className="space-y-4 rounded-2xl border border-latte bg-white p-6">
+      <div className="space-y-4 rounded-2xl card-dark p-6">
         <p className="font-bold text-espresso">Data Diri</p>
         <Input
           name="full_name"
@@ -214,7 +214,7 @@ export default function ProfileEditor({ initial }) {
       </div>
 
       {/* skills */}
-      <div className="rounded-2xl border border-latte bg-white p-6">
+      <div className="rounded-2xl card-dark p-6">
         <p className="font-bold text-espresso">Keahlian</p>
         <div className="mt-3 flex flex-wrap gap-2">
           {form.skills.map((s) => (
@@ -240,7 +240,7 @@ export default function ProfileEditor({ initial }) {
             }
           }}
           placeholder="Tulis skill lalu Enter"
-          className="mt-3 w-full rounded-xl border border-latte bg-white px-4 py-2.5 text-sm outline-none focus:border-caramel focus:ring-2 focus:ring-caramel/20"
+          className="mt-3 w-full rounded-xl border border-latte bg-white text-[#1c1412] px-4 py-2.5 text-sm outline-none focus:border-caramel focus:ring-2 focus:ring-caramel/20"
         />
         {form.skills.length === 0 && (
           <div className="mt-3 flex flex-wrap gap-2">
@@ -259,7 +259,7 @@ export default function ProfileEditor({ initial }) {
       </div>
 
       {/* certificates */}
-      <div className="rounded-2xl border border-latte bg-white p-6">
+      <div className="rounded-2xl card-dark p-6">
         <p className="font-bold text-espresso">
           Sertifikat{" "}
           <span className="font-medium text-espresso-soft">(opsional)</span>
@@ -297,7 +297,7 @@ export default function ProfileEditor({ initial }) {
               }
             }}
             placeholder="cth. SCA Barista Foundation"
-            className="w-full rounded-xl border border-latte bg-white px-4 py-2.5 text-sm outline-none focus:border-caramel focus:ring-2 focus:ring-caramel/20"
+            className="w-full rounded-xl border border-latte bg-white text-[#1c1412] px-4 py-2.5 text-sm outline-none focus:border-caramel focus:ring-2 focus:ring-caramel/20"
           />
           <Button variant="secondary" onClick={addCert}>
             Tambah
@@ -306,7 +306,7 @@ export default function ProfileEditor({ initial }) {
       </div>
 
       {/* ideas + toggle */}
-      <div className="space-y-5 rounded-2xl border border-latte bg-white p-6">
+      <div className="space-y-5 rounded-2xl card-dark p-6">
         <Textarea
           name="ideas_plus"
           label="Ide & nilai plus"

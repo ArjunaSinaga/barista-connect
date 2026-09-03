@@ -17,7 +17,7 @@ export default function JobCard({
   actions = null,
 }) {
   return (
-    <div className="relative rounded-2xl border border-latte bg-white p-5 shadow-sm transition-shadow hover:shadow-md">
+    <div className="relative rounded-2xl card-dark p-5 shadow-sm transition-shadow hover:shadow-md">
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
           <Link
@@ -30,9 +30,11 @@ export default function JobCard({
             <Store size={12} /> {ownerName ?? "Coffee Shop"}
           </p>
         </div>
-        <Badge classes={TYPE_CLASSES[job.employment_type]}>
-          {EMPLOYMENT_LABELS[job.employment_type] ?? job.employment_type}
-        </Badge>
+        <div className="flex flex-wrap gap-1 shrink-0 justify-end">
+          {(job.employment_types?.length ? job.employment_types : (job.employment_type ? [job.employment_type] : [])).map(t=>(
+            <Badge key={t} classes={TYPE_CLASSES[t]}>{EMPLOYMENT_LABELS[t] ?? t}</Badge>
+          ))}
+        </div>
       </div>
 
       {job.description && (
@@ -46,8 +48,9 @@ export default function JobCard({
           <MapPin size={13} className="text-caramel" />
           {job.location}
         </span>
-        <span className="text-[11px] text-espresso-soft/70">
-          {relativeTime(job.created_at)}
+        <span className="flex items-center gap-2 text-[11px]">
+          {job.salary_text && <span className="font-bold text-espresso">{job.salary_text}</span>}
+          <span className="text-espresso-soft/70">{relativeTime(job.created_at)}</span>
         </span>
       </div>
 

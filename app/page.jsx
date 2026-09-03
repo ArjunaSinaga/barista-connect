@@ -34,7 +34,7 @@ export default async function LandingPage() {
 
         <div className="relative mx-auto max-w-6xl px-4 pt-12 pb-14 sm:pt-20 sm:pb-16">
           <div className="mx-auto max-w-3xl text-center">
-            <span className="inline-flex items-center gap-2 rounded-full border border-[#d4a24e]/20 bg-white/[0.05] px-3.5 py-1.5 text-[11px] font-bold tracking-[0.14em] text-[#d4a24e] backdrop-blur">
+            <span className="inline-flex items-center gap-2 rounded-full border border-[#d4a24e]/20 card-dark/[0.05] px-3.5 py-1.5 text-[11px] font-bold tracking-[0.14em] text-[#d4a24e] backdrop-blur">
               <Sparkles size={12} className="text-[#d4a24e]" /> BARISTA CONNECT — DARK ROAST EDITION
             </span>
             <h1 className="mt-6 text-[32px] font-black leading-[0.95] tracking-[-0.03em] sm:text-[56px]">
@@ -52,11 +52,11 @@ export default async function LandingPage() {
                   Jelajah lowongan <ArrowRight size={16} />
                 </Link>
               </Button>
-              <Button asChild variant="outline" className="rounded-full border-white/15 bg-white/[0.06] text-[#fdf6ec] hover:bg-white/[0.10]">
+              <Button asChild variant="outline" className="rounded-full border-white/15 card-dark/[0.06] text-[#fdf6ec] hover:card-dark/[0.10]">
                 <Link href="/auth/signup">Daftar gratis</Link>
               </Button>
             </div>
-        <form action="/jobs" method="GET" className="mx-auto mt-8 flex max-w-xl items-center gap-2 rounded-full border border-white/10 bg-white/[0.06] p-1.5 backdrop-blur">
+        <form action="/jobs" method="GET" className="mx-auto mt-8 flex max-w-xl items-center gap-2 rounded-full border border-white/10 card-dark/[0.06] p-1.5 backdrop-blur">
           <div className="flex flex-1 items-center gap-2 pl-4">
             <Search size={16} className="shrink-0 text-white/50" />
             <input name="q" placeholder="Cari role, skill, atau lokasi..." className="h-9 w-full bg-transparent text-sm text-white placeholder:text-white/40 focus:outline-none" />
@@ -77,7 +77,7 @@ export default async function LandingPage() {
               ["340", "Coffee shop"],
               ["2.1k", "Lamaran / bulan"],
             ].map(([v, l]) => (
-              <div key={l} className="rounded-2xl border border-white/[0.08] bg-white/[0.04] p-4 text-center backdrop-blur">
+              <div key={l} className="rounded-2xl border border-white/[0.08] card-dark/[0.04] p-4 text-center backdrop-blur">
                 <div className="text-lg font-black text-[#d4a24e] sm:text-xl">{v}</div>
                 <div className="text-[11px] tracking-wide text-[#fdf6ec]/50">{l}</div>
               </div>
@@ -114,7 +114,7 @@ export default async function LandingPage() {
               </Link>
         </div>
         {jobs.length === 0 ? (
-          <div className="mt-6 rounded-2xl border border-dashed border-white/10 bg-white/[0.03] p-10 text-center text-sm text-[#fdf6ec]/50">
+          <div className="mt-6 rounded-2xl border border-dashed border-white/10 card-dark/[0.03] p-10 text-center text-sm text-[#fdf6ec]/50">
             Belum ada lowongan aktif. Jadilah yang pertama pasang — owner verified akan muncul di sini.
           </div>
         ) : (

@@ -78,14 +78,16 @@ export default async function JobDetailPage({ params }) {
       <div className="mt-5 grid gap-6 lg:grid-cols-[1fr_300px]">
         {/* Main */}
         <div>
-          <div className="rounded-2xl border border-latte bg-white p-6">
+          <div className="rounded-2xl card-dark p-6">
             <div className="flex flex-wrap items-start justify-between gap-3">
               <h1 className="text-2xl font-extrabold text-espresso">
                 {job.title}
               </h1>
-              <Badge classes={TYPE_CLASSES[job.employment_type]}>
-                {EMPLOYMENT_LABELS[job.employment_type]}
-              </Badge>
+              <div className="flex flex-wrap gap-1.5 justify-end">
+                {(job.employment_types?.length ? job.employment_types : (job.employment_type ? [job.employment_type] : [])).map((t)=>(
+                  <Badge key={t} classes={TYPE_CLASSES[t]}>{EMPLOYMENT_LABELS[t]}</Badge>
+                ))}
+              </div>
             </div>
 
             <div className="mt-3 flex flex-wrap gap-x-5 gap-y-1.5 text-sm font-semibold text-espresso-soft">
@@ -116,11 +118,14 @@ export default async function JobDetailPage({ params }) {
               <p className="mt-3 leading-relaxed whitespace-pre-line text-espresso-soft">
                 {job.description || "Belum ada deskripsi."}
               </p>
+              {job.salary_text && (
+                <p className="mt-3 rounded-xl bg-cream-dark px-4 py-2.5 text-sm font-bold text-espresso">💰 {job.salary_text}</p>
+              )}
             </div>
           </div>
 
           {/* About business */}
-          <div className="mt-4 rounded-2xl border border-latte bg-white p-6">
+          <div className="mt-4 rounded-2xl card-dark p-6">
             <h2 className="text-sm font-extrabold tracking-wide text-espresso uppercase">
               Tentang Usaha
             </h2>
@@ -136,13 +141,13 @@ export default async function JobDetailPage({ params }) {
 
         {/* Sticky apply card */}
         <aside className="lg:sticky lg:top-20 lg:self-start">
-          <div className="rounded-2xl border border-latte bg-white p-5 shadow-sm">
+          <div className="rounded-2xl card-dark p-5 shadow-sm">
             <p className="flex items-center gap-1.5 text-xs font-bold text-espresso-soft">
               <Clock size={13} /> Lamar sekarang, gratis
             </p>
             {profile?.role === "barista" ? (
               <div className="mt-4">
-                <ApplyButton jobId={job.id} applied={applied} full size="lg" />
+                <ApplyButton jobId={job.id} applied={applied} jobTypes={job.employment_types?.length ? job.employment_types : (job.employment_type ? [job.employment_type] : [])} full size="lg" />
                 {applied && (
                   <Link
                     href="/dashboard/barista/applications"
@@ -158,7 +163,7 @@ export default async function JobDetailPage({ params }) {
                 melamar.
               </p>
             ) : (
-              <ApplyButton jobId={job.id} full size="lg" />
+              <ApplyButton jobId={job.id} jobTypes={job.employment_types?.length ? job.employment_types : (job.employment_type ? [job.employment_type] : [])} full size="lg" />
             )}
           </div>
         </aside>

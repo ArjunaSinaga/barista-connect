@@ -46,7 +46,7 @@ export default function JobManageCard({ job, applicantCount }) {
   }
 
   return (
-    <div className="rounded-2xl border border-latte bg-white p-5 shadow-sm">
+    <div className="rounded-2xl card-dark p-5 shadow-sm">
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
           <Link
@@ -56,12 +56,15 @@ export default function JobManageCard({ job, applicantCount }) {
             {job.title}
           </Link>
           <p className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs font-semibold text-espresso-soft">
-            <Badge classes="bg-cream-dark text-espresso-soft">
-              {EMPLOYMENT_LABELS[job.employment_type]}
-            </Badge>
+            <span className="flex flex-wrap gap-1">
+              {(job.employment_types?.length ? job.employment_types : (job.employment_type ? [job.employment_type] : [])).map(t=>(
+                <Badge key={t} classes="bg-cream-dark text-espresso-soft">{EMPLOYMENT_LABELS[t] ?? t}</Badge>
+              ))}
+            </span>
             <span className="flex items-center gap-1">
               <MapPin size={11} /> {job.location}
             </span>
+            {job.salary_text && <span className="font-bold text-espresso">{job.salary_text}</span>}
             <span>• {relativeTime(job.created_at)}</span>
           </p>
         </div>

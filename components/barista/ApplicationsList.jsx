@@ -74,7 +74,7 @@ export default function ApplicationsList() {
               className={`shrink-0 rounded-full px-4 py-2 text-xs font-bold transition-colors ${
                 tab === t.key
                   ? "bg-espresso text-white"
-                  : "border border-latte bg-white text-espresso-soft hover:text-caramel"
+                  : "border border-latte card-dark text-espresso-soft hover:text-caramel"
               }`}
             >
               {t.label} ({count})
@@ -107,7 +107,7 @@ export default function ApplicationsList() {
           return (
             <div
               key={app.id}
-              className="rounded-2xl border border-latte bg-white p-5 shadow-sm"
+              className="rounded-2xl card-dark p-5 shadow-sm"
             >
               <div className="flex items-start justify-between gap-3">
                 <div className="min-w-0">

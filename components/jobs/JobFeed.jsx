@@ -64,7 +64,7 @@ export default function JobFeed({ myRole }) {
       );
     }
     if (loc.trim()) req = req.ilike("location", `%${loc.trim()}%`);
-    if (types.length > 0) req = req.in("employment_type", types);
+    if (types.length > 0) req = req.overlaps("employment_types", types);
 
     const { data } = await req;
     setJobs(data ?? []);
@@ -111,7 +111,7 @@ export default function JobFeed({ myRole }) {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Cari posisi, cth. barista shift pagi"
-              className="w-full rounded-xl border border-latte bg-white py-2.5 pr-9 pl-10 text-sm outline-none focus:border-caramel focus:ring-2 focus:ring-caramel/20"
+              className="w-full rounded-xl border border-latte bg-white text-[#1c1412] py-2.5 pr-9 pl-10 text-sm outline-none focus:border-caramel focus:ring-2 focus:ring-caramel/20"
             />
             {query && (
               <button
@@ -125,7 +125,7 @@ export default function JobFeed({ myRole }) {
           </div>
           <button
             onClick={() => setSheetOpen(true)}
-            className="relative flex items-center gap-2 rounded-xl border border-latte bg-white px-4 text-sm font-bold text-espresso hover:border-caramel hover:text-caramel"
+            className="relative flex items-center gap-2 rounded-xl card-dark px-4 text-sm font-bold text-espresso hover:border-caramel hover:text-caramel"
           >
             <SlidersHorizontal size={16} />
             <span className="hidden sm:inline">Filter</span>
@@ -162,6 +162,7 @@ export default function JobFeed({ myRole }) {
                   <ApplyButton
                     jobId={job.id}
                     applied={appliedIds.has(job.id)}
+                    jobTypes={job.employment_types?.length ? job.employment_types : (job.employment_type ? [job.employment_type] : [])}
                     size="sm"
                   />
                 }
@@ -185,7 +186,7 @@ export default function JobFeed({ myRole }) {
               value={loc}
               onChange={(e) => setLoc(e.target.value)}
               placeholder="cth. Bandung"
-              className="w-full rounded-xl border border-latte bg-white px-4 py-2.5 text-sm outline-none focus:border-caramel focus:ring-2 focus:ring-caramel/20"
+              className="w-full rounded-xl border border-latte bg-white text-[#1c1412] px-4 py-2.5 text-sm outline-none focus:border-caramel focus:ring-2 focus:ring-caramel/20"
             />
           </div>
 
@@ -195,7 +196,7 @@ export default function JobFeed({ myRole }) {
               {EMPLOYMENT_TYPES.map((t) => (
                 <label
                   key={t.value}
-                  className="flex cursor-pointer items-center gap-3 rounded-xl border border-latte bg-white px-4 py-3 text-sm font-semibold has-checked:border-caramel has-checked:bg-caramel/5"
+                  className="flex cursor-pointer items-center gap-3 rounded-xl card-dark px-4 py-3 text-sm font-semibold has-checked:border-caramel has-checked:bg-caramel/5"
                 >
                   <input
                     type="checkbox"

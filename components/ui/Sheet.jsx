@@ -26,7 +26,7 @@ export default function Sheet({ open, onClose, title, children }) {
         className="absolute inset-0 bg-espresso/40 backdrop-blur-[2px]"
         onClick={onClose}
       />
-      <div className="animate-rise relative max-h-[85vh] w-full overflow-y-auto rounded-t-3xl bg-white p-5 sm:max-w-lg sm:rounded-3xl sm:p-6">
+      <div className="animate-rise relative max-h-[85vh] w-full overflow-y-auto rounded-t-3xl border border-[#2c241f] bg-[#16100d] p-5 sm:max-w-lg sm:rounded-3xl sm:p-6">
         <div className="mb-4 flex items-center justify-between">
           <h3 className="text-base font-bold text-espresso">{title}</h3>
           <button

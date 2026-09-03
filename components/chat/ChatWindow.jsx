@@ -172,7 +172,7 @@ export default function ChatWindow({
                   className={`rounded-2xl px-4 py-2.5 text-sm leading-relaxed ${
                     mine
                       ? "rounded-br-md bg-caramel text-white"
-                      : "rounded-bl-md border border-latte bg-white text-espresso"
+                      : "rounded-bl-md border border-latte card-dark text-espresso"
                   }`}
                 >
                   {m.body}
@@ -210,7 +210,7 @@ export default function ChatWindow({
             type="button"
             onClick={handleSuggest}
             disabled={suggesting}
-            className="inline-flex items-center gap-1 rounded-full border border-dashed border-caramel/40 bg-white px-3 py-1.5 text-[11px] font-bold text-caramel hover:bg-caramel/5 disabled:opacity-60"
+            className="inline-flex items-center gap-1 rounded-full border border-dashed border-caramel/40 card-dark px-3 py-1.5 text-[11px] font-bold text-caramel hover:bg-caramel/5 disabled:opacity-60"
           >
             {suggesting ? (
               <>
@@ -237,7 +237,7 @@ export default function ChatWindow({
             rows={1}
             placeholder="Tulis pesan..."
             maxLength={2000}
-            className="max-h-28 w-full resize-none rounded-xl border border-latte bg-white px-4 py-3 text-sm outline-none focus:border-caramel focus:ring-2 focus:ring-caramel/20"
+            className="max-h-28 w-full resize-none rounded-xl border border-latte bg-white text-[#1c1412] px-4 py-3 text-sm outline-none focus:border-caramel focus:ring-2 focus:ring-caramel/20"
           />
           <button
             type="submit"

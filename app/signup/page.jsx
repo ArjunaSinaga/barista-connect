@@ -99,7 +99,7 @@ function SignupForm() {
             key={value}
             type="button"
             onClick={() => setRole(value)}
-            className={`flex flex-col items-start rounded-2xl border-2 bg-white p-4 text-left transition-all ${
+            className={`flex flex-col items-start rounded-2xl border-2 card-dark p-4 text-left transition-all ${
               role === value
                 ? "border-caramel ring-2 ring-caramel/20"
                 : "border-[#e7ddd0] hover:border-[#d4a24e]/50"

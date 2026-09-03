@@ -10,10 +10,10 @@ import Avatar from "@/components/ui/Avatar";
 import { useToast } from "@/components/ui/toast";
 import { createClient } from "@/lib/supabase/client";
 import { baristaStep1Schema, skillsSchema } from "@/lib/validation";
-import { SKILL_PRESETS, CITIES, AVATAR_MIME_TYPES, AVATAR_MAX_BYTES } from "@/lib/constants";
+import { SKILL_PRESETS, CITIES, AVATAR_MIME_TYPES, AVATAR_MAX_BYTES, EMPLOYMENT_TYPES } from "@/lib/constants";
 import { compressImage, formatBytes } from "@/lib/image";
 
-const STEPS = ["Data Diri", "Foto Profil", "Skill & Sertifikat", "Siap Kerja"];
+const STEPS = ["Data Diri", "Foto Profil", "Skill & Sertifikat", "Dokumen & Tipe", "Siap Kerja"];
 
 export default function BaristaOnboardingPage() {
   const router = useRouter();
@@ -26,8 +26,13 @@ export default function BaristaOnboardingPage() {
     full_name: "",
     age: "",
     location_place: "",
+  whatsapp: "",
+  open_to_types: [],
+  cover_letter: "",
     skills: [],
     certificates: [],
+  cv: null,
+  cvUrl: "",
     ideas_plus: "",
     is_open_to_work: true,
   });
@@ -69,6 +74,16 @@ export default function BaristaOnboardingPage() {
         setErrors(errs);
         return;
       }
+      setErrors({});
+    }
+    if (step === 3) {
+      const errs = {};
+      if (!form.open_to_types || form.open_to_types.length === 0) errs.open_to_types = "Pilih minimal 1 tipe pekerjaan";
+      if (!form.cv && !form.cvUrl) errs.cv = "CV PDF wajib diunggah (max 5MB)";
+      if (!form.cover_letter || form.cover_letter.trim().length < 20) errs.cover_letter = "Cover letter minimal 20 karakter";
+      if (Object.keys(errs).length > 0) { setErrors(errs); return; }
+      if (form.cv && form.cv.type !== "application/pdf") { setErrors({ cv: "CV harus PDF" }); return; }
+      if (form.cv && form.cv.size > 5 * 1024 * 1024) { setErrors({ cv: "CV maksimal 5MB" }); return; }
       setErrors({});
     }
     setStep((s) => Math.min(s + 1, STEPS.length - 1));
@@ -148,6 +163,16 @@ export default function BaristaOnboardingPage() {
         data: { user },
       } = await supabase.auth.getUser();
       if (!user) throw new Error("Sesi habis, silakan login ulang");
+    let cvUrlToSave = form.cvUrl || null;
+    if (form.cv) {
+      if (form.cv.type !== "application/pdf") throw new Error("CV harus PDF");
+      if (form.cv.size > 5 * 1024 * 1024) throw new Error("CV max 5MB");
+      const cvPath = `${user.id}/cv-${Date.now()}.pdf`;
+      const { error: cvErr } = await supabase.storage.from("cvs").upload(cvPath, form.cv, { contentType: "application/pdf", upsert: true });
+      if (cvErr) throw cvErr;
+      const { data: cvData } = supabase.storage.from("cvs").getPublicUrl(cvPath);
+      cvUrlToSave = cvData.publicUrl;
+    }
 
       const payload = {
         id: user.id,
@@ -157,6 +182,10 @@ export default function BaristaOnboardingPage() {
         profile_picture_url: photo.url,
         years_of_experience: 0,
         skills: form.skills,
+        whatsapp: form.whatsapp?.replace(/\D/g,"") || null,
+        open_to_types: form.open_to_types,
+        cv_url: cvUrlToSave || null,
+        cover_letter: form.cover_letter,
         certificates: form.certificates,
         ideas_plus: form.ideas_plus.trim(),
         is_open_to_work: form.is_open_to_work,
@@ -176,8 +205,15 @@ export default function BaristaOnboardingPage() {
     }
   }
 
-  const canSubmit =
-    form.full_name && form.age && form.location_place && photo.url && form.skills.length > 0;
+  const canSubmit = (() => {
+  if (form.full_name.trim().length < 2 || Number(form.age) < 17 || !form.location_place.trim()) return false;
+  if (!photo.url) return false;
+  if (form.skills.length === 0) return false;
+  if (form.open_to_types.length === 0) return false;
+  if (!form.cv && !form.cvUrl) return false;
+  if (form.cover_letter.trim().length < 20) return false;
+  return true;
+})();
 
   return (
     <div className="mx-auto max-w-lg px-4 py-10">
@@ -252,6 +288,14 @@ export default function BaristaOnboardingPage() {
                 <option key={c} value={c} />
               ))}
             </datalist>
+          <Input
+            name="whatsapp"
+            label="WhatsApp (opsional)"
+            placeholder="08xxxxxxxxxx"
+            value={form.whatsapp}
+            onChange={(e) => set("whatsapp", e.target.value)}
+            error={errors.whatsapp}
+          />
           </div>
         </section>
       )}
@@ -332,7 +376,7 @@ export default function BaristaOnboardingPage() {
                   }
                 }}
                 placeholder="Tulis skill lalu tekan Enter"
-                className="w-full rounded-xl border border-latte bg-white px-4 py-2.5 text-sm outline-none focus:border-caramel focus:ring-2 focus:ring-caramel/20"
+                className="w-full rounded-xl border border-latte bg-white text-[#1c1412] px-4 py-2.5 text-sm outline-none focus:border-caramel focus:ring-2 focus:ring-caramel/20"
               />
             </div>
 
@@ -373,7 +417,7 @@ export default function BaristaOnboardingPage() {
                     key={preset}
                     type="button"
                     onClick={() => addSkill(preset)}
-                    className="rounded-full border border-dashed border-latte bg-white px-3 py-1.5 text-xs font-semibold text-espresso-soft hover:border-caramel hover:text-caramel"
+                    className="rounded-full card-dark border-dashed px-3 py-1.5 text-xs font-semibold text-espresso-soft hover:border-caramel hover:text-caramel"
                   >
                     + {preset}
                   </button>
@@ -398,7 +442,7 @@ export default function BaristaOnboardingPage() {
                   }
                 }}
                 placeholder="cth. SCA Barista Foundation 2024"
-                className="w-full rounded-xl border border-latte bg-white px-4 py-2.5 text-sm outline-none focus:border-caramel focus:ring-2 focus:ring-caramel/20"
+                className="w-full rounded-xl border border-latte bg-white text-[#1c1412] px-4 py-2.5 text-sm outline-none focus:border-caramel focus:ring-2 focus:ring-caramel/20"
               />
               <Button variant="secondary" onClick={addCert}>
                 Tambah
@@ -409,7 +453,7 @@ export default function BaristaOnboardingPage() {
                 {form.certificates.map((c, idx) => (
                   <li
                     key={`${c}-${idx}`}
-                    className="flex items-center justify-between rounded-xl border border-latte bg-white px-4 py-2.5 text-sm"
+                    className="flex items-center justify-between rounded-xl card-dark px-4 py-2.5 text-sm"
                   >
                     <span className="truncate">{c}</span>
                     <button
@@ -444,8 +488,51 @@ export default function BaristaOnboardingPage() {
         </section>
       )}
 
-      {/* STEP 4: Siap kerja */}
+      {/* STEP 4: Dokumen & Tipe (Wajib) */}
       {step === 3 && (
+        <section className="animate-rise space-y-6">
+          <div>
+            <h1 className="text-xl font-extrabold text-espresso">Dokumen & tipe kerja</h1>
+            <p className="mt-1 text-sm text-espresso-soft">CV PDF & cover letter wajib — tipe kerja pilih minimal 1.</p>
+          </div>
+          <div className="space-y-2">
+            <p className="text-sm font-bold text-espresso">Tipe pekerjaan yang kamu cari <span className="text-red-500">*</span></p>
+            <div className="flex flex-wrap gap-2">
+              {EMPLOYMENT_TYPES.map((t) => (
+                <label key={t.value} className={`px-4 py-2 rounded-full text-sm font-bold border cursor-pointer transition ${form.open_to_types.includes(t.value) ? "bg-caramel text-white border-caramel" : "card-dark border-[#2c241f] text-espresso-soft hover:border-caramel"}`}>
+                  <input type="checkbox" className="sr-only" checked={form.open_to_types.includes(t.value)} onChange={(e) => {
+                    setForm((s) => ({ ...s, open_to_types: e.target.checked ? [...s.open_to_types, t.value] : s.open_to_types.filter((v) => v !== t.value) }));
+                  }} />
+                  {t.label}
+                </label>
+              ))}
+            </div>
+            {errors.open_to_types && <p className="text-xs font-medium text-red-500">{errors.open_to_types}</p>}
+          </div>
+          <div className="space-y-2">
+            <p className="text-sm font-bold text-espresso">CV PDF <span className="text-red-500">*</span> <span className="font-normal text-espresso-soft">(max 5MB)</span></p>
+            <label className="flex cursor-pointer items-center gap-3 rounded-xl border border-dashed border-[#2c241f] bg-[#16100d] px-4 py-3 text-sm hover:border-caramel">
+              <input type="file" accept="application/pdf" className="hidden" onChange={(e) => setForm((s) => ({ ...s, cv: e.target.files?.[0] || null }))} />
+              <span className="rounded-lg bg-caramel px-3 py-1.5 text-xs font-bold text-white">Pilih PDF</span>
+              <span className="truncate text-espresso-soft">{form.cv ? `${form.cv.name} — ${(form.cv.size/1024).toFixed(0)} KB` : form.cvUrl ? "CV sudah terunggah" : "Belum ada file"}</span>
+            </label>
+            {errors.cv && <p className="text-xs font-medium text-red-500">{errors.cv}</p>}
+          </div>
+          <Textarea
+            name="cover_letter"
+            label="Cover letter"
+            placeholder="Ceritakan kenapa kamu cocok, pengalaman relevan, & tipe shift yang kamu bisa..."
+            value={form.cover_letter}
+            maxLength={1000}
+            onChange={(e) => set("cover_letter", e.target.value)}
+            error={errors.cover_letter}
+          />
+          <p className="-mt-3 text-right text-[11px] text-espresso-soft">{form.cover_letter.length}/1000 (min 20)</p>
+        </section>
+      )}
+
+      {/* STEP 5: Siap kerja */}
+      {step === 4 && (
         <section className="animate-rise">
           <h1 className="text-xl font-extrabold text-espresso">
             Terakhir — status siap kerja
@@ -454,7 +541,7 @@ export default function BaristaOnboardingPage() {
             Bisa kamu ubah kapan saja dari halaman profil.
           </p>
 
-          <div className="mt-6 rounded-2xl border border-latte bg-white p-5">
+          <div className="mt-6 rounded-2xl card-dark p-5">
             <Toggle
               checked={form.is_open_to_work}
               onChange={(v) => set("is_open_to_work", v)}
@@ -467,12 +554,15 @@ export default function BaristaOnboardingPage() {
             />
           </div>
 
-          <div className="mt-6 rounded-2xl border border-latte bg-white p-5 text-sm">
+          <div className="mt-6 rounded-2xl card-dark p-5 text-sm">
             <p className="font-bold text-espresso">Ringkasan</p>
             <ul className="mt-2 space-y-1 text-espresso-soft">
               <li>👤 {form.full_name}, {form.age} th — 📍 {form.location_place}</li>
+              <li>📱 {form.whatsapp || "—"} • {form.is_open_to_work ? "Buka peluang" : "Tutup"}</li>
               <li>🛠️ {form.skills.join(", ")}</li>
               <li>📜 {form.certificates.length} sertifikat</li>
+              <li>💼 {form.open_to_types.length ? form.open_to_types.join(", ") : "—"} • CV: {form.cv ? form.cv.name : form.cvUrl ? "terunggah" : "—"}</li>
+              <li>✉️ Cover: {form.cover_letter.length} karakter</li>
             </ul>
           </div>
         </section>

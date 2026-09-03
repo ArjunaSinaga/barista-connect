@@ -34,7 +34,7 @@ export default function ForgotPasswordPage() {
   return (
     <div className="mx-auto max-w-md px-4 py-12">
       {sent ? (
-        <div className="rounded-2xl border border-latte bg-white p-8 text-center">
+        <div className="rounded-2xl card-dark p-8 text-center">
           <MailCheck className="mx-auto text-matcha" size={44} />
           <h1 className="mt-4 text-xl font-extrabold text-espresso">
             Cek inbox kamu

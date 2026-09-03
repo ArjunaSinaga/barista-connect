@@ -28,7 +28,7 @@ export default async function BaristaPublicPage({ params }) {
   return (
     <div className="mx-auto max-w-3xl px-4 py-8">
       {/* Header card */}
-      <div className="overflow-hidden rounded-2xl border border-latte bg-white shadow-sm">
+      <div className="overflow-hidden rounded-2xl card-dark shadow-sm">
         <div className="h-24 bg-gradient-to-r from-latte/70 via-cream-dark to-caramel/30 sm:h-28" />
         <div className="-mt-12 px-6 pb-6">
           <div className="flex flex-wrap items-end justify-between gap-4">
@@ -90,7 +90,7 @@ export default async function BaristaPublicPage({ params }) {
 
       {/* Skills */}
       {b.skills?.length > 0 && (
-        <section className="mt-4 rounded-2xl border border-latte bg-white p-6">
+        <section className="mt-4 rounded-2xl card-dark p-6">
           <h2 className="text-xs font-extrabold tracking-wide text-espresso uppercase">
             Keahlian
           </h2>
@@ -109,7 +109,7 @@ export default async function BaristaPublicPage({ params }) {
 
       {/* Certificates */}
       {b.certificates?.length > 0 && (
-        <section className="mt-4 rounded-2xl border border-latte bg-white p-6">
+        <section className="mt-4 rounded-2xl card-dark p-6">
           <h2 className="text-xs font-extrabold tracking-wide text-espresso uppercase">
             Sertifikat
           </h2>
@@ -144,7 +144,7 @@ export default async function BaristaPublicPage({ params }) {
 
 function StatCard({ icon, label, value }) {
   return (
-    <div className="flex items-center justify-center gap-3 rounded-2xl border border-latte bg-white p-4">
+    <div className="flex items-center justify-center gap-3 rounded-2xl card-dark p-4">
       <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-cream-dark text-caramel">
         {icon}
       </span>

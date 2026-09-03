@@ -62,7 +62,7 @@ export default function BusinessForm({ initial }) {
 
       <form
         onSubmit={handleSubmit}
-        className="space-y-4 rounded-2xl border border-latte bg-white p-6"
+        className="space-y-4 rounded-2xl card-dark p-6"
       >
         <Input
           name="business_name"

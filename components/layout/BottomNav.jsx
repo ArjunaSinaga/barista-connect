@@ -24,7 +24,7 @@ export default function BottomNav({ role }) {
   if (!SETS[role]) return null;
 
   return (
-    <nav className="fixed inset-x-0 bottom-0 z-40 border-t border-latte bg-white/95 backdrop-blur md:hidden">
+    <nav className="fixed inset-x-0 bottom-0 z-40 border-t border-latte bg-[#16100d]/95 backdrop-blur md:hidden">
       <div className="grid grid-cols-4">
         {SETS[role].map(({ href, label, icon: Icon }) => {
           const active =

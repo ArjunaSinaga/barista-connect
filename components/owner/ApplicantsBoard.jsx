@@ -6,11 +6,14 @@ import { useRouter } from "next/navigation";
 import {
   ArrowLeft,
   Check,
+  FileText,
   MapPin,
   MessageSquareText,
+  Phone,
   UsersRound,
   X,
 } from "lucide-react";
+import { EMPLOYMENT_LABELS } from "@/lib/constants";
 import Avatar from "@/components/ui/Avatar";
 import Badge from "@/components/ui/Badge";
 import Button from "@/components/ui/Button";
@@ -104,7 +107,7 @@ export default function ApplicantsBoard({
               className={`shrink-0 rounded-full px-4 py-2 text-xs font-bold transition-colors ${
                 tab === k
                   ? "bg-espresso text-white"
-                  : "border border-latte bg-white text-espresso-soft hover:text-caramel"
+                  : "border border-latte card-dark text-espresso-soft hover:text-caramel"
               }`}
             >
               {k === "all"
@@ -130,7 +133,7 @@ export default function ApplicantsBoard({
           return (
             <div
               key={app.id}
-              className="rounded-2xl border border-latte bg-white p-5 shadow-sm transition-opacity"
+              className="rounded-2xl card-dark p-5 shadow-sm transition-opacity"
             >
               <div className="flex items-start gap-4">
                 <Avatar src={b?.profile_picture_url} name={b?.full_name} size="md" />
@@ -166,11 +169,36 @@ export default function ApplicantsBoard({
                     </div>
                   )}
 
+                  {app.employment_types?.length>0 && (
+                    <div className="mt-2 flex flex-wrap gap-1.5">
+                      {app.employment_types.map(t=>(
+                        <span key={t} className="rounded-full bg-caramel px-2.5 py-1 text-[11px] font-bold text-white">{EMPLOYMENT_LABELS[t] ?? t}</span>
+                      ))}
+                    </div>
+                  )}
+                  {app.cover_letter && (
+                    <p className="mt-3 rounded-xl bg-cream-dark px-4 py-2.5 text-sm text-espresso leading-relaxed whitespace-pre-wrap">
+                      {app.cover_letter}
+                    </p>
+                  )}
                   {app.message && (
-                    <p className="mt-3 rounded-xl bg-cream px-4 py-2.5 text-sm text-espresso-soft italic">
+                    <p className="mt-2 rounded-xl bg-cream px-4 py-2.5 text-sm text-espresso-soft italic">
                       “{app.message}”
                     </p>
                   )}
+                  <div className="mt-2 flex flex-wrap items-center gap-2">
+                    {app.cv_url && (
+                      <a href={app.cv_url} target="_blank" rel="noopener" className="inline-flex items-center gap-1 rounded-full bg-espresso px-3 py-1 text-xs font-bold text-white hover:bg-espresso/90">
+                        <FileText size={12}/> Lihat CV PDF
+                      </a>
+                    )}
+                    {b?.whatsapp && (
+                      <a href={`https://wa.me/${b.whatsapp.replace(/\D/g,"")}`} target="_blank" rel="noopener" className="inline-flex items-center gap-1 rounded-full bg-[#25D366] px-3 py-1 text-xs font-bold text-white hover:bg-[#20bd5a]">
+                        <Phone size={12}/> WA {b.whatsapp}
+                      </a>
+                    )}
+                    {app.cv_url?.endsWith?.(".pdf") ? null : null}
+                  </div>
 
                   <p className="mt-2 text-[11px] text-espresso-soft/70">
                     Melamar {relativeTime(app.created_at)}

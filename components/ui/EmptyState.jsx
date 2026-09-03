@@ -8,7 +8,7 @@ export default function EmptyState({
   actionHref,
 }) {
   return (
-    <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-latte bg-white/60 px-6 py-16 text-center">
+    <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-latte bg-[#16100d]/60 px-6 py-16 text-center">
       {icon && (
         <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-cream-dark text-caramel">
           {icon}

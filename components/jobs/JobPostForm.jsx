@@ -9,7 +9,7 @@ import Badge from "@/components/ui/Badge";
 import { useToast } from "@/components/ui/toast";
 import { createClient } from "@/lib/supabase/client";
 import { jobPostSchema } from "@/lib/validation";
-import { CITIES, EMPLOYMENT_LABELS } from "@/lib/constants";
+import { CITIES, EMPLOYMENT_LABELS, EMPLOYMENT_TYPES } from "@/lib/constants";
 
 const TYPE_CLASSES = {
   full_time: "bg-caramel/10 text-caramel",
@@ -20,11 +20,17 @@ const TYPE_CLASSES = {
 export default function JobPostForm({ initial = null }) {
   const router = useRouter();
   const toast = useToast();
+  const initialTypes = initial?.employment_types?.length
+    ? initial.employment_types
+    : initial?.employment_type
+      ? [initial.employment_type]
+      : [];
   const [form, setForm] = useState({
     title: initial?.title ?? "",
     description: initial?.description ?? "",
     location: initial?.location ?? "",
-    employment_type: initial?.employment_type ?? "",
+    salary_text: initial?.salary_text ?? "",
+    employment_types: initialTypes,
   });
   const [busy, setBusy] = useState(false);
 
@@ -40,10 +46,11 @@ export default function JobPostForm({ initial = null }) {
     setBusy(true);
     try {
       const supabase = createClient();
+      const payload = { ...parsed.data, employment_type: parsed.data.employment_types[0] };
       if (initial?.id) {
         const { error } = await supabase
           .from("job_posts")
-          .update(parsed.data)
+          .update(payload)
           .eq("id", initial.id);
         if (error) throw error;
         toast("Lowongan diperbarui ✓");
@@ -52,7 +59,7 @@ export default function JobPostForm({ initial = null }) {
           data: { user },
         } = await supabase.auth.getUser();
         const { error } = await supabase.from("job_posts").insert({
-          ...parsed.data,
+          ...payload,
           owner_id: user.id,
         });
         if (error) throw error;
@@ -77,6 +84,18 @@ export default function JobPostForm({ initial = null }) {
           value={form.title}
           onChange={(e) => set("title", e.target.value)}
         />
+        <div className="space-y-2">
+          <p className="text-sm font-bold text-espresso">Tipe pekerjaan yang ditawarkan <span className="text-red-500">*</span></p>
+          <div className="flex flex-wrap gap-2">
+            {EMPLOYMENT_TYPES.map((t) => (
+              <label key={t.value} className={`px-4 py-2 rounded-full text-sm font-bold border cursor-pointer transition ${form.employment_types.includes(t.value) ? "bg-caramel text-white border-caramel" : "card-dark border-[#2c241f] text-espresso-soft hover:border-caramel"}`}>
+                <input type="checkbox" className="sr-only" checked={form.employment_types.includes(t.value)} onChange={(e) => set("employment_types", e.target.checked ? [...form.employment_types, t.value] : form.employment_types.filter((v) => v !== t.value))} />
+                {t.label}
+              </label>
+            ))}
+          </div>
+          {form.employment_types.includes("casual") && <p className="text-xs text-espresso-soft">Untuk Panggilan, gaji wajib format <code className="rounded bg-cream-dark px-1">&lt;nominal&gt;/shift</code> mis: 80000/shift atau Rp 80.000/shift</p>}
+        </div>
         <div className="grid gap-4 sm:grid-cols-2">
           <Input
             name="location"
@@ -86,16 +105,12 @@ export default function JobPostForm({ initial = null }) {
             value={form.location}
             onChange={(e) => set("location", e.target.value)}
           />
-          <Select
-            name="employment_type"
-            label="Tipe pekerjaan"
-            placeholder="Pilih tipe"
-            options={Object.entries(EMPLOYMENT_LABELS).map(([value, label]) => ({
-              value,
-              label,
-            }))}
-            value={form.employment_type}
-            onChange={(e) => set("employment_type", e.target.value)}
+          <Input
+            name="salary_text"
+            label="Gaji (teks bebas)"
+            placeholder="cth. 80000/shift atau 3.500.000/bulan"
+            value={form.salary_text}
+            onChange={(e) => set("salary_text", e.target.value)}
           />
         </div>
         <datalist id="job-city-list">
@@ -125,16 +140,16 @@ export default function JobPostForm({ initial = null }) {
         <p className="mb-2 flex items-center gap-1.5 text-xs font-bold text-espresso-soft">
           <Eye size={13} /> Pratinjau kartu lowongan
         </p>
-        <div className="rounded-2xl border border-latte bg-white p-5 shadow-sm">
+        <div className="rounded-2xl card-dark p-5 shadow-sm">
           <div className="flex items-start justify-between gap-3">
             <p className="truncate font-bold text-espresso">
               {form.title || "Judul lowongan"}
             </p>
-            {form.employment_type && (
-              <Badge classes={TYPE_CLASSES[form.employment_type]}>
-                {EMPLOYMENT_LABELS[form.employment_type]}
-              </Badge>
-            )}
+            <div className="flex flex-wrap gap-1.5 justify-end">
+              {(form.employment_types.length ? form.employment_types : [""]).map((t) => t && (
+                <Badge key={t} classes={TYPE_CLASSES[t]}>{EMPLOYMENT_LABELS[t]}</Badge>
+              ))}
+            </div>
           </div>
           <p className="mt-3 line-clamp-3 min-h-[3rem] text-sm text-espresso-soft">
             {form.description || "Deskripsi muncul di sini..."}
