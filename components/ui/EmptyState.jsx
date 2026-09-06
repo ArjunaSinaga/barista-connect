@@ -1,12 +1,6 @@
-import Link from "next/link";
+﻿import Link from "next/link";
 
-export default function EmptyState({
-  icon,
-  title,
-  subtitle,
-  actionLabel,
-  actionHref,
-}) {
+export function EmptyState({ icon, title, subtitle, actionLabel, actionHref }) {
   return (
     <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-latte bg-[#16100d]/60 px-6 py-16 text-center">
       {icon && (
@@ -29,3 +23,4 @@ export default function EmptyState({
     </div>
   );
 }
+export default EmptyState;

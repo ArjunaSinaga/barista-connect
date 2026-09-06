@@ -47,3 +47,5 @@ next-env.d.ts
 .llm-wiki/
 proxy.js
 
+
+.vercel
