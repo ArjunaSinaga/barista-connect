@@ -102,20 +102,20 @@ function SignupForm() {
             className={`flex flex-col items-start rounded-2xl border-2 card-dark p-4 text-left transition-all ${
               role === value
                 ? "border-caramel ring-2 ring-caramel/20"
-                : "border-[#e7ddd0] hover:border-[#d4a24e]/50"
+                : "border-white/10 hover:border-[rgba(212,162,78,0.35)]"
             }`}
           >
             <span
               className={`mb-2 flex h-9 w-9 items-center justify-center rounded-xl ${
                 role === value
                   ? "bg-[#d4a24e] text-white"
-                  : "bg-[#f2f0eb] text-[#b45309]"
+                  : "bg-white/10 text-[#d4a24e]"
               }`}
             >
               <Icon size={18} />
             </span>
-            <span className="text-sm font-bold text-[#1c1412]">{label}</span>
-            <span className="mt-0.5 text-[11px] leading-snug text-[#1c1412]/60">
+            <span className="text-sm font-bold text-[#fdf6ec]">{label}</span>
+            <span className="mt-0.5 text-[11px] leading-snug text-[#fdf6ec]/60">
               {desc}
             </span>
           </button>
