@@ -10,7 +10,7 @@ export default async function OwnerDashboardPage() {
     return <div class="p-8 text-center text-sm text-espresso-soft">Supabase belum dikonfigurasi.</div>
   }
   const { user, profile } = await getSessionSafe()
-  if (!user) return <div class="p-8">Silakan login.</div>
+  if (!user || !profile) return <div class="p-8">Silakan login.</div>
   const supabase = await createClient()
   const { data: jobs } = await supabase.from("job_posts").select("id,title,location,salary_min,salary_max,job_type,is_active,created_at").eq("owner_id", profile.id).order("created_at", { ascending: false })
   const { data: apps } = await supabase.from("applications").select("job_post_id").in("job_post_id", (jobs||[]).map(j=>j.id))
