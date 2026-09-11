@@ -133,6 +133,14 @@ export default function JobPostForm({ initial = null }) {
         <Button type="submit" full size="lg" disabled={busy}>
           {busy ? "Menyimpan..." : initial ? "Simpan Perubahan" : "Pasang Lowongan"}
         </Button>
+        {initial?.id && (
+          <Button type="button" variant="danger" full onClick={async()=>{
+            if(!confirm("Hapus lowongan ini? Semua lamaran ikut terhapus.")) return;
+            const supabase=createClient();
+            const {error}=await supabase.from("job_posts").delete().eq("id",initial.id);
+            if(error) toast("Gagal hapus","error"); else { toast("Lowongan dihapus"); router.push("/dashboard/owner"); router.refresh(); }
+          }}>Hapus Lowongan</Button>
+        )}
       </form>
 
       {/* Live preview */}
