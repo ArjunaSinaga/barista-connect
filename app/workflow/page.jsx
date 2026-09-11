@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export const metadata = {
   title: "Workflow Visual | BaristaConnect",
   description: "Alur end-to-end BaristaConnect: dari daftar hingga kerja.",
@@ -25,9 +27,9 @@ export default function WorkflowPage() {
               Satu alur terhubung: profil, lowongan, lamaran, chat, dan hiring. Tidak ada spreadsheet, tidak ada DM hilang.
             </p>
           </div>
-          <a href="/jobs" className="inline-flex h-10 items-center rounded-full bg-[var(--color-caramel)] px-6 text-sm font-bold text-white hover:bg-[var(--color-caramel-dark)]">
+          <Link href="/jobs" className="inline-flex h-10 items-center rounded-full bg-[var(--color-caramel)] px-6 text-sm font-bold text-white hover:bg-[var(--color-caramel-dark)]">
             Lihat Lowongan
-          </a>
+          </Link>
         </div>
 
         <div className="grid gap-4 rounded-[24px] bg-white p-4 shadow-sm ring-1 ring-black/5 lg:p-6">
@@ -60,8 +62,8 @@ export default function WorkflowPage() {
           <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl bg-[var(--color-espresso)] px-5 py-4 text-white">
             <p className="text-sm font-medium">Data live dari Supabase. Route ini Server Component (Next.js 16 App Router).</p>
             <div className="flex gap-2">
-              <a href="/dashboard/barista" className="rounded-full bg-white px-4 py-2 text-sm font-bold text-[var(--color-espresso)]">Dashboard Barista</a>
-              <a href="/dashboard/owner" className="rounded-full bg-white/15 px-4 py-2 text-sm font-bold text-white ring-1 ring-white/20">Dashboard Owner</a>
+              <Link href="/dashboard/barista" className="rounded-full bg-white px-4 py-2 text-sm font-bold text-[var(--color-espresso)]">Dashboard Barista</Link>
+              <Link href="/dashboard/owner" className="rounded-full bg-white/15 px-4 py-2 text-sm font-bold text-white ring-1 ring-white/20">Dashboard Owner</Link>
             </div>
           </div>
         </div>

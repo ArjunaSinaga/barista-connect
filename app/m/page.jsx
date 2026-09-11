@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import { useState, useRef, useEffect } from "react";
 
 const QUICK = [
@@ -53,9 +54,9 @@ export default function MPage() {
             Otak aktif - fokus project ini
           </div>
         </div>
-        <a href="/" className="text-xs bg-white/15 px-3 py-1.5 rounded-full">
+        <Link href="/" className="text-xs bg-white/15 px-3 py-1.5 rounded-full">
           Desktop
-        </a>
+        </Link>
       </div>
 
       <div className="px-3 py-2 bg-[#e6e6e0] border-b flex gap-2 overflow-x-auto shrink-0">

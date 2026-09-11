@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/Field";
 import { useToast } from "@/components/ui/toast";
 import { createClient } from "@/lib/supabase/client";
 import { signUpSchema } from "@/lib/validation";
+import { isPwned } from "@/lib/pwned";
 
 const ROLES = [
   {
@@ -46,6 +47,12 @@ function SignupForm() {
     }
     if (!role) {
       toast("Pilih dulu: barista atau pemilik usaha?", "error");
+      return;
+    }
+
+    // F2P HIBP check (gratis, k-anonymity)
+    if (await isPwned(password)) {
+      setErrors({ password: "Password ini pernah bocor di internet, gunakan password lain yang lebih kuat" });
       return;
     }
 
