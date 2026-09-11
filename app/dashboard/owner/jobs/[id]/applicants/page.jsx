@@ -30,10 +30,10 @@ export default async function ApplicantsPage({ params }) {
   const { data: apps } = await supabase
     .from("applications")
     .select(
-      `id, status, message, created_at,
+      `id, status, message, cover_letter, cv_url, employment_types, created_at,
        barista_profiles ( id, full_name, age, location_place,
                           profile_picture_url, years_of_experience, skills,
-                          is_open_to_work )`
+                          is_open_to_work, whatsapp )`
     )
     .eq("job_post_id", job.id)
     .order("created_at", { ascending: false });

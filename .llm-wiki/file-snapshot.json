@@ -1,16 +1,16 @@
 {
   "version": 1,
-  "updatedAt": 1788425878678,
+  "updatedAt": 1789101960231,
   "files": {
     "schema.md": {
       "hash": "6ad767c40e35c6a5786f20120ca1ce08",
       "size": 28,
       "mtimeMs": 1788171399198
     },
-    "wiki/barista-connect.md": {
-      "hash": "c3abf5963e2b383af1c4ab53f340a977",
-      "size": 1899,
-      "mtimeMs": 1788422910760
+    "wiki/arjuna-profile.md": {
+      "hash": "48f855359304ffeb5a203d735e6c9608",
+      "size": 3105,
+      "mtimeMs": 1788633863953
     },
     "wiki/biodata.md": {
       "hash": "85938d02902f2555403d0ffeccc8409f",
@@ -23,9 +23,9 @@
       "mtimeMs": 1788171395686
     },
     "wiki/tutorial-barista-connect.md": {
-      "hash": "05119c0fe500cc41b9d7fcb0d44c7cd6",
-      "size": 18,
-      "mtimeMs": 1788425877969
+      "hash": "77157a94bcea10de0ac36d9646ddceed",
+      "size": 15714,
+      "mtimeMs": 1788892214729
     }
   }
 }
