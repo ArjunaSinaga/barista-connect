@@ -13,7 +13,8 @@ export default async function OwnerDashboardPage() {
   if (!user || !profile) return <div className="p-8">Silakan login.</div>
   const supabase = await createClient()
   const { data: jobs } = await supabase.from("job_posts").select("id,title,location,salary_text,employment_type,employment_types,is_active,created_at").eq("owner_id", profile.id).order("created_at", { ascending: false })
-  const { data: apps } = await supabase.from("applications").select("job_post_id").in("job_post_id", (jobs||[]).map(j=>j.id))
+  const jobIds = (jobs||[]).map(j=>j.id)
+  const { data: apps } = jobIds.length ? await supabase.from("applications").select("job_post_id").in("job_post_id", jobIds) : { data: [] }
   const appCountByJob = {}
   ;(apps||[]).forEach(a => { appCountByJob[a.job_post_id] = (appCountByJob[a.job_post_id]||0)+1 })
   const totalJobs = jobs?.length || 0
