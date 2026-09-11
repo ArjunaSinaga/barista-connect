@@ -23,7 +23,7 @@ import { STATUS_META } from "@/lib/constants";
 import { relativeTime } from "@/lib/time";
 import { createClient } from "@/lib/supabase/client";
 
-const ORDER = { accepted: 0, pending: 1, viewed: 2, rejected: 3 };
+const ORDER = { accepted: 0, pending: 1, viewed: 2, rejected: 3, terminated: 4 };
 
 export default function ApplicantsBoard({
   jobId,
@@ -95,7 +95,7 @@ export default function ApplicantsBoard({
       </h1>
 
       <div className="no-scrollbar mt-4 flex gap-2 overflow-x-auto">
-        {["all", "pending", "viewed", "accepted", "rejected"].map((k) => {
+        {["all", "pending", "viewed", "accepted", "rejected","terminated"].map((k) => {
           const count =
             k === "all"
               ? apps.length
@@ -207,7 +207,7 @@ export default function ApplicantsBoard({
               </div>
 
               <div className="mt-4 flex flex-wrap items-center gap-2 border-t border-latte/60 pt-4">
-                {app.status !== "accepted" && app.status !== "rejected" && (
+                {app.status !== "accepted" && app.status !== "rejected" && app.status !== "terminated" && (
                   <>
                     <Button
                       variant="success"
@@ -226,6 +226,11 @@ export default function ApplicantsBoard({
                       <X size={14} /> Tolak
                     </Button>
                   </>
+                )}
+                {app.status === "accepted" && (
+                  <Button variant="danger" size="sm" disabled={busyId===app.id} onClick={()=>setStatus(app.id,"terminated")}>
+                    <X size={14}/> Keluarkan
+                  </Button>
                 )}
                 <Button
                   variant="secondary"
