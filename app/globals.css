@@ -6,24 +6,24 @@
   --font-sans: var(--font-jakarta), "SoDoSans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
-/* — Warm chocolate balanced (readable + cozy) — */
+/* — Dark Roast (homepage palette unified) — */
 :root {
-  --background: #2b1a11;
+  --background: #0f0a08;
   --foreground: #fdf6ec;
-  --color-cream: #f2ede6;
-  --color-cream-dark: #e8ddd0;
-  --color-latte: #3a2418;
-  --color-espresso: #1a0f0a;
-  --color-espresso-soft: #6b4a35;
+  --color-cream: #f2f0eb;
+  --color-cream-dark: #1c1412;
+  --color-latte: #2a1e1b;
+  --color-espresso: #fdf6ec;
+  --color-espresso-soft: rgba(253,246,236,0.65);
   --color-caramel: #d4a24e;
   --color-caramel-dark: #b56a2a;
   --color-matcha: #1e3932;
   --color-gold: #d4a24e;
-  --surface: #fdfaf6;
-  --surface-2: #f5ebe0;
-  --surface-3: #efe2d2;
-  --border: rgba(43,26,17,0.10);
-  --border-strong: rgba(43,26,17,0.18);
+  --surface: #1c1412;
+  --surface-2: #251b19;
+  --surface-3: #2e221f;
+  --border: rgba(212,162,78,0.12);
+  --border-strong: rgba(212,162,78,0.22);
 }
 
 * { scrollbar-width: thin; scrollbar-color: var(--color-gold) transparent; }
@@ -48,11 +48,12 @@ body::before {
 
 /* Hero ambient */
 .bg-espresso { background: var(--background) !important; }
-.bg-cream { background: var(--surface) !important; }
+.bg-cream { background: var(--surface) !important; border-color: var(--border) !important; }
 .bg-latte { background: var(--surface-2) !important; }
 .text-espresso { color: var(--foreground) !important; }
 .text-espresso-soft { color: var(--color-espresso-soft) !important; }
 .border-latte { border-color: var(--border) !important; }
+.bg-white { background: var(--surface) !important; color: var(--foreground) !important; border-color: var(--border) !important; }
 .bg-caramel { background: linear-gradient(135deg,#d4a24e 0%,#b56a2a 100%) !important; color: #1a0f09 !important; }
 .bg-caramel-dark { background: #b56a2a !important; }
 
