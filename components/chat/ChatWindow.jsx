@@ -123,29 +123,30 @@ export default function ChatWindow({
   return (
     <div className="mx-auto flex h-[calc(100vh-3.5rem)] max-w-2xl flex-col px-4">
       {/* header */}
-      <div className="flex items-center gap-3 border-b border-latte/60 py-3">
+      <div className="flex items-center gap-3 rounded-2xl card-dark px-4 py-3 border border-latte">
         <Link
           href="/messages"
           aria-label="Kembali"
-          className="rounded-full p-1.5 text-espresso-soft hover:bg-cream-dark"
+          className="rounded-full p-2 bg-cream-dark text-espresso hover:bg-latte"
         >
           <ArrowLeft size={18} />
         </Link>
-        <Avatar src={counterpartAvatar} name={counterpartName} size="sm" />
+        <Avatar src={counterpartAvatar} name={counterpartName} size="md" />
         <div className="min-w-0 flex-1">
           <p className="truncate text-sm font-extrabold text-espresso">
             {counterpartName}
           </p>
           {jobTitle && (
-            <p className="truncate text-[11px] text-espresso-soft">
+            <span className="mt-1 inline-flex rounded-full bg-caramel/15 px-2.5 py-0.5 text-[11px] font-bold text-caramel">
               re: {jobTitle}
-            </p>
+            </span>
           )}
         </div>
+        <span className="h-2 w-2 rounded-full bg-green-500 animate-pulse" title="Realtime" />
       </div>
 
       {/* messages */}
-      <div className="flex-1 space-y-3 overflow-y-auto py-4">
+      <div className="flex-1 space-y-3 overflow-y-auto py-6 px-1">
         {messages.length === 0 && (
           <div className="flex h-full items-center justify-center text-center">
             <p className="max-w-xs text-sm text-espresso-soft">
@@ -169,13 +170,14 @@ export default function ChatWindow({
             >
               <div className="max-w-[80%]">
                 <div
-                  className={`rounded-2xl px-4 py-2.5 text-sm leading-relaxed ${
+                  className={`rounded-2xl px-4 py-3 text-sm leading-relaxed shadow-sm ${
                     mine
-                      ? "rounded-br-md bg-caramel text-white"
-                      : "rounded-bl-md border border-latte card-dark text-espresso"
+                      ? "rounded-br-sm bg-gradient-to-br from-[#d4a24e] to-[#b56a2a] text-white"
+                      : "rounded-bl-sm card-dark border border-latte text-espresso"
                   }`}
                 >
-                  {m.body}
+                  <p className="whitespace-pre-wrap">{m.body}</p>
+                  <p className={`mt-1 text-[10px] ${mine ? "text-white/70 text-right" : "text-espresso-soft"}`}>{new Date(m.created_at).toLocaleTimeString("id-ID",{hour:"2-digit",minute:"2-digit"})}</p>
                 </div>
                 {m.is_ai && (
                   <p
@@ -203,7 +205,7 @@ export default function ChatWindow({
       {/* composer */}
       <form
         onSubmit={handleSend}
-        className="sticky bottom-16 space-y-2 border-t border-latte/60 bg-cream/90 py-3 backdrop-blur md:bottom-0"
+        className="sticky bottom-16 space-y-2 rounded-2xl card-dark border border-latte p-3 shadow-lg md:bottom-2"
       >
         {!sending && (
           <button
@@ -235,9 +237,9 @@ export default function ChatWindow({
               }
             }}
             rows={1}
-            placeholder="Tulis pesan..."
+            placeholder="Tulis pesan... (Enter kirim, Shift+Enter baris baru)"
             maxLength={2000}
-            className="max-h-28 w-full resize-none rounded-xl border border-latte bg-white text-[#1c1412] px-4 py-3 text-sm outline-none focus:border-caramel focus:ring-2 focus:ring-caramel/20"
+            className="max-h-28 w-full resize-none rounded-xl border border-latte card-dark px-4 py-3 text-sm outline-none focus:border-caramel focus:ring-2 focus:ring-caramel/20"
           />
           <button
             type="submit"
