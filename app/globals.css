@@ -6,24 +6,24 @@
   --font-sans: var(--font-jakarta), "SoDoSans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
-/* — Light cream theme (readable) — */
+/* — Warm chocolate balanced (readable + cozy) — */
 :root {
-  --background: #f2f0eb;
-  --foreground: #1a0f0a;
-  --color-cream: #f2f0eb;
-  --color-cream-dark: #e8e0d5;
-  --color-latte: #dccbb8;
+  --background: #2b1a11;
+  --foreground: #fdf6ec;
+  --color-cream: #f2ede6;
+  --color-cream-dark: #e8ddd0;
+  --color-latte: #3a2418;
   --color-espresso: #1a0f0a;
-  --color-espresso-soft: rgba(26,15,10,0.62);
-  --color-caramel: #b56a2a;
-  --color-caramel-dark: #8d4e1f;
+  --color-espresso-soft: #6b4a35;
+  --color-caramel: #d4a24e;
+  --color-caramel-dark: #b56a2a;
   --color-matcha: #1e3932;
-  --color-gold: #c9a86a;
-  --surface: #ffffff;
-  --surface-2: #f9f6f2;
-  --surface-3: #f2ede6;
-  --border: rgba(26,15,10,0.12);
-  --border-strong: rgba(26,15,10,0.20);
+  --color-gold: #d4a24e;
+  --surface: #fdfaf6;
+  --surface-2: #f5ebe0;
+  --surface-3: #efe2d2;
+  --border: rgba(43,26,17,0.10);
+  --border-strong: rgba(43,26,17,0.18);
 }
 
 * { scrollbar-width: thin; scrollbar-color: var(--color-gold) transparent; }
