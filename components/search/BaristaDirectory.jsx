@@ -93,7 +93,7 @@ export default function BaristaDirectory({ ownerId }) {
           value={loc}
           onChange={(e) => setLoc(e.target.value)}
           placeholder="cth. Bandung"
-          className="w-full rounded-xl border border-latte bg-white text-[#1c1412] px-4 py-2.5 text-sm outline-none focus:border-caramel focus:ring-2 focus:ring-caramel/20"
+          className="w-full rounded-xl border border-latte card-dark px-4 py-2.5 text-sm outline-none focus:border-caramel focus:ring-2 focus:ring-caramel/20"
         />
       </div>
 

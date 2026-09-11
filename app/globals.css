@@ -26,6 +26,8 @@
   --border-strong: rgba(212,162,78,0.22);
 }
 
+select, option { background: var(--surface) !important; color: var(--foreground) !important; }
+input::placeholder { color: var(--color-espresso-soft); opacity: 1; }
 * { scrollbar-width: thin; scrollbar-color: var(--color-gold) transparent; }
 
 body {
