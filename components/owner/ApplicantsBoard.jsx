@@ -40,9 +40,7 @@ export default function ApplicantsBoard({
 
   useEffect(() => {
     async function loadRatings() {
-      const ids = initialApplicants
-        .filter((a) => a.status === "accepted" || a.status === "terminated")
-        .map((a) => a.id);
+      const ids = initialApplicants.map((a) => a.id);
       if (!ids.length) return;
       const supabase = createClient();
       const { data } = await supabase
@@ -228,17 +226,15 @@ export default function ApplicantsBoard({
               </div>
 
               <div className="mt-4 flex flex-wrap items-center gap-2 border-t border-latte/60 pt-4">
-                {(app.status === "accepted" || app.status === "terminated") && (
-                  <div className="w-full">
-                    <RatingForm
-                      applicationId={app.id}
-                      jobPostId={jobId}
-                      ownerId={ownerId}
-                      baristaId={b?.id}
-                      existing={ratings[app.id] ?? null}
-                    />
-                  </div>
-                )}
+                <div className="w-full">
+                  <RatingForm
+                    applicationId={app.id}
+                    jobPostId={jobId}
+                    ownerId={ownerId}
+                    baristaId={b?.id}
+                    existing={ratings[app.id] ?? null}
+                  />
+                </div>
                 {app.status !== "accepted" && app.status !== "rejected" && app.status !== "terminated" && (
                   <>
                     <Button

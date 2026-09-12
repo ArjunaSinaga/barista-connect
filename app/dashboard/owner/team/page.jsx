@@ -5,6 +5,7 @@ import { EmptyState } from "@/components/ui/EmptyState";
 import Avatar from "@/components/ui/Avatar";
 import Badge from "@/components/ui/Badge";
 import { Stars } from "@/components/ratings/RatingForm";
+import TeamRemoveButton from "@/components/owner/TeamRemoveButton";
 
 export const metadata = { title: "Tim Saya" };
 
@@ -101,6 +102,7 @@ export default async function TeamPage() {
               >
                 Profil →
               </Link>
+              <TeamRemoveButton memberId={m.id} name={b?.full_name ?? "Barista"} />
             </div>
           );
         })}
