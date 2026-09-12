@@ -26,33 +26,45 @@ export default async function BaristaPublicPage({ params }) {
   const isSelf = user?.id === b.id;
   const isOwner = profile?.role === "owner";
 
-  const { data: ratings } = await supabase
+  // Blind review: rating owner baru tampil publik setelah barista menilai balik.
+  const { data: ownerRatings } = await supabase
     .from("ratings")
-    .select("stars, comment, created_at")
+    .select("team_member_id, stars, comment, created_at")
     .eq("barista_id", id)
     .order("created_at", { ascending: false })
-    .limit(10);
-  const avg = ratings?.length
+    .limit(20);
+  const teamIds = [...new Set((ownerRatings ?? []).map((r) => r.team_member_id).filter(Boolean))];
+  let cafeTeamIds = new Set();
+  if (teamIds.length) {
+    const { data: pairs } = await supabase
+      .from("cafe_ratings")
+      .select("team_member_id")
+      .in("team_member_id", teamIds);
+    cafeTeamIds = new Set((pairs ?? []).map((r) => r.team_member_id));
+  }
+  const ratings = (ownerRatings ?? []).filter((r) => cafeTeamIds.has(r.team_member_id));
+  const avg = ratings.length
     ? (ratings.reduce((s, r) => s + r.stars, 0) / ratings.length).toFixed(1)
     : null;
 
-  // Kalau yang lihat adalah owner dan barista ini pernah melamar di tempatnya,
-  // tampilkan form rating langsung di sini (terikat lamaran terakhir).
-  let rateableApp = null;
+  // Kalau yang lihat adalah owner dan barista ini ada di timnya,
+  // tampilkan form rating langsung di sini (basis tim, tahan hapus loker).
+  let rateableTeam = null;
   let myRating = null;
   if (isOwner) {
-    const { data: myApps } = await supabase
-      .from("applications")
-      .select("id, job_post_id, job_posts ( id, title, owner_id )")
+    const { data: teams } = await supabase
+      .from("team_members")
+      .select("id")
+      .eq("owner_id", user.id)
       .eq("barista_id", id)
-      .order("created_at", { ascending: false })
-      .limit(10);
-    rateableApp = (myApps ?? []).find((a) => a.job_posts?.owner_id === user.id) ?? null;
-    if (rateableApp) {
+      .order("hired_at", { ascending: false })
+      .limit(1);
+    rateableTeam = teams?.[0] ?? null;
+    if (rateableTeam) {
       const { data: r } = await supabase
         .from("ratings")
         .select("id, stars, comment, updated_at")
-        .eq("application_id", rateableApp.id)
+        .eq("team_member_id", rateableTeam.id)
         .maybeSingle();
       myRating = r ?? null;
     }
@@ -126,18 +138,17 @@ export default async function BaristaPublicPage({ params }) {
         <h2 className="text-xs font-extrabold tracking-wide text-espresso uppercase">
           Rating dari owner ({ratings?.length ?? 0})
         </h2>
-        {isOwner && rateableApp && (
+        {isOwner && rateableTeam && (
           <div className="mt-3">
             <RatingForm
-              applicationId={rateableApp.id}
-              jobPostId={rateableApp.job_post_id}
+              teamMemberId={rateableTeam.id}
               ownerId={user.id}
               baristaId={id}
               existing={myRating}
             />
           </div>
         )}
-        {isOwner && !rateableApp && (
+        {isOwner && !rateableTeam && (
           <p className="mt-2 text-sm text-espresso-soft">
             Barista ini belum pernah melamar di tempatmu — rating tersedia setelah ada lamaran.
           </p>
@@ -159,7 +170,7 @@ export default async function BaristaPublicPage({ params }) {
           </div>
         ) : (
           <p className="mt-2 text-sm text-espresso-soft">
-            Belum ada rating. Owner yang pernah menerima lamarannya bisa memberi rating kapan saja.
+            Belum ada rating publik. Rating baru tampil setelah owner dan barista saling menilai (blind review).
           </p>
         )}
       </section>

@@ -2,13 +2,17 @@
 
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
-import { FileText, MapPin, Store } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { FileText, FlagOff, MapPin, Store } from "lucide-react";
 import Badge from "@/components/ui/Badge";
+import Button from "@/components/ui/Button";
 import EmptyState from "@/components/ui/EmptyState";
 import { CardSkeleton } from "@/components/ui/Skeleton";
 import { STATUS_META, EMPLOYMENT_LABELS } from "@/lib/constants";
 import { relativeTime } from "@/lib/time";
 import { createClient } from "@/lib/supabase/client";
+import { useToast } from "@/components/ui/toast";
+import CafeRatingForm from "@/components/ratings/CafeRatingForm";
 
 const TABS = [
   { key: "all", label: "Semua" },
@@ -16,11 +20,18 @@ const TABS = [
   { key: "viewed", label: "Dilihat" },
   { key: "accepted", label: "Diterima" },
   { key: "rejected", label: "Ditolak" },
+  { key: "terminated", label: "Selesai" },
 ];
 
 export default function ApplicationsList() {
+  const router = useRouter();
+  const toast = useToast();
   const [apps, setApps] = useState(null);
   const [tab, setTab] = useState("all");
+  const [busyId, setBusyId] = useState(null);
+  const [teamByApp, setTeamByApp] = useState({});
+  const [cafeRatings, setCafeRatings] = useState({});
+  const [meId, setMeId] = useState(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -30,6 +41,8 @@ export default function ApplicationsList() {
         data: { user },
       } = await supabase.auth.getUser();
       if (!user) return;
+
+      if (!cancelled) setMeId(user.id);
 
       const { data } = await supabase
         .from("applications")
@@ -42,6 +55,27 @@ export default function ApplicationsList() {
         .order("created_at", { ascending: false });
 
       if (!cancelled) setApps(data ?? []);
+
+      // Baris tim + rating cafe milik sendiri
+      const { data: teams } = await supabase
+        .from("team_members")
+        .select("id, application_id, owner_id, status")
+        .eq("barista_id", user.id);
+      if (cancelled) return;
+      const tmap = {};
+      (teams ?? []).forEach((t) => { if (t.application_id) tmap[t.application_id] = t; });
+      setTeamByApp(tmap);
+      const teamIds = (teams ?? []).map((t) => t.id);
+      if (teamIds.length) {
+        const { data: cr } = await supabase
+          .from("cafe_ratings")
+          .select("id, team_member_id, stars, comment, updated_at")
+          .in("team_member_id", teamIds);
+        if (cancelled) return;
+        const cmap = {};
+        (cr ?? []).forEach((r) => { cmap[r.team_member_id] = r; });
+        setCafeRatings(cmap);
+      }
     })();
     return () => {
       cancelled = true;
@@ -52,6 +86,23 @@ export default function ApplicationsList() {
     () => (apps ?? []).filter((a) => tab === "all" || a.status === tab),
     [apps, tab]
   );
+
+  async function handleResign(appId) {
+    if (!confirm("Tandai selesai bekerja di sini? Kamu bisa memberi rating ke cafe setelah ini.")) return;
+    setBusyId(appId);
+    try {
+      const supabase = createClient();
+      const { error } = await supabase.rpc("resign_application", { p_application: appId });
+      if (error) throw error;
+      setApps((list) => list.map((a) => (a.id === appId ? { ...a, status: "terminated" } : a)));
+      toast("Ditandai selesai. Kasih rating ke cafe-nya! ✓");
+      router.refresh();
+    } catch {
+      toast("Gagal menandai selesai", "error");
+    } finally {
+      setBusyId(null);
+    }
+  }
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-8">
@@ -137,18 +188,42 @@ export default function ApplicationsList() {
                 </p>
               )}
 
+              {app.status === "terminated" && teamByApp[app.id] && (
+                <CafeRatingForm
+                  teamMemberId={teamByApp[app.id].id}
+                  ownerId={teamByApp[app.id].owner_id}
+                  baristaId={meId}
+                  applicationId={app.id}
+                  jobPostId={job?.id ?? null}
+                  isTerminated
+                  existing={cafeRatings[teamByApp[app.id].id] ?? null}
+                />
+              )}
+
               <div className="mt-3 flex items-center justify-between border-t border-latte/60 pt-3">
                 <span className="text-[11px] text-espresso-soft/70">
                   Dilamar {relativeTime(app.created_at)}
                 </span>
-                {job && (
-                  <Link
-                    href="/messages"
-                    className="text-[11px] font-bold text-caramel hover:underline"
-                  >
-                    Hubungi via pesan →
-                  </Link>
-                )}
+                <div className="flex items-center gap-2">
+                  {app.status === "accepted" && (
+                    <Button
+                      variant="secondary"
+                      size="sm"
+                      disabled={busyId === app.id}
+                      onClick={() => handleResign(app.id)}
+                    >
+                      <FlagOff size={14} /> {busyId === app.id ? "..." : "Selesai Bekerja"}
+                    </Button>
+                  )}
+                  {job && (
+                    <Link
+                      href="/messages"
+                      className="text-[11px] font-bold text-caramel hover:underline"
+                    >
+                      Hubungi via pesan →
+                    </Link>
+                  )}
+                </div>
               </div>
             </div>
           );

@@ -53,6 +53,29 @@ export default async function JobDetailPage({ params }) {
   // Inactive jobs visible only to their owner
   if (!job || (!job.is_active && job.owner_id !== user?.id)) notFound();
 
+  // Badge rating cafe (blind: hanya yang sudah dinilai balik)
+  let cafeAvg = null;
+  let cafeCount = 0;
+  {
+    const { data: teams } = await supabase
+      .from("team_members")
+      .select("id")
+      .eq("owner_id", job.owner_id);
+    const tids = (teams ?? []).map((t) => t.id);
+    if (tids.length) {
+      const [{ data: cr }, { data: or }] = await Promise.all([
+        supabase.from("cafe_ratings").select("team_member_id, stars").in("team_member_id", tids),
+        supabase.from("ratings").select("team_member_id").in("team_member_id", tids),
+      ]);
+      const paired = new Set((or ?? []).map((r) => r.team_member_id));
+      const visible = (cr ?? []).filter((r) => paired.has(r.team_member_id));
+      cafeCount = visible.length;
+      if (visible.length) {
+        cafeAvg = (visible.reduce((s, r) => s + r.stars, 0) / visible.length).toFixed(1);
+      }
+    }
+  }
+
   let applied = false;
   let applicationId = null;
   if (profile?.role === "barista") {
@@ -131,7 +154,14 @@ export default async function JobDetailPage({ params }) {
             </h2>
             <p className="mt-3 flex items-center gap-2 font-bold text-espresso">
               <Store size={16} className="text-caramel" />
-              {job.owners?.business_name}
+              <Link href={`/owner/${job.owner_id}`} className="hover:text-caramel hover:underline">
+                {job.owners?.business_name}
+              </Link>
+              {cafeAvg && (
+                <span className="text-xs font-bold text-espresso-soft">
+                  ★ {cafeAvg} ({cafeCount})
+                </span>
+              )}
             </p>
             <p className="mt-1 flex items-center gap-2 text-sm text-espresso-soft">
               <MapPin size={14} /> {job.owners?.location}

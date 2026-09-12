@@ -37,18 +37,29 @@ export default function ApplicantsBoard({
   const [tab, setTab] = useState("all");
   const [busyId, setBusyId] = useState(null);
   const [ratings, setRatings] = useState({});
+  const [teamByApp, setTeamByApp] = useState({});
 
   useEffect(() => {
     async function loadRatings() {
       const ids = initialApplicants.map((a) => a.id);
       if (!ids.length) return;
       const supabase = createClient();
+      // Baris tim untuk lamaran di lowongan ini
+      const { data: teams } = await supabase
+        .from("team_members")
+        .select("id, application_id, barista_id")
+        .eq("job_post_id", jobId);
+      const tmap = {};
+      (teams ?? []).forEach((t) => { if (t.application_id) tmap[t.application_id] = t; });
+      setTeamByApp(tmap);
+      const teamIds = Object.values(tmap).map((t) => t.id);
+      if (!teamIds.length) return;
       const { data } = await supabase
         .from("ratings")
-        .select("id, application_id, stars, comment, updated_at")
-        .in("application_id", ids);
+        .select("id, team_member_id, stars, comment, updated_at")
+        .in("team_member_id", teamIds);
       const map = {};
-      (data ?? []).forEach((r) => { map[r.application_id] = r; });
+      (data ?? []).forEach((r) => { map[r.team_member_id] = r; });
       setRatings(map);
     }
     loadRatings();
@@ -228,11 +239,12 @@ export default function ApplicantsBoard({
               <div className="mt-4 flex flex-wrap items-center gap-2 border-t border-latte/60 pt-4">
                 <div className="w-full">
                   <RatingForm
+                    teamMemberId={teamByApp[app.id]?.id ?? null}
                     applicationId={app.id}
                     jobPostId={jobId}
                     ownerId={ownerId}
                     baristaId={b?.id}
-                    existing={ratings[app.id] ?? null}
+                    existing={teamByApp[app.id] ? (ratings[teamByApp[app.id].id] ?? null) : null}
                   />
                 </div>
                 {app.status !== "accepted" && app.status !== "rejected" && app.status !== "terminated" && (

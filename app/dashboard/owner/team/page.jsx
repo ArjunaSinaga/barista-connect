@@ -27,16 +27,24 @@ export default async function TeamPage() {
        barista_profiles ( id, full_name, profile_picture_url, location_place, years_of_experience )`
     )
     .eq("owner_id", user.id)
+    .in("status", ["active", "terminated"])
     .order("hired_at", { ascending: false });
 
-  const appIds = (members ?? []).map((m) => m.application_id).filter(Boolean);
+  const teamIds = (members ?? []).map((m) => m.id);
   let ratingMap = {};
-  if (appIds.length) {
+  let pairedSet = new Set();
+  if (teamIds.length) {
     const { data: ratings } = await supabase
       .from("ratings")
-      .select("application_id, stars, comment")
-      .in("application_id", appIds);
-    (ratings ?? []).forEach((r) => { ratingMap[r.application_id] = r; });
+      .select("team_member_id, stars, comment")
+      .in("team_member_id", teamIds);
+    (ratings ?? []).forEach((r) => { ratingMap[r.team_member_id] = r; });
+    // Blind review: rating owner tampil setelah barista menilai balik
+    const { data: pairs } = await supabase
+      .from("cafe_ratings")
+      .select("team_member_id")
+      .in("team_member_id", teamIds);
+    pairedSet = new Set((pairs ?? []).map((r) => r.team_member_id));
   }
 
   return (
@@ -61,7 +69,9 @@ export default async function TeamPage() {
         )}
         {(members ?? []).map((m) => {
           const b = m.barista_profiles;
-          const r = m.application_id ? ratingMap[m.application_id] : null;
+          // Rating milik sendiri selalu terlihat; publik menunggu blind pair.
+          const r = ratingMap[m.id] ?? null;
+          const rPublic = pairedSet.has(m.id) ? r : null;
           const meta = TEAM_META[m.status] ?? TEAM_META.active;
           return (
             <div key={m.id} className="rounded-2xl card-dark p-4 flex items-center gap-4">
@@ -83,6 +93,9 @@ export default async function TeamPage() {
                       {r.comment && (
                         <span className="truncate text-xs text-espresso-soft italic">“{r.comment}”</span>
                       )}
+                      {!rPublic && (
+                        <span className="text-[11px] text-espresso-soft">· menunggu rating balasan</span>
+                      )}
                     </span>
                   ) : m.application_id && m.job_post_id ? (
                     <Link
@@ -92,7 +105,12 @@ export default async function TeamPage() {
                       Belum dirating — kasih rating →
                     </Link>
                   ) : (
-                    <span className="text-xs text-espresso-soft italic">Riwayat lamaran sudah diarsip</span>
+                    <Link
+                      href={`/barista/${b?.id}`}
+                      className="text-xs font-bold text-caramel hover:underline"
+                    >
+                      Belum dirating — nilai di profil →
+                    </Link>
                   )}
                 </div>
               </div>
