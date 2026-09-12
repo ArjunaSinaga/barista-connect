@@ -118,8 +118,8 @@ export default function RatingForm({
       if (saved) {
         setSaved({ ...saved, stars, comment, updated_at: new Date().toISOString() });
       }
-    } catch {
-      toast("Gagal menyimpan rating", "error");
+    } catch (e) {
+      toast(e?.message ?? "Gagal menyimpan rating", "error");
     } finally {
       setBusy(false);
     }
