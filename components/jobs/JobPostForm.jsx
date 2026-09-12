@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Eye } from "lucide-react";
 import Button from "@/components/ui/Button";
@@ -26,6 +26,7 @@ export default function JobPostForm({ initial = null }) {
       ? [initial.employment_type]
       : [];
   const [form, setForm] = useState({
+    cafe_id: initial?.cafe_id ?? "",
     title: initial?.title ?? "",
     description: initial?.description ?? "",
     location: initial?.location ?? "",
@@ -33,6 +34,23 @@ export default function JobPostForm({ initial = null }) {
     employment_types: initialTypes,
   });
   const [busy, setBusy] = useState(false);
+  const [cafes, setCafes] = useState([]);
+
+  useEffect(() => {
+    async function loadCafes() {
+      const supabase = createClient();
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
+      const { data } = await supabase
+        .from("cafes")
+        .select("id, name, location")
+        .eq("owner_id", user.id)
+        .eq("is_active", true)
+        .order("created_at", { ascending: true });
+      setCafes(data ?? []);
+    }
+    loadCafes();
+  }, []);
 
   const set = (k, v) => setForm((f) => ({ ...f, [k]: v }));
 
@@ -77,6 +95,29 @@ export default function JobPostForm({ initial = null }) {
   return (
     <div className="mx-auto grid max-w-4xl gap-6 px-4 py-8 lg:grid-cols-[1fr_300px]">
       <form onSubmit={handleSubmit} className="space-y-4">
+        <div className="space-y-1.5">
+          <label htmlFor="job-cafe" className="text-sm font-bold text-espresso">
+            Cafe <span className="text-red-500">*</span>
+          </label>
+          <select
+            id="job-cafe"
+            value={form.cafe_id}
+            onChange={(e) => set("cafe_id", e.target.value)}
+            className="w-full rounded-xl border border-latte card-dark px-4 py-3 text-sm text-espresso focus:border-caramel focus:outline-none"
+          >
+            <option value="">— Pilih cafe —</option>
+            {cafes.map((c) => (
+              <option key={c.id} value={c.id}>
+                {c.name}{c.location ? ` • ${c.location}` : ""}
+              </option>
+            ))}
+          </select>
+          {cafes.length === 0 && (
+            <p className="text-xs text-espresso-soft">
+              Belum ada cafe. <a href="/dashboard/owner/cafes/new" className="font-bold text-caramel hover:underline">Daftarkan cafe dulu →</a>
+            </p>
+          )}
+        </div>
         <Input
           name="title"
           label="Judul lowongan"

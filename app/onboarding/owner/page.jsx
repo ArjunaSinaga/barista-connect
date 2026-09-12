@@ -1,24 +1,65 @@
 "use client";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Store, MapPin, MessageCircleMore } from "lucide-react";
+import { Store, MapPin, MessageCircleMore, Camera, LoaderCircle } from "lucide-react";
 import Button from "@/components/ui/Button";
 import { Input } from "@/components/ui/Field";
 import { useToast } from "@/components/ui/toast";
+import Avatar from "@/components/ui/Avatar";
 import { createClient } from "@/lib/supabase/client";
 import { ownerOnboardingSchema, ownerWaSchema } from "@/lib/validation";
-import { CITIES } from "@/lib/constants";
+import { CITIES, AVATAR_MIME_TYPES, AVATAR_MAX_BYTES } from "@/lib/constants";
+import { compressImage } from "@/lib/image";
 import OsmMapPicker from "@/components/maps/OsmMapPicker";
 
 export default function OwnerOnboardingPage() {
   const router = useRouter();
   const toast = useToast();
+  const fileRef = useRef(null);
   const [step, setStep] = useState(1);
   const [form, setForm] = useState({ business_name: "", location: "", address: "", lat: -6.208, lng: 106.83, whatsapp: "" });
+  const [avatarUrl, setAvatarUrl] = useState("");
+  const [uploading, setUploading] = useState(false);
   const [errors, setErrors] = useState({});
   const [busy, setBusy] = useState(false);
 
+  async function handleAvatar(e) {
+    const file = e.target.files?.[0];
+    e.target.value = "";
+    if (!file) return;
+    if (!AVATAR_MIME_TYPES.includes(file.type)) {
+      toast("Format harus JPG, PNG, atau WebP", "error");
+      return;
+    }
+    setUploading(true);
+    try {
+      const blob = await compressImage(file);
+      if (blob.size > AVATAR_MAX_BYTES) {
+        toast("Gambar terlalu besar (maks 2MB)", "error");
+        return;
+      }
+      const supabase = createClient();
+      const { data: { user } } = await supabase.auth.getUser();
+      const path = `${user.id}/owner-${Date.now()}.jpg`;
+      const { error } = await supabase.storage.from("avatars").upload(path, blob, {
+        contentType: "image/jpeg",
+      });
+      if (error) throw error;
+      const { data } = supabase.storage.from("avatars").getPublicUrl(path);
+      setAvatarUrl(data.publicUrl);
+      toast("Foto profil terpasang ✓");
+    } catch {
+      toast("Gagal unggah foto", "error");
+    } finally {
+      setUploading(false);
+    }
+  }
+
   function next1() {
+    if (!avatarUrl) {
+      toast("Foto profil wajib diunggah", "error");
+      return;
+    }
     const parsed = ownerOnboardingSchema.safeParse(form);
     if (!parsed.success) {
       const errs = {};
@@ -54,6 +95,7 @@ export default function OwnerOnboardingPage() {
         lat: Number(form.lat),
         lng: Number(form.lng),
         business_type: "coffee_shop",
+        avatar_url: avatarUrl,
       };
       let { error } = await supabase.from("owners").upsert(payload, { onConflict: "id" });
       if (error && /column .* does not exist/i.test(error.message)) {
@@ -64,7 +106,7 @@ export default function OwnerOnboardingPage() {
         toast("Migrasi DB belum dijalankan — simpan legacy + jalankan supabase/migrations/20250903_perfection_f1.sql", "error");
       } else if (error) throw error;
       toast("Profil bisnis tersimpan", "success");
-      router.push("/dashboard/owner"); router.refresh();
+      router.push("/dashboard/owner/cafes/new"); router.refresh();
     } catch (err) { toast(err.message || "Gagal menyimpan", "error"); }
     finally { setBusy(false); }
   }
@@ -83,6 +125,17 @@ export default function OwnerOnboardingPage() {
 
       {step===1 && (
         <div className="space-y-4">
+          <div>
+            <p className="mb-2 text-sm font-bold text-[#fdf6ec]">Foto profil — WAJIB</p>
+            <div className="flex items-center gap-3">
+              <Avatar src={avatarUrl} name={form.business_name || "Owner"} size="lg" />
+              <input ref={fileRef} type="file" accept="image/jpeg,image/png,image/webp" className="hidden" onChange={handleAvatar} />
+              <Button type="button" variant="secondary" size="sm" disabled={uploading} onClick={() => fileRef.current?.click()}>
+                {uploading ? <LoaderCircle size={14} className="animate-spin" /> : <Camera size={14} />}
+                {uploading ? " Mengunggah..." : avatarUrl ? " Ganti foto" : " Unggah foto"}
+              </Button>
+            </div>
+          </div>
           <Input name="business_name" label="Nama usaha / coffee shop" placeholder="cth. Kopi Senja" value={form.business_name} onChange={(e)=>setForm(f=>({...f,business_name:e.target.value}))} error={errors.business_name} />
           <div>
             <label className="mb-1.5 block text-sm font-bold text-[#fdf6ec]">Pilih titik di peta — WAJIB (OSM, tanpa Google billing)</label>

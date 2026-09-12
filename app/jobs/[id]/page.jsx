@@ -46,7 +46,7 @@ export default async function JobDetailPage({ params }) {
   const supabase = await createClient();
   const { data: job } = await supabase
     .from("job_posts")
-    .select("*, owners(business_name, location)")
+    .select("*, owners(business_name, location, avatar_url), cafes(id, name, location, address, photo_urls)")
     .eq("id", id)
     .maybeSingle();
 
@@ -116,7 +116,7 @@ export default async function JobDetailPage({ params }) {
             <div className="mt-3 flex flex-wrap gap-x-5 gap-y-1.5 text-sm font-semibold text-espresso-soft">
               <span className="flex items-center gap-1.5">
                 <Store size={15} className="text-caramel" />
-                {job.owners?.business_name}
+                {job.cafes?.name ?? job.owners?.business_name}
               </span>
               <span className="flex items-center gap-1.5">
                 <MapPin size={15} className="text-caramel" />
@@ -147,15 +147,18 @@ export default async function JobDetailPage({ params }) {
             </div>
           </div>
 
-          {/* About business */}
+          {/* Tentang Cafe */}
           <div className="mt-4 rounded-2xl card-dark p-6">
             <h2 className="text-sm font-extrabold tracking-wide text-espresso uppercase">
-              Tentang Usaha
+              Tentang Cafe
             </h2>
+            {job.cafes?.photo_urls?.[0] && (
+              <img src={job.cafes.photo_urls[0]} alt={job.cafes.name} className="mt-3 h-40 w-full rounded-xl object-cover" />
+            )}
             <p className="mt-3 flex items-center gap-2 font-bold text-espresso">
               <Store size={16} className="text-caramel" />
-              <Link href={`/owner/${job.owner_id}`} className="hover:text-caramel hover:underline">
-                {job.owners?.business_name}
+              <Link href={`/cafes/${job.cafe_id}`} className="hover:text-caramel hover:underline">
+                {job.cafes?.name ?? job.owners?.business_name}
               </Link>
               {cafeAvg && (
                 <span className="text-xs font-bold text-espresso-soft">
@@ -164,7 +167,7 @@ export default async function JobDetailPage({ params }) {
               )}
             </p>
             <p className="mt-1 flex items-center gap-2 text-sm text-espresso-soft">
-              <MapPin size={14} /> {job.owners?.location}
+              <MapPin size={14} /> {job.cafes?.address || job.cafes?.location || job.owners?.location}
             </p>
           </div>
         </div>

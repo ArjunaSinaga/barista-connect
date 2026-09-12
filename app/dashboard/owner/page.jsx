@@ -1,5 +1,5 @@
 ﻿import Link from "next/link"
-import { Plus, Briefcase, Users, Eye, Megaphone, TrendingUp } from "lucide-react"
+import { Plus, Briefcase, Users, Eye, Megaphone, TrendingUp, Store } from "lucide-react"
 import { createClient, getSessionSafe, isSupabaseConfigured } from "@/lib/supabase/server"
 import { EmptyState } from "@/components/ui/EmptyState"
 import JobDeleteButton from "@/components/jobs/JobDeleteButton"
@@ -17,7 +17,7 @@ export default async function OwnerDashboardPage() {
   let apps = []
   try {
     const supabase = await createClient()
-    const res = await supabase.from("job_posts").select("id,title,location,salary_text,employment_type,employment_types,is_active,created_at").eq("owner_id", user.id).order("created_at", { ascending: false })
+    const res = await supabase.from("job_posts").select("id,title,location,salary_text,employment_type,employment_types,is_active,created_at,cafes(name)").eq("owner_id", user.id).order("created_at", { ascending: false })
     jobs = res.data ?? []
     const jobIds = jobs.map(j=>j.id)
     if (jobIds.length) {
@@ -41,6 +41,9 @@ export default async function OwnerDashboardPage() {
             <p className="text-sm text-espresso-soft mt-2 max-w-xl">Pantau performa rekrutmen seperti laporan cabang. Semua lowongan dan pelamar tercatat rapi, siap dipresentasikan ke manager.</p>
           </div>
           <div className="flex flex-wrap items-center gap-2">
+          <Link href="/dashboard/owner/cafes" className="inline-flex items-center gap-2 rounded-full border border-latte bg-white px-5 py-3 text-sm font-bold text-espresso hover:border-caramel">
+            <Store size={16}/> Cafe Saya
+          </Link>
           <Link href="/dashboard/owner/team" className="inline-flex items-center gap-2 rounded-full border border-latte bg-white px-5 py-3 text-sm font-bold text-espresso hover:border-caramel">
             <Users size={16}/> Tim Saya
           </Link>
@@ -108,7 +111,7 @@ export default async function OwnerDashboardPage() {
                       <tr key={job.id} className="hover:bg-cream/50">
                         <td className="px-5 py-3">
                           <p className="font-bold text-espresso leading-tight">{job.title}</p>
-                          <p className="text-xs text-espresso-soft">{new Date(job.created_at).toLocaleDateString("id-ID")}</p>
+                          <p className="text-xs text-espresso-soft">{job.cafes?.name ?? "-"} • {new Date(job.created_at).toLocaleDateString("id-ID")}</p>
                         </td>
                         <td className="px-3 py-3 text-espresso-soft">{job.location || "-"}</td>
                         <td className="px-3 py-3 font-bold text-espresso">{job.salary_text || "-"}</td>
@@ -134,7 +137,7 @@ export default async function OwnerDashboardPage() {
                       <p className="font-bold text-espresso">{job.title}</p>
                       <span className="text-xs font-bold">{appCountByJob[job.id]||0} pelamar</span>
                     </div>
-                    <p className="text-xs text-espresso-soft">{job.location} | {(job.employment_types?.[0] || job.employment_type)}</p>
+                    <p className="text-xs text-espresso-soft">{job.cafes?.name ?? "-"} • {job.location} | {(job.employment_types?.[0] || job.employment_type)}</p>
                     <div className="flex gap-2 mt-3">
                       <Link href={`/dashboard/owner/jobs/${job.id}/applicants`} className="flex-1 text-center text-xs font-bold bg-espresso text-white py-2 rounded-full">Kelola</Link>
                       <Link href={`/dashboard/owner/jobs/${job.id}/edit`} className="flex-1 text-center text-xs font-bold border border-latte py-2 rounded-full">Edit</Link>

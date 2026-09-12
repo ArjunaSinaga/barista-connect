@@ -54,7 +54,7 @@ export default function JobFeed({ myRole }) {
     const supabase = createClient();
     let req = supabase
       .from("job_posts")
-      .select("*, owners(business_name)")
+      .select("*, owners(business_name), cafes(id, name)")
       .eq("is_active", true)
       .order("created_at", { ascending: false });
 
@@ -157,7 +157,7 @@ export default function JobFeed({ myRole }) {
               <JobCard
                 key={job.id}
                 job={job}
-                ownerName={job.owners?.business_name}
+                ownerName={job.cafes?.name ?? job.owners?.business_name}
                 actions={
                   <ApplyButton
                     jobId={job.id}
@@ -171,7 +171,7 @@ export default function JobFeed({ myRole }) {
               <JobCard
                 key={job.id}
                 job={job}
-                ownerName={job.owners?.business_name}
+                ownerName={job.cafes?.name ?? job.owners?.business_name}
               />
             )
           )}

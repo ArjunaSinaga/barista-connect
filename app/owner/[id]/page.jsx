@@ -43,6 +43,14 @@ export default async function OwnerPublicPage({ params }) {
   }
   const avg = avgStars(cafeRatings);
 
+  const { data: cafes } = await supabase
+    .from("cafes")
+    .select("id, name, location, photo_urls")
+    .eq("owner_id", id)
+    .eq("is_active", true)
+    .order("created_at", { ascending: true })
+    .limit(20);
+
   // Form untuk barista yang sudah selesai bekerja di sini
   let myTeam = null;
   let myRating = null;
@@ -73,7 +81,7 @@ export default async function OwnerPublicPage({ params }) {
         <div className="-mt-12 px-6 pb-6">
           <div className="flex flex-wrap items-end justify-between gap-4">
             <div className="flex items-end gap-4">
-              <Avatar name={o.business_name} size="xl" className="border-4 border-white shadow-md" />
+              <Avatar src={o.avatar_url} name={o.business_name} size="xl" className="border-4 border-white shadow-md" />
               <div className="pb-1">
                 <h1 className="text-2xl font-extrabold text-espresso">{o.business_name}</h1>
                 <p className="mt-0.5 flex items-center gap-1 text-sm font-semibold text-espresso-soft">
@@ -97,6 +105,32 @@ export default async function OwnerPublicPage({ params }) {
           </div>
         </div>
       </div>
+
+      <section className="mt-4 rounded-2xl card-dark p-6">
+        <h2 className="text-xs font-extrabold tracking-wide text-espresso uppercase">
+          Cabang ({cafes?.length ?? 0})
+        </h2>
+        {(cafes ?? []).length === 0 && (
+          <p className="mt-2 text-sm text-espresso-soft">Belum ada cafe terdaftar.</p>
+        )}
+        <div className="mt-3 grid gap-2 sm:grid-cols-2">
+          {(cafes ?? []).map((c) => (
+            <Link key={c.id} href={`/cafes/${c.id}`} className="flex items-center gap-3 rounded-xl bg-cream px-3 py-2.5 hover:bg-cream-dark">
+              {c.photo_urls?.[0] ? (
+                <img src={c.photo_urls[0]} alt={c.name} className="h-12 w-12 shrink-0 rounded-lg object-cover" />
+              ) : (
+                <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-cream-dark text-caramel">
+                  <Store size={20} />
+                </span>
+              )}
+              <span className="min-w-0">
+                <span className="block truncate text-sm font-bold text-espresso">{c.name}</span>
+                <span className="block truncate text-xs text-espresso-soft">{c.location || "-"}</span>
+              </span>
+            </Link>
+          ))}
+        </div>
+      </section>
 
       <section className="mt-4 rounded-2xl card-dark p-6">
         <h2 className="text-xs font-extrabold tracking-wide text-espresso uppercase">

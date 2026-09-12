@@ -10,7 +10,7 @@ async function getLatestJobs() {
     const supabase = await createClient();
     const { data } = await supabase
       .from("job_posts")
-      .select("*, owners(business_name)")
+      .select("*, owners(business_name), cafes(name)")
       .eq("is_active", true)
       .order("created_at", { ascending: false })
       .limit(3);
@@ -128,7 +128,7 @@ export default async function LandingPage() {
                 }`}
               >
                 {jobs.map((job) => (
-                  <JobCard key={job.id} job={job} />
+                  <JobCard key={job.id} job={job} ownerName={job.cafes?.name ?? job.owners?.business_name} />
                 ))}
               </div>
         )}
