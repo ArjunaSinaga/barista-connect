@@ -48,7 +48,7 @@ export default function ApplicationsList() {
         .from("applications")
         .select(
           `id, status, message, created_at,
-           job_posts ( id, title, location, employment_type, is_active,
+           job_posts ( id, title, location, employment_type, is_active, owner_id,
                        owners ( business_name ) )`
         )
         .eq("barista_id", user.id)
@@ -86,6 +86,24 @@ export default function ApplicationsList() {
     () => (apps ?? []).filter((a) => tab === "all" || a.status === tab),
     [apps, tab]
   );
+
+  async function startChat(ownerId) {
+    if (!ownerId || !meId) return;
+    setBusyId("chat");
+    try {
+      const supabase = createClient();
+      const { data: cid, error } = await supabase.rpc(
+        "get_or_create_conversation",
+        { p_owner: ownerId, p_barista: meId }
+      );
+      if (error || !cid) throw error;
+      router.push(`/messages/${cid}`);
+    } catch {
+      toast("Gagal membuka percakapan", "error");
+    } finally {
+      setBusyId(null);
+    }
+  }
 
   async function handleResign(appId) {
     if (!confirm("Tandai selesai bekerja di sini? Kamu bisa memberi rating ke cafe setelah ini.")) return;
@@ -215,13 +233,15 @@ export default function ApplicationsList() {
                       <FlagOff size={14} /> {busyId === app.id ? "..." : "Selesai Bekerja"}
                     </Button>
                   )}
-                  {job && (
-                    <Link
-                      href="/messages"
-                      className="text-[11px] font-bold text-caramel hover:underline"
+                  {job?.owner_id && (
+                    <button
+                      type="button"
+                      onClick={() => startChat(job.owner_id)}
+                      disabled={busyId === "chat"}
+                      className="text-[11px] font-bold text-caramel hover:underline disabled:opacity-50"
                     >
                       Hubungi via pesan →
-                    </Link>
+                    </button>
                   )}
                 </div>
               </div>
