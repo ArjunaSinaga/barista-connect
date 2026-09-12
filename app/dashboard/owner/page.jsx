@@ -10,29 +10,26 @@ export default async function OwnerDashboardPage() {
     return <div className="p-8 text-center text-sm text-espresso-soft">Supabase belum dikonfigurasi.</div>
   }
   const { user, profile } = await getSessionSafe()
-  if (!user || !profile) return <div className="p-8 text-center">Silakan login di <a href="/login" className="text-caramel underline">/login</a>.</div>
+  if (!user) return <div className="p-8 text-center">Silakan login di <a href="/login" className="text-caramel underline">/login</a>.</div>
+  if (!profile) return <div className="p-8 text-center">Akun belum lengkap, <a href="/onboarding/owner" className="text-caramel underline">lengkapi profil owner</a>.</div>
   let jobs = []
   let apps = []
-  let dbg = ""
   try {
     const supabase = await createClient()
-    const res = await supabase.from("job_posts").select("id,title,location,salary_text,employment_type,employment_types,is_active,created_at").eq("owner_id", profile.id).order("created_at", { ascending: false })
-    if (res.error) dbg = `jobs_error:${res.error.message}`
+    const res = await supabase.from("job_posts").select("id,title,location,salary_text,employment_type,employment_types,is_active,created_at").eq("owner_id", user.id).order("created_at", { ascending: false })
     jobs = res.data ?? []
     const jobIds = jobs.map(j=>j.id)
     if (jobIds.length) {
       const r2 = await supabase.from("applications").select("job_post_id").in("job_post_id", jobIds)
-      if (r2.error) dbg += ` apps_error:${r2.error.message}`
       apps = r2.data ?? []
     }
-  } catch(e) { dbg = `catch:${String(e?.message||e)}`; jobs = [] }
+  } catch(e) { jobs = []; apps = [] }
   const appCountByJob = {}
   ;(apps||[]).forEach(a => { appCountByJob[a.job_post_id] = (appCountByJob[a.job_post_id]||0)+1 })
   const totalJobs = jobs?.length || 0
   const activeJobs = jobs?.filter(j=>j.is_active).length || 0
   const totalApplicants = Object.values(appCountByJob).reduce((s,n)=>s+n,0)
   const avgPerJob = totalJobs ? (totalApplicants/totalJobs).toFixed(1) : "0"
-  if (dbg) return <div className="p-8 text-red-400 text-xs whitespace-pre-wrap">DEBUG: {dbg} profile:{profile?.id} role:{profile?.role}</div>
   return (
     <div className="min-h-screen bg-cream">
       <div className="mx-auto max-w-6xl px-5 py-8">
