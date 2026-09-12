@@ -4,7 +4,7 @@ import { BadgeCheck, MapPin, Sparkles, Award, BriefcaseBusiness } from "lucide-r
 import { createClient, getSessionSafe } from "@/lib/supabase/server";
 import Avatar from "@/components/ui/Avatar";
 import StartChatButton from "@/components/chat/StartChatButton";
-import { Stars } from "@/components/ratings/RatingForm";
+import RatingForm, { Stars } from "@/components/ratings/RatingForm";
 
 export async function generateMetadata({ params }) {
   const { id } = await params;
@@ -35,6 +35,28 @@ export default async function BaristaPublicPage({ params }) {
   const avg = ratings?.length
     ? (ratings.reduce((s, r) => s + r.stars, 0) / ratings.length).toFixed(1)
     : null;
+
+  // Kalau yang lihat adalah owner dan barista ini pernah melamar di tempatnya,
+  // tampilkan form rating langsung di sini (terikat lamaran terakhir).
+  let rateableApp = null;
+  let myRating = null;
+  if (isOwner) {
+    const { data: myApps } = await supabase
+      .from("applications")
+      .select("id, job_post_id, job_posts ( id, title, owner_id )")
+      .eq("barista_id", id)
+      .order("created_at", { ascending: false })
+      .limit(10);
+    rateableApp = (myApps ?? []).find((a) => a.job_posts?.owner_id === user.id) ?? null;
+    if (rateableApp) {
+      const { data: r } = await supabase
+        .from("ratings")
+        .select("id, stars, comment, updated_at")
+        .eq("application_id", rateableApp.id)
+        .maybeSingle();
+      myRating = r ?? null;
+    }
+  }
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-8">
@@ -104,6 +126,22 @@ export default async function BaristaPublicPage({ params }) {
         <h2 className="text-xs font-extrabold tracking-wide text-espresso uppercase">
           Rating dari owner ({ratings?.length ?? 0})
         </h2>
+        {isOwner && rateableApp && (
+          <div className="mt-3">
+            <RatingForm
+              applicationId={rateableApp.id}
+              jobPostId={rateableApp.job_post_id}
+              ownerId={user.id}
+              baristaId={id}
+              existing={myRating}
+            />
+          </div>
+        )}
+        {isOwner && !rateableApp && (
+          <p className="mt-2 text-sm text-espresso-soft">
+            Barista ini belum pernah melamar di tempatmu — rating tersedia setelah ada lamaran.
+          </p>
+        )}
         {avg ? (
           <div className="mt-3">
             <div className="flex items-center gap-2">
@@ -121,7 +159,7 @@ export default async function BaristaPublicPage({ params }) {
           </div>
         ) : (
           <p className="mt-2 text-sm text-espresso-soft">
-            Belum ada rating. Owner bisa memberi rating setelah menerima lamaran.
+            Belum ada rating. Owner yang pernah menerima lamarannya bisa memberi rating kapan saja.
           </p>
         )}
       </section>
