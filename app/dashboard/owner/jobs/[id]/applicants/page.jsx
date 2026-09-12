@@ -1,8 +1,9 @@
-import { notFound } from "next/navigation";
 import Link from "next/link";
 import { createClient, getSessionSafe, isSupabaseConfigured } from "@/lib/supabase/server";
 import ApplicantsBoard from "@/components/owner/ApplicantsBoard";
 import JobDeleteButton from "@/components/jobs/JobDeleteButton";
+import { EmptyState } from "@/components/ui/EmptyState";
+import { UsersRound } from "lucide-react";
 import { relativeTime } from "@/lib/time";
 
 export const metadata = { title: "Pelamar" };
@@ -20,7 +21,29 @@ export default async function ApplicantsPage({ params }) {
     .eq("id", id)
     .eq("owner_id", user.id)
     .maybeSingle();
-  if (!job) notFound();
+  if (!job) {
+    // Bukan 404 misterius: lowongan tidak ada / sudah dihapus / milik akun lain
+    const { data: anyJob } = await supabase
+      .from("job_posts")
+      .select("id, owner_id")
+      .eq("id", id)
+      .maybeSingle();
+    return (
+      <div className="mx-auto max-w-3xl px-4 py-8">
+        <EmptyState
+          icon={<UsersRound size={22} />}
+          title={anyJob ? "Bukan lowonganmu" : "Lowongan tidak ditemukan"}
+          subtitle={
+            anyJob
+              ? "Lowongan ini milik akun owner lain. Login dengan akun yang membuatnya (mis. owner.senja vs owner.brewok)."
+              : "Lowongan ini sudah dihapus atau ID-nya salah. Cek daftar lowongan di dashboard."
+          }
+          actionLabel="Ke Dashboard"
+          actionHref="/dashboard/owner"
+        />
+      </div>
+    );
+  }
 
   // Mark pending applications as viewed (owner opened the list)
   await supabase
