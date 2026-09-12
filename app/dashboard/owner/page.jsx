@@ -75,9 +75,9 @@ export default async function OwnerDashboardPage() {
           {!jobs || jobs.length === 0 ? (
             <div className="p-8">
               <EmptyState
-                icon={Megaphone}
+                icon={<Megaphone size={22} />}
                 title="Belum ada lowongan"
-                description="Buat lowongan pertama. Manager akan menilai dari kelengkapan data: lokasi, gaji, dan deskripsi yang jelas."
+                subtitle="Buat lowongan pertama. Manager akan menilai dari kelengkapan data: lokasi, gaji, dan deskripsi yang jelas."
                 actionLabel="Buat Lowongan"
                 actionHref="/dashboard/owner/jobs/new"
               />
