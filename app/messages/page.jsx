@@ -4,6 +4,7 @@ import { createClient, getSessionSafe, isSupabaseConfigured } from "@/lib/supaba
 import Avatar from "@/components/ui/Avatar";
 import EmptyState from "@/components/ui/EmptyState";
 import Badge from "@/components/ui/Badge";
+import ConversationDeleteButton from "@/components/chat/ConversationDeleteButton";
 
 export const metadata = { title: "Pesan" };
 
@@ -76,28 +77,33 @@ export default async function InboxPage() {
               };
           const last = lastByConv[c.id];
           return (
-            <Link
+            <div
               key={c.id}
-              href={`/messages/${c.id}`}
-              className="flex items-center gap-4 rounded-2xl card-dark p-4 shadow-sm transition-shadow hover:shadow-md"
+              className="flex items-center gap-2 rounded-2xl card-dark p-4 shadow-sm transition-shadow hover:shadow-md"
             >
-              <Avatar src={counterpart.avatar} name={counterpart.name} size="md" />
-              <div className="min-w-0 flex-1">
-                <div className="flex items-center justify-between gap-2">
-                  <p className="truncate font-bold text-espresso">
-                    {counterpart.name}
+              <Link
+                href={`/messages/${c.id}`}
+                className="flex min-w-0 flex-1 items-center gap-4"
+              >
+                <Avatar src={counterpart.avatar} name={counterpart.name} size="md" />
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-center justify-between gap-2">
+                    <p className="truncate font-bold text-espresso">
+                      {counterpart.name}
+                    </p>
+                    {c.needs_human && (
+                      <Badge classes="bg-caramel/10 text-caramel">✨ butuh kamu</Badge>
+                    )}
+                  </div>
+                  <p className="truncate text-xs text-espresso-soft">
+                    {last
+                      ? `${last.is_ai ? "✨ " : ""}${last.body}`
+                      : "Belum ada pesan — mulai ngobrol!"}
                   </p>
-                  {c.needs_human && (
-                    <Badge classes="bg-caramel/10 text-caramel">✨ butuh kamu</Badge>
-                  )}
                 </div>
-                <p className="truncate text-xs text-espresso-soft">
-                  {last
-                    ? `${last.is_ai ? "✨ " : ""}${last.body}`
-                    : "Belum ada pesan — mulai ngobrol!"}
-                </p>
-              </div>
-            </Link>
+              </Link>
+              <ConversationDeleteButton conversationId={c.id} name={counterpart.name} />
+            </div>
           );
         })}
       </div>

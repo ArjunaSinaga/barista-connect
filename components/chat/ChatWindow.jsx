@@ -2,10 +2,11 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { ArrowLeft, Send, Sparkles, LoaderCircle } from "lucide-react";
+import { ArrowLeft, Send, Sparkles, LoaderCircle, X } from "lucide-react";
 import Avatar from "@/components/ui/Avatar";
 import { useToast } from "@/components/ui/toast";
 import { createClient } from "@/lib/supabase/client";
+import ConversationDeleteButton from "@/components/chat/ConversationDeleteButton";
 
 export default function ChatWindow({
   conversationId,
@@ -93,6 +94,21 @@ export default function ChatWindow({
     }
   }
 
+  async function handleDeleteMessage(id) {
+    if (!confirm("Hapus pesan ini?")) return;
+    const prev = messages;
+    setMessages((cur) => cur.filter((x) => x.id !== id));
+    try {
+      const supabase = createClient();
+      const { error } = await supabase.from("messages").delete().eq("id", id);
+      if (error) throw error;
+      toast("Pesan dihapus");
+    } catch {
+      setMessages(prev);
+      toast("Gagal menghapus pesan", "error");
+    }
+  }
+
   async function handleSuggest() {
     if (suggesting) return;
     setSuggesting(true);
@@ -143,6 +159,7 @@ export default function ChatWindow({
           )}
         </div>
         <span className="h-2 w-2 rounded-full bg-green-500 animate-pulse" title="Realtime" />
+        <ConversationDeleteButton conversationId={conversationId} name={counterpartName} variant="header" />
       </div>
 
       {/* messages */}
@@ -170,13 +187,24 @@ export default function ChatWindow({
             >
               <div className="max-w-[80%]">
                 <div
-                  className={`rounded-2xl px-4 py-3 text-sm leading-relaxed shadow-sm ${
+                  className={`group relative rounded-2xl px-4 py-3 text-sm leading-relaxed shadow-sm ${
                     mine
                       ? "rounded-br-sm bg-gradient-to-br from-[#d4a24e] to-[#b56a2a] text-white"
                       : "rounded-bl-sm card-dark border border-latte text-espresso"
                   }`}
                 >
                   <p className="whitespace-pre-wrap">{m.body}</p>
+                  {mine && (
+                    <button
+                      type="button"
+                      onClick={() => handleDeleteMessage(m.id)}
+                      title="Hapus pesan"
+                      aria-label="Hapus pesan"
+                      className="absolute -left-8 top-1/2 -translate-y-1/2 rounded-full p-1.5 text-espresso-soft/40 opacity-0 transition-opacity hover:bg-red-50 hover:text-red-600 group-hover:opacity-100"
+                    >
+                      <X size={14} />
+                    </button>
+                  )}
                   <p className={`mt-1 text-[10px] ${mine ? "text-white/70 text-right" : "text-espresso-soft"}`}>{new Date(m.created_at).toLocaleTimeString("id-ID",{hour:"2-digit",minute:"2-digit"})}</p>
                 </div>
                 {m.is_ai && (
