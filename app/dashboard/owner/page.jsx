@@ -2,6 +2,7 @@
 import { Plus, Briefcase, Users, Eye, Megaphone, TrendingUp } from "lucide-react"
 import { createClient, getSessionSafe, isSupabaseConfigured } from "@/lib/supabase/server"
 import { EmptyState } from "@/components/ui/EmptyState"
+import JobDeleteButton from "@/components/jobs/JobDeleteButton"
 
 export const metadata = { title: "Dashboard Owner - Barista Connect" }
 
@@ -111,7 +112,9 @@ export default async function OwnerDashboardPage() {
                         <td className="px-3 py-3 text-center">{job.is_active ? <span className="text-xs bg-caramel text-white px-2 py-1 rounded-full font-bold">Aktif</span> : <span className="text-xs bg-latte text-espresso-soft px-2 py-1 rounded-full font-bold">Nonaktif</span>}</td>
                         <td className="px-5 py-3 text-right flex items-center justify-end gap-2">
                           <Link href={`/dashboard/owner/jobs/${job.id}/applicants`} className="text-xs font-bold text-espresso hover:text-caramel inline-flex items-center gap-1"><Eye size={14}/>Kelola</Link>
+                          <Link href={`/dashboard/owner/jobs/${job.id}/edit`} className="text-xs font-bold text-espresso hover:text-caramel">Edit</Link>
                           <Link href={`/jobs/${job.id}`} className="text-xs font-bold text-caramel hover:underline">Lihat</Link>
+                          <JobDeleteButton jobId={job.id} jobTitle={job.title} />
                         </td>
                       </tr>
                     ))}
@@ -129,7 +132,11 @@ export default async function OwnerDashboardPage() {
                     <p className="text-xs text-espresso-soft">{job.location} | {(job.employment_types?.[0] || job.employment_type)}</p>
                     <div className="flex gap-2 mt-3">
                       <Link href={`/dashboard/owner/jobs/${job.id}/applicants`} className="flex-1 text-center text-xs font-bold bg-espresso text-white py-2 rounded-full">Kelola</Link>
+                      <Link href={`/dashboard/owner/jobs/${job.id}/edit`} className="flex-1 text-center text-xs font-bold border border-latte py-2 rounded-full">Edit</Link>
                       <Link href={`/jobs/${job.id}`} className="flex-1 text-center text-xs font-bold border border-latte py-2 rounded-full">Lihat</Link>
+                    </div>
+                    <div className="mt-2 text-center">
+                      <JobDeleteButton jobId={job.id} jobTitle={job.title} />
                     </div>
                   </div>
                 ))}

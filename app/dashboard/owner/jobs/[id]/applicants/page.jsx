@@ -1,6 +1,8 @@
 import { notFound } from "next/navigation";
+import Link from "next/link";
 import { createClient, getSessionSafe, isSupabaseConfigured } from "@/lib/supabase/server";
 import ApplicantsBoard from "@/components/owner/ApplicantsBoard";
+import JobDeleteButton from "@/components/jobs/JobDeleteButton";
 import { relativeTime } from "@/lib/time";
 
 export const metadata = { title: "Pelamar" };
@@ -46,6 +48,15 @@ export default async function ApplicantsPage({ params }) {
           <span className="text-caramel">{job.title}</span>{" "}
           {!job.is_active && "(dijeda)"}
         </p>
+        <div className="mt-3 flex flex-wrap items-center gap-2">
+          <Link
+            href={`/dashboard/owner/jobs/${job.id}/edit`}
+            className="inline-flex items-center gap-1.5 rounded-full border border-latte px-4 py-2 text-xs font-bold text-espresso hover:border-caramel"
+          >
+            Edit Lowongan
+          </Link>
+          <JobDeleteButton jobId={job.id} jobTitle={job.title} variant="button" />
+        </div>
       </div>
       <ApplicantsBoard
         jobId={job.id}
