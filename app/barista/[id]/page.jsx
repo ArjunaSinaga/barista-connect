@@ -26,6 +26,15 @@ export default async function BaristaPublicPage({ params }) {
   const isSelf = user?.id === b.id;
   const isOwner = profile?.role === "owner";
 
+  // Riwayat kerja: cafe tempat barista pernah/sedang bekerja
+  const { data: workHistory } = await supabase
+    .from("team_members")
+    .select("job_title, status, hired_at, owner_id, owners ( business_name )")
+    .eq("barista_id", id)
+    .in("status", ["active", "terminated"])
+    .order("hired_at", { ascending: false })
+    .limit(10);
+
   // Blind review: rating owner baru tampil publik setelah barista menilai balik.
   const { data: ownerRatings } = await supabase
     .from("ratings")
@@ -132,6 +141,33 @@ export default async function BaristaPublicPage({ params }) {
         <StatCard icon={<BadgeCheck size={16} />} label="Skill" value={`${b.skills?.length ?? 0}`} />
         <StatCard icon={<Award size={16} />} label="Sertifikat" value={`${b.certificates?.length ?? 0}`} />
       </div>
+
+      {/* Riwayat Kerja */}
+      {(workHistory ?? []).length > 0 && (
+        <section className="mt-4 rounded-2xl card-dark p-6">
+          <h2 className="text-xs font-extrabold tracking-wide text-espresso uppercase">
+            Riwayat Kerja ({workHistory.length})
+          </h2>
+          <ul className="mt-3 space-y-2">
+            {workHistory.map((w, i) => (
+              <li key={i} className="flex items-center justify-between gap-3 rounded-xl bg-cream px-4 py-3">
+                <div className="min-w-0">
+                  <Link
+                    href={`/owner/${w.owner_id}`}
+                    className="block truncate text-sm font-bold text-espresso hover:text-caramel hover:underline"
+                  >
+                    {w.owners?.business_name ?? "Coffee shop"}
+                  </Link>
+                  <p className="truncate text-xs text-espresso-soft">{w.job_title || "Barista"}</p>
+                </div>
+                <span className={`shrink-0 rounded-full px-2.5 py-1 text-[11px] font-bold ${w.status === "active" ? "bg-green-100 text-green-700" : "bg-gray-200 text-gray-600"}`}>
+                  {w.status === "active" ? "Aktif" : "Selesai"}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
 
       {/* Rating dari owner */}
       <section className="mt-4 rounded-2xl card-dark p-6">

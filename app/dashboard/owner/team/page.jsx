@@ -23,7 +23,7 @@ export default async function TeamPage() {
   const { data: members } = await supabase
     .from("team_members")
     .select(
-      `id, status, job_title, job_post_id, application_id, hired_at,
+      `id, status, job_title, job_post_id, application_id, hired_at, barista_id,
        barista_profiles ( id, full_name, profile_picture_url, location_place, years_of_experience )`
     )
     .eq("owner_id", user.id)
@@ -47,18 +47,34 @@ export default async function TeamPage() {
     pairedSet = new Set((pairs ?? []).map((r) => r.team_member_id));
   }
 
+  // Grup: 1 baris per barista, tiap lowongan jadi sub-baris
+  const grouped = [];
+  const byBarista = new Map();
+  for (const m of members ?? []) {
+    if (!byBarista.has(m.barista_id)) {
+      const g = { baristaId: m.barista_id, profile: m.barista_profiles, jobs: [] };
+      byBarista.set(m.barista_id, g);
+      grouped.push(g);
+    }
+    byBarista.get(m.barista_id).jobs.push(m);
+  }
+  for (const g of grouped) {
+    g.isActive = g.jobs.some((j) => j.status === "active");
+    g.memberIds = g.jobs.map((j) => j.id);
+  }
+
   return (
     <div className="mx-auto max-w-3xl px-4 py-8">
       <p className="text-xs font-bold tracking-widest text-caramel uppercase">Owner</p>
       <h1 className="mt-1 text-2xl font-extrabold text-espresso">
-        Tim Saya ({members?.length ?? 0})
+        Tim Saya ({grouped.length})
       </h1>
       <p className="mt-1 text-sm text-espresso-soft">
-        Pekerja yang kamu terima otomatis tercatat di sini — tetap ada walau lowongannya dihapus.
+        Satu baris per orang. Riwayat cafe tempat ia bekerja tampil di profilnya.
       </p>
 
       <div className="mt-5 space-y-3 pb-8">
-        {(!members || !members.length) && (
+        {grouped.length === 0 && (
           <EmptyState
             icon={<UsersRound size={22} />}
             title="Belum ada pekerja"
@@ -67,60 +83,68 @@ export default async function TeamPage() {
             actionHref="/dashboard/owner"
           />
         )}
-        {(members ?? []).map((m) => {
-          const b = m.barista_profiles;
-          // Rating milik sendiri selalu terlihat; publik menunggu blind pair.
-          const r = ratingMap[m.id] ?? null;
-          const rPublic = pairedSet.has(m.id) ? r : null;
-          const meta = TEAM_META[m.status] ?? TEAM_META.active;
+        {grouped.map((g) => {
+          const b = g.profile;
+          const meta = g.isActive ? TEAM_META.active : TEAM_META.terminated;
           return (
-            <div key={m.id} className="rounded-2xl card-dark p-4 flex items-center gap-4">
-              <Avatar src={b?.profile_picture_url} name={b?.full_name} size="md" />
-              <div className="min-w-0 flex-1">
-                <div className="flex items-center gap-2 flex-wrap">
-                  <span className="truncate font-bold text-espresso">
-                    {b?.full_name ?? "Barista"}
-                  </span>
-                  <Badge classes={meta.classes}>{meta.label}</Badge>
-                </div>
-                <p className="mt-0.5 truncate text-xs text-espresso-soft">
-                  {m.job_title || "Lowongan"} • {b?.location_place ?? "-"} • {b?.years_of_experience ?? 0} th pengalaman
-                </p>
-                <div className="mt-1">
-                  {r ? (
-                    <span className="inline-flex items-center gap-2">
-                      <Stars value={r.stars} size={14} />
-                      {r.comment && (
-                        <span className="truncate text-xs text-espresso-soft italic">“{r.comment}”</span>
-                      )}
-                      {!rPublic && (
-                        <span className="text-[11px] text-espresso-soft">· menunggu rating balasan</span>
-                      )}
+            <div key={g.baristaId} className="rounded-2xl card-dark p-4">
+              <div className="flex items-center gap-4">
+                <Avatar src={b?.profile_picture_url} name={b?.full_name} size="md" />
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <span className="truncate font-bold text-espresso">
+                      {b?.full_name ?? "Barista"}
                     </span>
-                  ) : m.application_id && m.job_post_id ? (
-                    <Link
-                      href={`/dashboard/owner/jobs/${m.job_post_id}/applicants`}
-                      className="text-xs font-bold text-caramel hover:underline"
-                    >
-                      Belum dirating — kasih rating →
-                    </Link>
-                  ) : (
-                    <Link
-                      href={`/barista/${b?.id}`}
-                      className="text-xs font-bold text-caramel hover:underline"
-                    >
-                      Belum dirating — nilai di profil →
-                    </Link>
-                  )}
+                    <Badge classes={meta.classes}>{meta.label}</Badge>
+                  </div>
+                  <p className="mt-0.5 truncate text-xs text-espresso-soft">
+                    {b?.location_place ?? "-"} • {b?.years_of_experience ?? 0} th pengalaman • {g.jobs.length} lowongan
+                  </p>
                 </div>
+                <Link
+                  href={`/barista/${b?.id}`}
+                  className="shrink-0 text-xs font-bold text-espresso-soft hover:text-caramel"
+                >
+                  Profil →
+                </Link>
+                <TeamRemoveButton memberIds={g.memberIds} name={b?.full_name ?? "Barista"} />
               </div>
-              <Link
-                href={`/barista/${b?.id}`}
-                className="shrink-0 text-xs font-bold text-espresso-soft hover:text-caramel"
-              >
-                Profil →
-              </Link>
-              <TeamRemoveButton memberId={m.id} name={b?.full_name ?? "Barista"} />
+              <ul className="mt-3 space-y-2 border-t border-latte/60 pt-3">
+                {g.jobs.map((m) => {
+                  const r = ratingMap[m.id] ?? null;
+                  const jm = TEAM_META[m.status] ?? TEAM_META.active;
+                  return (
+                    <li key={m.id} className="flex items-center justify-between gap-2 text-xs">
+                      <span className="min-w-0 truncate text-espresso-soft">
+                        <span className="font-bold text-espresso">{m.job_title || "Lowongan"}</span>
+                        {" "}· <Badge classes={jm.classes}>{jm.label}</Badge>
+                      </span>
+                      {r ? (
+                        <span className="inline-flex shrink-0 items-center gap-1.5">
+                          <Stars value={r.stars} size={12} />
+                          {!pairedSet.has(m.id) && (
+                            <span className="text-[11px] text-espresso-soft">· menunggu balasan</span>
+                          )}
+                        </span>
+                      ) : m.application_id && m.job_post_id ? (
+                        <Link
+                          href={`/dashboard/owner/jobs/${m.job_post_id}/applicants`}
+                          className="shrink-0 font-bold text-caramel hover:underline"
+                        >
+                          Kasih rating →
+                        </Link>
+                      ) : (
+                        <Link
+                          href={`/barista/${b?.id}`}
+                          className="shrink-0 font-bold text-caramel hover:underline"
+                        >
+                          Nilai di profil →
+                        </Link>
+                      )}
+                    </li>
+                  );
+                })}
+              </ul>
             </div>
           );
         })}
