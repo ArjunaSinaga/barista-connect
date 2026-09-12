@@ -10,11 +10,21 @@ export default async function OwnerDashboardPage() {
     return <div className="p-8 text-center text-sm text-espresso-soft">Supabase belum dikonfigurasi.</div>
   }
   const { user, profile } = await getSessionSafe()
-  if (!user || !profile) return <div className="p-8">Silakan login.</div>
-  const supabase = await createClient()
-  const { data: jobs } = await supabase.from("job_posts").select("id,title,location,salary_text,employment_type,employment_types,is_active,created_at").eq("owner_id", profile.id).order("created_at", { ascending: false })
-  const jobIds = (jobs||[]).map(j=>j.id)
-  const { data: apps } = jobIds.length ? await supabase.from("applications").select("job_post_id").in("job_post_id", jobIds) : { data: [] }
+  if (!user || !profile) return <div className="p-8 text-center">Silakan login di <a href="/login" className="text-caramel underline">/login</a>.</div>
+  let jobs = null
+  let apps = []
+  try {
+    const supabase = await createClient()
+    const res = await supabase.from("job_posts").select("id,title,location,salary_text,employment_type,employment_types,is_active,created_at").eq("owner_id", profile.id).order("created_at", { ascending: false })
+    jobs = res.data
+    if (res.error) console.error("jobs error", res.error)
+    const jobIds = (jobs||[]).map(j=>j.id)
+    if (jobIds.length) {
+      const r2 = await supabase.from("applications").select("job_post_id").in("job_post_id", jobIds)
+      apps = r2.data ?? []
+      if (r2.error) console.error("apps error", r2.error)
+    }
+  } catch(e) { console.error("dashboard owner error", e); jobs = [] }
   const appCountByJob = {}
   ;(apps||[]).forEach(a => { appCountByJob[a.job_post_id] = (appCountByJob[a.job_post_id]||0)+1 })
   const totalJobs = jobs?.length || 0
