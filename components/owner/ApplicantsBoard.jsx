@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
@@ -22,6 +22,7 @@ import { useToast } from "@/components/ui/toast";
 import { STATUS_META } from "@/lib/constants";
 import { relativeTime } from "@/lib/time";
 import { createClient } from "@/lib/supabase/client";
+import RatingForm from "@/components/ratings/RatingForm";
 
 const ORDER = { accepted: 0, pending: 1, viewed: 2, rejected: 3, terminated: 4 };
 
@@ -35,6 +36,26 @@ export default function ApplicantsBoard({
   const [apps, setApps] = useState(initialApplicants);
   const [tab, setTab] = useState("all");
   const [busyId, setBusyId] = useState(null);
+  const [ratings, setRatings] = useState({});
+
+  useEffect(() => {
+    async function loadRatings() {
+      const ids = initialApplicants
+        .filter((a) => a.status === "accepted" || a.status === "terminated")
+        .map((a) => a.id);
+      if (!ids.length) return;
+      const supabase = createClient();
+      const { data } = await supabase
+        .from("ratings")
+        .select("id, application_id, stars, comment, updated_at")
+        .in("application_id", ids);
+      const map = {};
+      (data ?? []).forEach((r) => { map[r.application_id] = r; });
+      setRatings(map);
+    }
+    loadRatings();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const filtered = useMemo(
     () =>
@@ -207,6 +228,17 @@ export default function ApplicantsBoard({
               </div>
 
               <div className="mt-4 flex flex-wrap items-center gap-2 border-t border-latte/60 pt-4">
+                {(app.status === "accepted" || app.status === "terminated") && (
+                  <div className="w-full">
+                    <RatingForm
+                      applicationId={app.id}
+                      jobPostId={jobId}
+                      ownerId={ownerId}
+                      baristaId={b?.id}
+                      existing={ratings[app.id] ?? null}
+                    />
+                  </div>
+                )}
                 {app.status !== "accepted" && app.status !== "rejected" && app.status !== "terminated" && (
                   <>
                     <Button

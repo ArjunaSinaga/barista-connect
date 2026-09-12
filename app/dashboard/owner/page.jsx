@@ -40,9 +40,14 @@ export default async function OwnerDashboardPage() {
             <h1 className="text-3xl font-black text-espresso leading-none mt-1">Lowongan Saya</h1>
             <p className="text-sm text-espresso-soft mt-2 max-w-xl">Pantau performa rekrutmen seperti laporan cabang. Semua lowongan dan pelamar tercatat rapi, siap dipresentasikan ke manager.</p>
           </div>
+          <div className="flex flex-wrap items-center gap-2">
+          <Link href="/dashboard/owner/team" className="inline-flex items-center gap-2 rounded-full border border-latte bg-white px-5 py-3 text-sm font-bold text-espresso hover:border-caramel">
+            <Users size={16}/> Tim Saya
+          </Link>
           <Link href="/dashboard/owner/jobs/new" className="inline-flex items-center gap-2 rounded-full bg-espresso px-5 py-3 text-sm font-bold text-white hover:bg-black transition">
             <Plus size={16}/> Buat Lowongan
           </Link>
+          </div>
         </div>
 
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-6">

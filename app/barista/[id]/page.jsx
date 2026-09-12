@@ -4,6 +4,7 @@ import { BadgeCheck, MapPin, Sparkles, Award, BriefcaseBusiness } from "lucide-r
 import { createClient, getSessionSafe } from "@/lib/supabase/server";
 import Avatar from "@/components/ui/Avatar";
 import StartChatButton from "@/components/chat/StartChatButton";
+import { Stars } from "@/components/ratings/RatingForm";
 
 export async function generateMetadata({ params }) {
   const { id } = await params;
@@ -24,6 +25,16 @@ export default async function BaristaPublicPage({ params }) {
   const { user, profile } = await getSessionSafe();
   const isSelf = user?.id === b.id;
   const isOwner = profile?.role === "owner";
+
+  const { data: ratings } = await supabase
+    .from("ratings")
+    .select("stars, comment, created_at")
+    .eq("barista_id", id)
+    .order("created_at", { ascending: false })
+    .limit(10);
+  const avg = ratings?.length
+    ? (ratings.reduce((s, r) => s + r.stars, 0) / ratings.length).toFixed(1)
+    : null;
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-8">
@@ -87,6 +98,33 @@ export default async function BaristaPublicPage({ params }) {
         <StatCard icon={<BadgeCheck size={16} />} label="Skill" value={`${b.skills?.length ?? 0}`} />
         <StatCard icon={<Award size={16} />} label="Sertifikat" value={`${b.certificates?.length ?? 0}`} />
       </div>
+
+      {/* Rating dari owner */}
+      <section className="mt-4 rounded-2xl card-dark p-6">
+        <h2 className="text-xs font-extrabold tracking-wide text-espresso uppercase">
+          Rating dari owner ({ratings?.length ?? 0})
+        </h2>
+        {avg ? (
+          <div className="mt-3">
+            <div className="flex items-center gap-2">
+              <Stars value={Math.round(avg)} size={18} />
+              <span className="text-lg font-black text-espresso">{avg}/5</span>
+            </div>
+            <ul className="mt-3 space-y-2">
+              {(ratings ?? []).filter((r) => r.comment).slice(0, 5).map((r, i) => (
+                <li key={i} className="rounded-xl bg-cream px-4 py-3">
+                  <Stars value={r.stars} size={12} />
+                  <p className="mt-1 text-sm text-espresso italic">“{r.comment}”</p>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ) : (
+          <p className="mt-2 text-sm text-espresso-soft">
+            Belum ada rating. Owner bisa memberi rating setelah menerima lamaran.
+          </p>
+        )}
+      </section>
 
       {/* Skills */}
       {b.skills?.length > 0 && (
