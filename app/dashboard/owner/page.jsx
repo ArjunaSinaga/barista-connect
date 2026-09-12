@@ -11,26 +11,28 @@ export default async function OwnerDashboardPage() {
   }
   const { user, profile } = await getSessionSafe()
   if (!user || !profile) return <div className="p-8 text-center">Silakan login di <a href="/login" className="text-caramel underline">/login</a>.</div>
-  let jobs = null
+  let jobs = []
   let apps = []
+  let dbg = ""
   try {
     const supabase = await createClient()
     const res = await supabase.from("job_posts").select("id,title,location,salary_text,employment_type,employment_types,is_active,created_at").eq("owner_id", profile.id).order("created_at", { ascending: false })
-    jobs = res.data
-    if (res.error) console.error("jobs error", res.error)
-    const jobIds = (jobs||[]).map(j=>j.id)
+    if (res.error) dbg = `jobs_error:${res.error.message}`
+    jobs = res.data ?? []
+    const jobIds = jobs.map(j=>j.id)
     if (jobIds.length) {
       const r2 = await supabase.from("applications").select("job_post_id").in("job_post_id", jobIds)
+      if (r2.error) dbg += ` apps_error:${r2.error.message}`
       apps = r2.data ?? []
-      if (r2.error) console.error("apps error", r2.error)
     }
-  } catch(e) { console.error("dashboard owner error", e); jobs = [] }
+  } catch(e) { dbg = `catch:${String(e?.message||e)}`; jobs = [] }
   const appCountByJob = {}
   ;(apps||[]).forEach(a => { appCountByJob[a.job_post_id] = (appCountByJob[a.job_post_id]||0)+1 })
   const totalJobs = jobs?.length || 0
   const activeJobs = jobs?.filter(j=>j.is_active).length || 0
   const totalApplicants = Object.values(appCountByJob).reduce((s,n)=>s+n,0)
   const avgPerJob = totalJobs ? (totalApplicants/totalJobs).toFixed(1) : "0"
+  if (dbg) return <div className="p-8 text-red-400 text-xs whitespace-pre-wrap">DEBUG: {dbg} profile:{profile?.id} role:{profile?.role}</div>
   return (
     <div className="min-h-screen bg-cream">
       <div className="mx-auto max-w-6xl px-5 py-8">
