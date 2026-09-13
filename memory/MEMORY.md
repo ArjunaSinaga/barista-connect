@@ -1,4 +1,29 @@
-# Memory
+## BaristaConnect (2026-09-12, dari sesi sebelah)
+- Next.js + Supabase + Vercel live; repo ArjunaSinaga/barista-connect, branch main
+- RLS initplan fixed, FK indexes added, SECURITY DEFINER hardened, cvs bucket public, enum terminated
+- HIBP Pro-only diganti cek k-anonymity gratis di signup (lib/pwned.js)
+- Akun demo 4: owner.senja, owner.brewok, barista1, barista2 / password123
+- Dashboard owner 500 root cause: EmptyState icon mentah; palette dark roast unified
+- Fitur pelamar: CV/cover/WA, Keluarkan (terminated), Hapus Lowongan; chat polish; /about
+- AI suggest: Qwen bocor <think> → fix per-provider reasoning hidden (HEAD 56377ea)
+- Sisa: advisor WARN HIBP (abaikan, sudah app-layer); AGENTS.md dirty oleh block next dev
+- Next: verifikasi AI suggest di Vercel live, push bila ada fix baru
+- 2026-09-12: tombol Hapus Lowongan tak terlihat (cuma di edit page tanpa link) → tambah JobDeleteButton + link Edit di dashboard owner & halaman pelamar (00795db, pushed)
+- 2026-09-12: fitur rating owner→pekerja (bintang 1-5 + komen, ubah seminggu sekali via RLS) + halaman Tim Saya + avg rating di profil barista (911598b, pushed)
+- 2026-09-12: tim permanen via team_members + trigger sync (diterima→catat, terminated→tandai, hapus loker→tetap ada) (1ce34b4, pushed; terverifikasi via SQL + data tes dibersihkan)
+- 2026-09-12: hapus chat — RLS delete conversations/messages + tombol hapus percakapan (inbox & thread) + hapus pesan sendiri per bubble (64f0b64, pushed)
+- 2026-09-12: 404 misterius di applicants/edit → diganti EmptyState jelas (bukan lowonganmu / sudah dihapus); root cause kemungkinan login akun owner yang salah (5cc6ac9, pushed)
+- 2026-09-12: rating kapan saja (RLS dilonggarkan, form di semua status) + tombol hapus anggota tim (40429e3, pushed)
+- 2026-09-12: form rating langsung di profil barista untuk owner (terikat lamaran terakhir) (48b3cca, pushed)
+- 2026-09-12: rating dua arah + blind review: team applicant-status, ratings basis tim, cafe_ratings, RPC resign, Selesai Bekerja, /owner/[id], badge lowongan (bcef5f9, pushed; trigger terverifikasi)
+- 2026-09-12: trigger team SECURITY DEFINER (fix RLS lamaran barista ditolak); dashboard barista beneran (ringkasan + lamaran terbaru + feed) (844f996, pushed)
+- 2026-09-12: fix hubungi via pesan barista → langsung buka/buat percakapan (9ecb985, pushed)
+- 2026-09-12: tim 1 baris per orang (sub-baris per lowongan) + Riwayat Kerja di profil barista (9250224, pushed)
+- 2026-09-12: WIPE data bisnis (4 akun tetap) + multi-cafe: tabel cafes, avatar owner, job cafe_id wajib, bucket cafes, CRUD Cafe Saya, foto wajib, profil /cafes/[id], hapus cafe cascade lowongan (591a6e3, pushed). SISA: tambah 2 owner + 2 barista (user buat via signup)
+- 2026-09-12: fix palette form — Field.jsx dark roast (bg gelap + teks terang), kartu peran signup eksplisit (6e9f5c2, pushed)
+- 2026-09-12: rampingkan onboarding owner 1 langkah (foto+nama; alamat/peta/WA pindah ke per-cafe) (483aba9, pushed)
+- 2026-09-12: landing jujur — statistik live (28629b7), buang badge internal + klaim kota/update harian (8cd2130, pushed)
+- 2026-09-13: foto ringkasan onboarding barista (4fa8bff); user tolak deteksi wajah — tidak diperlukan
 
 ## User History
 - 2026-09-11: Complete LDPlayer removal - all traces deleted from system
