@@ -59,9 +59,6 @@ export default async function LandingPage() {
 
         <div className="relative mx-auto max-w-6xl px-4 pt-12 pb-14 sm:pt-20 sm:pb-16">
           <div className="mx-auto max-w-3xl text-center">
-            <span className="inline-flex items-center gap-2 rounded-full border border-[#d4a24e]/20 card-dark/[0.05] px-3.5 py-1.5 text-[11px] font-bold tracking-[0.14em] text-[#d4a24e] backdrop-blur">
-              <Sparkles size={12} className="text-[#d4a24e]" /> BARISTA CONNECT — DARK ROAST EDITION
-            </span>
             <h1 className="mt-6 text-[32px] font-black leading-[0.95] tracking-[-0.03em] sm:text-[56px]">
               <span className="text-[#fdf6ec]">Seduh</span>{" "}
               <span className="text-[#d4a24e]">kariermu.</span>
@@ -87,12 +84,7 @@ export default async function LandingPage() {
             <input name="q" placeholder="Cari role, skill, atau lokasi..." className="h-9 w-full bg-transparent text-sm text-white placeholder:text-white/40 focus:outline-none" />
           </div>
           <button type="submit" className="inline-flex h-9 shrink-0 items-center justify-center gap-1.5 rounded-full bg-[#d4a24e] px-6 text-sm font-bold text-[#1c1412] hover:bg-[#c09342]">Cari <ArrowRight size={16} /></button>
-        </form>
-            <div className="mt-6 flex items-center justify-center gap-5 text-xs text-[#fdf6ec]/45">
-              <span className="inline-flex items-center gap-1.5"><MapPin size={13} className="text-[#d4a24e]" /> Jakarta • Surabaya • Bandung</span>
-              <span className="h-3 w-px bg-white/10" />
-              <span className="inline-flex items-center gap-1.5"><Clock3 size={13} className="text-[#d4a24e]" /> Update harian</span>
-            </div>
+          </form>
           </div>
 
           {/* glass stats */}
