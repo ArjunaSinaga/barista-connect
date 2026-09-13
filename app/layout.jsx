@@ -1,4 +1,5 @@
 import { Plus_Jakarta_Sans } from "next/font/google";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 import { getSessionSafe } from "@/lib/supabase/server";
 import Navbar from "@/components/layout/Navbar";
@@ -31,6 +32,7 @@ export default async function RootLayout({ children }) {
           <main className="flex-1">{children}</main>
           <Footer />
         </ToastProvider>
+        <SpeedInsights />
       </body>
     </html>
   );
