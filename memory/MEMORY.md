@@ -24,6 +24,7 @@
 - 2026-09-12: rampingkan onboarding owner 1 langkah (foto+nama; alamat/peta/WA pindah ke per-cafe) (483aba9, pushed)
 - 2026-09-12: landing jujur — statistik live (28629b7), buang badge internal + klaim kota/update harian (8cd2130, pushed)
 - 2026-09-13: foto ringkasan onboarding barista (4fa8bff); user tolak deteksi wajah — tidak diperlukan
+- 2026-09-13: profil saya view mode versi ramping: BaristaProfileView + OwnerProfileView share, dashboard jadi view + ?edit=1, banner privat (bf96a6f, pushed)
 
 ## User History
 - 2026-09-11: Complete LDPlayer removal - all traces deleted from system
