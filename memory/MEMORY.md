@@ -27,6 +27,7 @@
 - 2026-09-13: profil saya view mode versi ramping: BaristaProfileView + OwnerProfileView share, dashboard jadi view + ?edit=1, banner privat (bf96a6f, pushed)
 - 2026-09-13: navbar desktop tambah link Profil per role (e1e02e3, pushed)
 - 2026-09-13: profile view centered (header vertikal tengah, stat/section center) barista+owner (1a72087, pushed)
+- 2026-09-13: dashboard barista stat boxes tinted per status (97e6365, pushed)
 
 ## User History
 - 2026-09-11: Complete LDPlayer removal - all traces deleted from system
