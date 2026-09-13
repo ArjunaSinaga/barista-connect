@@ -1,0 +1,12 @@
+{
+  "files.exclude": {
+    "**/node_modules": true,
+    "**/.next": true,
+    "**/.vercel": true,
+    "**/.agent": true,
+    "**/.agents": true,
+    "**/.opencode": true,
+    "**/.llm-wiki": true,
+    "**/archify-demo": true
+  }
+}
