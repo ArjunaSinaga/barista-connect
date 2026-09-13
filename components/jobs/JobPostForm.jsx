@@ -9,7 +9,7 @@ import Badge from "@/components/ui/Badge";
 import { useToast } from "@/components/ui/toast";
 import { createClient } from "@/lib/supabase/client";
 import { jobPostSchema } from "@/lib/validation";
-import { CITIES, EMPLOYMENT_LABELS, EMPLOYMENT_TYPES } from "@/lib/constants";
+import { EMPLOYMENT_LABELS, EMPLOYMENT_TYPES } from "@/lib/constants";
 
 const TYPE_CLASSES = {
   full_time: "bg-caramel/10 text-caramel",
@@ -56,11 +56,18 @@ export default function JobPostForm({ initial = null }) {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    const parsed = jobPostSchema.safeParse(form);
+    const cafe = cafes.find((c) => c.id === form.cafe_id);
+    const withLocation = { ...form, location: cafe?.location?.trim() || form.location };
+    const parsed = jobPostSchema.safeParse(withLocation);
     if (!parsed.success) {
       toast(parsed.error.issues[0]?.message ?? "Periksa isian", "error");
       return;
     }
+    if (!withLocation.location) {
+      toast("Cafe belum punya kota — lengkapi dulu di Cafe Saya", "error");
+      return;
+    }
+    set("location", withLocation.location);
     setBusy(true);
     try {
       const supabase = createClient();
@@ -139,14 +146,6 @@ export default function JobPostForm({ initial = null }) {
         </div>
         <div className="grid gap-4 sm:grid-cols-2">
           <Input
-            name="location"
-            label="Lokasi kerja"
-            list="job-city-list"
-            placeholder="cth. Bandung"
-            value={form.location}
-            onChange={(e) => set("location", e.target.value)}
-          />
-          <Input
             name="salary_text"
             label="Gaji (teks bebas)"
             placeholder="cth. 80000/shift atau 3.500.000/bulan"
@@ -154,11 +153,6 @@ export default function JobPostForm({ initial = null }) {
             onChange={(e) => set("salary_text", e.target.value)}
           />
         </div>
-        <datalist id="job-city-list">
-          {CITIES.map((c) => (
-            <option key={c} value={c} />
-          ))}
-        </datalist>
         <Textarea
           name="description"
           label="Deskripsi singkat"
