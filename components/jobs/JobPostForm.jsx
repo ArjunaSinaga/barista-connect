@@ -54,10 +54,7 @@ export default function JobPostForm({ initial = null }) {
   const set = (k, v) => setForm((f) => ({ ...f, [k]: v }));
 
   const cafe = cafes.find((c) => c.id === form.cafe_id) ?? null;
-  const typeLabels = form.employment_types.map((t) => EMPLOYMENT_LABELS[t] ?? t);
-  const autoTitle = typeLabels.length
-    ? `${typeLabels.join(", ")}${cafe ? ` — ${cafe.name}` : ""}`.slice(0, 120)
-    : "";
+  const autoTitle = cafe ? `Barista — ${cafe.name}`.slice(0, 120) : "";
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -76,6 +73,10 @@ export default function JobPostForm({ initial = null }) {
       return;
     }
     if (!autoTitle || autoTitle.length < 5) {
+      toast("Pilih cafe dulu", "error");
+      return;
+    }
+    if (!form.employment_types.length) {
       toast("Pilih minimal 1 tipe pekerjaan", "error");
       return;
     }
