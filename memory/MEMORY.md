@@ -30,6 +30,7 @@
 - 2026-09-13: dashboard barista stat boxes tinted per status (97e6365, pushed)
 - 2026-09-13: navbar opsi A — logo ke dashboard saat login, link Dashboard dihapus (a2fe95c, pushed)
 - 2026-09-13: navbar split — ikon kopi ke landing, tulisan ke dashboard saat login (53910b2, pushed)
+- 2026-09-13: centang biru berbayar — payments + QRIS Midtrans 10mnt + /verify + badge (6621459, pushed; BUTUH keys Midtrans + service role di Vercel env)
 
 ## User History
 - 2026-09-11: Complete LDPlayer removal - all traces deleted from system
