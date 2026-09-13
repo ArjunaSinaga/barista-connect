@@ -37,7 +37,7 @@ export default function OsmMapPicker({ value, onChange }) {
   return (
     <div className="space-y-3">
       <div className="flex gap-2">
-        <input value={q} onChange={(e)=>setQ(e.target.value)} onKeyDown={(e)=>e.key==='Enter'&&(e.preventDefault(),search())} placeholder="Cari alamat / drag pin di peta" className="flex-1 rounded-xl border border-latte bg-white px-3 py-2.5 text-sm text-[#1c1412] placeholder:text-[#1c1412]/40 focus:border-caramel focus:outline-none focus:ring-2 focus:ring-caramel/20" />
+        <input value={q} onChange={(e)=>setQ(e.target.value)} onKeyDown={(e)=>e.key==='Enter'&&(e.preventDefault(),search())} placeholder="Cari alamat / drag pin di peta" className="flex-1 rounded-xl border border-white/10 bg-[#1c1412] px-3 py-2.5 text-sm text-[#fdf6ec] placeholder:text-[#fdf6ec]/40 focus:border-caramel focus:outline-none focus:ring-2 focus:ring-caramel/20" />
         <button type="button" onClick={search} disabled={loading} className="rounded-xl bg-caramel px-4 py-2.5 text-sm font-bold text-white disabled:opacity-50">{loading?"Mencari…":"Cari"}</button>
       </div>
       {hits.length>0 && <ul className="max-h-40 overflow-auto rounded-xl border border-latte bg-[#16100d]">{hits.map((h)=><li key={h.place_id}><button type="button" onClick={()=>{const lat=parseFloat(h.lat),lng=parseFloat(h.lon); onChange?.({lat,lng,address:h.display_name}); setQ(h.display_name); setHits([]);}} className="w-full px-3 py-2 text-left text-xs leading-snug text-[#fdf6ec] hover:bg-[#251b19]">{h.display_name}</button></li>)}</ul>}

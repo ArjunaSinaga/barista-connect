@@ -9,6 +9,7 @@ import { useToast } from "@/components/ui/toast";
 import { createClient } from "@/lib/supabase/client";
 import { AVATAR_MIME_TYPES, AVATAR_MAX_BYTES, CITIES } from "@/lib/constants";
 import { compressImage } from "@/lib/image";
+import OsmMapPicker from "@/components/maps/OsmMapPicker";
 
 const MAX_PHOTOS = 5;
 
@@ -21,6 +22,8 @@ export default function CafeForm({ initial = null }) {
     location: initial?.location ?? "",
     address: initial?.address ?? "",
     whatsapp: initial?.whatsapp ?? "",
+    lat: initial?.lat ?? null,
+    lng: initial?.lng ?? null,
   });
   const [photos, setPhotos] = useState(initial?.photo_urls ?? []);
   const [uploading, setUploading] = useState(false);
@@ -90,6 +93,8 @@ export default function CafeForm({ initial = null }) {
         address: form.address.trim(),
         whatsapp: form.whatsapp.replace(/[\s-]/g, ""),
         photo_urls: photos,
+        lat: form.lat ?? null,
+        lng: form.lng ?? null,
       };
       if (initial?.id) {
         const { error } = await supabase.from("cafes").update(payload).eq("id", initial.id);
@@ -165,12 +170,19 @@ export default function CafeForm({ initial = null }) {
         </datalist>
         <Textarea
           name="address"
-          label="Alamat lengkap (opsional)"
+          label="Alamat lengkap (opsional — bisa pilih dari peta)"
           rows={2}
-          placeholder="Jl. ..."
+          placeholder="Jl. ... atau cari lewat peta di bawah"
           value={form.address}
           onChange={(e) => set("address", e.target.value)}
         />
+        <div>
+          <p className="mb-2 text-sm font-bold text-espresso">Titik peta (gratis, OpenStreetMap)</p>
+          <OsmMapPicker
+            value={form}
+            onChange={(v) => setForm((f) => ({ ...f, lat: v.lat, lng: v.lng, address: v.address }))}
+          />
+        </div>
 
         <div>
           <p className="text-sm font-bold text-espresso">
