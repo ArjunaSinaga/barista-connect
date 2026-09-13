@@ -16,7 +16,7 @@
 - **Development:** Multiple tech stacks - Python, TypeScript, Next.js, Flutter, Vue, etc.
 
 ## Preferences
-- Kalau user minta file/dokumen: buatkan shortcut `.lnk` di Desktop ke file-nya (biar gampang dibuka/diimpor ke Notion), + bukakan file di VS Code.
+- Kalau user minta file/dokumen: cukup buatkan shortcut `.lnk` di Desktop ke file-nya (biar gampang dibuka/diimpor ke Notion). JANGAN bukakan di VS Code kecuali diminta.
 
 ## Session Memory
 - **2026-09-11:** Removed LDPlayer 14 from device (was at D:\LDPlayer). All traces cleaned including registry, shortcuts, and data folders.
