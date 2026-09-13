@@ -24,36 +24,27 @@ export default function OwnerProfileView({
           )}
         </div>
       )}
-      <div className="overflow-hidden rounded-2xl card-dark shadow-sm">
-        <div className="h-24 bg-gradient-to-r from-latte/70 via-cream-dark to-caramel/30 sm:h-28" />
-        <div className="-mt-12 px-6 pb-6">
-          <div className="flex flex-wrap items-end justify-between gap-4">
-            <div className="flex items-end gap-4">
-              <Avatar src={o.avatar_url} name={o.business_name} size="xl" className="border-4 border-white shadow-md" />
-              <div className="pb-1">
-                <h1 className="text-2xl font-extrabold text-espresso">{o.business_name}</h1>
-                <p className="mt-0.5 flex items-center gap-1 text-sm font-semibold text-espresso-soft">
-                  <MapPin size={13} className="text-caramel" />{o.location}
-                </p>
-                {avg && (
-                  <p className="mt-1.5 flex items-center gap-2">
-                    <Stars value={Math.round(avg)} size={16} />
-                    <span className="text-sm font-black text-espresso">{avg}/5</span>
-                    <span className="text-xs text-espresso-soft">({cafeRatings.length} ulasan)</span>
-                  </p>
-                )}
-              </div>
-            </div>
-            {isBarista && viewerId && (
-              <div className="w-full sm:w-auto">
-                <StartChatButton ownerId={o.id} baristaId={viewerId} />
-              </div>
-            )}
+      <div className="rounded-2xl card-dark px-6 py-8 text-center shadow-sm">
+        <Avatar src={o.avatar_url} name={o.business_name} size="xl" className="mx-auto border-4 border-white shadow-md" />
+        <h1 className="mt-4 text-2xl font-extrabold text-espresso">{o.business_name}</h1>
+        <p className="mt-1 flex items-center justify-center gap-1 text-sm font-semibold text-espresso-soft">
+          <MapPin size={13} className="text-caramel" />{o.location}
+        </p>
+        {avg && (
+          <p className="mt-1.5 flex items-center justify-center gap-2">
+            <Stars value={Math.round(avg)} size={16} />
+            <span className="text-sm font-black text-espresso">{avg}/5</span>
+            <span className="text-xs text-espresso-soft">({cafeRatings.length} ulasan)</span>
+          </p>
+        )}
+        {isBarista && viewerId && (
+          <div className="mt-4 flex justify-center">
+            <StartChatButton ownerId={o.id} baristaId={viewerId} />
           </div>
-        </div>
+        )}
       </div>
 
-      <section className="mt-4 rounded-2xl card-dark p-6">
+      <section className="mt-4 rounded-2xl card-dark p-6 text-center">
         <h2 className="text-xs font-extrabold tracking-wide text-espresso uppercase">Cabang ({cafes?.length ?? 0})</h2>
         {(cafes ?? []).length === 0 && <p className="mt-2 text-sm text-espresso-soft">Belum ada cafe terdaftar.</p>}
         <div className="mt-3 grid gap-2 sm:grid-cols-2">
@@ -73,7 +64,7 @@ export default function OwnerProfileView({
         </div>
       </section>
 
-      <section className="mt-4 rounded-2xl card-dark p-6">
+      <section className="mt-4 rounded-2xl card-dark p-6 text-center">
         <h2 className="text-xs font-extrabold tracking-wide text-espresso uppercase">Rating dari barista ({cafeRatings.length})</h2>
         {isBarista && myTeam && (
           <div className="mt-3">

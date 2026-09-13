@@ -23,36 +23,29 @@ export default function BaristaProfileView({
           )}
         </div>
       )}
-      <div className="overflow-hidden rounded-2xl card-dark shadow-sm">
-        <div className="h-24 bg-gradient-to-r from-latte/70 via-cream-dark to-caramel/30 sm:h-28" />
-        <div className="-mt-12 px-6 pb-6">
-          <div className="flex flex-wrap items-end justify-between gap-4">
-            <div className="flex items-end gap-4">
-              <Avatar src={b.profile_picture_url} name={b.full_name} size="xl" className="border-4 border-white shadow-md" />
-              <div className="pb-1">
-                <h1 className="text-2xl font-extrabold text-espresso">{b.full_name}</h1>
-                <p className="mt-0.5 flex items-center gap-1 text-sm font-semibold text-espresso-soft">
-                  <MapPin size={13} className="text-caramel" />
-                  {b.location_place} • {b.age} tahun
-                </p>
-              </div>
-            </div>
-            {isOwner && viewerId && (
-              <div className="w-full sm:w-auto">
-                <StartChatButton ownerId={viewerId} baristaId={b.id} />
-              </div>
-            )}
+      <div className="rounded-2xl card-dark px-6 py-8 text-center shadow-sm">
+        <Avatar src={b.profile_picture_url} name={b.full_name} size="xl" className="mx-auto border-4 border-white shadow-md" />
+        <h1 className="mt-4 text-2xl font-extrabold text-espresso">{b.full_name}</h1>
+        <p className="mt-1 flex items-center justify-center gap-1 text-sm font-semibold text-espresso-soft">
+          <MapPin size={13} className="text-caramel" />
+          {b.location_place} • {b.age} tahun
+        </p>
+        <div className="mt-4 flex justify-center">
+          <div className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-extrabold ${b.is_open_to_work ? "bg-matcha/15 text-matcha" : "bg-gray-100 text-gray-500"}`}>
+            <span className={`inline-block h-2 w-2 rounded-full ${b.is_open_to_work ? "bg-matcha pulse-dot" : "bg-gray-400"}`} />
+            {b.is_open_to_work ? "Terbuka untuk peluang kerja" : "Sedang tidak mencari kerja"}
+          </div>
+        </div>
+        {(isOwner && viewerId) || (isSelf && !editHref) ? (
+          <div className="mt-4 flex justify-center">
+            {isOwner && viewerId && <StartChatButton ownerId={viewerId} baristaId={b.id} />}
             {isSelf && !editHref && (
               <Link href="/dashboard/barista/profile?edit=1" className="rounded-xl bg-espresso px-4 py-2.5 text-sm font-bold text-white hover:bg-espresso/90">
                 Edit profil
               </Link>
             )}
           </div>
-          <div className={`mt-4 inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-extrabold ${b.is_open_to_work ? "bg-matcha/15 text-matcha" : "bg-gray-100 text-gray-500"}`}>
-            <span className={`inline-block h-2 w-2 rounded-full ${b.is_open_to_work ? "bg-matcha pulse-dot" : "bg-gray-400"}`} />
-            {b.is_open_to_work ? "Terbuka untuk peluang kerja" : "Sedang tidak mencari kerja"}
-          </div>
-        </div>
+        ) : null}
       </div>
 
       <div className="mt-4 grid grid-cols-3 gap-3">
@@ -82,7 +75,7 @@ export default function BaristaProfileView({
         </section>
       )}
 
-      <section className="mt-4 rounded-2xl card-dark p-6">
+      <section className="mt-4 rounded-2xl card-dark p-6 text-center">
         <h2 className="text-xs font-extrabold tracking-wide text-espresso uppercase">Rating dari owner ({ratings?.length ?? 0})</h2>
         {isOwner && rateableTeam && (
           <div className="mt-3">
@@ -94,7 +87,7 @@ export default function BaristaProfileView({
         )}
         {avg ? (
           <div className="mt-3">
-            <div className="flex items-center gap-2">
+            <div className="flex items-center justify-center gap-2">
               <Stars value={Math.round(avg)} size={18} />
               <span className="text-lg font-black text-espresso">{avg}/5</span>
             </div>
@@ -113,9 +106,9 @@ export default function BaristaProfileView({
       </section>
 
       {b.skills?.length > 0 && (
-        <section className="mt-4 rounded-2xl card-dark p-6">
+        <section className="mt-4 rounded-2xl card-dark p-6 text-center">
           <h2 className="text-xs font-extrabold tracking-wide text-espresso uppercase">Keahlian</h2>
-          <div className="mt-3 flex flex-wrap gap-2">
+          <div className="mt-3 flex flex-wrap justify-center gap-2">
             {b.skills.map((s) => (
               <span key={s} className="rounded-full bg-caramel/10 px-3 py-1.5 text-xs font-bold text-caramel">{s}</span>
             ))}
@@ -124,7 +117,7 @@ export default function BaristaProfileView({
       )}
 
       {b.certificates?.length > 0 && (
-        <section className="mt-4 rounded-2xl card-dark p-6">
+        <section className="mt-4 rounded-2xl card-dark p-6 text-center">
           <h2 className="text-xs font-extrabold tracking-wide text-espresso uppercase">Sertifikat</h2>
           <ul className="mt-3 space-y-2">
             {b.certificates.map((c, i) => (
@@ -137,8 +130,8 @@ export default function BaristaProfileView({
       )}
 
       {b.ideas_plus && (
-        <section className="mt-4 rounded-2xl border border-caramel/25 bg-caramel/5 p-6">
-          <h2 className="flex items-center gap-1.5 text-xs font-extrabold tracking-wide text-caramel uppercase"><Sparkles size={14} /> Ide & nilai plus</h2>
+        <section className="mt-4 rounded-2xl border border-caramel/25 bg-caramel/5 p-6 text-center">
+          <h2 className="flex items-center justify-center gap-1.5 text-xs font-extrabold tracking-wide text-caramel uppercase"><Sparkles size={14} /> Ide & nilai plus</h2>
           <p className="mt-3 leading-relaxed text-espresso italic">&ldquo;{b.ideas_plus}&rdquo;</p>
         </section>
       )}
@@ -148,12 +141,10 @@ export default function BaristaProfileView({
 
 function StatCard({ icon, label, value }) {
   return (
-    <div className="flex items-center justify-center gap-3 rounded-2xl card-dark p-4">
-      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-cream-dark text-caramel">{icon}</span>
-      <div>
-        <p className="text-lg leading-none font-extrabold text-espresso">{value}</p>
-        <p className="mt-1 text-[10px] font-bold tracking-wide text-espresso-soft uppercase">{label}</p>
-      </div>
+    <div className="flex flex-col items-center gap-1 rounded-2xl card-dark p-4 text-center">
+      <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-cream-dark text-caramel">{icon}</span>
+      <p className="text-lg leading-none font-extrabold text-espresso">{value}</p>
+      <p className="text-[10px] font-bold tracking-wide text-espresso-soft uppercase">{label}</p>
     </div>
   );
 }
