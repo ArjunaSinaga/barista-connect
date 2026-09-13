@@ -20,8 +20,33 @@ async function getLatestJobs() {
   }
 }
 
+async function getLiveStats() {
+  const fallback = [
+    ["0", "Barista terdaftar"],
+    ["0", "Coffee shop"],
+    ["0", "Lowongan aktif"],
+  ];
+  if (!isSupabaseConfigured()) return fallback;
+  try {
+    const supabase = await createClient();
+    const [{ count: baristas }, { count: cafes }, { count: jobs }] = await Promise.all([
+      supabase.from("barista_profiles").select("id", { count: "exact", head: true }),
+      supabase.from("cafes").select("id", { count: "exact", head: true }).eq("is_active", true),
+      supabase.from("job_posts").select("id", { count: "exact", head: true }).eq("is_active", true),
+    ]);
+    return [
+      [`${baristas ?? 0}`, "Barista terdaftar"],
+      [`${cafes ?? 0}`, "Coffee shop"],
+      [`${jobs ?? 0}`, "Lowongan aktif"],
+    ];
+  } catch {
+    return fallback;
+  }
+}
+
 export default async function LandingPage() {
   const jobs = await getLatestJobs();
+  const stats = await getLiveStats();
   return (
     <div className="min-h-screen bg-[#0f0a08] text-[#fdf6ec]">
       {/* Hero - dark chocolate */}
@@ -72,11 +97,7 @@ export default async function LandingPage() {
 
           {/* glass stats */}
           <div className="mx-auto mt-10 grid max-w-4xl grid-cols-3 gap-3">
-            {[
-              ["1.200+", "Barista aktif"],
-              ["340", "Coffee shop"],
-              ["2.1k", "Lamaran / bulan"],
-            ].map(([v, l]) => (
+            {stats.map(([v, l]) => (
               <div key={l} className="rounded-2xl border border-white/[0.08] card-dark/[0.04] p-4 text-center backdrop-blur">
                 <div className="text-lg font-black text-[#d4a24e] sm:text-xl">{v}</div>
                 <div className="text-[11px] tracking-wide text-[#fdf6ec]/50">{l}</div>
