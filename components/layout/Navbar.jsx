@@ -24,7 +24,7 @@ export default function Navbar({ user, role }) {
   return (
     <header className="sticky top-0 z-40 border-b border-latte/60 bg-cream/85 backdrop-blur">
       <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-4">
-        <Link href="/" className="flex items-center gap-2 font-extrabold tracking-tight">
+        <Link href={user ? home : "/"} className="flex items-center gap-2 font-extrabold tracking-tight">
           <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-caramel text-white">
             <Coffee size={17} />
           </span>
@@ -40,12 +40,6 @@ export default function Navbar({ user, role }) {
           </Link>
           {user ? (
             <>
-              <Link
-                href={home}
-                className="hidden rounded-lg px-3 py-2 text-sm font-semibold text-espresso-soft hover:text-caramel sm:block"
-              >
-                Dashboard
-              </Link>
               <Link
                 href={profileHref}
                 className="hidden rounded-lg px-3 py-2 text-sm font-semibold text-espresso-soft hover:text-caramel sm:block"
