@@ -11,6 +11,7 @@ export default function Navbar({ user, role }) {
   const router = useRouter();
   const [busy, setBusy] = useState(false);
   const home = role === "owner" ? "/dashboard/owner" : "/dashboard/barista";
+  const profileHref = role === "owner" ? "/dashboard/owner/profile" : "/dashboard/barista/profile";
 
   async function handleLogout() {
     setBusy(true);
@@ -44,6 +45,12 @@ export default function Navbar({ user, role }) {
                 className="hidden rounded-lg px-3 py-2 text-sm font-semibold text-espresso-soft hover:text-caramel sm:block"
               >
                 Dashboard
+              </Link>
+              <Link
+                href={profileHref}
+                className="hidden rounded-lg px-3 py-2 text-sm font-semibold text-espresso-soft hover:text-caramel sm:block"
+              >
+                Profil
               </Link>
               <Link
                 href="/messages"
