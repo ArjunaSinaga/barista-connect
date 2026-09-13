@@ -96,7 +96,7 @@ function SignupForm() {
         Buat akun gratis
       </h1>
       <p className="mt-1 text-center text-sm text-[#fdf6ec]/60">
-        Gabung bersama ribuan barista & coffee shop
+        Gratis, tanpa biaya — profil sekali jadi
       </p>
 
       {/* Role selection */}
