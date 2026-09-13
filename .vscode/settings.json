@@ -7,6 +7,23 @@
     "**/.agents": true,
     "**/.opencode": true,
     "**/.llm-wiki": true,
-    "**/archify-demo": true
+    "**/archify-demo": true,
+    "**/docs": true,
+    "**/wiki": true,
+    "**/-w": true,
+    "**/.npmrc": true,
+    "**/CLAUDE.md": true,
+    "**/DESIGN.md": true,
+    "**/SETUP.md": true,
+    "**/schema.md": true,
+    "**/plan.md": true,
+    "**/skills-lock.json": true,
+    "**/opencode.json": true,
+    "**/eslint.config.mjs": true,
+    "**/jsconfig.json": true,
+    "**/next.config.mjs": true,
+    "**/postcss.config.mjs": true,
+    "**/project-theme.css": true,
+    "**/proxy.ts": true
   }
 }
