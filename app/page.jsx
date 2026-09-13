@@ -20,6 +20,29 @@ async function getLatestJobs() {
   }
 }
 
+async function getTopCities() {
+  if (!isSupabaseConfigured()) return [];
+  try {
+    const supabase = await createClient();
+    const { data } = await supabase
+      .from("cafes")
+      .select("location")
+      .eq("is_active", true)
+      .limit(200);
+    const count = {};
+    (data ?? []).forEach((c) => {
+      const city = (c.location || "").trim();
+      if (city) count[city] = (count[city] || 0) + 1;
+    });
+    return Object.entries(count)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 3)
+      .map(([city]) => city);
+  } catch {
+    return [];
+  }
+}
+
 async function getLiveStats() {
   const fallback = [
     ["0", "Barista terdaftar"],
@@ -47,6 +70,7 @@ async function getLiveStats() {
 export default async function LandingPage() {
   const jobs = await getLatestJobs();
   const stats = await getLiveStats();
+  const topCities = await getTopCities();
   return (
     <div className="min-h-screen bg-[#0f0a08] text-[#fdf6ec]">
       {/* Hero - dark chocolate */}
@@ -85,6 +109,12 @@ export default async function LandingPage() {
           </div>
           <button type="submit" className="inline-flex h-9 shrink-0 items-center justify-center gap-1.5 rounded-full bg-[#d4a24e] px-6 text-sm font-bold text-[#1c1412] hover:bg-[#c09342]">Cari <ArrowRight size={16} /></button>
           </form>
+          {topCities.length > 0 && (
+            <div className="mt-6 flex items-center justify-center gap-1.5 text-xs text-[#fdf6ec]/45">
+              <MapPin size={13} className="text-[#d4a24e]" />
+              {topCities.join(" • ")}
+            </div>
+          )}
           </div>
 
           {/* glass stats */}
