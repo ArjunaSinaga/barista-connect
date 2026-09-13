@@ -54,22 +54,22 @@ export default async function BaristaDashboardPage() {
       </div>
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-6">
-        <div className="rounded-2xl bg-white border border-latte p-4">
-          <p className="text-xs font-bold tracking-widest text-espresso-soft uppercase">Total Lamaran</p>
+        <div className="rounded-2xl border border-caramel/40 bg-caramel/10 p-4">
+          <p className="text-xs font-bold tracking-widest text-caramel uppercase">Total Lamaran</p>
           <p className="text-3xl font-black text-espresso mt-1">{total}</p>
           <p className="text-xs text-espresso-soft mt-1 flex items-center gap-1"><Briefcase size={12} />terkirim</p>
         </div>
-        <div className="rounded-2xl bg-white border border-latte p-4">
-          <p className="text-xs font-bold tracking-widest text-espresso-soft uppercase">Menunggu</p>
+        <div className="rounded-2xl border border-amber-400/40 bg-amber-400/10 p-4">
+          <p className="text-xs font-bold tracking-widest text-amber-600 uppercase">Menunggu</p>
           <p className="text-3xl font-black text-espresso mt-1">{waiting}</p>
           <p className="text-xs text-espresso-soft mt-1">terkirim + dilihat</p>
         </div>
-        <div className="rounded-2xl bg-white border border-latte p-4">
-          <p className="text-xs font-bold tracking-widest text-espresso-soft uppercase">Diterima</p>
-          <p className="text-3xl font-black text-caramel mt-1">{accepted}</p>
+        <div className="rounded-2xl border border-matcha/40 bg-matcha/10 p-4">
+          <p className="text-xs font-bold tracking-widest text-matcha uppercase">Diterima</p>
+          <p className="text-3xl font-black text-espresso mt-1">{accepted}</p>
           <p className="text-xs text-espresso-soft mt-1 flex items-center gap-1"><CheckCheck size={12} />sedang bekerja</p>
         </div>
-        <div className="rounded-2xl bg-espresso text-white p-4">
+        <div className="rounded-2xl bg-espresso text-white border border-espresso p-4">
           <p className="text-xs font-bold tracking-widest text-latte uppercase">Selesai</p>
           <p className="text-3xl font-black mt-1">{done}</p>
           <p className="text-xs text-latte mt-1 flex items-center gap-1"><FlagOff size={12} />bisa dinilai</p>
