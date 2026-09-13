@@ -556,7 +556,14 @@ export default function BaristaOnboardingPage() {
 
           <div className="mt-6 rounded-2xl card-dark p-5 text-sm">
             <p className="font-bold text-espresso">Ringkasan</p>
-            <ul className="mt-2 space-y-1 text-espresso-soft">
+            <div className="mt-3 flex items-center gap-3">
+              <Avatar src={photo.url} name={form.full_name} size="lg" />
+              <div className="min-w-0">
+                <p className="truncate font-bold text-espresso">{form.full_name || "—"}</p>
+                <p className="text-xs text-espresso-soft">Foto profil ✓</p>
+              </div>
+            </div>
+            <ul className="mt-3 space-y-1 text-espresso-soft">
               <li>👤 {form.full_name}, {form.age} th — 📍 {form.location_place}</li>
               <li>📱 {form.whatsapp || "—"} • {form.is_open_to_work ? "Buka peluang" : "Tutup"}</li>
               <li>🛠️ {form.skills.join(", ")}</li>
