@@ -24,12 +24,14 @@ export default function Navbar({ user, role }) {
   return (
     <header className="sticky top-0 z-40 border-b border-latte/60 bg-cream/85 backdrop-blur">
       <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-4">
-        <Link href={user ? home : "/"} className="flex items-center gap-2 font-extrabold tracking-tight">
-          <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-caramel text-white">
+        <span className="flex items-center gap-2 font-extrabold tracking-tight">
+          <Link href="/" aria-label="Beranda" title="Beranda" className="flex h-8 w-8 items-center justify-center rounded-xl bg-caramel text-white hover:bg-caramel-dark">
             <Coffee size={17} />
-          </span>
-          <span className="text-espresso">{APP_NAME}</span>
-        </Link>
+          </Link>
+          <Link href={user ? home : "/"} title={user ? "Dashboard" : "Beranda"} className="text-espresso hover:text-caramel">
+            {APP_NAME}
+          </Link>
+        </span>
 
         <nav className="flex items-center gap-1 sm:gap-2">
           <Link
