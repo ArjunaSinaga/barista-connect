@@ -29,6 +29,7 @@
 - 2026-09-13: profile view centered (header vertikal tengah, stat/section center) barista+owner (1a72087, pushed)
 - 2026-09-13: dashboard barista stat boxes tinted per status (97e6365, pushed)
 - 2026-09-13: navbar opsi A — logo ke dashboard saat login, link Dashboard dihapus (a2fe95c, pushed)
+- 2026-09-13: navbar split — ikon kopi ke landing, tulisan ke dashboard saat login (53910b2, pushed)
 
 ## User History
 - 2026-09-11: Complete LDPlayer removal - all traces deleted from system
