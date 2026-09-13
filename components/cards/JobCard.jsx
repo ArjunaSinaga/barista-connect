@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { MapPin, Store } from "lucide-react";
 import Badge from "@/components/ui/Badge";
+import VerifiedBadge from "@/components/ui/VerifiedBadge";
 import { EMPLOYMENT_LABELS } from "@/lib/constants";
 import { relativeTime } from "@/lib/time";
 
@@ -13,6 +14,7 @@ const TYPE_CLASSES = {
 export default function JobCard({
   job,
   ownerName,
+  ownerVerified = false,
   applied = false,
   actions = null,
 }) {
@@ -27,7 +29,7 @@ export default function JobCard({
             {job.title}
           </Link>
           <p className="mt-0.5 flex items-center gap-1 truncate text-xs font-medium text-espresso-soft">
-            <Store size={12} /> {ownerName ?? "Coffee Shop"}
+            <Store size={12} /> {ownerName ?? "Coffee Shop"}{ownerVerified && <VerifiedBadge size={13} />}
           </p>
         </div>
         <div className="flex flex-wrap gap-1 shrink-0 justify-end">

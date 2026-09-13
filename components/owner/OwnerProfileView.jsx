@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { MapPin, Store } from "lucide-react";
 import Avatar from "@/components/ui/Avatar";
+import VerifiedBadge from "@/components/ui/VerifiedBadge";
 import StartChatButton from "@/components/chat/StartChatButton";
 import CafeRatingForm from "@/components/ratings/CafeRatingForm";
 import { Stars } from "@/components/ratings/RatingForm";
@@ -26,7 +27,7 @@ export default function OwnerProfileView({
       )}
       <div className="rounded-2xl card-dark px-6 py-8 text-center shadow-sm">
         <Avatar src={o.avatar_url} name={o.business_name} size="xl" className="mx-auto border-4 border-white shadow-md" />
-        <h1 className="mt-4 text-2xl font-extrabold text-espresso">{o.business_name}</h1>
+        <h1 className="mt-4 flex items-center justify-center gap-1.5 text-2xl font-extrabold text-espresso">{o.business_name}{o.is_verified && <VerifiedBadge size={22} />}</h1>
         <p className="mt-1 flex items-center justify-center gap-1 text-sm font-semibold text-espresso-soft">
           <MapPin size={13} className="text-caramel" />{o.location}
         </p>

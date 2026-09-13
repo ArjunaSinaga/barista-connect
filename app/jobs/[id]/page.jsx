@@ -9,6 +9,7 @@ import {
 } from "lucide-react";
 import { createClient, getSessionSafe, isSupabaseConfigured } from "@/lib/supabase/server";
 import Badge from "@/components/ui/Badge";
+import VerifiedBadge from "@/components/ui/VerifiedBadge";
 import ApplyButton from "@/components/jobs/ApplyButton";
 import { EMPLOYMENT_LABELS } from "@/lib/constants";
 import { relativeTime } from "@/lib/time";
@@ -46,7 +47,7 @@ export default async function JobDetailPage({ params }) {
   const supabase = await createClient();
   const { data: job } = await supabase
     .from("job_posts")
-    .select("*, owners(business_name, location, avatar_url), cafes(id, name, location, address, photo_urls)")
+    .select("*, owners(business_name, location, avatar_url, is_verified), cafes(id, name, location, address, photo_urls)")
     .eq("id", id)
     .maybeSingle();
 
@@ -117,6 +118,7 @@ export default async function JobDetailPage({ params }) {
               <span className="flex items-center gap-1.5">
                 <Store size={15} className="text-caramel" />
                 {job.cafes?.name ?? job.owners?.business_name}
+                {job.owners?.is_verified && <VerifiedBadge size={14} />}
               </span>
               <span className="flex items-center gap-1.5">
                 <MapPin size={15} className="text-caramel" />
