@@ -27,7 +27,6 @@ export default function JobPostForm({ initial = null }) {
       : [];
   const [form, setForm] = useState({
     cafe_id: initial?.cafe_id ?? "",
-    title: initial?.title ?? "",
     description: initial?.description ?? "",
     location: initial?.location ?? "",
     salary_text: initial?.salary_text ?? "",
@@ -54,20 +53,33 @@ export default function JobPostForm({ initial = null }) {
 
   const set = (k, v) => setForm((f) => ({ ...f, [k]: v }));
 
+  const cafe = cafes.find((c) => c.id === form.cafe_id) ?? null;
+  const typeLabels = form.employment_types.map((t) => EMPLOYMENT_LABELS[t] ?? t);
+  const autoTitle = typeLabels.length
+    ? `${typeLabels.join(", ")}${cafe ? ` — ${cafe.name}` : ""}`.slice(0, 120)
+    : "";
+
   async function handleSubmit(e) {
     e.preventDefault();
-    const cafe = cafes.find((c) => c.id === form.cafe_id);
-    const withLocation = { ...form, location: cafe?.location?.trim() || form.location };
-    const parsed = jobPostSchema.safeParse(withLocation);
+    const withAuto = {
+      ...form,
+      title: autoTitle,
+      location: cafe?.location?.trim() || form.location,
+    };
+    const parsed = jobPostSchema.safeParse(withAuto);
     if (!parsed.success) {
       toast(parsed.error.issues[0]?.message ?? "Periksa isian", "error");
       return;
     }
-    if (!withLocation.location) {
+    if (!withAuto.location) {
       toast("Cafe belum punya kota — lengkapi dulu di Cafe Saya", "error");
       return;
     }
-    set("location", withLocation.location);
+    if (!autoTitle || autoTitle.length < 5) {
+      toast("Pilih minimal 1 tipe pekerjaan", "error");
+      return;
+    }
+    set("location", withAuto.location);
     setBusy(true);
     try {
       const supabase = createClient();
@@ -125,13 +137,6 @@ export default function JobPostForm({ initial = null }) {
             </p>
           )}
         </div>
-        <Input
-          name="title"
-          label="Judul lowongan"
-          placeholder="cth. Barista Shift Pagi"
-          value={form.title}
-          onChange={(e) => set("title", e.target.value)}
-        />
         <div className="space-y-2">
           <p className="text-sm font-bold text-espresso">Tipe pekerjaan yang ditawarkan <span className="text-red-500">*</span></p>
           <div className="flex flex-wrap gap-2">
@@ -144,15 +149,13 @@ export default function JobPostForm({ initial = null }) {
           </div>
           {form.employment_types.includes("casual") && <p className="text-xs text-espresso-soft">Untuk Panggilan, gaji wajib format <code className="rounded bg-cream-dark px-1">&lt;nominal&gt;/shift</code> mis: 80000/shift atau Rp 80.000/shift</p>}
         </div>
-        <div className="grid gap-4 sm:grid-cols-2">
-          <Input
-            name="salary_text"
-            label="Gaji (teks bebas)"
-            placeholder="cth. 80000/shift atau 3.500.000/bulan"
-            value={form.salary_text}
-            onChange={(e) => set("salary_text", e.target.value)}
-          />
-        </div>
+        <Input
+          name="salary_text"
+          label="Gaji (teks bebas)"
+          placeholder="cth. 80000/shift atau 3.500.000/bulan"
+          value={form.salary_text}
+          onChange={(e) => set("salary_text", e.target.value)}
+        />
         <Textarea
           name="description"
           label="Deskripsi singkat"
@@ -184,21 +187,26 @@ export default function JobPostForm({ initial = null }) {
           <Eye size={13} /> Pratinjau kartu lowongan
         </p>
         <div className="rounded-2xl card-dark p-5 shadow-sm">
-          <div className="flex items-start justify-between gap-3">
-            <p className="truncate font-bold text-espresso">
-              {form.title || "Judul lowongan"}
-            </p>
-            <div className="flex flex-wrap gap-1.5 justify-end">
-              {(form.employment_types.length ? form.employment_types : [""]).map((t) => t && (
+          <p className="font-bold leading-snug text-espresso">
+            {autoTitle || "Pilih cafe + tipe pekerjaan..."}
+          </p>
+          {form.employment_types.length > 0 && (
+            <div className="mt-2 flex flex-wrap gap-1.5">
+              {form.employment_types.map((t) => (
                 <Badge key={t} classes={TYPE_CLASSES[t]}>{EMPLOYMENT_LABELS[t]}</Badge>
               ))}
             </div>
-          </div>
+          )}
           <p className="mt-3 line-clamp-3 min-h-[3rem] text-sm text-espresso-soft">
             {form.description || "Deskripsi muncul di sini..."}
           </p>
+          {form.salary_text && (
+            <p className="mt-3 rounded-xl bg-cream-dark px-3 py-2 text-sm font-bold text-espresso">
+              💰 {form.salary_text}
+            </p>
+          )}
           <p className="mt-3 text-xs font-semibold text-espresso-soft">
-            📍 {form.location || "Lokasi"}
+            📍 {cafe ? `${cafe.name}${cafe.location ? ` • ${cafe.location}` : ""}` : "Pilih cafe dulu"}
           </p>
         </div>
       </aside>
