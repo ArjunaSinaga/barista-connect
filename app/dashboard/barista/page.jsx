@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Briefcase, FileText, CheckCheck, FlagOff, MessagesSquare, Search, BadgeCheck } from "lucide-react";
+import { Briefcase, FileText, CheckCheck, FlagOff, MessagesSquare, Search } from "lucide-react";
 import { createClient, getSessionSafe, isSupabaseConfigured } from "@/lib/supabase/server";
 import { STATUS_META } from "@/lib/constants";
 import { relativeTime } from "@/lib/time";
@@ -49,9 +49,6 @@ export default async function BaristaDashboardPage() {
           </Link>
           <Link href="/messages" className="inline-flex items-center gap-2 rounded-full border border-latte bg-white px-5 py-3 text-sm font-bold text-espresso hover:border-caramel">
             <MessagesSquare size={16} /> Pesan
-          </Link>
-          <Link href="/verify" className="inline-flex items-center gap-2 rounded-full bg-sky-500 px-5 py-3 text-sm font-bold text-white hover:bg-sky-600">
-            <BadgeCheck size={16} /> Centang Biru
           </Link>
         </div>
       </div>

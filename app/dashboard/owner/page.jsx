@@ -1,5 +1,5 @@
 ﻿import Link from "next/link"
-import { Plus, Briefcase, Users, Eye, Megaphone, TrendingUp, Store, BadgeCheck } from "lucide-react"
+import { Plus, Briefcase, Users, Eye, Megaphone, TrendingUp, Store } from "lucide-react"
 import { createClient, getSessionSafe, isSupabaseConfigured } from "@/lib/supabase/server"
 import { EmptyState } from "@/components/ui/EmptyState"
 import JobDeleteButton from "@/components/jobs/JobDeleteButton"
@@ -49,9 +49,6 @@ export default async function OwnerDashboardPage() {
           </Link>
           <Link href="/dashboard/owner/jobs/new" className="inline-flex items-center gap-2 rounded-full bg-espresso px-5 py-3 text-sm font-bold text-white hover:bg-black transition">
             <Plus size={16}/> Buat Lowongan
-          </Link>
-          <Link href="/verify" className="inline-flex items-center gap-2 rounded-full bg-sky-500 px-5 py-3 text-sm font-bold text-white hover:bg-sky-600">
-            <BadgeCheck size={16}/> Centang Biru
           </Link>
           </div>
         </div>
