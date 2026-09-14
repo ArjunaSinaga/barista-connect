@@ -83,6 +83,54 @@ body::before {
   outline-offset: -6px;
 }
 
+/* — Kertas redup: scope halaman funnel (login/signup/onboarding).
+   Petakan ulang token dark + field gelap ke tinta kertas.
+   Dashboard & lain-lain TIDAK tersentuh. — */
+.paper-scope .text-espresso { color: #2f2721 !important; }
+.paper-scope .text-espresso-soft { color: rgba(47, 39, 33, 0.68) !important; }
+.paper-scope .text-caramel { color: #6f5a3e !important; }
+.paper-scope .border-latte { border-color: rgba(47, 39, 33, 0.2) !important; }
+.paper-scope .divide-latte > * + * { border-color: rgba(47, 39, 33, 0.14) !important; }
+.paper-scope .card-dark { background: #e3dbc9 !important; border-color: rgba(47, 39, 33, 0.2) !important; }
+.paper-scope .bg-white { background: #ece5d3 !important; color: #2f2721 !important; border-color: rgba(47, 39, 33, 0.22) !important; }
+.paper-scope .bg-latte,
+.paper-scope .bg-latte\/70 { background: rgba(47, 39, 33, 0.18) !important; }
+.paper-scope label { color: #2f2721 !important; }
+.paper-scope input,
+.paper-scope textarea,
+.paper-scope select {
+  background: #ece5d3 !important;
+  color: #2f2721 !important;
+  border-color: rgba(47, 39, 33, 0.22) !important;
+}
+.paper-scope input::placeholder,
+.paper-scope textarea::placeholder { color: rgba(47, 39, 33, 0.45) !important; opacity: 1; }
+.paper-scope option { background: #ece5d3; color: #2f2721; }
+
+/* — Ruang antara: auth (login/signup/onboarding) coklat sedang.
+   Di antara kertas landing dan coklat tua dashboard. — */
+.auth-shade { background: #4f3d2e; }
+.auth-scope .text-espresso { color: #ece0c9 !important; }
+.auth-scope .text-espresso-soft { color: rgba(236, 224, 201, 0.68) !important; }
+.auth-scope .text-caramel { color: #d4a24e !important; }
+.auth-scope .border-latte { border-color: rgba(236, 224, 201, 0.2) !important; }
+.auth-scope .divide-latte > * + * { border-color: rgba(236, 224, 201, 0.14) !important; }
+.auth-scope .card-dark { background: #5f4c39 !important; border-color: rgba(236, 224, 201, 0.2) !important; }
+.auth-scope .bg-white { background: #5f4c39 !important; color: #ece0c9 !important; border-color: rgba(236, 224, 201, 0.22) !important; }
+.auth-scope .bg-latte,
+.auth-scope .bg-latte\/70 { background: rgba(236, 224, 201, 0.16) !important; }
+.auth-scope label { color: #ece0c9 !important; }
+.auth-scope input,
+.auth-scope textarea,
+.auth-scope select {
+  background: #5f4c39 !important;
+  color: #ece0c9 !important;
+  border-color: rgba(236, 224, 201, 0.22) !important;
+}
+.auth-scope input::placeholder,
+.auth-scope textarea::placeholder { color: rgba(236, 224, 201, 0.45) !important; opacity: 1; }
+.auth-scope option { background: #5f4c39; color: #ece0c9; }
+
 /* Glass + glow */
 .glass {
   background: rgba(28,20,18,0.72);

@@ -91,11 +91,12 @@ function SignupForm() {
   }
 
   return (
+    <div className="auth-shade auth-scope">
     <div className="mx-auto max-w-md px-4 py-12">
-      <h1 className="text-center text-2xl font-extrabold text-[#fdf6ec]">
+      <h1 className="text-center text-2xl font-extrabold text-[#ece0c9]">
         Buat akun gratis
       </h1>
-      <p className="mt-1 text-center text-sm text-[#fdf6ec]/60">
+      <p className="mt-1 text-center text-sm text-[#ece0c9]/65">
         Gratis, tanpa biaya — profil sekali jadi
       </p>
 
@@ -106,23 +107,23 @@ function SignupForm() {
             key={value}
             type="button"
             onClick={() => setRole(value)}
-            className={`flex flex-col items-start rounded-2xl border-2 bg-[#1c1412] p-4 text-left transition-all ${
+            className={`flex flex-col items-start rounded-2xl border-2 bg-[#5f4c39] p-4 text-left transition-all ${
               role === value
                 ? "border-caramel ring-2 ring-caramel/20"
-                : "border-white/10 hover:border-[rgba(212,162,78,0.35)]"
+                : "border-[#ece0c9]/20 hover:border-[#d4a24e]"
             }`}
           >
             <span
               className={`mb-2 flex h-9 w-9 items-center justify-center rounded-xl ${
                 role === value
                   ? "bg-[#d4a24e] text-white"
-                  : "bg-white/10 text-[#d4a24e]"
+                  : "bg-[#ece0c9]/15 text-[#d4a24e]"
               }`}
             >
               <Icon size={18} />
             </span>
-            <span className="text-sm font-bold text-[#fdf6ec]">{label}</span>
-            <span className="mt-0.5 text-[11px] leading-snug text-[#fdf6ec]/60">
+            <span className="text-sm font-bold text-[#ece0c9]">{label}</span>
+            <span className="mt-0.5 text-[11px] leading-snug text-[#ece0c9]/60">
               {desc}
             </span>
           </button>
@@ -155,12 +156,13 @@ function SignupForm() {
         </Button>
       </form>
 
-      <p className="mt-6 text-center text-sm text-[#fdf6ec]/60">
+      <p className="mt-6 text-center text-sm text-[#ece0c9]/65">
         Sudah punya akun?{" "}
-        <Link href="/login" className="font-bold text-caramel hover:underline">
+        <Link href="/login" className="font-bold text-[#d4a24e] hover:underline">
           Masuk
         </Link>
       </p>
+    </div>
     </div>
   );
 }

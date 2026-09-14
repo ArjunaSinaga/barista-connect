@@ -84,6 +84,7 @@ function LoginForm() {
   }
 
   return (
+    <div className="auth-shade auth-scope">
     <div className="mx-auto max-w-md px-4 py-12">
       <h1 className="text-center text-2xl font-extrabold text-espresso">
         Masuk ke akun kamu
@@ -132,6 +133,7 @@ function LoginForm() {
           Daftar gratis
         </Link>
       </p>
+    </div>
     </div>
   );
 }

@@ -216,6 +216,7 @@ export default function BaristaOnboardingPage() {
 })();
 
   return (
+    <div className="auth-shade auth-scope">
     <div className="mx-auto max-w-lg px-4 py-10">
       {/* Stepper */}
       <div className="mb-8 flex items-center justify-between">
@@ -596,6 +597,7 @@ export default function BaristaOnboardingPage() {
           </Button>
         )}
       </div>
+    </div>
     </div>
   );
 }
