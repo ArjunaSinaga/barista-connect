@@ -66,19 +66,19 @@ body::before {
 .font-display { font-family: var(--font-display), Georgia, "Times New Roman", serif; }
 .font-chalk { font-family: var(--font-chalk), "Comic Sans MS", cursive; }
 .paper {
-  background-color: #f2f0eb;
+  background-color: #b0a58e;
   background-image: repeating-linear-gradient(
     to bottom,
     transparent 0,
     transparent 27px,
-    rgba(26, 15, 10, 0.035) 27px,
-    rgba(26, 15, 10, 0.035) 28px
+    rgba(47, 39, 33, 0.06) 27px,
+    rgba(47, 39, 33, 0.06) 28px
   );
 }
 .chalkboard {
   background-color: #1e3932;
   background-image: radial-gradient(ellipse 60% 50% at 50% 40%, rgba(255, 255, 255, 0.04), transparent 70%);
-  border: 10px solid #3d2b1f;
+  border: 10px solid #2c1f16;
   outline: 2px dashed rgba(253, 246, 236, 0.25);
   outline-offset: -6px;
 }
