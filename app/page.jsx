@@ -72,109 +72,122 @@ export default async function LandingPage() {
   const stats = await getLiveStats();
   const topCities = await getTopCities();
   return (
-    <div className="min-h-screen bg-[#0f0a08] text-[#fdf6ec]">
-      {/* Hero - dark chocolate */}
-      <section className="relative overflow-hidden border-b border-white/[0.06]">
-        {/* ambient */}
-        <div className="absolute inset-0 bg-[radial-gradient(800px_400px_at_20%_-10%,rgba(212,162,78,0.18),transparent_60%),radial-gradient(700px_400px_at_90%_0%,rgba(181,106,42,0.16),transparent_60%),linear-gradient(to_bottom,transparent,#0f0a08)]" />
-        <div className="absolute -top-28 -right-28 h-[560px] w-[560px] rounded-full bg-[#d4a24e]/[0.07] blur-[80px]" />
-        <div className="absolute -bottom-40 -left-40 h-[520px] w-[520px] rounded-full bg-[#b56a2a]/[0.10] blur-[70px]" />
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(255,255,255,0.04)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.04)_1px,transparent_1px)] bg-[size:32px_32px] [mask-image:radial-gradient(ellipse_80%_60%_at_50%_0%,black_70%,transparent_110%)] opacity-30" />
-
-        <div className="relative mx-auto max-w-6xl px-4 pt-12 pb-14 sm:pt-20 sm:pb-16">
-          <div className="mx-auto max-w-3xl text-center">
-            <h1 className="mt-6 text-[32px] font-black leading-[0.95] tracking-[-0.03em] sm:text-[56px]">
-              <span className="text-[#fdf6ec]">Seduh</span>{" "}
-              <span className="text-[#d4a24e]">kariermu.</span>
-              <br />
-              <span className="text-[#fdf6ec]">Temukan shift-mu.</span>
-            </h1>
-            <p className="mx-auto mt-4 max-w-xl text-sm leading-6 text-[#fdf6ec]/60 sm:text-[15px]">
-              Platform jujur untuk barista dan owner. Lowongan transparan, profil sekali jadi, lamar ke mana saja — tanpa biaya.
-            </p>
-            <div className="mt-7 flex flex-wrap items-center justify-center gap-3">
-              <Button asChild className="rounded-full bg-gradient-to-r from-[#d4a24e] to-[#b56a2a] px-7 text-[#1a0f09] hover:brightness-110">
-                <Link href="/jobs">
-                  Jelajah lowongan <ArrowRight size={16} />
-                </Link>
-              </Button>
-              <Button asChild variant="outline" className="rounded-full border-white/15 card-dark/[0.06] text-[#fdf6ec] hover:card-dark/[0.10]">
-                <Link href="/auth/signup">Daftar gratis</Link>
-              </Button>
+    <div className="paper min-h-screen text-[#1a0f0a]">
+      {/* Hero — nota kafe */}
+      <section className="border-b-2 border-dashed border-[#1a0f0a]/15">
+        <div className="mx-auto max-w-6xl px-4 pt-12 pb-10 sm:pt-16 sm:pb-12">
+          <div className="grid items-center gap-10 lg:grid-cols-[1.2fr_0.8fr]">
+            <div className="text-center lg:text-left">
+              <p className="font-chalk text-xl text-[#8d4e1f] sm:text-2xl">eh, lagi cari shift?</p>
+              <h1 className="font-display mt-2 text-4xl leading-[1.05] font-semibold tracking-tight sm:text-6xl">
+                Lowongan barista, ditempel tiap hari.
+              </h1>
+              <p className="mx-auto mt-4 max-w-xl text-sm leading-6 text-[#1a0f0a]/70 sm:text-[15px] lg:mx-0">
+                Kayak papan pengumuman di depan kafe — gaji ditulis di depan,
+                lamar tinggal klik. Gratis, nggak pakai ribet.
+              </p>
+              <div className="mt-6 flex flex-wrap items-center justify-center gap-3 lg:justify-start">
+                <Button href="/jobs" size="lg">
+                  Lihat lowongan <ArrowRight size={16} />
+                </Button>
+                <Button href="/auth/signup" variant="secondary" size="lg">
+                  Pasang lowongan — 1 menit
+                </Button>
+              </div>
+              <form action="/jobs" method="GET" className="mx-auto mt-6 flex max-w-xl items-center gap-2 rounded-full border-2 border-[#1a0f0a]/15 bg-[#fffdf9] p-1.5 lg:mx-0">
+                <div className="flex min-h-[44px] flex-1 items-center gap-2 pl-4">
+                  <Search size={16} className="shrink-0 text-[#1a0f0a]/50" />
+                  <input name="q" placeholder="Cari role, skill, atau lokasi..." aria-label="Cari lowongan" className="h-9 w-full bg-transparent text-sm text-[#1a0f0a] placeholder:text-[#1a0f0a]/40 focus:outline-none" />
+                </div>
+                <button type="submit" className="inline-flex min-h-[44px] shrink-0 items-center justify-center gap-1.5 rounded-full bg-[#1e3932] px-6 text-sm font-bold text-white transition-all hover:brightness-125 active:scale-[0.95]">Cari <ArrowRight size={16} /></button>
+              </form>
+              {topCities.length > 0 && (
+                <div className="mt-4 flex items-center justify-center gap-1.5 text-xs text-[#1a0f0a]/60 lg:justify-start">
+                  <MapPin size={13} className="text-[#b56a2a]" />
+                  {topCities.join(" • ")}
+                </div>
+              )}
             </div>
-        <form action="/jobs" method="GET" className="mx-auto mt-8 flex max-w-xl items-center gap-2 rounded-full border border-white/10 card-dark/[0.06] p-1.5 backdrop-blur">
-          <div className="flex flex-1 items-center gap-2 pl-4">
-            <Search size={16} className="shrink-0 text-white/50" />
-            <input name="q" placeholder="Cari role, skill, atau lokasi..." className="h-9 w-full bg-transparent text-sm text-white placeholder:text-white/40 focus:outline-none" />
-          </div>
-          <button type="submit" className="inline-flex h-9 shrink-0 items-center justify-center gap-1.5 rounded-full bg-[#d4a24e] px-6 text-sm font-bold text-[#1c1412] hover:bg-[#c09342]">Cari <ArrowRight size={16} /></button>
-          </form>
-          {topCities.length > 0 && (
-            <div className="mt-6 flex items-center justify-center gap-1.5 text-xs text-[#fdf6ec]/45">
-              <MapPin size={13} className="text-[#d4a24e]" />
-              {topCities.join(" • ")}
+
+            {/* Slot foto kafe asli */}
+            <div className="hidden lg:block">
+              <figure className="rotate-2 rounded-sm bg-[#fffdf9] p-3 pb-4 shadow-[0_10px_30px_rgba(26,15,10,0.18)]">
+                <div className="flex aspect-[4/3] items-center justify-center rounded-[2px] border-2 border-dashed border-[#1a0f0a]/20 bg-[#e7ddd3] px-6 text-center">
+                  <p className="text-sm leading-6 text-[#1a0f0a]/55">
+                    Foto kafe asli nempel di sini.<br />Bukan gambar AI.
+                  </p>
+                </div>
+                <figcaption className="font-chalk mt-2 text-center text-lg text-[#1a0f0a]/70">
+                  — shift pagi, aroma robusta —
+                </figcaption>
+              </figure>
             </div>
-          )}
           </div>
 
-          {/* glass stats */}
-          <div className="mx-auto mt-10 grid max-w-4xl grid-cols-3 gap-3">
+          {/* stats */}
+          <dl className="mx-auto mt-10 grid max-w-2xl grid-cols-3 gap-3 text-center">
             {stats.map(([v, l]) => (
-              <div key={l} className="rounded-2xl border border-white/[0.08] card-dark/[0.04] p-4 text-center backdrop-blur">
-                <div className="text-lg font-black text-[#d4a24e] sm:text-xl">{v}</div>
-                <div className="text-[11px] tracking-wide text-[#fdf6ec]/50">{l}</div>
+              <div key={l} className="flex flex-col border-t-2 border-[#1a0f0a]/15 pt-3">
+                <dd className="font-display order-1 text-2xl font-semibold sm:text-3xl">{v}</dd>
+                <dt className="order-2 mt-1 text-[11px] tracking-wide text-[#1a0f0a]/60">{l}</dt>
               </div>
             ))}
-          </div>
+          </dl>
         </div>
       </section>
 
-      {/* Steps */}
-      <section className="mx-auto max-w-6xl px-4 py-14">
+      {/* Untuk siapa */}
+      <section className="mx-auto max-w-6xl px-4 py-12">
         <div className="grid gap-4 sm:grid-cols-2">
           {[
-            { icon: <Store size={20} className="text-[#d4a24e]" />, title: "Pemilik Coffee Shop", desc: "Pasang lowongan dalam 1 menit, review pelamar terkurasi, tutup shift lebih cepat." },
-            { icon: <Coffee size={20} className="text-[#d4a24e]" />, title: "Barista", desc: "Lengkapi profil sekali, lamar ke semua lowongan yang cocok. Gratis selamanya." },
+            { icon: <Store size={20} className="text-[#b56a2a]" />, title: "Punya coffee shop?", desc: "Nempel lowongan kayak nempel pengumuman di mading — 1 menit jadi, pelamar masuk sendiri." },
+            { icon: <Coffee size={20} className="text-[#b56a2a]" />, title: "Lagi cari shift?", desc: "Isi profil sekali, lamar ke mana-mana. Gaji tertulis jelas sebelum kamu apply." },
           ].map((s) => (
-            <div key={s.title} className="group rounded-[20px] border border-white/[0.08] bg-gradient-to-b from-[#1c1412] to-[#19110f] p-6 transition hover:border-[#d4a24e]/20 hover:shadow-[0_12px_40px_rgba(0,0,0,0.4)]">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-[#d4a24e]/20 bg-[#d4a24e]/10">{s.icon}</div>
-              <h3 className="mt-4 text-[15px] font-bold tracking-tight text-[#fdf6ec]">{s.title}</h3>
-              <p className="mt-1.5 text-sm leading-6 text-[#fdf6ec]/55">{s.desc}</p>
+            <div key={s.title} className="rounded-xl border border-[#1a0f0a]/12 bg-[#fffdf9] p-6 shadow-[0_2px_10px_rgba(26,15,10,0.06)]">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#f2f0eb]">{s.icon}</div>
+              <h3 className="mt-4 text-[15px] font-bold tracking-tight">{s.title}</h3>
+              <p className="mt-1.5 text-sm leading-6 text-[#1a0f0a]/65">{s.desc}</p>
             </div>
           ))}
         </div>
       </section>
 
-      {/* Latest jobs */}
+      {/* Papan lowongan */}
       <section className="mx-auto max-w-6xl px-4 pb-16">
-        <div className="flex items-end justify-between">
-          <h2 className="text-lg font-black tracking-tight text-[#fdf6ec] sm:text-xl">Lowongan terbaru</h2>
-              <Link
-                href="/jobs"
-                className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#d4a24e] hover:underline"
-              >
-                Lihat semua <ArrowRight size={16} />
-              </Link>
-        </div>
-        {jobs.length === 0 ? (
-          <div className="mt-6 rounded-2xl border border-dashed border-white/10 card-dark/[0.03] p-10 text-center text-sm text-[#fdf6ec]/50">
-            Belum ada lowongan aktif. Jadilah yang pertama pasang — owner verified akan muncul di sini.
+        <div className="chalkboard rounded-lg p-5 sm:p-8">
+          <div className="flex flex-wrap items-end justify-between gap-2">
+            <div>
+              <p className="font-chalk text-lg text-[#dfc49d]">diupdate tiap ada yang nempel ↓</p>
+              <h2 className="font-display mt-1 text-2xl font-semibold tracking-tight text-[#fdf6ec] sm:text-3xl">Papan lowongan hari ini</h2>
+            </div>
+            <Link
+              href="/jobs"
+              className="font-chalk inline-flex min-h-[44px] items-center gap-1.5 text-lg text-[#dfc49d] hover:underline"
+            >
+              lihat semua <ArrowRight size={16} />
+            </Link>
           </div>
-        ) : (
-          <div
-                className={`mt-6 grid gap-4 ${
-                  jobs.length === 1
-                    ? "mx-auto max-w-sm grid-cols-1 place-items-stretch"
-                    : jobs.length === 2
-                      ? "mx-auto max-w-3xl grid-cols-1 place-items-stretch sm:grid-cols-2"
-                      : "sm:grid-cols-2 lg:grid-cols-3"
-                }`}
-              >
-                {jobs.map((job) => (
-                  <JobCard key={job.id} job={job} ownerName={job.cafes?.name ?? job.owners?.business_name} />
-                ))}
-              </div>
-        )}
+          {jobs.length === 0 ? (
+            <div className="mt-6 rounded-md border-2 border-dashed border-[#fdf6ec]/25 p-10 text-center">
+              <p className="font-chalk text-xl text-[#fdf6ec]/80">papannya masih kosong, bos.</p>
+              <p className="mt-1 text-sm text-[#fdf6ec]/60">Jadilah yang pertama nempel lowongan hari ini.</p>
+            </div>
+          ) : (
+            <div
+              className={`mt-6 grid gap-4 ${
+                jobs.length === 1
+                  ? "mx-auto max-w-sm grid-cols-1 place-items-stretch"
+                  : jobs.length === 2
+                    ? "mx-auto max-w-3xl grid-cols-1 place-items-stretch sm:grid-cols-2"
+                    : "sm:grid-cols-2 lg:grid-cols-3"
+              }`}
+            >
+              {jobs.map((job) => (
+                <JobCard key={job.id} job={job} ownerName={job.cafes?.name ?? job.owners?.business_name} />
+              ))}
+            </div>
+          )}
+        </div>
       </section>
     </div>
   );
