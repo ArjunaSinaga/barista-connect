@@ -9,7 +9,6 @@ import { useToast } from "@/components/ui/toast";
 import { createClient } from "@/lib/supabase/client";
 import { AVATAR_MIME_TYPES, AVATAR_MAX_BYTES, CITIES } from "@/lib/constants";
 import { compressImage } from "@/lib/image";
-import OsmMapPicker from "@/components/maps/OsmMapPicker";
 
 const MAX_PHOTOS = 5;
 
@@ -170,19 +169,12 @@ export default function CafeForm({ initial = null }) {
         </datalist>
         <Textarea
           name="address"
-          label="Alamat lengkap (opsional — bisa pilih dari peta)"
+          label="Alamat lengkap (opsional)"
           rows={2}
-          placeholder="Jl. ... atau cari lewat peta di bawah"
+          placeholder="cth. Jl. Kaliurang No. 10, Yogyakarta"
           value={form.address}
           onChange={(e) => set("address", e.target.value)}
         />
-        <div>
-          <p className="mb-2 text-sm font-bold text-espresso">Titik peta (gratis, OpenStreetMap)</p>
-          <OsmMapPicker
-            value={form}
-            onChange={(v) => setForm((f) => ({ ...f, lat: v.lat, lng: v.lng, address: v.address }))}
-          />
-        </div>
 
         <div>
           <p className="text-sm font-bold text-espresso">
