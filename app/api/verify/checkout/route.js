@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
+import { rateLimit, rateLimitedResponse } from "@/lib/rate-limit";
 import {
   VERIFY_PRODUCTS,
   QRIS_EXPIRY_MINUTES,
@@ -7,7 +8,9 @@ import {
   createQrisCharge,
 } from "@/lib/midtrans";
 
-export async function POST() {
+export async function POST(request) {
+  const rl = rateLimit(request, { scope: "checkout", limit: 10 });
+  if (!rl.ok) return rateLimitedResponse(rl.retryAfter);
   if (!midtransConfigured()) {
     return NextResponse.json({ error: "Pembayaran belum dikonfigurasi" }, { status: 501 });
   }

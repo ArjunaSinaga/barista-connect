@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": 1789101960231,
+  "updatedAt": 1789373408119,
   "files": {
     "schema.md": {
       "hash": "6ad767c40e35c6a5786f20120ca1ce08",
@@ -22,10 +22,15 @@
       "size": 111,
       "mtimeMs": 1788171395686
     },
+    "wiki/project-overview.md": {
+      "hash": "dca7536ae14dbfe15d6fdf7f9eff3a43",
+      "size": 6050,
+      "mtimeMs": 1789317174545
+    },
     "wiki/tutorial-barista-connect.md": {
-      "hash": "77157a94bcea10de0ac36d9646ddceed",
-      "size": 15714,
-      "mtimeMs": 1788892214729
+      "hash": "0adc747b894a97d63b776ad52bdfad5f",
+      "size": 15500,
+      "mtimeMs": 1789119427464
     }
   }
 }

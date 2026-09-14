@@ -1,4 +1,6 @@
 import { NextResponse } from "next/server";
+import { createClient } from "@/lib/supabase/server";
+import { rateLimit, rateLimitedResponse } from "@/lib/rate-limit";
 import { aiConfigured, aiProvider, callLLM } from "@/lib/ai";
 
 export const runtime = "nodejs";
@@ -15,11 +17,20 @@ Konteks project:
 - Bahasa: ikuti bahasa user (default Indonesia santai).`;
 
 export async function POST(req) {
+  const rl = rateLimit(req, { scope: "mobile-chat", limit: 10 });
+  if (!rl.ok) return rateLimitedResponse(rl.retryAfter);
   try {
     const { message, history = [] } = await req.json();
     if (!message?.trim()) {
       return NextResponse.json({ error: "Pesan kosong" }, { status: 400 });
     }
+    if (message.length > 2000) {
+      return NextResponse.json({ error: "Pesan terlalu panjang (max 2000)" }, { status: 400 });
+    }
+    // Auth wajib — cegah LLM proxy gratis untuk publik
+    const supabase = await createClient();
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return NextResponse.json({ error: "unauthorized" }, { status: 401 });
     if (!aiConfigured()) {
       return NextResponse.json(
         { error: "AI belum dikonfigurasi (set GROQ_API_KEY / CEREBRAS / NVIDIA / GEMINI)" },

@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
+import { rateLimit, rateLimitedResponse } from "@/lib/rate-limit";
 import { createAdminClient, adminConfigured } from "@/lib/supabase/admin";
 import { midtransConfigured, getTransactionStatus } from "@/lib/midtrans";
 
@@ -12,6 +13,8 @@ async function activate(admin, payment) {
 }
 
 export async function GET(request) {
+  const rl = rateLimit(request, { scope: "status", limit: 30 });
+  if (!rl.ok) return rateLimitedResponse(rl.retryAfter);
   const orderId = new URL(request.url).searchParams.get("orderId");
   if (!orderId) return NextResponse.json({ error: "orderId required" }, { status: 400 });
 

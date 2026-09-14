@@ -1,8 +1,11 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
+import { rateLimit, rateLimitedResponse } from "@/lib/rate-limit";
 import { aiConfigured, loadConversationContext, suggestReply } from "@/lib/ai";
 
 export async function POST(request) {
+  const rl = rateLimit(request, { scope: "ai", limit: 10 });
+  if (!rl.ok) return rateLimitedResponse(rl.retryAfter);
   if (!aiConfigured()) {
     return NextResponse.json({ error: "AI not configured" }, { status: 501 });
   }
