@@ -136,6 +136,25 @@ body::before {
 .auth-scope textarea::placeholder { color: rgba(236, 224, 201, 0.45) !important; opacity: 1; }
 .auth-scope option { background: #5f4c39; color: #ece0c9; }
 
+/* — Auth terang: login/signup ikut tema kertas homepage (bg #f5f1e8,
+   kartu putih, tinta #2b2118). Onboarding tetap auth-scope. — */
+.auth-light { background: #f5f1e8; }
+.auth-light label { color: #2b2118 !important; }
+.auth-light input,
+.auth-light textarea,
+.auth-light select {
+  background: #ffffff !important;
+  color: #2b2118 !important;
+}
+.auth-light input:not(.border-red-400),
+.auth-light textarea:not(.border-red-400),
+.auth-light select:not(.border-red-400) {
+  border-color: #e0d5bd !important;
+}
+.auth-light input::placeholder,
+.auth-light textarea::placeholder { color: #b6a98f !important; opacity: 1; }
+.auth-light option { background: #ffffff; color: #2b2118; }
+
 /* Glass + glow */
 .glass {
   background: rgba(28,20,18,0.72);

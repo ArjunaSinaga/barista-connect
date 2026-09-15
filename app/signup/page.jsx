@@ -91,12 +91,13 @@ function SignupForm() {
   }
 
   return (
-    <div className="auth-shade auth-scope">
+    <div className="auth-light min-h-[calc(100dvh-3.5rem)] text-[#2b2118]">
     <div className="mx-auto max-w-md px-4 py-12">
-      <h1 className="text-center text-2xl font-extrabold text-[#ece0c9]">
+      <div className="rounded-2xl border border-[#e8e0cf] bg-[#ffffff] p-6 shadow-[0_2px_12px_rgba(43,33,24,0.10)] sm:p-8">
+      <h1 className="text-center text-2xl font-extrabold tracking-tight text-[#2b2118]">
         Buat akun gratis
       </h1>
-      <p className="mt-1 text-center text-sm text-[#ece0c9]/65">
+      <p className="mt-1 text-center text-sm text-[#857768]">
         Gratis, tanpa biaya — profil sekali jadi
       </p>
 
@@ -107,23 +108,23 @@ function SignupForm() {
             key={value}
             type="button"
             onClick={() => setRole(value)}
-            className={`flex flex-col items-start rounded-2xl border-2 bg-[#5f4c39] p-4 text-left transition-all ${
+            className={`flex flex-col items-start rounded-2xl border-2 bg-[#ffffff] p-4 text-left transition-all ${
               role === value
-                ? "border-caramel ring-2 ring-caramel/20"
-                : "border-[#ece0c9]/20 hover:border-[#d4a24e]"
+                ? "border-[#3d2c1e] ring-2 ring-[#3d2c1e]/15"
+                : "border-[#e8e0cf] hover:border-[#3d2c1e]"
             }`}
           >
             <span
               className={`mb-2 flex h-9 w-9 items-center justify-center rounded-xl ${
                 role === value
-                  ? "bg-[#d4a24e] text-white"
-                  : "bg-[#ece0c9]/15 text-[#d4a24e]"
+                  ? "bg-[#3d2c1e] text-white"
+                  : "bg-[#efe8d8] text-[#3d2c1e]"
               }`}
             >
               <Icon size={18} />
             </span>
-            <span className="text-sm font-bold text-[#ece0c9]">{label}</span>
-            <span className="mt-0.5 text-[11px] leading-snug text-[#ece0c9]/60">
+            <span className="text-sm font-bold text-[#2b2118]">{label}</span>
+            <span className="mt-0.5 text-[11px] leading-snug text-[#857768]">
               {desc}
             </span>
           </button>
@@ -151,17 +152,18 @@ function SignupForm() {
           error={errors.password}
           autoComplete="new-password"
         />
-        <Button type="submit" full size="lg" disabled={busy}>
+        <Button type="submit" full size="lg" variant="coffee" disabled={busy}>
           {busy ? "Mendaftarkan..." : "Daftar Sekarang"}
         </Button>
       </form>
 
-      <p className="mt-6 text-center text-sm text-[#ece0c9]/65">
+      <p className="mt-6 text-center text-sm text-[#857768]">
         Sudah punya akun?{" "}
-        <Link href="/login" className="font-bold text-[#d4a24e] hover:underline">
+        <Link href="/login" className="font-bold text-[#1f6b4a] hover:underline">
           Masuk
         </Link>
       </p>
+      </div>
     </div>
     </div>
   );

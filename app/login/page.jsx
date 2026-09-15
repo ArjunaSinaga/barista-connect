@@ -84,12 +84,13 @@ function LoginForm() {
   }
 
   return (
-    <div className="auth-shade auth-scope">
+    <div className="auth-light min-h-[calc(100dvh-3.5rem)] text-[#2b2118]">
     <div className="mx-auto max-w-md px-4 py-12">
-      <h1 className="text-center text-2xl font-extrabold text-espresso">
+      <div className="rounded-2xl border border-[#e8e0cf] bg-[#ffffff] p-6 shadow-[0_2px_12px_rgba(43,33,24,0.10)] sm:p-8">
+      <h1 className="text-center text-2xl font-extrabold tracking-tight text-[#2b2118]">
         Masuk ke akun kamu
       </h1>
-      <p className="mt-1 text-center text-sm text-espresso-soft">
+      <p className="mt-1 text-center text-sm text-[#857768]">
         Senang bertemu lagi ☕
       </p>
 
@@ -117,22 +118,23 @@ function LoginForm() {
         <div className="text-right">
           <Link
             href="/forgot-password"
-            className="text-xs font-bold text-caramel hover:underline"
+            className="text-xs font-bold text-[#1f6b4a] hover:underline"
           >
             Lupa password?
           </Link>
         </div>
-        <Button type="submit" full size="lg" disabled={busy}>
+        <Button type="submit" full size="lg" variant="coffee" disabled={busy}>
           {busy ? "Memproses..." : "Masuk"}
         </Button>
       </form>
 
-      <p className="mt-6 text-center text-sm text-espresso-soft">
+      <p className="mt-6 text-center text-sm text-[#857768]">
         Belum punya akun?{" "}
-        <Link href="/signup" className="font-bold text-caramel hover:underline">
+        <Link href="/signup" className="font-bold text-[#1f6b4a] hover:underline">
           Daftar gratis
         </Link>
       </p>
+      </div>
     </div>
     </div>
   );
