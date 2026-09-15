@@ -52,7 +52,7 @@ export default function BottomCtaStrip() {
             I&apos;m a Cafe Owner
           </Link>
         </div>
-        <p className="font-chalk hidden text-right text-sm leading-4 text-[#f5f1e8]/70 xl:block">Same People<br />Brighter Tomorrows</p>
+        <p className="font-chalk hidden pr-10 text-right text-sm leading-4 text-[#f5f1e8]/70 xl:block">Same People<br />Brighter Tomorrows</p>
       </div>
     </section>
   );
