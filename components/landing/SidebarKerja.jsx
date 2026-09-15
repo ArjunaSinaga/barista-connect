@@ -37,6 +37,7 @@ export function EcosystemCard() {
 
 export function AcademyCard({ image }) {
   const src = image ?? `https://picsum.photos/seed/barista-training/640/320`;
+  const points = ["Beginner to Advanced", "Learn from Industry Experts", "Get Certified by kerja.inc"];
   return (
     <div className="rounded-2xl border border-[#e8e0cf] bg-[#ffffff] p-4 shadow-[0_1px_3px_rgba(43,33,24,0.08)] lg:min-h-full">
       <div className="flex items-center justify-between">
@@ -45,28 +46,28 @@ export function AcademyCard({ image }) {
           View all courses <ChevronRight size={13} />
         </Link>
       </div>
-      <div className="mt-2 grid items-center gap-3">
-        <div className="relative overflow-hidden rounded-xl">
-          <img src={src} alt="Barista training" loading="lazy" className="aspect-[16/8] w-full object-cover" />
-          <span className="absolute top-2 right-2 flex h-12 w-12 rotate-6 items-center justify-center rounded-full bg-[#c9a227] text-center text-[8px] leading-tight font-extrabold text-white shadow">
-            CERTIFIED BY kerja.inc
-          </span>
-        </div>
+      <div className="mt-2 grid grid-cols-2 items-stretch gap-2">
         <div className="min-w-0">
           <p className="text-[15px] leading-6 font-extrabold text-[#2b2118]">Barista training for a brighter tomorrow.</p>
           <p className="mt-1 text-xs leading-5 text-[#857768]">
             From beginner to advanced, our industry-led courses help baristas build real skills and cafe-ready confidence.
           </p>
-          <ul className="mt-2 space-y-1 text-xs text-[#857768]">
-            {["Beginner to Advanced", "Learn from Industry Experts", "Get Certified by kerja.inc"].map((t) => (
-              <li key={t} className="flex items-center gap-2">
-                <span className="inline-flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-[#e3f0e8] text-[10px] font-bold text-[#1f6b4a]">✓</span>{t}
-              </li>
-            ))}
-          </ul>
           <Link href="/signup" className="mt-3 inline-flex min-h-[40px] items-center justify-center rounded-full bg-[#3d2c1e] px-5 text-[13px] font-bold text-white hover:bg-[#2e2015]">
             Explore Courses
           </Link>
+        </div>
+        <div className="relative min-h-44 overflow-hidden rounded-xl">
+          <img src={src} alt="Barista training" loading="lazy" className="absolute inset-0 h-full w-full object-cover" />
+          <ul className="absolute top-2 left-2 space-y-1 rounded-lg bg-[#ffffff]/95 p-2 shadow">
+            {points.map((t) => (
+              <li key={t} className="flex items-center gap-1.5 text-[10px] leading-3 font-semibold text-[#3d2c1e]">
+                <span className="inline-flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-full bg-[#e3f0e8] text-[9px] font-bold text-[#1f6b4a]">✓</span>{t}
+              </li>
+            ))}
+          </ul>
+          <span className="absolute right-2 bottom-2 flex h-12 w-12 rotate-6 items-center justify-center rounded-full bg-[#c9a227] text-center text-[8px] leading-tight font-extrabold text-white shadow">
+            CERTIFIED BY kerja.inc
+          </span>
         </div>
       </div>
     </div>

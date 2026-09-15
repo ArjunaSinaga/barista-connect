@@ -5,6 +5,18 @@ import VerifiedBadge from "@/components/ui/VerifiedBadge";
 import { EMPLOYMENT_LABELS } from "@/lib/constants";
 import { relativeTime } from "@/lib/time";
 
+// Tag skill diturunkan dari teks asli lowongan (judul+deskripsi), bukan hardcode.
+// Hanya tampil bila keyword benar-benar ada di data.
+const SKILL_KEYWORDS = [
+  "Espresso", "Latte Art", "Manual Brew", "Brewing", "Roasting",
+  "Customer Service", "Cashier", "POS", "Leadership", "Teamwork",
+  "Hygiene", "Communication",
+];
+
+function skillTags(job) {
+  const text = `${job.title ?? ""} ${job.description ?? ""}`.toLowerCase();
+  return SKILL_KEYWORDS.filter((k) => text.includes(k.toLowerCase())).slice(0, 4);
+}
 function CafeLogo({ job }) {
   const photo = job.cafes?.photo_urls?.[0];
   const name = job.cafes?.name ?? job.owners?.business_name ?? "C";
@@ -40,6 +52,7 @@ export default function LatestJobs({ jobs }) {
         <ul className="mt-1 divide-y divide-[#e7ddc8]">
           {jobs.map((job) => {
             const types = job.employment_types?.length ? job.employment_types : (job.employment_type ? [job.employment_type] : []);
+            const tags = skillTags(job);
             return (
               <li key={job.id} className="flex gap-3 py-3.5">
                 <CafeLogo job={job} />
@@ -58,11 +71,13 @@ export default function LatestJobs({ jobs }) {
                       <span key={t} className="inline-flex items-center gap-1"><Briefcase size={11} />{EMPLOYMENT_LABELS[t] ?? t}</span>
                     ))}
                   </p>
-                  <div className="mt-1.5 flex flex-wrap gap-1.5">
-                    {types.map((t) => (
-                      <span key={t} className="rounded-full bg-[#efe9d9] px-2.5 py-0.5 text-[11px] font-semibold text-[#6f6252]">{EMPLOYMENT_LABELS[t] ?? t}</span>
-                    ))}
-                  </div>
+                  {tags.length > 0 && (
+                    <div className="mt-1.5 flex flex-wrap gap-1.5">
+                      {tags.map((t) => (
+                        <span key={t} className="rounded-full bg-[#efe9d9] px-2.5 py-0.5 text-[11px] font-semibold text-[#6f6252]">{t}</span>
+                      ))}
+                    </div>
+                  )}
                 </div>
                 <div className="flex shrink-0 flex-col items-end justify-start gap-1.5">
                   <span className="flex items-center gap-2 text-[11px] text-[#b6a98f]">

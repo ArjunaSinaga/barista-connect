@@ -84,9 +84,11 @@ async function getRecentReviews() {
   }
 }
 
-function HeroPhotoBlock({ photo }) {
+function HeroPhotoBlock({ photo, flush }) {
   return (
-    <div className="relative h-48 overflow-hidden rounded-xl shadow-[0_1px_3px_rgba(43,33,24,0.08)] sm:h-56 lg:h-full lg:min-h-[228px]">
+    <div className={flush
+      ? "relative h-48 overflow-hidden sm:h-56 lg:h-full lg:min-h-[228px]"
+      : "relative h-48 overflow-hidden rounded-xl shadow-[0_1px_3px_rgba(43,33,24,0.08)] sm:h-56 lg:h-full lg:min-h-[228px]"}>
       {photo ? (
         <>
           <img src={photo.url} alt={photo.cafe ? `Photo of ${photo.cafe}` : "Cafe photo"} loading="lazy" className="absolute inset-0 h-full w-full object-cover" />
@@ -96,6 +98,9 @@ function HeroPhotoBlock({ photo }) {
           <span className="absolute right-3 bottom-3 rounded-full bg-[#f5f1e8]/95 px-4 py-2 text-right shadow">
             <span className="font-chalk block text-sm leading-4 text-[#3d2c1e]">Same Passion<br />More Opportunities</span>
             {photo.cafe && <span className="mt-0.5 block text-[10px] font-bold tracking-wide text-[#857768]">— {photo.cafe} —</span>}
+          </span>
+          <span className="absolute bottom-1 left-0 right-0 hidden text-center text-[8px] font-bold tracking-[0.22em] text-white/90 lg:block">
+            JOBS&nbsp;&nbsp;•&nbsp;&nbsp;PEOPLE&nbsp;&nbsp;•&nbsp;&nbsp;TRAINING&nbsp;&nbsp;•&nbsp;&nbsp;STRONGER CAFES
           </span>
         </>
       ) : (
@@ -137,8 +142,8 @@ export default async function LandingPage() {
       <section className="mx-auto w-full max-w-[1400px] shrink-0 px-4 pt-2 pb-2 sm:px-6">
         <div className="grid items-stretch gap-4 lg:grid-cols-[1fr_1fr_0.85fr]">
           <div className="min-w-0 lg:col-span-2">
-            <div className="flex gap-5 rounded-2xl border border-[#e8e0cf] bg-[#ece2cd] px-5 py-3 shadow-[0_2px_12px_rgba(43,33,24,0.10)] sm:px-6">
-              <div className="min-w-0 flex-1">
+            <div className="flex gap-0 overflow-hidden rounded-2xl border border-[#e8e0cf] bg-[#ece2cd] py-3 pr-0 pl-5 shadow-[0_2px_12px_rgba(43,33,24,0.10)] sm:pl-6">
+              <div className="min-w-0 flex-1 pr-5">
                 <p className="text-[11px] font-bold tracking-[0.18em] text-[#857768] uppercase">
                   A stronger coffee community
                 </p>
@@ -166,8 +171,8 @@ export default async function LandingPage() {
                   ))}
                 </dl>
               </div>
-              <div className="hidden w-60 shrink-0 sm:block lg:w-72">
-                <HeroPhotoBlock photo={heroMain} />
+              <div className="hidden w-60 shrink-0 self-stretch sm:block lg:w-72">
+                <HeroPhotoBlock photo={heroMain} flush />
               </div>
             </div>
             <div className="mt-3 grid gap-3 sm:grid-cols-2">
