@@ -13,8 +13,8 @@ export default function Navbar({ user, role }) {
   const [busy, setBusy] = useState(false);
   const home = role === "owner" ? "/dashboard/owner" : "/dashboard/barista";
   const profileHref = role === "owner" ? "/dashboard/owner/profile" : "/dashboard/barista/profile";
-  // Jembatan terang-gelap: di landing navbar ikut kertas, di dalam ikut dark roast.
-  const light = pathname === "/";
+  // Jembatan terang-gelap: landing + auth terang ikut kertas, dalam ikut dark roast.
+  const light = pathname === "/" || pathname === "/login" || pathname === "/signup";
 
   async function handleLogout() {
     setBusy(true);
