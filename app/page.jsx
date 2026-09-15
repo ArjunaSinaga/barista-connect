@@ -1,13 +1,11 @@
 import Link from "next/link";
-import { ArrowRight, Search, MapPin, Star, Bookmark, ChevronRight, Coffee, Store } from "lucide-react";
+import { ArrowRight, Search, MapPin, ChevronRight, Coffee, Store } from "lucide-react";
 import { createClient, isSupabaseConfigured, getSessionSafe } from "@/lib/supabase/server";
-import ApplyButton from "@/components/jobs/ApplyButton";
+import LatestJobs from "@/components/landing/LatestJobs";
 import FeaturedBarista from "@/components/landing/FeaturedBarista";
-import SidebarKerja from "@/components/landing/SidebarKerja";
-import VerifiedBadge from "@/components/ui/VerifiedBadge";
+import ReviewsCard from "@/components/landing/ReviewsCard";
+import { EcosystemCard, AcademyCard, SmarterOpsCard } from "@/components/landing/SidebarKerja";
 import { avgStars } from "@/lib/ratings";
-import { EMPLOYMENT_LABELS } from "@/lib/constants";
-import { relativeTime } from "@/lib/time";
 
 async function getLatestJobs() {
   if (!isSupabaseConfigured()) return [];
@@ -110,22 +108,10 @@ async function getRecentReviews() {
   }
 }
 
-function CafeLogo({ job }) {
-  const photo = job.cafes?.photo_urls?.[0];
-  const name = job.cafes?.name ?? job.owners?.business_name ?? "C";
-  if (photo) {
-    return <img src={photo} alt={name} loading="lazy" className="h-11 w-11 shrink-0 rounded-full object-cover" />;
-  }
-  return (
-    <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#3d2c1e] text-base font-bold text-white">
-      {name.charAt(0).toUpperCase()}
-    </span>
-  );
-}
-
 // Homepage = 1 layar tanpa scroll halaman (desktop): hero atas, 2 kartu peran,
-// 3 kolom (kiri lowongan, tengah talenta, kanan ekosistem) + strip bawah melebar.
-// Tiap kolom scroll di dalam kotaknya sendiri. Mobile tetap scroll normal.
+// 6 blok mandiri (3×2: kiri jobs+reviews, tengah featured+academy, kanan
+// ekosistem+smarter ops) + strip bawah melebar. Tiap blok scroll sendiri.
+// Mobile tetap scroll normal.
 export default async function LandingPage() {
   const { user } = await getSessionSafe();
   const [jobs, stats, topCities, featured, reviews] = await Promise.all([
@@ -146,7 +132,7 @@ export default async function LandingPage() {
   return (
     <div className="min-h-screen bg-[#f5f1e8] text-[#2b2118] lg:flex lg:h-[calc(100dvh-3.5rem)] lg:flex-col lg:overflow-hidden">
       {/* Hero banner — teks kiri menyatu foto kanan */}
-      <section className="mx-auto w-full max-w-[1400px] shrink-0 px-4 sm:px-6 pt-4 pb-3 sm:px-6">
+      <section className="mx-auto w-full max-w-[1400px] shrink-0 px-4 pt-4 pb-3 sm:px-6">
         <div className="grid overflow-hidden rounded-2xl border border-[#e8e0cf] bg-[#ece2cd] shadow-[0_2px_12px_rgba(43,33,24,0.10)] lg:grid-cols-[1.05fr_0.95fr]">
           <div className="p-5 sm:p-7">
             <p className="text-[11px] font-bold tracking-[0.18em] text-[#857768] uppercase">
@@ -214,7 +200,7 @@ export default async function LandingPage() {
       </section>
 
       {/* Kartu peran */}
-      <section className="mx-auto w-full max-w-[1400px] shrink-0 px-4 sm:px-6 pb-3">
+      <section className="mx-auto w-full max-w-[1400px] shrink-0 px-4 pb-3 sm:px-6">
         <div className="grid gap-3 sm:grid-cols-2">
           <Link href="/signup" className="group flex items-center gap-3 rounded-2xl border border-[#e8e0cf] bg-[#ffffff] px-4 py-2.5 shadow-[0_1px_3px_rgba(43,33,24,0.08)] hover:border-[#3d2c1e]">
             <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#efe8d8]"><Coffee size={17} className="text-[#3d2c1e]" /></span>
@@ -235,108 +221,33 @@ export default async function LandingPage() {
         </div>
       </section>
 
-      {/* 3 kolom: kiri lowongan, tengah talenta, kanan ekosistem */}
+      {/* 6 blok mandiri */}
       <section className="mx-auto w-full max-w-[1400px] flex-1 px-4 sm:px-6 lg:min-h-0">
-        <div className="grid items-start gap-4 lg:h-full lg:grid-cols-[1.05fr_1fr_0.95fr]">
-          {/* KIRI — Latest jobs */}
-          <div className="min-w-0 rounded-2xl border border-[#e8e0cf] bg-[#ffffff] p-4 shadow-[0_1px_3px_rgba(43,33,24,0.08)] lg:h-full lg:min-h-0 lg:overflow-y-auto">
-            <div className="flex items-start justify-between gap-2">
-              <div>
-                <h2 className="text-[15px] font-bold tracking-tight">Latest Barista Jobs</h2>
-                <p className="mt-0.5 text-[11px] text-[#857768]">Great cafes. Real opportunities.</p>
-              </div>
-              <Link href="/jobs" className="inline-flex shrink-0 items-center gap-0.5 text-xs font-bold text-[#2b6cb0] hover:underline">
-                View all jobs <ChevronRight size={13} />
-              </Link>
-            </div>
-            {jobs.length === 0 ? (
-              <div className="mt-3 rounded-xl border-2 border-dashed border-[#e0d5bd] p-8 text-center">
-                <p className="text-sm font-bold">No jobs posted yet.</p>
-                <p className="mt-1 text-xs text-[#857768]">Be the first cafe to post today.</p>
-              </div>
-            ) : (
-              <ul className="mt-1 divide-y divide-[#f0e9d8]">
-                {jobs.map((job) => {
-                  const types = job.employment_types?.length ? job.employment_types : (job.employment_type ? [job.employment_type] : []);
-                  return (
-                    <li key={job.id} className="flex items-center gap-3 py-3">
-                      <CafeLogo job={job} />
-                      <div className="min-w-0 flex-1">
-                        <Link href={`/jobs/${job.id}`} className="block truncate text-sm font-bold hover:text-[#1f6b4a]">
-                          {job.title}
-                        </Link>
-                        <p className="flex items-center gap-1 truncate text-xs text-[#857768]">
-                          {job.cafes?.name ?? job.owners?.business_name}
-                          {job.owners?.is_verified && <VerifiedBadge size={12} />}
-                        </p>
-                        <p className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[11px] text-[#857768]">
-                          <span className="inline-flex items-center gap-1"><MapPin size={11} />{job.location}</span>
-                          {job.salary_text && <span className="font-bold text-[#2b2118]">{job.salary_text}</span>}
-                          {types.map((t) => (
-                            <span key={t} className="rounded-full bg-[#f2ecdf] px-2 py-0.5 font-semibold text-[#6f6252]">{EMPLOYMENT_LABELS[t] ?? t}</span>
-                          ))}
-                        </p>
-                      </div>
-                      <div className="flex shrink-0 flex-col items-end gap-2">
-                        <span className="flex items-center gap-2 text-[11px] text-[#b6a98f]">
-                          {relativeTime(job.created_at)}
-                          <button type="button" disabled title="Saved jobs coming soon" aria-label="Save job (coming soon)" className="text-[#b6a98f]">
-                            <Bookmark size={15} />
-                          </button>
-                        </span>
-                        <ApplyButton jobId={job.id} size="sm" variant="coffee" label="Quick Apply" jobTypes={types} />
-                      </div>
-                    </li>
-                  );
-                })}
-              </ul>
-            )}
+        <div className="grid items-start gap-4 sm:grid-cols-2 lg:h-full lg:grid-cols-3 lg:grid-rows-2">
+          <div className="min-w-0 sm:col-span-2 lg:col-span-1 lg:row-span-2 lg:h-full lg:min-h-0 lg:overflow-y-auto lg:pr-1 lg:pb-1">
+            <LatestJobs jobs={jobs} />
           </div>
-
-          {/* TENGAH — Featured + reviews */}
-          <div className="min-w-0 space-y-4 lg:h-full lg:min-h-0 lg:overflow-y-auto lg:pr-1 lg:pb-1">
+          <div className="min-w-0 lg:h-full lg:min-h-0 lg:overflow-y-auto lg:pr-1 lg:pb-1">
             <FeaturedBarista barista={featured} isAnon={!user} />
-            {reviews.length > 0 && (
-              <div className="rounded-2xl border border-[#e8e0cf] bg-[#ffffff] p-4 shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
-                <div className="flex items-center justify-between">
-                  <h3 className="text-sm font-bold">Recent Reviews from Cafe Owners</h3>
-                  <Link href="/find-baristas" className="inline-flex items-center gap-0.5 text-xs font-bold text-[#2b6cb0] hover:underline">
-                    View all <ChevronRight size={13} />
-                  </Link>
-                </div>
-                <ul className="mt-3 space-y-3">
-                  {reviews.map((r, i) => (
-                    <li key={i} className="rounded-xl bg-[#faf7ef] p-3.5">
-                      <div className="flex items-center justify-between gap-2">
-                        <p className="flex items-center gap-1.5 text-[13px] font-bold">
-                          <Store size={13} className="text-[#857768]" />
-                          {r.owner?.business_name ?? "Cafe owner"}
-                        </p>
-                        <span className="flex items-center gap-0.5" aria-label={`${r.stars} out of 5 stars`}>
-                          {Array.from({ length: 5 }).map((_, s) => (
-                            <Star key={s} size={12} className={s < r.stars ? "fill-[#c98a2b] text-[#c98a2b]" : "text-[#d8cdae]"} />
-                          ))}
-                        </span>
-                      </div>
-                      <p className="mt-1.5 text-[13px] leading-5 text-[#6f6252] italic">&ldquo;{r.comment}&rdquo;</p>
-                      <p className="mt-1 text-[11px] text-[#b6a98f]">for {r.barista?.full_name ?? "a barista"}</p>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
           </div>
-
-          {/* KANAN — ekosistem */}
-          <aside className="min-w-0 lg:h-full lg:min-h-0 lg:overflow-y-auto lg:pb-1">
-            <SidebarKerja />
-          </aside>
+          <div className="min-w-0 lg:h-full lg:min-h-0 lg:overflow-y-auto lg:pb-1">
+            <EcosystemCard />
+          </div>
+          <div className="min-w-0 lg:h-full lg:min-h-0 lg:overflow-y-auto lg:pr-1 lg:pb-1">
+            <ReviewsCard reviews={reviews} />
+          </div>
+          <div className="min-w-0 lg:h-full lg:min-h-0 lg:overflow-y-auto lg:pr-1 lg:pb-1">
+            <AcademyCard />
+          </div>
+          <div className="min-w-0 lg:h-full lg:min-h-0 lg:overflow-y-auto lg:pb-1">
+            <SmarterOpsCard />
+          </div>
         </div>
       </section>
 
       {/* Strip bawah melebar */}
       <section className="mt-3 w-full shrink-0 bg-[#2b1c11]">
-        <div className="mx-auto flex max-w-[1400px] flex-wrap items-center gap-x-6 gap-y-2 px-4 sm:px-6 py-3">
+        <div className="mx-auto flex max-w-[1400px] flex-wrap items-center gap-x-6 gap-y-2 px-4 py-3 sm:px-6">
           <div className="min-w-0 flex-1">
             <p className="text-sm font-bold text-[#f5f1e8]">Good people make great coffee.</p>
             <p className="truncate text-[11px] text-[#f5f1e8]/60">Join thousands of baristas and cafe owners building a stronger coffee community.</p>
