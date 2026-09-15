@@ -135,31 +135,31 @@ export default async function LandingPage() {
   return (
     <div className="min-h-screen bg-[#f5f1e8] text-[#2b2118] lg:flex lg:h-[calc(100dvh-3.5rem)] lg:min-h-0 lg:flex-col lg:overflow-hidden">
       {/* Hero teks — foto pindah ke trio di bawah */}
-      <section className="mx-auto w-full max-w-[1400px] shrink-0 px-4 pt-3 pb-2 sm:px-6">
-        <div className="rounded-2xl border border-[#e8e0cf] bg-[#ece2cd] px-5 py-3.5 shadow-[0_2px_12px_rgba(43,33,24,0.10)] sm:px-7">
+      <section className="mx-auto w-full max-w-[1400px] shrink-0 px-4 pt-2 pb-1.5 sm:px-6">
+        <div className="rounded-2xl border border-[#e8e0cf] bg-[#ece2cd] px-5 py-2.5 shadow-[0_2px_12px_rgba(43,33,24,0.10)] sm:px-7">
           <div className="flex flex-wrap items-end gap-x-8 gap-y-3">
             <div className="min-w-0 flex-1 basis-72">
               <p className="text-[11px] font-bold tracking-[0.18em] text-[#857768] uppercase">
                 A stronger coffee community
               </p>
-              <h1 className="font-display mt-1 text-3xl leading-[1.05] font-semibold tracking-tight sm:text-[2.4rem]">
+              <h1 className="font-display mt-1 text-[1.7rem] leading-[1.05] font-semibold tracking-tight sm:text-3xl">
                 Hire better baristas. <span className="text-[#1f6b4a]">Find better cafe jobs.</span>
               </h1>
-              <p className="mt-1.5 max-w-xl text-[13px] leading-5 text-[#6f6252]">
+              <p className="mt-1 max-w-xl text-[13px] leading-5 text-[#6f6252]">
                 BaristaConnect connects passionate baristas and cafe owners with verified
                 experience, ratings, and reviews. More than a job board — the coffee hiring ecosystem.
               </p>
             </div>
             <div className="shrink-0">
               <div className="flex flex-wrap items-center gap-2">
-                <Link href="/jobs" className="inline-flex min-h-[40px] items-center gap-2 rounded-full bg-[#3d2c1e] px-5 text-[13px] font-bold text-white hover:bg-[#2e2015]">
+                <Link href="/jobs" className="inline-flex min-h-[36px] items-center gap-2 rounded-full bg-[#3d2c1e] px-5 text-[13px] font-bold text-white hover:bg-[#2e2015]">
                   <Search size={14} /> Find Jobs
                 </Link>
-                <Link href="/find-baristas" className="inline-flex min-h-[40px] items-center gap-2 rounded-full border border-[#c9b992] bg-[#ffffff] px-5 text-[13px] font-bold text-[#3d2c1e] hover:border-[#3d2c1e]">
+                <Link href="/find-baristas" className="inline-flex min-h-[36px] items-center gap-2 rounded-full border border-[#c9b992] bg-[#ffffff] px-5 text-[13px] font-bold text-[#3d2c1e] hover:border-[#3d2c1e]">
                   <Store size={14} /> Hire Baristas
                 </Link>
               </div>
-              <dl className="mt-3 flex items-stretch gap-5">
+              <dl className="mt-2 flex items-stretch gap-5">
                 {stats.map(([v, l], i) => (
                   <div key={l} className={i > 0 ? "border-l border-[#3d2c1e]/15 pl-5" : ""}>
                     <dd className="text-xl leading-6 font-extrabold tracking-tight text-[#2b2118]">{v}</dd>
@@ -175,7 +175,7 @@ export default async function LandingPage() {
       {/* Kartu peran */}
       <section className="mx-auto w-full max-w-[1400px] shrink-0 px-4 pb-2 sm:px-6">
         <div className="grid gap-3 sm:grid-cols-2">
-          <Link href="/signup" className="group flex items-center gap-3 rounded-2xl border border-[#e8e0cf] bg-[#ffffff] px-4 py-2.5 shadow-[0_1px_3px_rgba(43,33,24,0.08)] hover:border-[#3d2c1e]">
+          <Link href="/signup" className="group flex items-center gap-3 rounded-2xl border border-[#e8e0cf] bg-[#ffffff] px-4 py-2 shadow-[0_1px_3px_rgba(43,33,24,0.08)] hover:border-[#3d2c1e]">
             <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#efe8d8]"><Coffee size={17} className="text-[#3d2c1e]" /></span>
             <span className="min-w-0 flex-1">
               <span className="block text-[13px] font-bold">For Baristas</span>
@@ -183,7 +183,7 @@ export default async function LandingPage() {
             </span>
             <ChevronRight size={16} className="shrink-0 text-[#b6a98f] group-hover:text-[#3d2c1e]" />
           </Link>
-          <Link href="/find-baristas" className="group flex items-center gap-3 rounded-2xl border border-[#e8e0cf] bg-[#ffffff] px-4 py-2.5 shadow-[0_1px_3px_rgba(43,33,24,0.08)] hover:border-[#3d2c1e]">
+          <Link href="/find-baristas" className="group flex items-center gap-3 rounded-2xl border border-[#e8e0cf] bg-[#ffffff] px-4 py-2 shadow-[0_1px_3px_rgba(43,33,24,0.08)] hover:border-[#3d2c1e]">
             <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#efe8d8]"><Store size={17} className="text-[#3d2c1e]" /></span>
             <span className="min-w-0 flex-1">
               <span className="block text-[13px] font-bold">For Cafe Owners</span>
@@ -194,8 +194,8 @@ export default async function LandingPage() {
         </div>
       </section>
 
-      {/* Trio: jobs kiri, foto tengah (sempit), ekosistem kanan — tinggi sama */}
-      <section className="mx-auto w-full max-w-[1400px] px-4 sm:px-6 lg:min-h-0 lg:flex-[1.45]">
+      {/* Trio: jobs kiri, foto tengah (sempit), ekosistem kanan — porsi kecil */}
+      <section className="mx-auto w-full max-w-[1400px] px-4 sm:px-6 lg:min-h-0 lg:flex-1">
         <div className="grid items-stretch gap-4 sm:grid-cols-2 lg:h-full lg:grid-cols-[1fr_0.62fr_0.85fr]">
           <div className="min-w-0 sm:col-span-2 lg:col-span-1 lg:col-start-1 lg:row-start-1 lg:h-full lg:min-h-0 lg:overflow-y-auto lg:pr-1 lg:pb-1">
             <LatestJobs jobs={jobs} />
@@ -209,8 +209,8 @@ export default async function LandingPage() {
         </div>
       </section>
 
-      {/* Quad: featured | reviews | academy | smarter */}
-      <section className="mx-auto w-full max-w-[1400px] flex-1 px-4 pt-4 sm:px-6 lg:min-h-0 lg:flex-1 lg:pt-4">
+      {/* Quad: featured | reviews | academy | smarter — porsi besar ke atas */}
+      <section className="mx-auto w-full max-w-[1400px] flex-1 px-4 pt-3 sm:px-6 lg:min-h-0 lg:flex-[1.5] lg:pt-3">
         <div className="grid items-stretch gap-4 sm:grid-cols-2 lg:h-full lg:grid-cols-4">
           <div className="min-w-0 lg:h-full lg:min-h-0 lg:overflow-y-auto lg:pr-1 lg:pb-1">
             <FeaturedBarista barista={featured} isAnon={!user} />
