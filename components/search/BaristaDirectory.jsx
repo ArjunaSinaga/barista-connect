@@ -50,6 +50,7 @@ export default function BaristaDirectory({ ownerId }) {
   }, [fetchList]);
 
   async function startChat(baristaId) {
+    if (!ownerId) { router.push(`/login?next=/barista/${baristaId}`); return; }
     const supabase = createClient();
     const { data: cid } = await supabase.rpc("get_or_create_conversation", {
       p_owner: ownerId,

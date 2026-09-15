@@ -5,6 +5,6 @@ export const metadata = { title: "Cari Barista" };
 
 export default async function FindBaristasPage() {
   const { user } = await getSessionSafe();
-  if (!user) return null;
-  return <BaristaDirectory ownerId={user.id} />;
+  // Public preview: anon can browse ("lihat dulu"), actions redirect to login/signup.
+  return <BaristaDirectory ownerId={user?.id ?? null} />;
 }
