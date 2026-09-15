@@ -133,7 +133,7 @@ export default async function LandingPage() {
   const academyPhoto = heroPhoto[1]?.url ?? heroPhoto[0]?.url ?? null;
 
   return (
-    <div className="min-h-screen bg-[#f5f1e8] text-[#2b2118] lg:flex lg:h-[calc(100dvh-3.5rem)] lg:flex-col lg:overflow-hidden">
+    <div className="min-h-screen bg-[#f5f1e8] text-[#2b2118] lg:flex lg:h-[calc(100dvh-3.5rem)] lg:min-h-0 lg:flex-col lg:overflow-hidden">
       {/* Hero teks — foto pindah ke trio di bawah */}
       <section className="mx-auto w-full max-w-[1400px] shrink-0 px-4 pt-3 pb-2 sm:px-6">
         <div className="rounded-2xl border border-[#e8e0cf] bg-[#ece2cd] px-5 py-3.5 shadow-[0_2px_12px_rgba(43,33,24,0.10)] sm:px-7">
