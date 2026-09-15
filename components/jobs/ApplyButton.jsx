@@ -9,7 +9,7 @@ import { useToast } from "@/components/ui/toast";
 import { createClient } from "@/lib/supabase/client";
 import { EMPLOYMENT_LABELS } from "@/lib/constants";
 
-export default function ApplyButton({ jobId, applied=false, size="md", full=false, jobTypes=[] }) {
+export default function ApplyButton({ jobId, applied=false, size="md", full=false, jobTypes=[], variant="primary", label="Lamar" }) {
   const router = useRouter();
   const toast = useToast();
   const [open, setOpen] = useState(false);
@@ -88,8 +88,8 @@ export default function ApplyButton({ jobId, applied=false, size="md", full=fals
 
   return (
     <>
-      <Button onClick={handleClick} size={size} full={full} variant={done?"secondary":"primary"} disabled={done}>
-        {done ? "✓ Terkirim" : "Lamar"}
+      <Button onClick={handleClick} size={size} full={full} variant={done?"secondary":variant} disabled={done}>
+        {done ? "✓ Terkirim" : label}
       </Button>
       <Sheet open={open} onClose={()=>setOpen(false)} title="Kirim Lamaran">
         <div className="space-y-4">

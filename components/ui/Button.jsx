@@ -10,6 +10,8 @@ const VARIANTS = {
   ghost: "text-espresso-soft hover:text-caramel hover:bg-cream-dark",
   danger: "bg-red-500 text-white hover:bg-red-600",
   success: "bg-matcha text-white hover:brightness-95",
+  // Solid coffee-brown (kerja.inc mockup): light-page primary CTA.
+  coffee: "bg-[#3d2c1e] text-white hover:bg-[#2e2015] shadow-sm disabled:opacity-50",
 };
 
 const SIZES = {

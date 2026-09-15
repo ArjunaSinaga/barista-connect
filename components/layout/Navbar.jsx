@@ -26,7 +26,7 @@ export default function Navbar({ user, role }) {
 
   return (
     <header className={light
-      ? "sticky top-0 z-40 border-b-2 border-[#2f2721]/15 bg-[#b0a58e]/90 backdrop-blur"
+      ? "sticky top-0 z-40 border-b border-[#e0d5bd] bg-[#f5f1e8]/90 backdrop-blur"
       : "sticky top-0 z-40 border-b border-latte/60 bg-cream/85 backdrop-blur"}>
       <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-4">
         <span className="flex items-center gap-2 font-extrabold tracking-tight">
