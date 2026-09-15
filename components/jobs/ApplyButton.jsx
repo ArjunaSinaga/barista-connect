@@ -17,6 +17,7 @@ export default function ApplyButton({ jobId, applied=false, size="md", full=fals
   const [cover, setCover] = useState("");
   const [types, setTypes] = useState([]);
   const [cv, setCv] = useState(null);
+  const [profileCv, setProfileCv] = useState("");
   const [errors, setErrors] = useState({});
   const [busy, setBusy] = useState(false);
   const [done, setDone] = useState(applied);
@@ -27,6 +28,9 @@ export default function ApplyButton({ jobId, applied=false, size="md", full=fals
     if (!user) { router.push(`/login?next=/jobs/${jobId}`); return; }
     const { data: profile } = await supabase.from("profiles").select("role").eq("id", user.id).single();
     if (profile?.role !== "barista") { toast("Hanya akun barista yang bisa melamar","error"); return; }
+    const { data: bp } = await supabase.from("barista_profiles").select("cv_url").eq("id", user.id).maybeSingle();
+    setProfileCv(bp?.cv_url || "");
+    setCv(null);
     const ids = (jobTypes||[]).length ? jobTypes : [];
     setTypes(ids.length===1 ? ids : []);
     setOpen(true);
@@ -35,9 +39,10 @@ export default function ApplyButton({ jobId, applied=false, size="md", full=fals
   async function submitApplication() {
     const e={};
     if (types.length===0) e.types="Pilih minimal 1 tipe pekerjaan yang ditawarkan";
-    if (!cv) e.cv="CV PDF wajib (max 5MB)";
-    else if (cv.type!=="application/pdf") e.cv="CV harus PDF";
-    else if (cv.size>5*1024*1024) e.cv="CV maksimal 5MB";
+    if (cv) {
+      if (cv.type!=="application/pdf") e.cv="CV harus PDF";
+      else if (cv.size>5*1024*1024) e.cv="CV maksimal 5MB";
+    } else if (!profileCv) e.cv="CV belum ada di profil — upload PDF dulu";
     if (!cover.trim() || cover.trim().length<20) e.cover="Cover letter minimal 20 karakter";
     if (Object.keys(e).length) { setErrors(e); return; }
     setErrors({});
@@ -46,12 +51,17 @@ export default function ApplyButton({ jobId, applied=false, size="md", full=fals
       const supabase = createClient();
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) throw new Error("no user");
-      // upload CV to cvs bucket
-      const path = `${user.id}/${Date.now()}-${cv.name.replace(/[^a-zA-Z0-9._-]/g,"_")}`;
-      const { error: upErr } = await supabase.storage.from("cvs").upload(path, cv, { contentType:"application/pdf", upsert:false });
-      if (upErr) throw upErr;
-      const { data: pub } = supabase.storage.from("cvs").getPublicUrl(path);
-      const cv_url = pub.publicUrl;
+      let cv_url = profileCv || null;
+      if (cv) {
+        // CV baru: upload + jadikan CV profil sekalian
+        const path = `${user.id}/${Date.now()}-${cv.name.replace(/[^a-zA-Z0-9._-]/g,"_")}`;
+        const { error: upErr } = await supabase.storage.from("cvs").upload(path, cv, { contentType:"application/pdf", upsert:false });
+        if (upErr) throw upErr;
+        const { data: pub } = supabase.storage.from("cvs").getPublicUrl(path);
+        cv_url = pub.publicUrl;
+        await supabase.from("barista_profiles").update({ cv_url }).eq("id", user.id);
+      }
+      if (!cv_url) throw new Error("CV belum ada");
       // ensure types subset of jobTypes
       const jt = jobTypes?.length ? jobTypes : types;
       const filtered = types.filter(t=> jt.includes(t));
@@ -83,7 +93,7 @@ export default function ApplyButton({ jobId, applied=false, size="md", full=fals
       </Button>
       <Sheet open={open} onClose={()=>setOpen(false)} title="Kirim Lamaran">
         <div className="space-y-4">
-          <p className="text-sm text-espresso-soft">Pilih tipe kerja yang kamu lamar, upload CV PDF & cover letter wajib.</p>
+          <p className="text-sm text-espresso-soft">CV diambil dari profilmu — cukup pilih tipe & tulis cover letter.</p>
           {jobTypes?.length>0 && (
             <div className="space-y-2">
               <p className="text-sm font-bold text-espresso">Tipe yang ditawarkan <span className="text-red-500">*</span></p>
@@ -99,12 +109,25 @@ export default function ApplyButton({ jobId, applied=false, size="md", full=fals
             </div>
           )}
           <div className="space-y-2">
-            <p className="text-sm font-bold text-espresso">CV PDF <span className="text-red-500">*</span> <span className="font-normal text-espresso-soft">(max 5MB)</span></p>
-            <label className="flex cursor-pointer items-center gap-3 rounded-xl border border-dashed border-[#2c241f] bg-[#16100d] px-4 py-3 text-sm hover:border-caramel">
-              <input type="file" accept="application/pdf" className="hidden" onChange={e=> setCv(e.target.files?.[0]||null)} />
-              <span className="rounded-lg bg-caramel px-3 py-1.5 text-xs font-bold text-white">Pilih PDF</span>
-              <span className="truncate text-espresso-soft">{cv ? `${cv.name} — ${(cv.size/1024).toFixed(0)} KB` : "Belum ada file"}</span>
-            </label>
+            <p className="text-sm font-bold text-espresso">CV <span className="font-normal text-espresso-soft">(dari profil)</span></p>
+            {profileCv && !cv ? (
+              <div className="flex items-center gap-3 rounded-xl border border-[#2c241f] bg-[#16100d] px-4 py-3 text-sm">
+                <a href={profileCv} target="_blank" rel="noreferrer" className="truncate font-bold text-caramel hover:underline">Lihat CV profil</a>
+                <label className="ml-auto shrink-0 cursor-pointer rounded-lg bg-caramel px-3 py-1.5 text-xs font-bold text-white">
+                  Ganti file
+                  <input type="file" accept="application/pdf" className="hidden" onChange={e=> setCv(e.target.files?.[0]||null)} />
+                </label>
+              </div>
+            ) : (
+              <label className="flex cursor-pointer items-center gap-3 rounded-xl border border-dashed border-[#2c241f] bg-[#16100d] px-4 py-3 text-sm hover:border-caramel">
+                <input type="file" accept="application/pdf" className="hidden" onChange={e=> setCv(e.target.files?.[0]||null)} />
+                <span className="rounded-lg bg-caramel px-3 py-1.5 text-xs font-bold text-white">{profileCv ? "Upload CV baru" : "Pilih PDF"}</span>
+                <span className="truncate text-espresso-soft">{cv ? `${cv.name} — ${(cv.size/1024).toFixed(0)} KB` : "Belum ada file"}</span>
+              </label>
+            )}
+            {cv && profileCv && (
+              <button type="button" onClick={()=> setCv(null)} className="text-xs font-bold text-espresso-soft hover:text-caramel">Batal — pakai CV profil saja</button>
+            )}
             {errors.cv && <p className="text-xs font-medium text-red-500">{errors.cv}</p>}
           </div>
           <Textarea name="cover_letter" label="Cover letter" placeholder="Ceritakan kenapa kamu cocok, pengalaman relevan, & tipe shift yang kamu bisa..." value={cover} maxLength={1000} onChange={e=> setCover(e.target.value)} error={errors.cover} />
