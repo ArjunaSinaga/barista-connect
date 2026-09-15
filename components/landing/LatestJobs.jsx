@@ -64,7 +64,7 @@ export default function LatestJobs({ jobs }) {
                     ))}
                   </div>
                 </div>
-                <div className="flex shrink-0 flex-col items-end justify-between gap-2 py-0.5">
+                <div className="flex shrink-0 flex-col items-end justify-start gap-1.5">
                   <span className="flex items-center gap-2 text-[11px] text-[#b6a98f]">
                     {relativeTime(job.created_at)}
                     <button type="button" disabled title="Saved jobs coming soon" aria-label="Save job (coming soon)" className="text-[#2b2118]">

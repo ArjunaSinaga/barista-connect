@@ -226,9 +226,9 @@ export default async function LandingPage() {
         </div>
       </section>
 
-      {/* Strip bawah melebar */}
-      <section className="mt-3 w-full shrink-0 bg-[#2b1c11]">
-        <div className="mx-auto flex max-w-[1400px] flex-wrap items-center gap-x-6 gap-y-2 px-4 py-3 sm:px-6">
+      {/* Strip bawah — selebar konten, rounded */}
+      <section className="mx-auto w-full max-w-[1400px] shrink-0 px-4 pb-3 sm:px-6">
+        <div className="flex flex-wrap items-center gap-x-6 gap-y-2 rounded-2xl bg-[#2b1c11] px-5 py-3">
           <div className="min-w-0 flex-1">
             <p className="text-sm font-bold text-[#f5f1e8]">Good people make great coffee.</p>
             <p className="truncate text-[11px] text-[#f5f1e8]/60">Join thousands of baristas and cafe owners building a stronger coffee community.</p>
