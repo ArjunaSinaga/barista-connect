@@ -73,6 +73,16 @@ export default async function OwnerDashboardPage({ searchParams }) {
   const ranked = rankBaristas(baristas);
   const countByCafe = {};
   (jobs ?? []).forEach((j) => { if (j.is_active && j.cafe_id) countByCafe[j.cafe_id] = (countByCafe[j.cafe_id] ?? 0) + 1; });
+  const statusByJob = {};
+  const totals = { total: 0, pending: 0, accepted: 0, rejected: 0 };
+  (apps ?? []).forEach((a) => {
+    totals.total += 1;
+    if (a.status === "pending") totals.pending += 1;
+    else if (a.status === "accepted") totals.accepted += 1;
+    else if (a.status === "rejected") totals.rejected += 1;
+    const sb = (statusByJob[a.job_post_id] ??= { pending: 0 });
+    if (a.status === "pending") sb.pending += 1;
+  });
 
   return (
     <div className="min-h-screen bg-[#f5f1e8] text-[#2b2118] lg:flex lg:h-[calc(100dvh-3.5rem)] lg:min-h-0 lg:flex-col lg:overflow-hidden">
@@ -93,7 +103,8 @@ export default async function OwnerDashboardPage({ searchParams }) {
                 stats: { activeJobs, totalJobs, pendingApplicants, interviewsWeek: convosWeek.length, givenAvg, givenCount },
                 top3: ranked.slice(0, 3),
               },
-              lowongan: { jobs, appCountByJob, totalJobs, activeJobs, totalApplicants, avgPerJob },
+              active: { jobs, appCountByJob, totalJobs, activeJobs },
+              pelamar: { jobs, appCountByJob, statusByJob, totals },
               reviews: { reviews: givenRatings },
               cafes: { cafes, countByCafe },
             }}

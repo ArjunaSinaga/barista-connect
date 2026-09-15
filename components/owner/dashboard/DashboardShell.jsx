@@ -5,17 +5,20 @@ import Link from "next/link";
 import { ChevronRight } from "lucide-react";
 import SidebarOwner from "@/components/owner/dashboard/SidebarOwner";
 import TalentaView from "@/components/owner/dashboard/TalentaView";
-import LowonganView from "@/components/owner/dashboard/LowonganView";
+import ActiveJobsView from "@/components/owner/dashboard/ActiveJobsView";
+import PelamarView from "@/components/owner/dashboard/PelamarView";
 import ReviewsView from "@/components/owner/dashboard/ReviewsView";
 import CafesView from "@/components/owner/dashboard/CafesView";
 import { TalentRow } from "@/components/owner/dashboard/TopCandidates";
 import { SmarterOpsCard } from "@/components/landing/SidebarKerja";
 
 // Shell 3 kolom: sidebar tetap, hanya kolom TENGAH yang ganti
-// (talenta/lowongan/reviews/cafes) tanpa navigasi halaman.
-const VIEWS = ["talenta", "lowongan", "reviews", "cafes"];
+// (talenta/active/pelamar/reviews/cafes) tanpa navigasi halaman.
+const VIEWS = ["talenta", "active", "pelamar", "reviews", "cafes"];
+const LEGACY = { lowongan: "active" }; // deep-link lama tetap jalan
 export default function DashboardShell({ initialView = "talenta", sidebar, middle, right }) {
-  const [view, setView] = useState(VIEWS.includes(initialView) ? initialView : "talenta");
+  const start = LEGACY[initialView] ?? initialView;
+  const [view, setView] = useState(VIEWS.includes(start) ? start : "talenta");
   return (
     <div className="grid items-start gap-4 lg:h-full lg:grid-cols-[240px_minmax(0,1fr)] xl:grid-cols-[250px_minmax(0,1fr)_320px]">
       <div className="min-w-0 lg:h-full lg:min-h-0 lg:overflow-y-auto lg:pb-1 no-scrollbar">
@@ -23,8 +26,10 @@ export default function DashboardShell({ initialView = "talenta", sidebar, middl
       </div>
 
       <div className="min-w-0 space-y-3 lg:h-full lg:min-h-0 lg:overflow-y-auto lg:pr-1 lg:pb-1 no-scrollbar">
-        {view === "lowongan" ? (
-          <LowonganView {...middle.lowongan} onBack={() => setView("talenta")} />
+        {view === "active" ? (
+          <ActiveJobsView {...middle.active} onBack={() => setView("talenta")} />
+        ) : view === "pelamar" ? (
+          <PelamarView {...middle.pelamar} onBack={() => setView("talenta")} />
         ) : view === "reviews" ? (
           <ReviewsView {...middle.reviews} onBack={() => setView("talenta")} />
         ) : view === "cafes" ? (

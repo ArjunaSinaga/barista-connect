@@ -64,16 +64,16 @@ export default function SidebarOwner({ cafe, ownerName, completeness, counts, vi
       </div>
 
       <nav className="rounded-2xl border border-[#e8e0cf] bg-[#ffffff] p-2 shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
-        <button type="button" onClick={() => onNavigate?.("talenta")} className={cls(view !== "lowongan")}>
+        <button type="button" onClick={() => onNavigate?.("talenta")} className={cls(isMain && view === "talenta")}>
           <LayoutDashboard size={17} className="shrink-0" />
           <span className="flex-1 text-left">Dashboard</span>
         </button>
-        <button type="button" onClick={() => onNavigate?.("lowongan")} className={cls(view === "lowongan")}>
+        <button type="button" onClick={() => onNavigate?.("active")} className={cls(isMain && view === "active")}>
           <Briefcase size={17} className="shrink-0" />
           <span className="flex-1 text-left">Active Jobs</span>
           {countBadge(counts.activeJobs)}
         </button>
-        <button type="button" onClick={() => onNavigate?.("lowongan")} className={cls(false)}>
+        <button type="button" onClick={() => onNavigate?.("pelamar")} className={cls(isMain && view === "pelamar")}>
           <Users size={17} className="shrink-0" />
           <span className="flex-1 text-left">Pelamar</span>
           {countBadge(counts.applicants)}
