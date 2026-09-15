@@ -134,8 +134,8 @@ export default async function LandingPage() {
   return (
     <div className="min-h-screen bg-[#f5f1e8] text-[#2b2118] lg:flex lg:h-[calc(100dvh-3.5rem)] lg:flex-col lg:overflow-hidden">
       {/* Hero teks — foto pindah ke trio di bawah */}
-      <section className="mx-auto w-full max-w-[1400px] shrink-0 px-4 pt-4 pb-3 sm:px-6">
-        <div className="rounded-2xl border border-[#e8e0cf] bg-[#ece2cd] px-5 py-4 shadow-[0_2px_12px_rgba(43,33,24,0.10)] sm:px-7">
+      <section className="mx-auto w-full max-w-[1400px] shrink-0 px-4 pt-3 pb-2 sm:px-6">
+        <div className="rounded-2xl border border-[#e8e0cf] bg-[#ece2cd] px-5 py-3.5 shadow-[0_2px_12px_rgba(43,33,24,0.10)] sm:px-7">
           <div className="flex flex-wrap items-end gap-x-8 gap-y-3">
             <div className="min-w-0 flex-1 basis-72">
               <p className="text-[11px] font-bold tracking-[0.18em] text-[#857768] uppercase">
@@ -172,7 +172,7 @@ export default async function LandingPage() {
       </section>
 
       {/* Kartu peran */}
-      <section className="mx-auto w-full max-w-[1400px] shrink-0 px-4 pb-3 sm:px-6">
+      <section className="mx-auto w-full max-w-[1400px] shrink-0 px-4 pb-2 sm:px-6">
         <div className="grid gap-3 sm:grid-cols-2">
           <Link href="/signup" className="group flex items-center gap-3 rounded-2xl border border-[#e8e0cf] bg-[#ffffff] px-4 py-2.5 shadow-[0_1px_3px_rgba(43,33,24,0.08)] hover:border-[#3d2c1e]">
             <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#efe8d8]"><Coffee size={17} className="text-[#3d2c1e]" /></span>
@@ -194,7 +194,7 @@ export default async function LandingPage() {
       </section>
 
       {/* Trio: jobs kiri, foto tengah (sempit), ekosistem kanan — tinggi sama */}
-      <section className="mx-auto w-full max-w-[1400px] px-4 sm:px-6 lg:min-h-0 lg:flex-[1.25]">
+      <section className="mx-auto w-full max-w-[1400px] px-4 sm:px-6 lg:min-h-0 lg:flex-[1.45]">
         <div className="grid items-stretch gap-4 sm:grid-cols-2 lg:h-full lg:grid-cols-[1fr_0.62fr_0.85fr]">
           <div className="min-w-0 sm:col-span-2 lg:col-span-1 lg:col-start-1 lg:row-start-1 lg:h-full lg:min-h-0 lg:overflow-y-auto lg:pr-1 lg:pb-1">
             <LatestJobs jobs={jobs} />

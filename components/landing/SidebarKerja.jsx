@@ -11,7 +11,7 @@ const ITEMS = [
 
 export function EcosystemCard() {
   return (
-    <div className="rounded-2xl border border-[#e8e0cf] bg-[#ffffff] p-4 shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
+    <div className="rounded-2xl border border-[#e8e0cf] bg-[#ffffff] p-4 shadow-[0_1px_3px_rgba(43,33,24,0.08)] lg:min-h-full">
       <h3 className="text-sm font-extrabold text-[#2b2118]">More than a job board</h3>
       <p className="mt-0.5 text-xs text-[#857768]">A complete coffee hiring ecosystem.</p>
       <ul className="mt-2 space-y-1">
@@ -37,7 +37,7 @@ export function EcosystemCard() {
 
 export function AcademyCard({ image }) {
   return (
-    <div className="rounded-2xl border border-[#e8e0cf] bg-[#ffffff] p-4 shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
+    <div className="rounded-2xl border border-[#e8e0cf] bg-[#ffffff] p-4 shadow-[0_1px_3px_rgba(43,33,24,0.08)] lg:min-h-full">
       <div className="flex items-center justify-between">
         <h3 className="text-sm font-extrabold text-[#2b2118]">kerja.inc Academy</h3>
         <Link href="/signup" className="inline-flex shrink-0 items-center gap-0.5 text-xs font-bold text-[#2b6cb0] hover:underline">
@@ -83,7 +83,7 @@ const BARS = [
 
 export function SmarterOpsCard() {
   return (
-    <div className="rounded-2xl border border-[#e8e0cf] bg-[#ffffff] p-4 shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
+    <div className="rounded-2xl border border-[#e8e0cf] bg-[#ffffff] p-4 shadow-[0_1px_3px_rgba(43,33,24,0.08)] lg:min-h-full">
       <div className="flex items-center justify-between gap-2">
         <h3 className="text-sm font-extrabold text-[#2b2118]">For Cafe Owners: Smarter Operations</h3>
         <span className="shrink-0 rounded-full bg-[#e3ecf5] px-2 py-0.5 text-[10px] font-bold text-[#2b5f8a]">Coming Soon</span>
