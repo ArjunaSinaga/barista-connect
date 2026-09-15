@@ -2,7 +2,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { MapPin, Store, Briefcase } from "lucide-react";
 import { createClient, getSessionSafe } from "@/lib/supabase/server";
-import { Stars, avgStars, visibleCafeRatings } from "@/components/ratings/RatingForm";
+import { Stars } from "@/components/ratings/RatingForm";
+import { avgStars, visibleCafeRatings } from "@/lib/ratings";
 
 export async function generateMetadata({ params }) {
   const { id } = await params;

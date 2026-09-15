@@ -2,7 +2,7 @@ import Link from "next/link";
 import { createClient, getSessionSafe, isSupabaseConfigured } from "@/lib/supabase/server";
 import BusinessForm from "@/components/owner/BusinessForm";
 import OwnerProfileView from "@/components/owner/OwnerProfileView";
-import { avgStars, visibleCafeRatings } from "@/components/ratings/RatingForm";
+import { avgStars, visibleCafeRatings } from "@/lib/ratings";
 
 export const metadata = { title: "Data Bisnis" };
 

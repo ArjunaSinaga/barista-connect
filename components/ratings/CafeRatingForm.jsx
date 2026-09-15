@@ -5,7 +5,8 @@ import { Star } from "lucide-react";
 import Button from "@/components/ui/Button";
 import { useToast } from "@/components/ui/toast";
 import { createClient } from "@/lib/supabase/client";
-import { canEdit, nextEditableAt, Stars } from "@/components/ratings/RatingForm";
+import { canEdit, nextEditableAt } from "@/lib/ratings";
+import { Stars } from "@/components/ratings/RatingForm";
 
 // Form rating barista -> cafe. Hanya aktif untuk tim berstatus terminated.
 export default function CafeRatingForm({

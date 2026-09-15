@@ -2,7 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { createClient, getSessionSafe } from "@/lib/supabase/server";
 import OwnerProfileView from "@/components/owner/OwnerProfileView";
-import { avgStars, visibleCafeRatings } from "@/components/ratings/RatingForm";
+import { avgStars, visibleCafeRatings } from "@/lib/ratings";
 
 export async function generateMetadata() {
   return { title: "Profil Coffee Shop" };

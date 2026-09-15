@@ -5,17 +5,18 @@ import { Star } from "lucide-react";
 import Button from "@/components/ui/Button";
 import { useToast } from "@/components/ui/toast";
 import { createClient } from "@/lib/supabase/client";
+import { canEdit, nextEditableAt } from "@/lib/ratings";
 
-const WEEK_MS = 7 * 24 * 60 * 60 * 1000;
-
-export function nextEditableAt(updatedAt) {
-  return new Date(new Date(updatedAt).getTime() + WEEK_MS);
-}
-
-export function canEdit(updatedAt) {
-  if (!updatedAt) return true;
-  return Date.now() - new Date(updatedAt).getTime() >= WEEK_MS;
-}
+// Helper murni tinggal di @/lib/ratings (bebas "use client") agar bisa
+// dipakai Server Component; di-re-export di sini supaya import lama tetap jalan.
+export {
+  nextEditableAt,
+  canEdit,
+  blindPairs,
+  visibleOwnerRatings,
+  visibleCafeRatings,
+  avgStars,
+} from "@/lib/ratings";
 
 export function Stars({ value, size = 16 }) {
   return (
@@ -32,29 +33,7 @@ export function Stars({ value, size = 16 }) {
 }
 
 // Blind review: rating satu pihak baru tampil publik setelah pihak lain juga menilai.
-// Pasangan diikat via team_member_id yang sama.
-export function blindPairs(ownerRatings, cafeRatings) {
-  const cafeByTeam = {};
-  (cafeRatings ?? []).forEach((r) => { cafeByTeam[r.team_member_id] = r; });
-  const ownerByTeam = {};
-  (ownerRatings ?? []).forEach((r) => { ownerByTeam[r.team_member_id] = r; });
-  return { cafeByTeam, ownerByTeam };
-}
-
-export function visibleOwnerRatings(ownerRatings, cafeRatings) {
-  const { cafeByTeam } = blindPairs(ownerRatings, cafeRatings);
-  return (ownerRatings ?? []).filter((r) => cafeByTeam[r.team_member_id]);
-}
-
-export function visibleCafeRatings(ownerRatings, cafeRatings) {
-  const { ownerByTeam } = blindPairs(ownerRatings, cafeRatings);
-  return (cafeRatings ?? []).filter((r) => ownerByTeam[r.team_member_id]);
-}
-
-export function avgStars(ratings) {
-  if (!ratings?.length) return null;
-  return (ratings.reduce((s, r) => s + r.stars, 0) / ratings.length).toFixed(1);
-}
+// Pasangan diikat via team_member_id yang sama. (Implementasi: @/lib/ratings.)
 
 export default function RatingForm({
   teamMemberId,
