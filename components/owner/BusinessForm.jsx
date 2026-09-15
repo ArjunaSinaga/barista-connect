@@ -20,6 +20,7 @@ export default function BusinessForm({ initial }) {
     location: initial?.location ?? "",
   });
   const [avatarUrl, setAvatarUrl] = useState(initial?.avatar_url ?? "");
+  const [errors, setErrors] = useState({});
   const [uploading, setUploading] = useState(false);
   const [busy, setBusy] = useState(false);
   const fileRef = useRef(null);
@@ -62,21 +63,29 @@ export default function BusinessForm({ initial }) {
       toast("Foto profil wajib diunggah", "error");
       return;
     }
-    const parsed = ownerOnboardingSchema.safeParse(form);
+    const clean = {
+      business_name: (form.business_name ?? "").trim(),
+      location: (form.location ?? "").trim(),
+    };
+    const parsed = ownerOnboardingSchema.safeParse(clean);
     if (!parsed.success) {
+      const errs = {};
+      parsed.error.issues.forEach((i) => { if (i.path[0]) errs[i.path[0]] = i.message; });
+      setErrors(errs);
       toast(parsed.error.issues[0]?.message ?? "Periksa isian", "error");
       return;
     }
+    setErrors({});
     setBusy(true);
     try {
       const supabase = createClient();
       const {
         data: { user },
       } = await supabase.auth.getUser();
+      if (!user) throw new Error("Sesi habis, silakan login ulang");
       const { error } = await supabase
         .from("owners")
-        .update({ ...parsed.data, avatar_url: avatarUrl })
-        .eq("id", user.id);
+        .upsert({ id: user.id, ...parsed.data, avatar_url: avatarUrl }, { onConflict: "id" });
       if (error) throw error;
       toast("Data bisnis tersimpan ✓");
       router.refresh();
@@ -122,6 +131,7 @@ export default function BusinessForm({ initial }) {
           name="business_name"
           label="Nama usaha"
           value={form.business_name}
+          error={errors.business_name}
           onChange={(e) =>
             setForm((f) => ({ ...f, business_name: e.target.value }))
           }
@@ -131,6 +141,7 @@ export default function BusinessForm({ initial }) {
           label="Lokasi utama"
           list="biz-city-list"
           value={form.location}
+          error={errors.location}
           onChange={(e) => setForm((f) => ({ ...f, location: e.target.value }))}
         />
         <datalist id="biz-city-list">

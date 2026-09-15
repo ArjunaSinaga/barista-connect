@@ -16,11 +16,13 @@ export default async function OwnerProfilePage({ searchParams }) {
 
   if (params?.edit) {
     return (
+      <div className="auth-light min-h-[calc(100dvh-3.5rem)]">
       <div className="mx-auto max-w-3xl px-4 py-8">
         <Link href="/dashboard/owner/profile" className="text-sm font-bold text-caramel hover:underline">
           ← Kembali ke profil
         </Link>
         <div className="mt-4"><BusinessForm initial={row ?? null} /></div>
+      </div>
       </div>
     );
   }
