@@ -85,10 +85,32 @@ async function getRecentReviews() {
   }
 }
 
-// Homepage = 1 layar tanpa scroll halaman (desktop): hero atas, 2 kartu peran,
-// 6 blok mandiri (3×2: kiri jobs+reviews, tengah featured+academy, kanan
-// ekosistem+smarter ops) + strip bawah melebar. Tiap blok scroll sendiri.
-// Mobile tetap scroll normal.
+function HeroPhotoBlock({ photo }) {
+  return (
+    <div className="relative h-56 overflow-hidden rounded-2xl border border-[#e8e0cf] shadow-[0_1px_3px_rgba(43,33,24,0.08)] sm:h-64 lg:h-full lg:min-h-0">
+      {photo ? (
+        <>
+          <img src={photo.url} alt={photo.cafe ? `Photo of ${photo.cafe}` : "Cafe photo"} loading="lazy" className="absolute inset-0 h-full w-full object-cover" />
+          <span className="font-chalk absolute top-4 left-4 -rotate-6 text-xl leading-5 text-white drop-shadow-[0_2px_6px_rgba(0,0,0,0.6)]">
+            Good People<br />Better Coffee
+          </span>
+          <span className="absolute right-3 bottom-3 rounded-full bg-[#f5f1e8]/95 px-4 py-2 text-right shadow">
+            <span className="font-chalk block text-sm leading-4 text-[#3d2c1e]">Same Passion<br />More Opportunities</span>
+            {photo.cafe && <span className="mt-0.5 block text-[10px] font-bold tracking-wide text-[#857768]">— {photo.cafe} —</span>}
+          </span>
+        </>
+      ) : (
+        <div className="absolute inset-0 flex items-center justify-center bg-[#ece2cd] px-6 text-center">
+          <p className="text-sm leading-6 text-[#857768]">Real cafe photos appear here.<br />Not AI images.</p>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// Homepage = 1 layar tanpa scroll halaman (desktop): hero teks, 2 kartu peran,
+// trio (jobs | foto | ekosistem) + quad (featured | reviews | academy | smarter).
+// Tiap blok scroll di dalam kotaknya sendiri. Mobile tetap scroll normal.
 export default async function LandingPage() {
   const { user } = await getSessionSafe();
   const [jobs, stats, featured, reviews] = await Promise.all([
@@ -111,61 +133,40 @@ export default async function LandingPage() {
 
   return (
     <div className="min-h-screen bg-[#f5f1e8] text-[#2b2118] lg:flex lg:h-[calc(100dvh-3.5rem)] lg:flex-col lg:overflow-hidden">
-      {/* Hero banner — teks kiri menyatu foto kanan */}
+      {/* Hero teks — foto pindah ke trio di bawah */}
       <section className="mx-auto w-full max-w-[1400px] shrink-0 px-4 pt-4 pb-3 sm:px-6">
-        <div className="grid overflow-hidden rounded-2xl border border-[#e8e0cf] bg-[#ece2cd] shadow-[0_2px_12px_rgba(43,33,24,0.10)] lg:grid-cols-[1.05fr_0.95fr]">
-          <div className="p-5 sm:p-7">
-            <p className="text-[11px] font-bold tracking-[0.18em] text-[#857768] uppercase">
-              A stronger coffee community
-            </p>
-            <h1 className="font-display mt-1 text-3xl leading-[1.05] font-semibold tracking-tight sm:text-[2.6rem]">
-              Hire better baristas.<br />
-              <span className="text-[#1f6b4a]">Find better cafe jobs.</span>
-            </h1>
-            <p className="mt-2 max-w-xl text-[13px] leading-5 text-[#6f6252]">
-              BaristaConnect connects passionate baristas and cafe owners with verified
-              experience, ratings, and reviews. More than a job board — the coffee hiring ecosystem.
-            </p>
-            <div className="mt-3 flex flex-wrap items-center gap-2">
-              <Link href="/jobs" className="inline-flex min-h-[40px] items-center gap-2 rounded-full bg-[#3d2c1e] px-5 text-[13px] font-bold text-white hover:bg-[#2e2015]">
-                <Search size={14} /> Find Jobs
-              </Link>
-              <Link href="/find-baristas" className="inline-flex min-h-[40px] items-center gap-2 rounded-full border border-[#c9b992] bg-[#ffffff] px-5 text-[13px] font-bold text-[#3d2c1e] hover:border-[#3d2c1e]">
-                <Store size={14} /> Hire Baristas
-              </Link>
+        <div className="rounded-2xl border border-[#e8e0cf] bg-[#ece2cd] px-5 py-4 shadow-[0_2px_12px_rgba(43,33,24,0.10)] sm:px-7">
+          <div className="flex flex-wrap items-end gap-x-8 gap-y-3">
+            <div className="min-w-0 flex-1 basis-72">
+              <p className="text-[11px] font-bold tracking-[0.18em] text-[#857768] uppercase">
+                A stronger coffee community
+              </p>
+              <h1 className="font-display mt-1 text-3xl leading-[1.05] font-semibold tracking-tight sm:text-[2.4rem]">
+                Hire better baristas. <span className="text-[#1f6b4a]">Find better cafe jobs.</span>
+              </h1>
+              <p className="mt-1.5 max-w-xl text-[13px] leading-5 text-[#6f6252]">
+                BaristaConnect connects passionate baristas and cafe owners with verified
+                experience, ratings, and reviews. More than a job board — the coffee hiring ecosystem.
+              </p>
             </div>
-            <dl className="mt-4 flex items-stretch gap-5">
-              {stats.map(([v, l], i) => (
-                <div key={l} className={i > 0 ? "border-l border-[#3d2c1e]/15 pl-5" : ""}>
-                  <dd className="text-xl leading-6 font-extrabold tracking-tight text-[#2b2118]">{v}</dd>
-                  <dt className="mt-0.5 text-[10px] leading-3 text-[#857768]">{l}</dt>
-                </div>
-              ))}
-            </dl>
-          </div>
-
-          <div className="relative hidden min-h-[300px] lg:block">
-            {heroMain ? (
-              <>
-                <img src={heroMain.url} alt={heroMain.cafe ? `Photo of ${heroMain.cafe}` : "Cafe photo"} className="absolute inset-0 h-full w-full object-cover" />
-                <span aria-hidden="true" className="absolute inset-0" style={{ background: "linear-gradient(100deg, #ece2cd 0%, rgba(236,226,205,0.55) 22%, rgba(236,226,205,0) 45%)" }} />
-                <span aria-hidden="true" className="absolute -bottom-16 -left-16 h-56 w-72 rounded-[50%] bg-[#ece2cd]" />
-                <span className="font-chalk absolute top-8 left-4 -rotate-6 text-2xl leading-6 text-white drop-shadow-[0_2px_6px_rgba(0,0,0,0.6)]">
-                  Good People<br />Better Coffee
-                </span>
-                <span className="absolute right-4 bottom-4 rounded-full bg-[#f5f1e8]/95 px-5 py-2.5 text-right shadow">
-                  <span className="font-chalk block text-base leading-5 text-[#3d2c1e]">Same Passion<br />More Opportunities</span>
-                  {heroMain.cafe && <span className="mt-0.5 block text-[10px] font-bold tracking-wide text-[#857768]">— {heroMain.cafe} —</span>}
-                </span>
-                <span className="absolute bottom-2 left-1/2 hidden -translate-x-1/2 text-[9px] font-bold tracking-[0.25em] whitespace-nowrap text-[#2b2118]/40 xl:block">
-                  JOBS&nbsp;&nbsp;•&nbsp;&nbsp;PEOPLE&nbsp;&nbsp;•&nbsp;&nbsp;TRAINING&nbsp;&nbsp;•&nbsp;&nbsp;STRONGER CAFES
-                </span>
-              </>
-            ) : (
-              <div className="absolute inset-0 flex items-center justify-center px-6 text-center">
-                <p className="text-sm leading-6 text-[#857768]">Real cafe photos appear here.<br />Not AI images.</p>
+            <div className="shrink-0">
+              <div className="flex flex-wrap items-center gap-2">
+                <Link href="/jobs" className="inline-flex min-h-[40px] items-center gap-2 rounded-full bg-[#3d2c1e] px-5 text-[13px] font-bold text-white hover:bg-[#2e2015]">
+                  <Search size={14} /> Find Jobs
+                </Link>
+                <Link href="/find-baristas" className="inline-flex min-h-[40px] items-center gap-2 rounded-full border border-[#c9b992] bg-[#ffffff] px-5 text-[13px] font-bold text-[#3d2c1e] hover:border-[#3d2c1e]">
+                  <Store size={14} /> Hire Baristas
+                </Link>
               </div>
-            )}
+              <dl className="mt-3 flex items-stretch gap-5">
+                {stats.map(([v, l], i) => (
+                  <div key={l} className={i > 0 ? "border-l border-[#3d2c1e]/15 pl-5" : ""}>
+                    <dd className="text-xl leading-6 font-extrabold tracking-tight text-[#2b2118]">{v}</dd>
+                    <dt className="mt-0.5 text-[10px] leading-3 text-[#857768]">{l}</dt>
+                  </div>
+                ))}
+              </dl>
+            </div>
           </div>
         </div>
       </section>
@@ -192,25 +193,34 @@ export default async function LandingPage() {
         </div>
       </section>
 
-      {/* 6 blok mandiri: 2 baris × 3 kolom, tiap sel sama tinggi + scroll sendiri */}
-      <section className="mx-auto w-full max-w-[1400px] flex-1 px-4 sm:px-6 lg:min-h-0">
-        <div className="grid items-stretch gap-4 sm:grid-cols-2 lg:h-full lg:grid-cols-3 lg:grid-rows-2">
-          <div className="min-w-0 sm:col-span-2 lg:col-span-1 lg:row-start-1 lg:h-full lg:min-h-0 lg:overflow-y-auto lg:pr-1 lg:pb-1">
+      {/* Trio: jobs kiri, foto tengah (sempit), ekosistem kanan — tinggi sama */}
+      <section className="mx-auto w-full max-w-[1400px] px-4 sm:px-6 lg:min-h-0 lg:flex-[1.25]">
+        <div className="grid items-stretch gap-4 sm:grid-cols-2 lg:h-full lg:grid-cols-[1fr_0.62fr_0.85fr]">
+          <div className="min-w-0 sm:col-span-2 lg:col-span-1 lg:col-start-1 lg:row-start-1 lg:h-full lg:min-h-0 lg:overflow-y-auto lg:pr-1 lg:pb-1">
             <LatestJobs jobs={jobs} />
           </div>
-          <div className="min-w-0 lg:col-start-2 lg:row-start-1 lg:h-full lg:min-h-0 lg:overflow-y-auto lg:pr-1 lg:pb-1">
-            <FeaturedBarista barista={featured} isAnon={!user} />
+          <div className="min-w-0 lg:col-start-2 lg:row-start-1 lg:h-full lg:min-h-0 lg:pb-1">
+            <HeroPhotoBlock photo={heroMain} />
           </div>
           <div className="min-w-0 lg:col-start-3 lg:row-start-1 lg:h-full lg:min-h-0 lg:overflow-y-auto lg:pb-1">
             <EcosystemCard />
           </div>
-          <div className="min-w-0 lg:col-start-1 lg:row-start-2 lg:h-full lg:min-h-0 lg:overflow-y-auto lg:pr-1 lg:pb-1">
-            <AcademyCard image={academyPhoto} />
+        </div>
+      </section>
+
+      {/* Quad: featured | reviews | academy | smarter */}
+      <section className="mx-auto w-full max-w-[1400px] flex-1 px-4 pt-4 sm:px-6 lg:min-h-0 lg:flex-1 lg:pt-4">
+        <div className="grid items-stretch gap-4 sm:grid-cols-2 lg:h-full lg:grid-cols-4">
+          <div className="min-w-0 lg:h-full lg:min-h-0 lg:overflow-y-auto lg:pr-1 lg:pb-1">
+            <FeaturedBarista barista={featured} isAnon={!user} />
           </div>
-          <div className="min-w-0 lg:col-start-2 lg:row-start-2 lg:h-full lg:min-h-0 lg:overflow-y-auto lg:pr-1 lg:pb-1">
+          <div className="min-w-0 lg:h-full lg:min-h-0 lg:overflow-y-auto lg:pr-1 lg:pb-1">
             <ReviewsCard reviews={reviews} />
           </div>
-          <div className="min-w-0 lg:col-start-3 lg:row-start-2 lg:h-full lg:min-h-0 lg:overflow-y-auto lg:pb-1">
+          <div className="min-w-0 lg:h-full lg:min-h-0 lg:overflow-y-auto lg:pr-1 lg:pb-1">
+            <AcademyCard image={academyPhoto} />
+          </div>
+          <div className="min-w-0 lg:h-full lg:min-h-0 lg:overflow-y-auto lg:pb-1">
             <SmarterOpsCard />
           </div>
         </div>
