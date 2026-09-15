@@ -197,13 +197,13 @@ export default async function LandingPage() {
       {/* Trio: jobs kiri, foto tengah (sempit), ekosistem kanan — porsi kecil */}
       <section className="mx-auto w-full max-w-[1400px] px-4 sm:px-6 lg:min-h-0 lg:flex-1">
         <div className="grid items-stretch gap-4 sm:grid-cols-2 lg:h-full lg:grid-cols-[1fr_0.62fr_0.85fr]">
-          <div className="min-w-0 sm:col-span-2 lg:col-span-1 lg:col-start-1 lg:row-start-1 lg:h-full lg:min-h-0 lg:overflow-y-auto lg:pr-1 lg:pb-1">
+          <div className="min-w-0 sm:col-span-2 lg:col-span-1 lg:col-start-1 lg:row-start-1 lg:h-full lg:min-h-0 lg:overflow-y-auto lg:pr-1 lg:pb-1 no-scrollbar">
             <LatestJobs jobs={jobs} />
           </div>
           <div className="min-w-0 lg:col-start-2 lg:row-start-1 lg:h-full lg:min-h-0 lg:pb-1">
             <HeroPhotoBlock photo={heroMain} />
           </div>
-          <div className="min-w-0 lg:col-start-3 lg:row-start-1 lg:h-full lg:min-h-0 lg:overflow-y-auto lg:pb-1">
+          <div className="min-w-0 lg:col-start-3 lg:row-start-1 lg:h-full lg:min-h-0 lg:overflow-y-auto lg:pb-1 no-scrollbar">
             <EcosystemCard />
           </div>
         </div>
@@ -212,16 +212,16 @@ export default async function LandingPage() {
       {/* Quad: featured | reviews | academy | smarter — porsi besar ke atas */}
       <section className="mx-auto w-full max-w-[1400px] flex-1 px-4 pt-3 sm:px-6 lg:min-h-0 lg:flex-[1.5] lg:pt-3">
         <div className="grid items-stretch gap-4 sm:grid-cols-2 lg:h-full lg:grid-cols-4">
-          <div className="min-w-0 lg:h-full lg:min-h-0 lg:overflow-y-auto lg:pr-1 lg:pb-1">
+          <div className="min-w-0 lg:h-full lg:min-h-0 lg:overflow-y-auto lg:pr-1 lg:pb-1 no-scrollbar">
             <FeaturedBarista barista={featured} isAnon={!user} />
           </div>
-          <div className="min-w-0 lg:h-full lg:min-h-0 lg:overflow-y-auto lg:pr-1 lg:pb-1">
+          <div className="min-w-0 lg:h-full lg:min-h-0 lg:overflow-y-auto lg:pr-1 lg:pb-1 no-scrollbar">
             <ReviewsCard reviews={reviews} />
           </div>
-          <div className="min-w-0 lg:h-full lg:min-h-0 lg:overflow-y-auto lg:pr-1 lg:pb-1">
+          <div className="min-w-0 lg:h-full lg:min-h-0 lg:overflow-y-auto lg:pr-1 lg:pb-1 no-scrollbar">
             <AcademyCard image={academyPhoto} />
           </div>
-          <div className="min-w-0 lg:h-full lg:min-h-0 lg:overflow-y-auto lg:pb-1">
+          <div className="min-w-0 lg:h-full lg:min-h-0 lg:overflow-y-auto lg:pb-1 no-scrollbar">
             <SmarterOpsCard />
           </div>
         </div>
