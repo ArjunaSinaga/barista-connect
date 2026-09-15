@@ -88,10 +88,10 @@ export default function SidebarOwner({ cafe, ownerName, completeness, counts, vi
           <span className="flex-1 text-left">Cafe Saya</span>
           {countBadge(counts.cafes)}
         </button>
-        <Link href="/dashboard/owner/profile" className={cls(pathname?.startsWith("/dashboard/owner/profile"))}>
+        <button type="button" onClick={() => onNavigate?.("settings")} className={cls(isMain && view === "settings")}>
           <Settings size={17} className="shrink-0" />
-          <span className="flex-1">Settings</span>
-        </Link>
+          <span className="flex-1 text-left">Settings</span>
+        </button>
         <span
           title="Segera hadir"
           className="flex cursor-not-allowed items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-bold text-[#6f6252]/50"

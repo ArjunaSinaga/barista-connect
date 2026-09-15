@@ -40,7 +40,7 @@ export default async function OwnerDashboardPage({ searchParams }) {
       apps = r2.data ?? []
     }
     const [o, c, gr, cw, b] = await Promise.all([
-      supabase.from("owners").select("business_name,avatar_url,whatsapp").eq("id", user.id).maybeSingle(),
+      supabase.from("owners").select("business_name,avatar_url,whatsapp,location").eq("id", user.id).maybeSingle(),
       supabase.from("cafes").select("id,name,address,location,photo_urls,is_active").eq("owner_id", user.id).order("created_at", { ascending: true }),
       supabase.from("ratings").select("stars,comment,created_at, barista:barista_profiles!ratings_barista_id_fkey(full_name,profile_picture_url)").eq("owner_id", user.id).order("created_at", { ascending: false }).limit(30),
       supabase.from("conversations").select("id").eq("owner_id", user.id).gte("created_at", new Date(Date.now() - 7 * 864e5).toISOString()),
@@ -107,6 +107,7 @@ export default async function OwnerDashboardPage({ searchParams }) {
               pelamar: { jobs, appCountByJob, statusByJob, totals },
               reviews: { reviews: givenRatings },
               cafes: { cafes, countByCafe },
+              settings: { initial: ownerRow, publicHref: `/owner/${user.id}` },
             }}
             right={{ recs: ranked.slice(3, 6), certified: ranked.filter(b => (b.certificates?.length ?? 0) > 0).slice(0, 3) }}
           />

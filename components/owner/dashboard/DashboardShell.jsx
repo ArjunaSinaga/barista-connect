@@ -9,12 +9,13 @@ import ActiveJobsView from "@/components/owner/dashboard/ActiveJobsView";
 import PelamarView from "@/components/owner/dashboard/PelamarView";
 import ReviewsView from "@/components/owner/dashboard/ReviewsView";
 import CafesView from "@/components/owner/dashboard/CafesView";
+import SettingsView from "@/components/owner/dashboard/SettingsView";
 import { TalentRow } from "@/components/owner/dashboard/TopCandidates";
 import { SmarterOpsCard } from "@/components/landing/SidebarKerja";
 
 // Shell 3 kolom: sidebar tetap, hanya kolom TENGAH yang ganti
 // (talenta/active/pelamar/reviews/cafes) tanpa navigasi halaman.
-const VIEWS = ["talenta", "active", "pelamar", "reviews", "cafes"];
+const VIEWS = ["talenta", "active", "pelamar", "reviews", "cafes", "settings"];
 const LEGACY = { lowongan: "active" }; // deep-link lama tetap jalan
 export default function DashboardShell({ initialView = "talenta", sidebar, middle, right }) {
   const start = LEGACY[initialView] ?? initialView;
@@ -34,6 +35,8 @@ export default function DashboardShell({ initialView = "talenta", sidebar, middl
           <ReviewsView {...middle.reviews} onBack={() => setView("talenta")} />
         ) : view === "cafes" ? (
           <CafesView {...middle.cafes} onBack={() => setView("talenta")} />
+        ) : view === "settings" ? (
+          <SettingsView {...middle.settings} onBack={() => setView("talenta")} />
         ) : (
           <TalentaView {...middle.talenta} />
         )}
