@@ -122,12 +122,16 @@ export default async function LandingPage() {
     getRecentReviews(),
   ]);
   const heroPhoto = (() => {
+    const photos = [];
     for (const j of jobs) {
-      const url = j.cafes?.photo_urls?.[0];
-      if (url) return { url, cafe: j.cafes?.name ?? null };
+      for (const url of j.cafes?.photo_urls ?? []) {
+        if (url && !photos.some((p) => p.url === url)) photos.push({ url, cafe: j.cafes?.name ?? null });
+      }
     }
-    return null;
+    return photos;
   })();
+  const heroMain = heroPhoto[0] ?? null;
+  const academyPhoto = heroPhoto[1]?.url ?? heroPhoto[0]?.url ?? null;
 
   return (
     <div className="min-h-screen bg-[#f5f1e8] text-[#2b2118] lg:flex lg:h-[calc(100dvh-3.5rem)] lg:flex-col lg:overflow-hidden">
@@ -179,15 +183,15 @@ export default async function LandingPage() {
           </div>
 
           <div className="relative hidden min-h-[300px] lg:block">
-            {heroPhoto ? (
+            {heroMain ? (
               <>
-                <img src={heroPhoto.url} alt={heroPhoto.cafe ? `Photo of ${heroPhoto.cafe}` : "Cafe photo"} className="absolute inset-0 h-full w-full object-cover" />
+                <img src={heroMain.url} alt={heroMain.cafe ? `Photo of ${heroMain.cafe}` : "Cafe photo"} className="absolute inset-0 h-full w-full object-cover" />
                 <span className="font-chalk absolute top-5 left-1/2 -translate-x-1/2 -rotate-3 text-center text-2xl leading-6 text-white drop-shadow-[0_2px_6px_rgba(0,0,0,0.6)]">
                   Good People<br />Better Coffee
                 </span>
                 <span className="absolute right-4 bottom-4 rounded-xl bg-[#f5f1e8]/95 px-4 py-2 text-right shadow">
                   <span className="font-chalk block text-base leading-5 text-[#3d2c1e]">Same Passion<br />More Opportunities</span>
-                  {heroPhoto.cafe && <span className="mt-0.5 block text-[10px] font-bold tracking-wide text-[#857768]">— {heroPhoto.cafe} —</span>}
+                  {heroMain.cafe && <span className="mt-0.5 block text-[10px] font-bold tracking-wide text-[#857768]">— {heroMain.cafe} —</span>}
                 </span>
               </>
             ) : (
@@ -223,7 +227,7 @@ export default async function LandingPage() {
 
       {/* 6 blok mandiri */}
       <section className="mx-auto w-full max-w-[1400px] flex-1 px-4 sm:px-6 lg:min-h-0">
-        <div className="grid items-start gap-4 sm:grid-cols-2 lg:h-full lg:grid-cols-3 lg:grid-rows-2">
+        <div className="grid items-start gap-4 sm:grid-cols-2 lg:h-full lg:grid-cols-[1.12fr_1fr_0.82fr] lg:grid-rows-2">
           <div className="min-w-0 sm:col-span-2 lg:col-span-1 lg:row-span-2 lg:h-full lg:min-h-0 lg:overflow-y-auto lg:pr-1 lg:pb-1">
             <LatestJobs jobs={jobs} />
           </div>
@@ -237,7 +241,7 @@ export default async function LandingPage() {
             <ReviewsCard reviews={reviews} />
           </div>
           <div className="min-w-0 lg:h-full lg:min-h-0 lg:overflow-y-auto lg:pr-1 lg:pb-1">
-            <AcademyCard />
+            <AcademyCard image={academyPhoto} />
           </div>
           <div className="min-w-0 lg:h-full lg:min-h-0 lg:overflow-y-auto lg:pb-1">
             <SmarterOpsCard />

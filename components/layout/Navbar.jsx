@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
-import { Coffee, MessageSquareText, LogOut } from "lucide-react";
+import { Coffee, MessageSquareText, LogOut, Search, MapPin } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import { APP_NAME } from "@/lib/constants";
 
@@ -28,7 +28,7 @@ export default function Navbar({ user, role }) {
     <header className={light
       ? "sticky top-0 z-40 border-b border-[#e0d5bd] bg-[#f5f1e8]/90 backdrop-blur"
       : "sticky top-0 z-40 border-b border-latte/60 bg-cream/85 backdrop-blur"}>
-      <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-4">
+      <div className={`mx-auto flex h-14 items-center justify-between px-4 sm:px-6 ${light ? "max-w-[1400px]" : "max-w-6xl"}`}>
         <span className="flex items-center gap-2 font-extrabold tracking-tight">
           <Link href="/" aria-label="Beranda" title="Beranda" className="flex h-8 w-8 items-center justify-center rounded-xl bg-caramel text-white hover:bg-caramel-dark">
             <Coffee size={17} />
@@ -55,6 +55,17 @@ export default function Navbar({ user, role }) {
           >
             Talent
           </Link>
+          {light && (
+            <form action="/jobs" method="GET" className="ml-2 hidden min-w-0 flex-1 items-center gap-2 rounded-full border border-[#e0d5bd] bg-[#ffffff] px-3.5 py-1.5 xl:flex xl:max-w-xs">
+              <Search size={14} className="shrink-0 text-[#b6a98f]" />
+              <input name="q" placeholder="Search jobs, baristas, or cafes..." aria-label="Search" className="h-6 w-full bg-transparent text-xs text-[#2b2118] placeholder:text-[#b6a98f] focus:outline-none" />
+            </form>
+          )}
+          {light && (
+            <span className="ml-1 hidden items-center gap-1 rounded-full px-2 py-2 text-xs font-bold text-[#2f2721]/70 lg:inline-flex">
+              <MapPin size={14} /> Yogyakarta
+            </span>
+          )}
           {user ? (
             <>
               <Link
