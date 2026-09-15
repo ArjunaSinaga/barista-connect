@@ -161,11 +161,11 @@ export default async function LandingPage() {
               <Link href="/jobs" className="inline-flex min-h-[44px] items-center gap-2 rounded-full bg-[#3d2c1e] px-6 text-sm font-bold text-white hover:bg-[#2e2015]">
                 <Search size={15} /> Find Jobs
               </Link>
-              <Link href="/find-baristas" className="inline-flex min-h-[44px] items-center gap-2 rounded-full border border-[#d8cdae] bg-white px-6 text-sm font-bold text-[#3d2c1e] hover:border-[#3d2c1e]">
+              <Link href="/find-baristas" className="inline-flex min-h-[44px] items-center gap-2 rounded-full border border-[#d8cdae] bg-[#ffffff] px-6 text-sm font-bold text-[#3d2c1e] hover:border-[#3d2c1e]">
                 <Store size={15} /> Hire Baristas
               </Link>
             </div>
-            <form action="/jobs" method="GET" className="mt-4 flex max-w-xl items-center gap-2 rounded-full border border-[#e0d5bd] bg-white p-1.5 shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
+            <form action="/jobs" method="GET" className="mt-4 flex max-w-xl items-center gap-2 rounded-full border border-[#e0d5bd] bg-[#ffffff] p-1.5 shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
               <div className="flex min-h-[40px] flex-1 items-center gap-2 pl-4">
                 <Search size={15} className="shrink-0 text-[#b6a98f]" />
                 <input name="q" placeholder="Search jobs, baristas, or cafes..." aria-label="Search jobs" className="h-9 w-full bg-transparent text-sm text-[#2b2118] placeholder:text-[#b6a98f] focus:outline-none" />
@@ -194,13 +194,13 @@ export default async function LandingPage() {
               <figure className="overflow-hidden rounded-2xl border border-[#e8e0cf] shadow-[0_8px_30px_rgba(43,33,24,0.15)]">
                 <img src={heroPhoto.url} alt={heroPhoto.cafe ? `Photo of ${heroPhoto.cafe}` : "Cafe photo"} className="aspect-[4/3] w-full object-cover" />
                 {heroPhoto.cafe && (
-                  <figcaption className="bg-white px-4 py-2 text-center text-xs font-bold tracking-wide text-[#857768]">
+                  <figcaption className="bg-[#ffffff] px-4 py-2 text-center text-xs font-bold tracking-wide text-[#857768]">
                     — {heroPhoto.cafe} —
                   </figcaption>
                 )}
               </figure>
             ) : (
-              <div className="flex aspect-[4/3] items-center justify-center rounded-2xl border border-dashed border-[#d8cdae] bg-white px-6 text-center">
+              <div className="flex aspect-[4/3] items-center justify-center rounded-2xl border border-dashed border-[#d8cdae] bg-[#ffffff] px-6 text-center">
                 <p className="text-sm leading-6 text-[#857768]">Real cafe photos appear here.<br />Not AI images.</p>
               </div>
             )}
@@ -212,7 +212,7 @@ export default async function LandingPage() {
       {/* Role cards */}
       <section className="mx-auto max-w-6xl px-4 pb-6">
         <div className="grid gap-3 sm:grid-cols-2">
-          <Link href="/signup" className="group flex items-center gap-3 rounded-2xl border border-[#e8e0cf] bg-white px-5 py-4 shadow-[0_1px_3px_rgba(43,33,24,0.08)] hover:border-[#3d2c1e]">
+          <Link href="/signup" className="group flex items-center gap-3 rounded-2xl border border-[#e8e0cf] bg-[#ffffff] px-5 py-4 shadow-[0_1px_3px_rgba(43,33,24,0.08)] hover:border-[#3d2c1e]">
             <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#efe8d8]"><Coffee size={19} className="text-[#3d2c1e]" /></span>
             <span className="min-w-0 flex-1">
               <span className="block text-sm font-bold">For Baristas</span>
@@ -220,7 +220,7 @@ export default async function LandingPage() {
             </span>
             <ChevronRight size={17} className="shrink-0 text-[#b6a98f] group-hover:text-[#3d2c1e]" />
           </Link>
-          <Link href="/find-baristas" className="group flex items-center gap-3 rounded-2xl border border-[#e8e0cf] bg-white px-5 py-4 shadow-[0_1px_3px_rgba(43,33,24,0.08)] hover:border-[#3d2c1e]">
+          <Link href="/find-baristas" className="group flex items-center gap-3 rounded-2xl border border-[#e8e0cf] bg-[#ffffff] px-5 py-4 shadow-[0_1px_3px_rgba(43,33,24,0.08)] hover:border-[#3d2c1e]">
             <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#efe8d8]"><Store size={19} className="text-[#3d2c1e]" /></span>
             <span className="min-w-0 flex-1">
               <span className="block text-sm font-bold">For Cafe Owners</span>
@@ -236,7 +236,7 @@ export default async function LandingPage() {
         <div className="grid items-start gap-4 lg:grid-cols-[1fr_320px]">
           <div className="min-w-0 space-y-4">
             {/* Latest jobs */}
-            <div className="rounded-2xl border border-[#e8e0cf] bg-white p-5 shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
+            <div className="rounded-2xl border border-[#e8e0cf] bg-[#ffffff] p-5 shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
               <div className="flex items-start justify-between gap-2">
                 <div>
                   <h2 className="text-base font-bold tracking-tight">Latest Barista Jobs</h2>
@@ -301,7 +301,7 @@ export default async function LandingPage() {
 
             {/* Recent reviews */}
             {reviews.length > 0 && (
-              <div className="rounded-2xl border border-[#e8e0cf] bg-white p-5 shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
+              <div className="rounded-2xl border border-[#e8e0cf] bg-[#ffffff] p-5 shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
                 <div className="flex items-center justify-between">
                   <h3 className="text-sm font-bold">Recent Reviews from Cafe Owners</h3>
                   <Link href="/find-baristas" className="inline-flex items-center gap-0.5 text-xs font-bold text-[#2b6cb0] hover:underline">

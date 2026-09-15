@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Star, MapPin, Briefcase } from "lucide-react";
 import Avatar from "@/components/ui/Avatar";
 import VerifiedBadge from "@/components/ui/VerifiedBadge";
@@ -11,7 +12,7 @@ export default function FeaturedBarista({ barista, isAnon }) {
   const count = barista.ratings?.length ?? 0;
   const inviteHref = isAnon ? `/login?next=/barista/${barista.id}` : `/barista/${barista.id}`;
   return (
-    <div className="rounded-2xl border border-[#e8e0cf] bg-white p-5 shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
+    <div className="rounded-2xl border border-[#e8e0cf] bg-[#ffffff] p-5 shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
       <div className="flex items-center justify-between">
         <h3 className="text-sm font-bold text-[#2b2118]">Featured Barista</h3>
         {barista.is_open_to_work && (
@@ -52,7 +53,9 @@ export default function FeaturedBarista({ barista, isAnon }) {
       )}
       <div className="mt-4 flex gap-2">
         <Button size="sm" full variant="coffee" href={inviteHref}>Invite to Interview</Button>
-        <Button size="sm" full variant="secondary" href={`/barista/${barista.id}`} className="!border-[#e0d5bd] !bg-white !text-[#3d2c1e] hover:!border-[#3d2c1e]">View Full Profile</Button>
+        <Link href={`/barista/${barista.id}`} className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-[#d8cdae] bg-[#ffffff] px-3 py-1.5 text-xs font-semibold text-[#3d2c1e] transition-all hover:border-[#3d2c1e] active:scale-[0.95]">
+          View Full Profile
+        </Link>
       </div>
     </div>
   );
