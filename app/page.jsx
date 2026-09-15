@@ -130,7 +130,7 @@ export default async function LandingPage() {
     return photos;
   })();
   const heroMain = heroPhoto[0] ?? null;
-  const academyPhoto = heroPhoto[1]?.url ?? heroPhoto[0]?.url ?? null;
+  const academyPhoto = heroPhoto[1]?.url ?? heroPhoto[0]?.url ?? `https://picsum.photos/seed/barista-training/640/320`;
 
   return (
     <div className="min-h-screen bg-[#f5f1e8] text-[#2b2118] lg:flex lg:h-[calc(100dvh-3.5rem)] lg:min-h-0 lg:flex-col lg:overflow-hidden">

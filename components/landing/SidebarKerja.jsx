@@ -36,6 +36,7 @@ export function EcosystemCard() {
 }
 
 export function AcademyCard({ image }) {
+  const src = image ?? `https://picsum.photos/seed/barista-training/640/320`;
   return (
     <div className="rounded-2xl border border-[#e8e0cf] bg-[#ffffff] p-4 shadow-[0_1px_3px_rgba(43,33,24,0.08)] lg:min-h-full">
       <div className="flex items-center justify-between">
@@ -46,11 +47,7 @@ export function AcademyCard({ image }) {
       </div>
       <div className="mt-2 grid items-center gap-3">
         <div className="relative overflow-hidden rounded-xl">
-          {image ? (
-            <img src={image} alt="Barista training" loading="lazy" className="aspect-[16/8] w-full object-cover" />
-          ) : (
-            <div className="flex aspect-[16/8] w-full items-center justify-center bg-[#efe8d8] text-xs text-[#857768]">Training photo</div>
-          )}
+          <img src={src} alt="Barista training" loading="lazy" className="aspect-[16/8] w-full object-cover" />
           <span className="absolute top-2 right-2 flex h-12 w-12 rotate-6 items-center justify-center rounded-full bg-[#c9a227] text-center text-[8px] leading-tight font-extrabold text-white shadow">
             CERTIFIED BY kerja.inc
           </span>
