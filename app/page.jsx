@@ -5,6 +5,7 @@ import LatestJobs from "@/components/landing/LatestJobs";
 import FeaturedBarista from "@/components/landing/FeaturedBarista";
 import ReviewsCard from "@/components/landing/ReviewsCard";
 import { EcosystemCard, AcademyCard, SmarterOpsCard } from "@/components/landing/SidebarKerja";
+import BottomCtaStrip from "@/components/landing/BottomCtaStrip";
 import { avgStars } from "@/lib/ratings";
 
 async function getLatestJobs() {
@@ -226,24 +227,8 @@ export default async function LandingPage() {
         </div>
       </section>
 
-      {/* Strip bawah — selebar konten, rounded */}
-      <section className="mx-auto w-full max-w-[1400px] shrink-0 px-4 pb-3 sm:px-6">
-        <div className="flex flex-wrap items-center gap-x-6 gap-y-2 rounded-2xl bg-[#2b1c11] px-5 py-3">
-          <div className="min-w-0 flex-1">
-            <p className="text-sm font-bold text-[#f5f1e8]">Good people make great coffee.</p>
-            <p className="truncate text-[11px] text-[#f5f1e8]/60">Join thousands of baristas and cafe owners building a stronger coffee community.</p>
-          </div>
-          <div className="flex shrink-0 items-center gap-2">
-            <Link href="/signup" className="inline-flex min-h-[36px] items-center rounded-full bg-[#f5f1e8] px-5 text-xs font-bold text-[#2b1c11] hover:bg-white">
-              I&apos;m a Barista
-            </Link>
-            <Link href="/signup?role=owner" className="inline-flex min-h-[36px] items-center rounded-full border border-[#f5f1e8]/40 px-5 text-xs font-bold text-[#f5f1e8] hover:border-[#f5f1e8]">
-              I&apos;m a Cafe Owner
-            </Link>
-          </div>
-          <p className="font-chalk hidden text-right text-sm leading-4 text-[#f5f1e8]/70 xl:block">Same People<br />Brighter Tomorrows</p>
-        </div>
-      </section>
+      {/* Strip bawah — bisa di-X */}
+      <BottomCtaStrip />
     </div>
   );
 }
