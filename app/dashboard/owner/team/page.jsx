@@ -14,16 +14,27 @@ const TEAM_META = {
   terminated: { label: "Keluar", classes: "bg-gray-200 text-gray-600" },
 };
 
-export default async function TeamPage() {
+export default async function TeamPage({ searchParams }) {
   if (!isSupabaseConfigured()) return null;
   const { user } = await getSessionSafe();
   if (!user) return null;
+  const params = await searchParams;
   const supabase = await createClient();
+
+  const { data: cafes } = await supabase
+    .from("cafes")
+    .select("id, name")
+    .eq("owner_id", user.id)
+    .eq("is_active", true)
+    .order("created_at", { ascending: true });
+  const cafeIds = new Set((cafes ?? []).map((c) => c.id));
+  const activeCafe = params?.cafe && cafeIds.has(params.cafe) ? params.cafe : null;
 
   const { data: members } = await supabase
     .from("team_members")
     .select(
-      `id, status, job_title, job_post_id, application_id, hired_at, barista_id,
+      `id, status, job_title, job_post_id, application_id, hired_at, barista_id, cafe_id,
+       cafes ( id, name ),
        barista_profiles ( id, full_name, profile_picture_url, location_place, years_of_experience )`
     )
     .eq("owner_id", user.id)
@@ -32,25 +43,26 @@ export default async function TeamPage() {
 
   const teamIds = (members ?? []).map((m) => m.id);
   let ratingMap = {};
-  let pairedSet = new Set();
   if (teamIds.length) {
     const { data: ratings } = await supabase
       .from("ratings")
       .select("team_member_id, stars, comment")
       .in("team_member_id", teamIds);
     (ratings ?? []).forEach((r) => { ratingMap[r.team_member_id] = r; });
-    // Blind review: rating owner tampil setelah barista menilai balik
-    const { data: pairs } = await supabase
-      .from("cafe_ratings")
-      .select("team_member_id")
-      .in("team_member_id", teamIds);
-    pairedSet = new Set((pairs ?? []).map((r) => r.team_member_id));
+  }
+
+  // Filter cafe: hanya pekerja yang diterima di cafe tersebut (sudah daftar + diterima)
+  const inCafe = (members ?? []).filter((m) => !activeCafe || m.cafe_id === activeCafe);
+  // Hitung per cafe untuk chip
+  const countByCafe = {};
+  for (const m of members ?? []) {
+    if (m.cafe_id) countByCafe[m.cafe_id] = (countByCafe[m.cafe_id] ?? 0) + 1;
   }
 
   // Grup: 1 baris per barista, tiap lowongan jadi sub-baris
   const grouped = [];
   const byBarista = new Map();
-  for (const m of members ?? []) {
+  for (const m of inCafe) {
     if (!byBarista.has(m.barista_id)) {
       const g = { baristaId: m.barista_id, profile: m.barista_profiles, jobs: [] };
       byBarista.set(m.barista_id, g);
@@ -70,8 +82,28 @@ export default async function TeamPage() {
         Tim Saya ({grouped.length})
       </h1>
       <p className="mt-1 text-sm text-espresso-soft">
-        Satu baris per orang. Riwayat cafe tempat ia bekerja tampil di profilnya.
+        Satu baris per orang. Klik cafe untuk melihat siapa saja yang bekerja di sana.
       </p>
+
+      {(cafes ?? []).length > 0 && (
+        <div className="mt-4 flex flex-wrap gap-2">
+          <Link
+            href="/dashboard/owner/team"
+            className={`rounded-full px-4 py-2 text-xs font-bold border transition ${!activeCafe ? "bg-caramel text-white border-caramel" : "card-dark border-[#2c241f] text-espresso-soft hover:border-caramel"}`}
+          >
+            Semua ({(members ?? []).length})
+          </Link>
+          {(cafes ?? []).map((c) => (
+            <Link
+              key={c.id}
+              href={`/dashboard/owner/team?cafe=${c.id}`}
+              className={`rounded-full px-4 py-2 text-xs font-bold border transition ${activeCafe === c.id ? "bg-caramel text-white border-caramel" : "card-dark border-[#2c241f] text-espresso-soft hover:border-caramel"}`}
+            >
+              {c.name} ({countByCafe[c.id] ?? 0})
+            </Link>
+          ))}
+        </div>
+      )}
 
       <div className="mt-5 space-y-3 pb-8">
         {grouped.length === 0 && (
@@ -117,14 +149,12 @@ export default async function TeamPage() {
                     <li key={m.id} className="flex items-center justify-between gap-2 text-xs">
                       <span className="min-w-0 truncate text-espresso-soft">
                         <span className="font-bold text-espresso">{m.job_title || "Lowongan"}</span>
+                        {m.cafes?.name && <> · {m.cafes.name}</>}
                         {" "}· <Badge classes={jm.classes}>{jm.label}</Badge>
                       </span>
                       {r ? (
                         <span className="inline-flex shrink-0 items-center gap-1.5">
                           <Stars value={r.stars} size={12} />
-                          {!pairedSet.has(m.id) && (
-                            <span className="text-[11px] text-espresso-soft">· menunggu balasan</span>
-                          )}
                         </span>
                       ) : m.application_id && m.job_post_id ? (
                         <Link
