@@ -233,28 +233,30 @@ export default async function OwnerDashboardPage({ searchParams }) {
   ];
 
   return (
-    <div className="min-h-screen bg-[#f5f1e8] text-[#2b2118]">
-      <div className="mx-auto max-w-[1400px] px-4 py-6 sm:px-6">
-        <div className="grid items-start gap-4 lg:grid-cols-[250px_minmax(0,1fr)] xl:grid-cols-[260px_minmax(0,1fr)_330px]">
+    <div className="min-h-screen bg-[#f5f1e8] text-[#2b2118] lg:flex lg:h-[calc(100dvh-3.5rem)] lg:min-h-0 lg:flex-col lg:overflow-hidden">
+      <div className="mx-auto w-full max-w-[1400px] px-4 py-4 sm:px-6 lg:min-h-0 lg:flex-1">
+        <div className="grid items-start gap-4 lg:h-full lg:grid-cols-[240px_minmax(0,1fr)] xl:grid-cols-[250px_minmax(0,1fr)_320px]">
           <Suspense fallback={null}>
+            <div className="min-w-0 lg:h-full lg:min-h-0 lg:overflow-y-auto lg:pb-1 no-scrollbar">
             <SidebarOwner
               cafe={firstCafe}
               ownerName={ownerRow?.business_name}
               completeness={completeness}
               counts={{ activeJobs, applicants: totalApplicants, reviewsGiven: givenCount, cafes: cafes.length }}
             />
+            </div>
           </Suspense>
 
-          <div className="min-w-0 space-y-4">
+          <div className="min-w-0 space-y-3 lg:h-full lg:min-h-0 lg:overflow-y-auto lg:pr-1 lg:pb-1 no-scrollbar">
             <HeroTalenta photo={heroPhoto} cafeName={firstCafe?.name} />
             <div className="grid grid-cols-2 gap-3 xl:grid-cols-4">
               {STATS.map((s) => (
-                <div key={s.label} className="rounded-2xl border border-[#e8e0cf] bg-[#ffffff] p-4 shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
+                <div key={s.label} className="rounded-2xl border border-[#e8e0cf] bg-[#ffffff] p-3 shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
                   <p className="flex items-center gap-2 text-xs font-bold text-[#6f6252]">
-                    <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#efe9d9] text-[#3d2c1e]"><s.icon size={15} /></span>
+                    <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#efe9d9] text-[#3d2c1e]"><s.icon size={14} /></span>
                     {s.label}
                   </p>
-                  <p className="mt-2 text-3xl font-black tracking-tight text-[#2b2118]">{s.value}</p>
+                  <p className="mt-1.5 text-2xl font-black tracking-tight text-[#2b2118]">{s.value}</p>
                   <p className="mt-0.5 text-[11px] font-semibold text-[#1f6b4a]">{s.sub}</p>
                 </div>
               ))}
@@ -262,7 +264,7 @@ export default async function OwnerDashboardPage({ searchParams }) {
             <TopCandidates baristas={top3} />
           </div>
 
-          <div className="min-w-0 space-y-4 lg:col-span-2 xl:col-span-1">
+          <div className="min-w-0 space-y-4 lg:col-span-2 lg:h-full lg:min-h-0 lg:overflow-y-auto lg:pb-1 xl:col-span-1 no-scrollbar">
             <div className="rounded-2xl border border-[#e8e0cf] bg-[#ffffff] p-4 shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
               <div className="flex items-start justify-between gap-2">
                 <div>
