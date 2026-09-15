@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname, useSearchParams } from "next/navigation";
+import { usePathname } from "next/navigation";
 import {
   LayoutDashboard, Briefcase, Users, Star, GraduationCap, Settings,
   Camera, Crown, ArrowRight,
@@ -10,19 +10,22 @@ import Avatar from "@/components/ui/Avatar";
 
 // Sidebar dashboard owner ala mockup: kartu profil cafe + nav + upsell Pro.
 // Semua angka dari props (data real), bukan hardcode.
-export default function SidebarOwner({ cafe, ownerName, completeness, counts }) {
+export default function SidebarOwner({ cafe, ownerName, completeness, counts, view, onNavigate }) {
   const pathname = usePathname();
-  const searchParams = useSearchParams();
-  const tab = searchParams.get("tab");
   const photo = cafe?.photo_urls?.[0] ?? null;
   const name = cafe?.name ?? ownerName ?? "Cafe Anda";
   const loc = cafe?.address ?? cafe?.location ?? "Lengkapi alamat cafe";
 
+  const cls = (active) =>
+    `flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-bold ${
+      active ? "bg-[#efe9d9] text-[#3d2c1e]" : "text-[#6f6252] hover:bg-[#faf7ef] hover:text-[#3d2c1e]"
+    }`;
+  const countBadge = (n) =>
+    n !== null && n !== undefined ? (
+      <span className="rounded-full bg-[#efe9d9] px-2 py-0.5 text-[11px] font-bold text-[#6f6252]">{n}</span>
+    ) : null;
+
   const NAV = [
-    { href: "/dashboard/owner", label: "Dashboard", icon: LayoutDashboard, active: pathname === "/dashboard/owner" && !tab, count: null },
-    { href: "/dashboard/owner?tab=lowongan", label: "Active Jobs", icon: Briefcase, active: tab === "lowongan", count: counts.activeJobs },
-    { href: "/dashboard/owner?tab=lowongan", label: "Pelamar", icon: Users, active: false, count: counts.applicants },
-    { href: "/dashboard/owner/team", label: "Reviews Given", icon: Star, active: pathname?.startsWith("/dashboard/owner/team"), count: counts.reviewsGiven },
     { href: "/dashboard/owner/cafes", label: "Cafe Saya", icon: Camera, active: pathname?.startsWith("/dashboard/owner/cafes"), count: counts.cafes },
     { href: "/dashboard/owner/profile", label: "Settings", icon: Settings, active: pathname?.startsWith("/dashboard/owner/profile"), count: null },
   ];
@@ -64,19 +67,30 @@ export default function SidebarOwner({ cafe, ownerName, completeness, counts }) 
       </div>
 
       <nav className="rounded-2xl border border-[#e8e0cf] bg-[#ffffff] p-2 shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
+        <button type="button" onClick={() => onNavigate?.("talenta")} className={cls(view !== "lowongan")}>
+          <LayoutDashboard size={17} className="shrink-0" />
+          <span className="flex-1 text-left">Dashboard</span>
+        </button>
+        <button type="button" onClick={() => onNavigate?.("lowongan")} className={cls(view === "lowongan")}>
+          <Briefcase size={17} className="shrink-0" />
+          <span className="flex-1 text-left">Active Jobs</span>
+          {countBadge(counts.activeJobs)}
+        </button>
+        <button type="button" onClick={() => onNavigate?.("lowongan")} className={cls(false)}>
+          <Users size={17} className="shrink-0" />
+          <span className="flex-1 text-left">Pelamar</span>
+          {countBadge(counts.applicants)}
+        </button>
+        <Link href="/dashboard/owner/team" className={cls(pathname?.startsWith("/dashboard/owner/team"))}>
+          <Star size={17} className="shrink-0" />
+          <span className="flex-1">Reviews Given</span>
+          {countBadge(counts.reviewsGiven)}
+        </Link>
         {NAV.map((n) => (
-          <Link
-            key={n.label}
-            href={n.href}
-            className={`flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-bold ${
-              n.active ? "bg-[#efe9d9] text-[#3d2c1e]" : "text-[#6f6252] hover:bg-[#faf7ef] hover:text-[#3d2c1e]"
-            }`}
-          >
+          <Link key={n.label} href={n.href} className={cls(n.active)}>
             <n.icon size={17} className="shrink-0" />
             <span className="flex-1">{n.label}</span>
-            {n.count !== null && n.count !== undefined && (
-              <span className="rounded-full bg-[#efe9d9] px-2 py-0.5 text-[11px] font-bold text-[#6f6252]">{n.count}</span>
-            )}
+            {countBadge(n.count)}
           </Link>
         ))}
         <span
