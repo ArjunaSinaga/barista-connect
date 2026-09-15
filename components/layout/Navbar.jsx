@@ -45,7 +45,15 @@ export default function Navbar({ user, role }) {
               ? "rounded-lg px-3 py-2 text-sm font-semibold text-[#2f2721]/70 hover:text-[#6f5a3e]"
               : "rounded-lg px-3 py-2 text-sm font-semibold text-espresso-soft hover:text-caramel"}
           >
-            Lowongan
+            Jobs
+          </Link>
+          <Link
+            href="/find-baristas"
+            className={light
+              ? "hidden rounded-lg px-3 py-2 text-sm font-semibold text-[#2f2721]/70 hover:text-[#6f5a3e] sm:block"
+              : "hidden rounded-lg px-3 py-2 text-sm font-semibold text-espresso-soft hover:text-caramel sm:block"}
+          >
+            Talent
           </Link>
           {user ? (
             <>
@@ -87,6 +95,12 @@ export default function Navbar({ user, role }) {
                   : "rounded-xl px-4 py-2 text-sm font-bold text-espresso hover:text-caramel"}
               >
                 Masuk
+              </Link>
+              <Link
+                href="/signup?role=owner"
+                className="hidden rounded-full bg-[#3d2c1e] px-4 py-2 text-sm font-bold text-white hover:bg-[#2e2015] sm:block"
+              >
+                Post a Job
               </Link>
               <Link
                 href="/signup"

@@ -123,8 +123,9 @@ function CafeLogo({ job }) {
   );
 }
 
-// Homepage = 1 layar tanpa scroll halaman (desktop): footer disembunyikan,
-// tiap panel konten scroll di dalam kotaknya sendiri. Mobile tetap scroll normal.
+// Homepage = 1 layar tanpa scroll halaman (desktop): hero atas, 2 kartu peran,
+// 3 kolom (kiri lowongan, tengah talenta, kanan ekosistem) + strip bawah melebar.
+// Tiap kolom scroll di dalam kotaknya sendiri. Mobile tetap scroll normal.
 export default async function LandingPage() {
   const { user } = await getSessionSafe();
   const [jobs, stats, topCities, featured, reviews] = await Promise.all([
@@ -144,7 +145,7 @@ export default async function LandingPage() {
 
   return (
     <div className="min-h-screen bg-[#f5f1e8] text-[#2b2118] lg:flex lg:h-[calc(100dvh-3.5rem)] lg:flex-col lg:overflow-hidden">
-      {/* Hero — compact */}
+      {/* Hero — tengah ke atas */}
       <section className="mx-auto w-full max-w-6xl shrink-0 px-4 pt-5 pb-3">
         <div className="grid items-center gap-6 lg:grid-cols-[1.15fr_0.85fr]">
           <div>
@@ -209,7 +210,7 @@ export default async function LandingPage() {
         </div>
       </section>
 
-      {/* Role cards — compact */}
+      {/* Kartu peran */}
       <section className="mx-auto w-full max-w-6xl shrink-0 px-4 pb-3">
         <div className="grid gap-3 sm:grid-cols-2">
           <Link href="/signup" className="group flex items-center gap-3 rounded-2xl border border-[#e8e0cf] bg-[#ffffff] px-4 py-2.5 shadow-[0_1px_3px_rgba(43,33,24,0.08)] hover:border-[#3d2c1e]">
@@ -231,77 +232,69 @@ export default async function LandingPage() {
         </div>
       </section>
 
-      {/* Panels — scroll di dalam kotak (desktop) */}
-      <section className="mx-auto w-full max-w-6xl flex-1 px-4 pb-4 lg:min-h-0">
-        <div className="grid items-start gap-4 lg:h-full lg:grid-cols-[1fr_320px]">
-          <div className="min-w-0 space-y-4 lg:h-full lg:min-h-0 lg:overflow-y-auto lg:pr-1 lg:pb-1">
-            {/* Latest jobs */}
-            <div className="rounded-2xl border border-[#e8e0cf] bg-[#ffffff] p-5 shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
-              <div className="flex items-start justify-between gap-2">
-                <div>
-                  <h2 className="text-base font-bold tracking-tight">Latest Barista Jobs</h2>
-                  <p className="mt-0.5 text-xs text-[#857768]">Great cafes. Real opportunities. Find your next role in coffee.</p>
-                </div>
-                <Link href="/jobs" className="inline-flex shrink-0 items-center gap-0.5 text-xs font-bold text-[#2b6cb0] hover:underline">
-                  View all jobs <ChevronRight size={13} />
-                </Link>
+      {/* 3 kolom: kiri lowongan, tengah talenta, kanan ekosistem */}
+      <section className="mx-auto w-full max-w-6xl flex-1 px-4 lg:min-h-0">
+        <div className="grid items-start gap-4 lg:h-full lg:grid-cols-[1.05fr_1fr_0.95fr]">
+          {/* KIRI — Latest jobs */}
+          <div className="min-w-0 rounded-2xl border border-[#e8e0cf] bg-[#ffffff] p-4 shadow-[0_1px_3px_rgba(43,33,24,0.08)] lg:h-full lg:min-h-0 lg:overflow-y-auto">
+            <div className="flex items-start justify-between gap-2">
+              <div>
+                <h2 className="text-[15px] font-bold tracking-tight">Latest Barista Jobs</h2>
+                <p className="mt-0.5 text-[11px] text-[#857768]">Great cafes. Real opportunities.</p>
               </div>
-              {jobs.length === 0 ? (
-                <div className="mt-4 rounded-xl border-2 border-dashed border-[#e0d5bd] p-8 text-center">
-                  <p className="text-sm font-bold">No jobs posted yet.</p>
-                  <p className="mt-1 text-xs text-[#857768]">Be the first cafe to post today.</p>
-                </div>
-              ) : (
-                <ul className="mt-2 divide-y divide-[#f0e9d8]">
-                  {jobs.map((job) => {
-                    const types = job.employment_types?.length ? job.employment_types : (job.employment_type ? [job.employment_type] : []);
-                    return (
-                      <li key={job.id} className="flex items-center gap-3 py-3">
-                        <CafeLogo job={job} />
-                        <div className="min-w-0 flex-1">
-                          <Link href={`/jobs/${job.id}`} className="block truncate text-sm font-bold hover:text-[#1f6b4a]">
-                            {job.title}
-                          </Link>
-                          <p className="flex items-center gap-1 truncate text-xs text-[#857768]">
-                            {job.cafes?.name ?? job.owners?.business_name}
-                            {job.owners?.is_verified && <VerifiedBadge size={12} />}
-                          </p>
-                          <p className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[11px] text-[#857768]">
-                            <span className="inline-flex items-center gap-1"><MapPin size={11} />{job.location}</span>
-                            {job.salary_text && <span className="font-bold text-[#2b2118]">{job.salary_text}</span>}
-                            {types.map((t) => (
-                              <span key={t} className="rounded-full bg-[#f2ecdf] px-2 py-0.5 font-semibold text-[#6f6252]">{EMPLOYMENT_LABELS[t] ?? t}</span>
-                            ))}
-                          </p>
-                        </div>
-                        <div className="flex shrink-0 flex-col items-end gap-2">
-                          <span className="flex items-center gap-2 text-[11px] text-[#b6a98f]">
-                            {relativeTime(job.created_at)}
-                            <button type="button" disabled title="Saved jobs coming soon" aria-label="Save job (coming soon)" className="text-[#b6a98f]">
-                              <Bookmark size={15} />
-                            </button>
-                          </span>
-                          <ApplyButton
-                            jobId={job.id}
-                            size="sm"
-                            variant="coffee"
-                            label="Quick Apply"
-                            jobTypes={types}
-                          />
-                        </div>
-                      </li>
-                    );
-                  })}
-                </ul>
-              )}
+              <Link href="/jobs" className="inline-flex shrink-0 items-center gap-0.5 text-xs font-bold text-[#2b6cb0] hover:underline">
+                View all jobs <ChevronRight size={13} />
+              </Link>
             </div>
+            {jobs.length === 0 ? (
+              <div className="mt-3 rounded-xl border-2 border-dashed border-[#e0d5bd] p-8 text-center">
+                <p className="text-sm font-bold">No jobs posted yet.</p>
+                <p className="mt-1 text-xs text-[#857768]">Be the first cafe to post today.</p>
+              </div>
+            ) : (
+              <ul className="mt-1 divide-y divide-[#f0e9d8]">
+                {jobs.map((job) => {
+                  const types = job.employment_types?.length ? job.employment_types : (job.employment_type ? [job.employment_type] : []);
+                  return (
+                    <li key={job.id} className="flex items-center gap-3 py-3">
+                      <CafeLogo job={job} />
+                      <div className="min-w-0 flex-1">
+                        <Link href={`/jobs/${job.id}`} className="block truncate text-sm font-bold hover:text-[#1f6b4a]">
+                          {job.title}
+                        </Link>
+                        <p className="flex items-center gap-1 truncate text-xs text-[#857768]">
+                          {job.cafes?.name ?? job.owners?.business_name}
+                          {job.owners?.is_verified && <VerifiedBadge size={12} />}
+                        </p>
+                        <p className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[11px] text-[#857768]">
+                          <span className="inline-flex items-center gap-1"><MapPin size={11} />{job.location}</span>
+                          {job.salary_text && <span className="font-bold text-[#2b2118]">{job.salary_text}</span>}
+                          {types.map((t) => (
+                            <span key={t} className="rounded-full bg-[#f2ecdf] px-2 py-0.5 font-semibold text-[#6f6252]">{EMPLOYMENT_LABELS[t] ?? t}</span>
+                          ))}
+                        </p>
+                      </div>
+                      <div className="flex shrink-0 flex-col items-end gap-2">
+                        <span className="flex items-center gap-2 text-[11px] text-[#b6a98f]">
+                          {relativeTime(job.created_at)}
+                          <button type="button" disabled title="Saved jobs coming soon" aria-label="Save job (coming soon)" className="text-[#b6a98f]">
+                            <Bookmark size={15} />
+                          </button>
+                        </span>
+                        <ApplyButton jobId={job.id} size="sm" variant="coffee" label="Quick Apply" jobTypes={types} />
+                      </div>
+                    </li>
+                  );
+                })}
+              </ul>
+            )}
+          </div>
 
-            {/* Featured barista */}
+          {/* TENGAH — Featured + reviews */}
+          <div className="min-w-0 space-y-4 lg:h-full lg:min-h-0 lg:overflow-y-auto lg:pr-1 lg:pb-1">
             <FeaturedBarista barista={featured} isAnon={!user} />
-
-            {/* Recent reviews */}
             {reviews.length > 0 && (
-              <div className="rounded-2xl border border-[#e8e0cf] bg-[#ffffff] p-5 shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
+              <div className="rounded-2xl border border-[#e8e0cf] bg-[#ffffff] p-4 shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
                 <div className="flex items-center justify-between">
                   <h3 className="text-sm font-bold">Recent Reviews from Cafe Owners</h3>
                   <Link href="/find-baristas" className="inline-flex items-center gap-0.5 text-xs font-bold text-[#2b6cb0] hover:underline">
@@ -310,7 +303,7 @@ export default async function LandingPage() {
                 </div>
                 <ul className="mt-3 space-y-3">
                   {reviews.map((r, i) => (
-                    <li key={i} className="rounded-xl bg-[#faf7ef] p-4">
+                    <li key={i} className="rounded-xl bg-[#faf7ef] p-3.5">
                       <div className="flex items-center justify-between gap-2">
                         <p className="flex items-center gap-1.5 text-[13px] font-bold">
                           <Store size={13} className="text-[#857768]" />
@@ -331,9 +324,28 @@ export default async function LandingPage() {
             )}
           </div>
 
+          {/* KANAN — ekosistem */}
           <aside className="min-w-0 lg:h-full lg:min-h-0 lg:overflow-y-auto lg:pb-1">
             <SidebarKerja />
           </aside>
+        </div>
+      </section>
+
+      {/* Strip bawah melebar */}
+      <section className="mt-3 w-full shrink-0 bg-[#2b1c11]">
+        <div className="mx-auto flex max-w-6xl flex-wrap items-center gap-x-6 gap-y-2 px-4 py-3">
+          <div className="min-w-0 flex-1">
+            <p className="text-sm font-bold text-[#f5f1e8]">Good people make great coffee.</p>
+            <p className="truncate text-[11px] text-[#f5f1e8]/60">Join thousands of baristas and cafe owners building a stronger coffee community.</p>
+          </div>
+          <div className="flex shrink-0 items-center gap-2">
+            <Link href="/signup" className="inline-flex min-h-[36px] items-center rounded-full bg-[#f5f1e8] px-5 text-xs font-bold text-[#2b1c11] hover:bg-white">
+              I&apos;m a Barista
+            </Link>
+            <Link href="/signup?role=owner" className="inline-flex min-h-[36px] items-center rounded-full border border-[#f5f1e8]/40 px-5 text-xs font-bold text-[#f5f1e8] hover:border-[#f5f1e8]">
+              I&apos;m a Cafe Owner
+            </Link>
+          </div>
         </div>
       </section>
     </div>
