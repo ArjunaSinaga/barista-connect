@@ -13,6 +13,7 @@ import VerifiedBadge from "@/components/ui/VerifiedBadge";
 import ApplyButton from "@/components/jobs/ApplyButton";
 import { EMPLOYMENT_LABELS } from "@/lib/constants";
 import { relativeTime } from "@/lib/time";
+import { avgStars } from "@/lib/ratings";
 
 const TYPE_CLASSES = {
   full_time: "bg-caramel/10 text-caramel",
@@ -54,7 +55,7 @@ export default async function JobDetailPage({ params }) {
   // Inactive jobs visible only to their owner
   if (!job || (!job.is_active && job.owner_id !== user?.id)) notFound();
 
-  // Badge rating cafe (blind: hanya yang sudah dinilai balik)
+  // Badge rating cafe: tampil segera setelah ada yang menilai
   let cafeAvg = null;
   let cafeCount = 0;
   {
@@ -64,16 +65,9 @@ export default async function JobDetailPage({ params }) {
       .eq("owner_id", job.owner_id);
     const tids = (teams ?? []).map((t) => t.id);
     if (tids.length) {
-      const [{ data: cr }, { data: or }] = await Promise.all([
-        supabase.from("cafe_ratings").select("team_member_id, stars").in("team_member_id", tids),
-        supabase.from("ratings").select("team_member_id").in("team_member_id", tids),
-      ]);
-      const paired = new Set((or ?? []).map((r) => r.team_member_id));
-      const visible = (cr ?? []).filter((r) => paired.has(r.team_member_id));
-      cafeCount = visible.length;
-      if (visible.length) {
-        cafeAvg = (visible.reduce((s, r) => s + r.stars, 0) / visible.length).toFixed(1);
-      }
+      const { data: cr } = await supabase.from("cafe_ratings").select("team_member_id, stars").in("team_member_id", tids);
+      cafeCount = (cr ?? []).length;
+      cafeAvg = avgStars(cr ?? []);
     }
   }
 

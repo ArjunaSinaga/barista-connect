@@ -102,7 +102,7 @@ export default function BaristaProfileView({
             </ul>
           </div>
         ) : (
-          <p className="mt-2 text-sm text-espresso-soft">Belum ada rating publik. Rating baru tampil setelah owner dan barista saling menilai (blind review).</p>
+          <p className="mt-2 text-sm text-espresso-soft">Belum ada rating. Rating tampil segera setelah ada yang menilai.</p>
         )}
       </section>
 

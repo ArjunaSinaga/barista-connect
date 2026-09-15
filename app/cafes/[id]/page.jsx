@@ -23,7 +23,7 @@ export default async function CafePublicPage({ params }) {
 
   await getSessionSafe();
 
-  // Rating level cafe (blind): tim di cafe ini yang sudah saling menilai
+  // Rating level cafe: tampil segera setelah ada yang menilai
   const { data: teams } = await supabase
     .from("team_members")
     .select("id")
@@ -115,7 +115,7 @@ export default async function CafePublicPage({ params }) {
           </ul>
         ) : (
           <p className="mt-2 text-sm text-espresso-soft">
-            Belum ada ulasan. Ulasan tampil setelah kedua pihak saling menilai.
+            Belum ada ulasan. Ulasan tampil segera setelah ada yang menilai.
           </p>
         )}
       </section>

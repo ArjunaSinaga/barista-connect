@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import { createClient, getSessionSafe } from "@/lib/supabase/server";
+import { avgStars, visibleOwnerRatings } from "@/lib/ratings";
 import BaristaProfileView from "@/components/barista/BaristaProfileView";
 
 export async function generateMetadata() {
@@ -31,14 +32,8 @@ export default async function BaristaPublicPage({ params }) {
     .eq("barista_id", id)
     .order("created_at", { ascending: false })
     .limit(20);
-  const teamIds = [...new Set((ownerRatings ?? []).map((r) => r.team_member_id).filter(Boolean))];
-  let cafeTeamIds = new Set();
-  if (teamIds.length) {
-    const { data: pairs } = await supabase.from("cafe_ratings").select("team_member_id").in("team_member_id", teamIds);
-    cafeTeamIds = new Set((pairs ?? []).map((r) => r.team_member_id));
-  }
-  const ratings = (ownerRatings ?? []).filter((r) => cafeTeamIds.has(r.team_member_id));
-  const avg = ratings.length ? (ratings.reduce((s, r) => s + r.stars, 0) / ratings.length).toFixed(1) : null;
+  const ratings = visibleOwnerRatings(ownerRatings);
+  const avg = avgStars(ratings);
 
   let rateableTeam = null;
   let myRating = null;

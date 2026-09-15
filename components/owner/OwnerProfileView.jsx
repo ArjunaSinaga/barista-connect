@@ -85,7 +85,7 @@ export default function OwnerProfileView({
             ))}
           </ul>
         ) : (
-          <p className="mt-2 text-sm text-espresso-soft">Belum ada ulasan publik. Ulasan tampil setelah kedua pihak saling menilai.</p>
+          <p className="mt-2 text-sm text-espresso-soft">Belum ada ulasan. Rating tampil segera setelah ada yang menilai.</p>
         )}
       </section>
     </div>
