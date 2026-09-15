@@ -8,7 +8,7 @@ import Button from "@/components/ui/Button";
 import { Input } from "@/components/ui/Field";
 import { useToast } from "@/components/ui/toast";
 import { createClient } from "@/lib/supabase/client";
-import { ownerOnboardingSchema } from "@/lib/validation";
+import { ownerBusinessSchema } from "@/lib/validation";
 import { CITIES, AVATAR_MIME_TYPES, AVATAR_MAX_BYTES } from "@/lib/constants";
 import { compressImage } from "@/lib/image";
 
@@ -67,7 +67,7 @@ export default function BusinessForm({ initial }) {
       business_name: (form.business_name ?? "").trim(),
       location: (form.location ?? "").trim(),
     };
-    const parsed = ownerOnboardingSchema.safeParse(clean);
+    const parsed = ownerBusinessSchema.safeParse(clean);
     if (!parsed.success) {
       const errs = {};
       parsed.error.issues.forEach((i) => { if (i.path[0]) errs[i.path[0]] = i.message; });
