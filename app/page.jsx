@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ArrowRight, Search, Coffee, Store, Sparkles, MapPin, Clock3 } from "lucide-react";
 import { createClient, isSupabaseConfigured } from "@/lib/supabase/server";
 import JobCard from "@/components/cards/JobCard";
+import HeroPhoto from "@/components/landing/HeroPhoto";
 import Button from "@/components/ui/Button";
 
 async function getLatestJobs() {
@@ -10,7 +11,7 @@ async function getLatestJobs() {
     const supabase = await createClient();
     const { data } = await supabase
       .from("job_posts")
-      .select("*, owners(business_name), cafes(name)")
+      .select("*, owners(business_name), cafes(name, photo_urls)")
       .eq("is_active", true)
       .order("created_at", { ascending: false })
       .limit(3);
@@ -71,6 +72,17 @@ export default async function LandingPage() {
   const jobs = await getLatestJobs();
   const stats = await getLiveStats();
   const topCities = await getTopCities();
+  const seen = new Set();
+  const heroPhotos = [];
+  for (const j of jobs) {
+    const cafe = j.cafes?.name ?? null;
+    for (const url of j.cafes?.photo_urls ?? []) {
+      if (url && !seen.has(url)) {
+        seen.add(url);
+        heroPhotos.push({ url, cafe });
+      }
+    }
+  }
   return (
     <div className="paper min-h-screen text-[#2f2721]">
       {/* Hero — nota kafe */}
@@ -109,8 +121,11 @@ export default async function LandingPage() {
               )}
             </div>
 
-            {/* Slot foto kafe asli */}
+            {/* Slot foto kafe asli — rotasi tiap 4 detik */}
             <div className="hidden lg:block">
+              {heroPhotos.length > 0 ? (
+                <HeroPhoto photos={heroPhotos} />
+              ) : (
               <figure className="rotate-2 rounded-sm bg-[#c6bba2] p-3 pb-4 shadow-[0_10px_30px_rgba(26,15,10,0.18)]">
                 <div className="flex aspect-[4/3] items-center justify-center rounded-[2px] border-2 border-dashed border-[#2f2721]/20 bg-[#a2977f] px-6 text-center">
                   <p className="text-sm leading-6 text-[#2f2721]/55">
@@ -121,6 +136,7 @@ export default async function LandingPage() {
                   — shift pagi, aroma robusta —
                 </figcaption>
               </figure>
+              )}
             </div>
           </div>
 

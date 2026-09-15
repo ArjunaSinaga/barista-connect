@@ -82,6 +82,11 @@ body::before {
   outline: 2px dashed rgba(253, 246, 236, 0.25);
   outline-offset: -6px;
 }
+/* Job cards (card-dark #1c1412) di atas chalkboard hijau gelap butuh separasi */
+.chalkboard .card-dark {
+  background: #2a4a41 !important;
+  border: 1px solid rgba(253, 246, 236, 0.18) !important;
+}
 
 /* — Kertas redup: scope halaman funnel (login/signup/onboarding).
    Petakan ulang token dark + field gelap ke tinta kertas.
