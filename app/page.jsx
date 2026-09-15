@@ -16,8 +16,7 @@ async function getLatestJobs() {
       .from("job_posts")
       .select("*, owners(business_name,is_verified), cafes(name, photo_urls)")
       .eq("is_active", true)
-      .order("created_at", { ascending: false })
-      .limit(4);
+      .order("created_at", { ascending: false });
     return data ?? [];
   } catch {
     return [];
@@ -78,8 +77,7 @@ async function getRecentReviews() {
     const { data } = await supabase
       .from("ratings")
       .select("stars,comment,created_at, barista:barista_profiles!ratings_barista_id_fkey(full_name), owner:owners!ratings_owner_id_fkey(business_name)")
-      .order("created_at", { ascending: false })
-      .limit(2);
+      .order("created_at", { ascending: false });
     return data ?? [];
   } catch {
     return [];

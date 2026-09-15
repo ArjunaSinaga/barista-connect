@@ -24,7 +24,7 @@ export default function LatestJobs({ jobs }) {
     <div className="rounded-2xl border border-[#e8e0cf] bg-[#ffffff] p-5 shadow-[0_1px_3px_rgba(43,33,24,0.08)] lg:min-h-full">
       <div className="flex items-start justify-between gap-2">
         <div>
-          <h2 className="text-base font-extrabold tracking-tight text-[#2b2118]">Latest Barista Jobs</h2>
+          <h2 className="text-base font-extrabold tracking-tight text-[#2b2118]">Latest Barista Jobs <span className="ml-1 rounded-full bg-[#efe9d9] px-2 py-0.5 text-[11px] font-bold text-[#6f6252]">{jobs.length}</span></h2>
           <p className="mt-0.5 text-[11px] text-[#857768]">Great cafes. Real opportunities. Find your next role in coffee.</p>
         </div>
         <Link href="/jobs" className="inline-flex shrink-0 items-center gap-0.5 text-xs font-bold text-[#2b6cb0] hover:underline">
