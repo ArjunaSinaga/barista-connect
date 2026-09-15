@@ -192,25 +192,25 @@ export default async function LandingPage() {
         </div>
       </section>
 
-      {/* 6 blok mandiri */}
+      {/* 6 blok mandiri: 2 baris × 3 kolom, tiap sel sama tinggi + scroll sendiri */}
       <section className="mx-auto w-full max-w-[1400px] flex-1 px-4 sm:px-6 lg:min-h-0">
-        <div className="grid items-start gap-4 sm:grid-cols-2 lg:h-full lg:grid-cols-[1.12fr_1fr_0.82fr] lg:grid-rows-2">
-          <div className="min-w-0 sm:col-span-2 lg:col-span-1 lg:row-span-2 lg:h-full lg:min-h-0 lg:overflow-y-auto lg:pr-1 lg:pb-1">
+        <div className="grid items-stretch gap-4 sm:grid-cols-2 lg:h-full lg:grid-cols-3 lg:grid-rows-2">
+          <div className="min-w-0 sm:col-span-2 lg:col-span-1 lg:row-start-1 lg:h-full lg:min-h-0 lg:overflow-y-auto lg:pr-1 lg:pb-1">
             <LatestJobs jobs={jobs} />
           </div>
-          <div className="min-w-0 lg:h-full lg:min-h-0 lg:overflow-y-auto lg:pr-1 lg:pb-1">
+          <div className="min-w-0 lg:col-start-2 lg:row-start-1 lg:h-full lg:min-h-0 lg:overflow-y-auto lg:pr-1 lg:pb-1">
             <FeaturedBarista barista={featured} isAnon={!user} />
           </div>
-          <div className="min-w-0 lg:h-full lg:min-h-0 lg:overflow-y-auto lg:pb-1">
+          <div className="min-w-0 lg:col-start-3 lg:row-start-1 lg:h-full lg:min-h-0 lg:overflow-y-auto lg:pb-1">
             <EcosystemCard />
           </div>
-          <div className="min-w-0 lg:h-full lg:min-h-0 lg:overflow-y-auto lg:pr-1 lg:pb-1">
-            <ReviewsCard reviews={reviews} />
-          </div>
-          <div className="min-w-0 lg:h-full lg:min-h-0 lg:overflow-y-auto lg:pr-1 lg:pb-1">
+          <div className="min-w-0 lg:col-start-1 lg:row-start-2 lg:h-full lg:min-h-0 lg:overflow-y-auto lg:pr-1 lg:pb-1">
             <AcademyCard image={academyPhoto} />
           </div>
-          <div className="min-w-0 lg:h-full lg:min-h-0 lg:overflow-y-auto lg:pb-1">
+          <div className="min-w-0 lg:col-start-2 lg:row-start-2 lg:h-full lg:min-h-0 lg:overflow-y-auto lg:pr-1 lg:pb-1">
+            <ReviewsCard reviews={reviews} />
+          </div>
+          <div className="min-w-0 lg:col-start-3 lg:row-start-2 lg:h-full lg:min-h-0 lg:overflow-y-auto lg:pb-1">
             <SmarterOpsCard />
           </div>
         </div>

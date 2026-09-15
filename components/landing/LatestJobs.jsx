@@ -24,7 +24,7 @@ export default function LatestJobs({ jobs }) {
     <div>
       <div className="flex items-start justify-between gap-2">
         <div>
-          <h2 className="text-[15px] font-bold tracking-tight text-[#2b2118]">Latest Barista Jobs</h2>
+          <h2 className="text-base font-extrabold tracking-tight text-[#2b2118]">Latest Barista Jobs</h2>
           <p className="mt-0.5 text-[11px] text-[#857768]">Great cafes. Real opportunities. Find your next role in coffee.</p>
         </div>
         <Link href="/jobs" className="inline-flex shrink-0 items-center gap-0.5 text-xs font-bold text-[#2b6cb0] hover:underline">

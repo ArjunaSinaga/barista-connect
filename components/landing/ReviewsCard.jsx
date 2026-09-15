@@ -8,7 +8,7 @@ export default function ReviewsCard({ reviews }) {
   return (
     <div className="rounded-2xl border border-[#e8e0cf] bg-[#ffffff] p-4 shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
       <div className="flex items-center justify-between">
-        <h3 className="text-sm font-bold text-[#2b2118]">Recent Reviews from Cafe Owners</h3>
+        <h3 className="text-[15px] font-extrabold text-[#2b2118]">Recent Reviews from Cafe Owners</h3>
         <Link href="/find-baristas" className="inline-flex shrink-0 items-center gap-0.5 text-xs font-bold text-[#2b6cb0] hover:underline">
           View all <ChevronRight size={13} />
         </Link>

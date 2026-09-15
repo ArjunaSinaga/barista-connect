@@ -15,7 +15,7 @@ export default function FeaturedBarista({ barista, isAnon }) {
   return (
     <div className="rounded-2xl border border-[#e8e0cf] bg-[#ffffff] p-5 shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
       <div className="flex items-center justify-between">
-        <h3 className="text-sm font-bold text-[#2b2118]">Featured Barista</h3>
+        <h3 className="text-[15px] font-extrabold text-[#2b2118]">Featured Barista</h3>
         {barista.is_open_to_work && (
           <span className="inline-flex items-center gap-1.5 rounded-full bg-[#e3f0e8] px-2.5 py-1 text-[11px] font-bold text-[#1f6b4a]">
             <span className="inline-block h-1.5 w-1.5 rounded-full bg-[#1f6b4a]" />
