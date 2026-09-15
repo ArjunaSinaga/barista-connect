@@ -89,7 +89,7 @@ export default async function TeamPage({ searchParams }) {
         <div className="mt-4 flex flex-wrap gap-2">
           <Link
             href="/dashboard/owner/team"
-            className={`rounded-full px-4 py-2 text-xs font-bold border transition ${!activeCafe ? "bg-caramel text-white border-caramel" : "card-dark border-[#2c241f] text-espresso-soft hover:border-caramel"}`}
+            className={`rounded-full px-4 py-2 text-xs font-bold border transition ${!activeCafe ? "bg-caramel text-white border-caramel" : "card-dark border-[#e0d5bd] text-espresso-soft hover:border-caramel"}`}
           >
             Semua ({(members ?? []).length})
           </Link>
@@ -97,7 +97,7 @@ export default async function TeamPage({ searchParams }) {
             <Link
               key={c.id}
               href={`/dashboard/owner/team?cafe=${c.id}`}
-              className={`rounded-full px-4 py-2 text-xs font-bold border transition ${activeCafe === c.id ? "bg-caramel text-white border-caramel" : "card-dark border-[#2c241f] text-espresso-soft hover:border-caramel"}`}
+              className={`rounded-full px-4 py-2 text-xs font-bold border transition ${activeCafe === c.id ? "bg-caramel text-white border-caramel" : "card-dark border-[#e0d5bd] text-espresso-soft hover:border-caramel"}`}
             >
               {c.name} ({countByCafe[c.id] ?? 0})
             </Link>

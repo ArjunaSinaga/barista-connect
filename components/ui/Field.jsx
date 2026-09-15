@@ -5,14 +5,14 @@ export function Input({ label, error, className = "", id, ...props }) {
       {label && (
         <label
           htmlFor={fieldId}
-          className="mb-1.5 block text-sm font-semibold text-[#fdf6ec]"
+          className="mb-1.5 block text-sm font-semibold text-[#2b2118]"
         >
           {label}
         </label>
       )}
       <input
         id={fieldId}
-        className={`w-full rounded-xl border bg-[#1c1412] px-4 py-2.5 text-sm text-[#fdf6ec] outline-none transition-colors placeholder:text-[#fdf6ec]/40 focus:border-[#d4a24e] focus:ring-2 focus:ring-[#d4a24e]/20 ${
+        className={`w-full rounded-xl border bg-[#ffffff] px-4 py-2.5 text-sm text-[#2b2118] outline-none transition-colors placeholder:text-[#b6a98f] focus:border-[#3d2c1e] focus:ring-2 focus:ring-[#3d2c1e]/15 ${
           error ? "border-red-400" : "border-white/10"
         } ${className}`}
         {...props}
@@ -28,14 +28,14 @@ export function Textarea({ label, error, className = "", rows = 4, ...props }) {
       {label && (
         <label
           htmlFor={props.name}
-          className="mb-1.5 block text-sm font-semibold text-[#fdf6ec]"
+          className="mb-1.5 block text-sm font-semibold text-[#2b2118]"
         >
           {label}
         </label>
       )}
       <textarea
         rows={rows}
-        className={`w-full rounded-xl border bg-[#1c1412] px-4 py-2.5 text-sm text-[#fdf6ec] outline-none transition-colors placeholder:text-[#fdf6ec]/40 focus:border-[#d4a24e] focus:ring-2 focus:ring-[#d4a24e]/20 ${
+        className={`w-full rounded-xl border bg-[#ffffff] px-4 py-2.5 text-sm text-[#2b2118] outline-none transition-colors placeholder:text-[#b6a98f] focus:border-[#3d2c1e] focus:ring-2 focus:ring-[#3d2c1e]/15 ${
           error ? "border-red-400" : "border-white/10"
         } ${className}`}
         {...props}
@@ -51,13 +51,13 @@ export function Select({ label, error, options = [], placeholder, ...props }) {
       {label && (
         <label
           htmlFor={props.name}
-          className="mb-1.5 block text-sm font-semibold text-[#fdf6ec]"
+          className="mb-1.5 block text-sm font-semibold text-[#2b2118]"
         >
           {label}
         </label>
       )}
       <select
-        className={`w-full rounded-xl border bg-[#1c1412] px-4 py-2.5 text-sm text-[#fdf6ec] outline-none transition-colors focus:border-[#d4a24e] focus:ring-2 focus:ring-[#d4a24e]/20 ${
+        className={`w-full rounded-xl border bg-[#ffffff] px-4 py-2.5 text-sm text-[#2b2118] outline-none transition-colors focus:border-[#3d2c1e] focus:ring-2 focus:ring-[#3d2c1e]/15 ${
           error ? "border-red-400" : "border-white/10"
         }`}
         {...props}

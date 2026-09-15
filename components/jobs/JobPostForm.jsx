@@ -142,7 +142,7 @@ export default function JobPostForm({ initial = null }) {
           <p className="text-sm font-bold text-espresso">Tipe pekerjaan yang ditawarkan <span className="text-red-500">*</span></p>
           <div className="flex flex-wrap gap-2">
             {EMPLOYMENT_TYPES.map((t) => (
-              <label key={t.value} className={`px-4 py-2 rounded-full text-sm font-bold border cursor-pointer transition ${form.employment_types.includes(t.value) ? "bg-caramel text-white border-caramel" : "card-dark border-[#2c241f] text-espresso-soft hover:border-caramel"}`}>
+              <label key={t.value} className={`px-4 py-2 rounded-full text-sm font-bold border cursor-pointer transition ${form.employment_types.includes(t.value) ? "bg-caramel text-white border-caramel" : "card-dark border-[#e0d5bd] text-espresso-soft hover:border-caramel"}`}>
                 <input type="checkbox" className="sr-only" checked={form.employment_types.includes(t.value)} onChange={(e) => set("employment_types", e.target.checked ? [...form.employment_types, t.value] : form.employment_types.filter((v) => v !== t.value))} />
                 {t.label}
               </label>

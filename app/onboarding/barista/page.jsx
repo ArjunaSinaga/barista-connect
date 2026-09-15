@@ -216,7 +216,7 @@ export default function BaristaOnboardingPage() {
 })();
 
   return (
-    <div className="auth-shade auth-scope">
+    <div className="auth-light">
     <div className="mx-auto max-w-lg px-4 py-10">
       {/* Stepper */}
       <div className="mb-8 flex items-center justify-between">
@@ -500,7 +500,7 @@ export default function BaristaOnboardingPage() {
             <p className="text-sm font-bold text-espresso">Tipe pekerjaan yang kamu cari <span className="text-red-500">*</span></p>
             <div className="flex flex-wrap gap-2">
               {EMPLOYMENT_TYPES.map((t) => (
-                <label key={t.value} className={`px-4 py-2 rounded-full text-sm font-bold border cursor-pointer transition ${form.open_to_types.includes(t.value) ? "bg-caramel text-white border-caramel" : "card-dark border-[#2c241f] text-espresso-soft hover:border-caramel"}`}>
+                <label key={t.value} className={`px-4 py-2 rounded-full text-sm font-bold border cursor-pointer transition ${form.open_to_types.includes(t.value) ? "bg-caramel text-white border-caramel" : "card-dark border-[#e0d5bd] text-espresso-soft hover:border-caramel"}`}>
                   <input type="checkbox" className="sr-only" checked={form.open_to_types.includes(t.value)} onChange={(e) => {
                     setForm((s) => ({ ...s, open_to_types: e.target.checked ? [...s.open_to_types, t.value] : s.open_to_types.filter((v) => v !== t.value) }));
                   }} />
@@ -512,7 +512,7 @@ export default function BaristaOnboardingPage() {
           </div>
           <div className="space-y-2">
             <p className="text-sm font-bold text-espresso">CV PDF <span className="text-red-500">*</span> <span className="font-normal text-espresso-soft">(max 5MB)</span></p>
-            <label className="flex cursor-pointer items-center gap-3 rounded-xl border border-dashed border-[#2c241f] bg-[#16100d] px-4 py-3 text-sm hover:border-caramel">
+            <label className="flex cursor-pointer items-center gap-3 rounded-xl border border-dashed border-[#e0d5bd] bg-[#faf7ef] px-4 py-3 text-sm hover:border-caramel">
               <input type="file" accept="application/pdf" className="hidden" onChange={(e) => setForm((s) => ({ ...s, cv: e.target.files?.[0] || null }))} />
               <span className="rounded-lg bg-caramel px-3 py-1.5 text-xs font-bold text-white">Pilih PDF</span>
               <span className="truncate text-espresso-soft">{form.cv ? `${form.cv.name} — ${(form.cv.size/1024).toFixed(0)} KB` : form.cvUrl ? "CV sudah terunggah" : "Belum ada file"}</span>

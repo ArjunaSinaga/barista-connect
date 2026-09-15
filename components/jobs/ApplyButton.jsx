@@ -99,7 +99,7 @@ export default function ApplyButton({ jobId, applied=false, size="md", full=fals
               <p className="text-sm font-bold text-espresso">Tipe yang ditawarkan <span className="text-red-500">*</span></p>
               <div className="flex flex-wrap gap-2">
                 {jobTypes.map(t=>(
-                  <label key={t} className={`px-4 py-2 rounded-full text-sm font-bold border cursor-pointer transition ${types.includes(t) ? "bg-caramel text-white border-caramel" : "card-dark border-[#2c241f] text-espresso-soft hover:border-caramel"}`}>
+                  <label key={t} className={`px-4 py-2 rounded-full text-sm font-bold border cursor-pointer transition ${types.includes(t) ? "bg-caramel text-white border-caramel" : "card-dark border-[#e0d5bd] text-espresso-soft hover:border-caramel"}`}>
                     <input type="checkbox" className="sr-only" checked={types.includes(t)} onChange={e=> setTypes(s=> e.target.checked ? [...s,t] : s.filter(v=>v!==t))} />
                     {EMPLOYMENT_LABELS[t]||t}
                   </label>
@@ -111,7 +111,7 @@ export default function ApplyButton({ jobId, applied=false, size="md", full=fals
           <div className="space-y-2">
             <p className="text-sm font-bold text-espresso">CV <span className="font-normal text-espresso-soft">(dari profil)</span></p>
             {profileCv && !cv ? (
-              <div className="flex items-center gap-3 rounded-xl border border-[#2c241f] bg-[#16100d] px-4 py-3 text-sm">
+              <div className="flex items-center gap-3 rounded-xl border border-[#e0d5bd] bg-[#faf7ef] px-4 py-3 text-sm">
                 <a href={profileCv} target="_blank" rel="noreferrer" className="truncate font-bold text-caramel hover:underline">Lihat CV profil</a>
                 <label className="ml-auto shrink-0 cursor-pointer rounded-lg bg-caramel px-3 py-1.5 text-xs font-bold text-white">
                   Ganti file
@@ -119,7 +119,7 @@ export default function ApplyButton({ jobId, applied=false, size="md", full=fals
                 </label>
               </div>
             ) : (
-              <label className="flex cursor-pointer items-center gap-3 rounded-xl border border-dashed border-[#2c241f] bg-[#16100d] px-4 py-3 text-sm hover:border-caramel">
+              <label className="flex cursor-pointer items-center gap-3 rounded-xl border border-dashed border-[#e0d5bd] bg-[#faf7ef] px-4 py-3 text-sm hover:border-caramel">
                 <input type="file" accept="application/pdf" className="hidden" onChange={e=> setCv(e.target.files?.[0]||null)} />
                 <span className="rounded-lg bg-caramel px-3 py-1.5 text-xs font-bold text-white">{profileCv ? "Upload CV baru" : "Pilih PDF"}</span>
                 <span className="truncate text-espresso-soft">{cv ? `${cv.name} — ${(cv.size/1024).toFixed(0)} KB` : "Belum ada file"}</span>

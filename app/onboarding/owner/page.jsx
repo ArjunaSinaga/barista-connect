@@ -89,7 +89,7 @@ export default function OwnerOnboardingPage() {
   }
 
   return (
-    <div className="auth-shade auth-scope">
+    <div className="auth-light">
     <div className="mx-auto max-w-lg px-4 py-10">
       <div className="mb-6 text-center">
         <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-caramel text-white"><Store size={26} /></span>

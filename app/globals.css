@@ -6,27 +6,27 @@
   --font-sans: var(--font-jakarta), "SoDoSans", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
-/* — Dark Roast (homepage palette unified) — */
+/* — Kertas terang (palet homepage, dipakai seluruh aplikasi) — */
 :root {
-  --background: #0f0a08;
-  --foreground: #fdf6ec;
-  --color-cream: #f2f0eb;
-  --color-cream-dark: #1c1412;
-  --color-latte: #2a1e1b;
-  --color-espresso: #fdf6ec;
-  --color-espresso-soft: rgba(253,246,236,0.65);
-  --color-caramel: #d4a24e;
+  --background: #f5f1e8;
+  --foreground: #2b2118;
+  --color-cream: #ffffff;
+  --color-cream-dark: #ece2cd;
+  --color-latte: #e8e0cf;
+  --color-espresso: #2b2118;
+  --color-espresso-soft: #6f6252;
+  --color-caramel: #9a6a2f;
   --color-caramel-dark: #b56a2a;
-  --color-matcha: #1e3932;
-  --color-gold: #d4a24e;
-  --surface: #1c1412;
-  --surface-2: #251b19;
-  --surface-3: #2e221f;
-  --border: rgba(212,162,78,0.12);
-  --border-strong: rgba(212,162,78,0.22);
+  --color-matcha: #1f6b4a;
+  --color-gold: #9a6a2f;
+  --surface: #ffffff;
+  --surface-2: #faf7ef;
+  --surface-3: #efe9d9;
+  --border: rgba(43,33,24,0.14);
+  --border-strong: rgba(43,33,24,0.26);
 }
 
-select, option { background: var(--surface) !important; color: var(--foreground) !important; }
+select, option { background: #ffffff !important; color: #2b2118 !important; }
 input::placeholder { color: var(--color-espresso-soft); opacity: 1; }
 * { scrollbar-width: thin; scrollbar-color: var(--color-gold) transparent; }
 
@@ -165,10 +165,10 @@ body::before {
   box-shadow: 0 0 40px rgba(212,162,78,0.18), 0 8px 32px rgba(0,0,0,0.6);
 }
 .card-dark {
-  background: linear-gradient(180deg, #1c1412 0%, #19110f 100%);
-  border: 1px solid var(--border);
+  background: #ffffff;
+  border: 1px solid rgba(43,33,24,0.12);
 }
-.card-dark:hover { border-color: var(--border-strong); }
+.card-dark:hover { border-color: rgba(43,33,24,0.26); }
 
 /* Anim */
 @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
