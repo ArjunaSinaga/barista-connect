@@ -151,7 +151,7 @@ export default function ProfileEditor({ initial }) {
         <div className="relative">
           <Avatar src={photoUrl} name={form.full_name} size="xl" />
           {uploading && (
-            <span className="absolute inset-0 flex items-center justify-center rounded-full bg-espresso/50 text-white">
+            <span className="absolute inset-0 flex items-center justify-center rounded-full bg-black/50 text-white">
               <LoaderCircle size={26} className="animate-spin" />
             </span>
           )}

@@ -47,7 +47,7 @@ export default async function OwnerDashboardPage() {
           <Link href="/dashboard/owner/team" className="inline-flex items-center gap-2 rounded-full border border-latte bg-white px-5 py-3 text-sm font-bold text-espresso hover:border-caramel">
             <Users size={16}/> Tim Saya
           </Link>
-          <Link href="/dashboard/owner/jobs/new" className="inline-flex items-center gap-2 rounded-full bg-espresso px-5 py-3 text-sm font-bold text-white hover:bg-black transition">
+          <Link href="/dashboard/owner/jobs/new" className="inline-flex items-center gap-2 rounded-full bg-[#3d2c1e] px-5 py-3 text-sm font-bold text-white hover:bg-[#2e2015] transition">
             <Plus size={16}/> Buat Lowongan
           </Link>
           </div>
@@ -69,7 +69,7 @@ export default async function OwnerDashboardPage() {
             <p className="text-3xl font-black text-caramel mt-1">{totalJobs ? Math.round(activeJobs/totalJobs*100) : 0}%</p>
             <p className="text-xs text-espresso-soft mt-1 flex items-center gap-1"><TrendingUp size={12}/>kesehatan rekrutmen</p>
           </div>
-          <div className="rounded-2xl bg-espresso text-white p-4">
+          <div className="rounded-2xl bg-[#3d2c1e] text-white p-4">
             <p className="text-xs font-bold tracking-widest text-latte uppercase">Butuh Aksi</p>
             <p className="text-3xl font-black mt-1">{jobs?.filter(j=>!j.is_active).length || 0}</p>
             <p className="text-xs text-latte mt-1">lowongan nonaktif</p>
@@ -139,7 +139,7 @@ export default async function OwnerDashboardPage() {
                     </div>
                     <p className="text-xs text-espresso-soft">{job.cafes?.name ?? "-"} • {job.location} | {(job.employment_types?.[0] || job.employment_type)}</p>
                     <div className="flex gap-2 mt-3">
-                      <Link href={`/dashboard/owner/jobs/${job.id}/applicants`} className="flex-1 text-center text-xs font-bold bg-espresso text-white py-2 rounded-full">Kelola</Link>
+                      <Link href={`/dashboard/owner/jobs/${job.id}/applicants`} className="flex-1 text-center text-xs font-bold bg-[#3d2c1e] text-white py-2 rounded-full">Kelola</Link>
                       <Link href={`/dashboard/owner/jobs/${job.id}/edit`} className="flex-1 text-center text-xs font-bold border border-latte py-2 rounded-full">Edit</Link>
                       <Link href={`/jobs/${job.id}`} className="flex-1 text-center text-xs font-bold border border-latte py-2 rounded-full">Lihat</Link>
                     </div>

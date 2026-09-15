@@ -75,7 +75,7 @@ export default function VerifyCheckout({ amount, label }) {
       <div className="rounded-xl bg-matcha/10 px-4 py-5 text-center">
         <p className="text-lg font-black text-matcha">Pembayaran berhasil!</p>
         <p className="mt-1 text-sm font-semibold text-espresso">Centang biru sudah aktif di profilmu.</p>
-        <a href="/dashboard/barista/profile" className="mt-3 inline-block rounded-xl bg-espresso px-5 py-2.5 text-sm font-bold text-white">Lihat Profil Saya</a>
+        <a href="/dashboard/barista/profile" className="mt-3 inline-block rounded-xl bg-[#3d2c1e] px-5 py-2.5 text-sm font-bold text-white">Lihat Profil Saya</a>
       </div>
     );
   }

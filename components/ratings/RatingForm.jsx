@@ -25,7 +25,7 @@ export function Stars({ value, size = 16 }) {
         <Star
           key={s}
           size={size}
-          className={s <= value ? "fill-amber-400 text-amber-400" : "text-latte"}
+          className={s <= value ? "fill-amber-400 text-amber-400" : "text-[#d8cdae]"}
         />
       ))}
     </span>
@@ -137,7 +137,7 @@ export default function RatingForm({
                   className={
                     s <= (hover || stars)
                       ? "fill-amber-400 text-amber-400"
-                      : "text-latte hover:text-amber-300"
+                      : "text-[#d8cdae] hover:text-amber-300"
                   }
                 />
               </button>

@@ -114,7 +114,7 @@ export default function CafeRatingForm({
                   className={
                     s <= (hover || stars)
                       ? "fill-amber-400 text-amber-400"
-                      : "text-latte hover:text-amber-300"
+                      : "text-[#d8cdae] hover:text-amber-300"
                   }
                 />
               </button>

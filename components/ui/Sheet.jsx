@@ -23,7 +23,7 @@ export default function Sheet({ open, onClose, title, children }) {
   return (
     <div className="fixed inset-0 z-50 flex items-end justify-center sm:items-center">
       <div
-        className="absolute inset-0 bg-espresso/40 backdrop-blur-[2px]"
+        className="absolute inset-0 bg-black/40 backdrop-blur-[2px]"
         onClick={onClose}
       />
       <div className="animate-rise relative max-h-[85vh] w-full overflow-y-auto rounded-t-3xl border border-[#e0d5bd] bg-[#ffffff] p-5 sm:max-w-lg sm:rounded-3xl sm:p-6">

@@ -19,7 +19,7 @@ export default function OwnerProfileView({
             Ini tampilan publik bisnismu — begini barista lain melihatmu.
           </p>
           {editHref && (
-            <Link href={editHref} className="rounded-xl bg-espresso px-4 py-2 text-sm font-bold text-white hover:bg-espresso/90">
+            <Link href={editHref} className="rounded-xl bg-[#3d2c1e] px-4 py-2 text-sm font-bold text-white hover:bg-[#2e2015]">
               Edit Bisnis
             </Link>
           )}

@@ -316,7 +316,7 @@ export default function BaristaOnboardingPage() {
             <div className="relative">
               <Avatar src={photo.url} name={form.full_name} size="xl" />
               {photo.uploading && (
-                <span className="absolute inset-0 flex items-center justify-center rounded-full bg-espresso/50 text-white">
+                <span className="absolute inset-0 flex items-center justify-center rounded-full bg-black/50 text-white">
                   <LoaderCircle size={26} className="animate-spin" />
                 </span>
               )}

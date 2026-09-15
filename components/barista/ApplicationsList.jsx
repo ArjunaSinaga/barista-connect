@@ -142,7 +142,7 @@ export default function ApplicationsList() {
               onClick={() => setTab(t.key)}
               className={`shrink-0 rounded-full px-4 py-2 text-xs font-bold transition-colors ${
                 tab === t.key
-                  ? "bg-espresso text-white"
+                  ? "bg-[#3d2c1e] text-white"
                   : "border border-latte card-dark text-espresso-soft hover:text-caramel"
               }`}
             >

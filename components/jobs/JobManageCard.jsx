@@ -74,7 +74,7 @@ export default function JobManageCard({ job, applicantCount }) {
       <div className="mt-4 flex items-center justify-between border-t border-latte/60 pt-4">
         <Link
           href={`/dashboard/owner/jobs/${job.id}/applicants`}
-          className="inline-flex items-center gap-1.5 rounded-xl bg-espresso px-4 py-2 text-xs font-bold text-white hover:bg-espresso/90"
+          className="inline-flex items-center gap-1.5 rounded-xl bg-[#3d2c1e] px-4 py-2 text-xs font-bold text-white hover:bg-[#2e2015]"
         >
           <UsersRound size={14} />
           Pelamar ({count})

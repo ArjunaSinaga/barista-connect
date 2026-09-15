@@ -40,7 +40,7 @@ export default async function CafesPage() {
             Daftarkan semua cabangmu. Lowongan dipasang per cafe.
           </p>
         </div>
-        <Link href="/dashboard/owner/cafes/new" className="inline-flex items-center gap-2 rounded-full bg-espresso px-5 py-3 text-sm font-bold text-white hover:bg-black transition">
+        <Link href="/dashboard/owner/cafes/new" className="inline-flex items-center gap-2 rounded-full bg-[#3d2c1e] px-5 py-3 text-sm font-bold text-white hover:bg-[#2e2015] transition">
           <Plus size={16} /> Tambah Cafe
         </Link>
       </div>

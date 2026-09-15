@@ -69,7 +69,7 @@ export default async function BaristaDashboardPage() {
           <p className="text-3xl font-black text-espresso mt-1">{accepted}</p>
           <p className="text-xs text-espresso-soft mt-1 flex items-center gap-1"><CheckCheck size={12} />sedang bekerja</p>
         </div>
-        <div className="rounded-2xl bg-espresso text-white border border-espresso p-4">
+        <div className="rounded-2xl bg-[#3d2c1e] text-white border border-[#3d2c1e] p-4">
           <p className="text-xs font-bold tracking-widest text-latte uppercase">Selesai</p>
           <p className="text-3xl font-black mt-1">{done}</p>
           <p className="text-xs text-latte mt-1 flex items-center gap-1"><FlagOff size={12} />bisa dinilai</p>
