@@ -25,10 +25,7 @@ export default function SidebarOwner({ cafe, ownerName, completeness, counts, vi
       <span className="rounded-full bg-[#efe9d9] px-2 py-0.5 text-[11px] font-bold text-[#6f6252]">{n}</span>
     ) : null;
 
-  const NAV = [
-    { href: "/dashboard/owner/cafes", label: "Cafe Saya", icon: Camera, active: pathname?.startsWith("/dashboard/owner/cafes"), count: counts.cafes },
-    { href: "/dashboard/owner/profile", label: "Settings", icon: Settings, active: pathname?.startsWith("/dashboard/owner/profile"), count: null },
-  ];
+  const isMain = !pathname?.startsWith("/dashboard/owner/cafes") && !pathname?.startsWith("/dashboard/owner/profile");
 
   return (
     <aside className="min-w-0 space-y-4">
@@ -81,18 +78,20 @@ export default function SidebarOwner({ cafe, ownerName, completeness, counts, vi
           <span className="flex-1 text-left">Pelamar</span>
           {countBadge(counts.applicants)}
         </button>
-        <Link href="/dashboard/owner/team" className={cls(pathname?.startsWith("/dashboard/owner/team"))}>
+        <button type="button" onClick={() => onNavigate?.("reviews")} className={cls(isMain && view === "reviews")}>
           <Star size={17} className="shrink-0" />
-          <span className="flex-1">Reviews Given</span>
+          <span className="flex-1 text-left">Reviews Given</span>
           {countBadge(counts.reviewsGiven)}
+        </button>
+        <button type="button" onClick={() => onNavigate?.("cafes")} className={cls(isMain && view === "cafes")}>
+          <Camera size={17} className="shrink-0" />
+          <span className="flex-1 text-left">Cafe Saya</span>
+          {countBadge(counts.cafes)}
+        </button>
+        <Link href="/dashboard/owner/profile" className={cls(pathname?.startsWith("/dashboard/owner/profile"))}>
+          <Settings size={17} className="shrink-0" />
+          <span className="flex-1">Settings</span>
         </Link>
-        {NAV.map((n) => (
-          <Link key={n.label} href={n.href} className={cls(n.active)}>
-            <n.icon size={17} className="shrink-0" />
-            <span className="flex-1">{n.label}</span>
-            {countBadge(n.count)}
-          </Link>
-        ))}
         <span
           title="Segera hadir"
           className="flex cursor-not-allowed items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-bold text-[#6f6252]/50"
