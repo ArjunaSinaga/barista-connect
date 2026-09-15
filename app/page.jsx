@@ -86,7 +86,7 @@ async function getRecentReviews() {
 
 function HeroPhotoBlock({ photo }) {
   return (
-    <div className="relative h-56 overflow-hidden rounded-2xl border border-[#e8e0cf] shadow-[0_1px_3px_rgba(43,33,24,0.08)] sm:h-64 lg:h-full lg:min-h-0">
+    <div className="relative h-48 overflow-hidden rounded-xl shadow-[0_1px_3px_rgba(43,33,24,0.08)] sm:h-56 lg:h-full lg:min-h-[228px]">
       {photo ? (
         <>
           <img src={photo.url} alt={photo.cafe ? `Photo of ${photo.cafe}` : "Cafe photo"} loading="lazy" className="absolute inset-0 h-full w-full object-cover" />
@@ -107,9 +107,10 @@ function HeroPhotoBlock({ photo }) {
   );
 }
 
-// Homepage = 1 layar tanpa scroll halaman (desktop): hero teks, 2 kartu peran,
-// trio (jobs | foto | ekosistem) + quad (featured | reviews | academy | smarter).
-// Tiap blok scroll di dalam kotaknya sendiri. Mobile tetap scroll normal.
+// Homepage = 1 layar tanpa scroll halaman (desktop): hero (teks+foto) + kartu peran
+// di kiri, ekosistem kanan; bawahnya 3 kolom (jobs | featured+reviews | academy+smarter).
+// Tiap kolom bawah scroll di dalam kotaknya sendiri tanpa scrollbar kelihatan.
+// Mobile tetap scroll normal.
 export default async function LandingPage() {
   const { user } = await getSessionSafe();
   const [jobs, stats, featured, reviews] = await Promise.all([
@@ -132,94 +133,80 @@ export default async function LandingPage() {
 
   return (
     <div className="min-h-screen bg-[#f5f1e8] text-[#2b2118] lg:flex lg:h-[calc(100dvh-3.5rem)] lg:min-h-0 lg:flex-col lg:overflow-hidden">
-      {/* Hero teks — foto pindah ke trio di bawah */}
-      <section className="mx-auto w-full max-w-[1400px] shrink-0 px-4 pt-2 pb-1.5 sm:px-6">
-        <div className="rounded-2xl border border-[#e8e0cf] bg-[#ece2cd] px-5 py-2.5 shadow-[0_2px_12px_rgba(43,33,24,0.10)] sm:px-7">
-          <div className="flex flex-wrap items-end gap-x-8 gap-y-3">
-            <div className="min-w-0 flex-1 basis-72">
-              <p className="text-[11px] font-bold tracking-[0.18em] text-[#857768] uppercase">
-                A stronger coffee community
-              </p>
-              <h1 className="font-display mt-1 text-[1.7rem] leading-[1.05] font-semibold tracking-tight sm:text-3xl">
-                Hire better baristas. <span className="text-[#1f6b4a]">Find better cafe jobs.</span>
-              </h1>
-              <p className="mt-1 max-w-xl text-[13px] leading-5 text-[#6f6252]">
-                BaristaConnect connects passionate baristas and cafe owners with verified
-                experience, ratings, and reviews. More than a job board — the coffee hiring ecosystem.
-              </p>
-            </div>
-            <div className="shrink-0">
-              <div className="flex flex-wrap items-center gap-2">
-                <Link href="/jobs" className="inline-flex min-h-[36px] items-center gap-2 rounded-full bg-[#3d2c1e] px-5 text-[13px] font-bold text-white hover:bg-[#2e2015]">
-                  <Search size={14} /> Find Jobs
-                </Link>
-                <Link href="/find-baristas" className="inline-flex min-h-[36px] items-center gap-2 rounded-full border border-[#c9b992] bg-[#ffffff] px-5 text-[13px] font-bold text-[#3d2c1e] hover:border-[#3d2c1e]">
-                  <Store size={14} /> Hire Baristas
-                </Link>
+      {/* Atas: hero (teks+foto) + kartu peran di kiri, ekosistem kanan */}
+      <section className="mx-auto w-full max-w-[1400px] shrink-0 px-4 pt-2 pb-2 sm:px-6">
+        <div className="grid items-stretch gap-4 lg:grid-cols-[1fr_1fr_0.85fr]">
+          <div className="min-w-0 lg:col-span-2">
+            <div className="flex gap-5 rounded-2xl border border-[#e8e0cf] bg-[#ece2cd] px-5 py-3 shadow-[0_2px_12px_rgba(43,33,24,0.10)] sm:px-6">
+              <div className="min-w-0 flex-1">
+                <p className="text-[11px] font-bold tracking-[0.18em] text-[#857768] uppercase">
+                  A stronger coffee community
+                </p>
+                <h1 className="font-display mt-1 text-[1.7rem] leading-[1.05] font-semibold tracking-tight sm:text-3xl">
+                  Hire better baristas. <span className="text-[#1f6b4a]">Find better cafe jobs.</span>
+                </h1>
+                <p className="mt-1 max-w-xl text-[13px] leading-5 text-[#6f6252]">
+                  BaristaConnect connects passionate baristas and cafe owners with verified
+                  experience, ratings, and reviews. More than a job board — the coffee hiring ecosystem.
+                </p>
+                <div className="mt-2 flex flex-wrap items-center gap-2">
+                  <Link href="/jobs" className="inline-flex min-h-[36px] items-center gap-2 rounded-full bg-[#3d2c1e] px-5 text-[13px] font-bold text-white hover:bg-[#2e2015]">
+                    <Search size={14} /> Find Jobs
+                  </Link>
+                  <Link href="/find-baristas" className="inline-flex min-h-[36px] items-center gap-2 rounded-full border border-[#c9b992] bg-[#ffffff] px-5 text-[13px] font-bold text-[#3d2c1e] hover:border-[#3d2c1e]">
+                    <Store size={14} /> Hire Baristas
+                  </Link>
+                </div>
+                <dl className="mt-2 flex items-stretch gap-5">
+                  {stats.map(([v, l], i) => (
+                    <div key={l} className={i > 0 ? "border-l border-[#3d2c1e]/15 pl-5" : ""}>
+                      <dd className="text-xl leading-6 font-extrabold tracking-tight text-[#2b2118]">{v}</dd>
+                      <dt className="mt-0.5 text-[10px] leading-3 text-[#857768]">{l}</dt>
+                    </div>
+                  ))}
+                </dl>
               </div>
-              <dl className="mt-2 flex items-stretch gap-5">
-                {stats.map(([v, l], i) => (
-                  <div key={l} className={i > 0 ? "border-l border-[#3d2c1e]/15 pl-5" : ""}>
-                    <dd className="text-xl leading-6 font-extrabold tracking-tight text-[#2b2118]">{v}</dd>
-                    <dt className="mt-0.5 text-[10px] leading-3 text-[#857768]">{l}</dt>
-                  </div>
-                ))}
-              </dl>
+              <div className="hidden w-60 shrink-0 sm:block lg:w-72">
+                <HeroPhotoBlock photo={heroMain} />
+              </div>
+            </div>
+            <div className="mt-3 grid gap-3 sm:grid-cols-2">
+              <Link href="/signup" className="group flex items-center gap-3 rounded-2xl border border-[#e8e0cf] bg-[#ffffff] px-4 py-2 shadow-[0_1px_3px_rgba(43,33,24,0.08)] hover:border-[#3d2c1e]">
+                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#efe8d8]"><Coffee size={17} className="text-[#3d2c1e]" /></span>
+                <span className="min-w-0 flex-1">
+                  <span className="block text-[13px] font-bold">For Baristas</span>
+                  <span className="block truncate text-xs text-[#857768]">Find jobs, grow your skills, build your reputation.</span>
+                </span>
+                <ChevronRight size={16} className="shrink-0 text-[#b6a98f] group-hover:text-[#3d2c1e]" />
+              </Link>
+              <Link href="/find-baristas" className="group flex items-center gap-3 rounded-2xl border border-[#e8e0cf] bg-[#ffffff] px-4 py-2 shadow-[0_1px_3px_rgba(43,33,24,0.08)] hover:border-[#3d2c1e]">
+                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#efe8d8]"><Store size={17} className="text-[#3d2c1e]" /></span>
+                <span className="min-w-0 flex-1">
+                  <span className="block text-[13px] font-bold">For Cafe Owners</span>
+                  <span className="block truncate text-xs text-[#857768]">Discover talented baristas, hire with confidence.</span>
+                </span>
+                <ChevronRight size={16} className="shrink-0 text-[#b6a98f] group-hover:text-[#3d2c1e]" />
+              </Link>
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* Kartu peran */}
-      <section className="mx-auto w-full max-w-[1400px] shrink-0 px-4 pb-2 sm:px-6">
-        <div className="grid gap-3 sm:grid-cols-2">
-          <Link href="/signup" className="group flex items-center gap-3 rounded-2xl border border-[#e8e0cf] bg-[#ffffff] px-4 py-2 shadow-[0_1px_3px_rgba(43,33,24,0.08)] hover:border-[#3d2c1e]">
-            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#efe8d8]"><Coffee size={17} className="text-[#3d2c1e]" /></span>
-            <span className="min-w-0 flex-1">
-              <span className="block text-[13px] font-bold">For Baristas</span>
-              <span className="block truncate text-xs text-[#857768]">Find jobs, grow your skills, build your reputation.</span>
-            </span>
-            <ChevronRight size={16} className="shrink-0 text-[#b6a98f] group-hover:text-[#3d2c1e]" />
-          </Link>
-          <Link href="/find-baristas" className="group flex items-center gap-3 rounded-2xl border border-[#e8e0cf] bg-[#ffffff] px-4 py-2 shadow-[0_1px_3px_rgba(43,33,24,0.08)] hover:border-[#3d2c1e]">
-            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#efe8d8]"><Store size={17} className="text-[#3d2c1e]" /></span>
-            <span className="min-w-0 flex-1">
-              <span className="block text-[13px] font-bold">For Cafe Owners</span>
-              <span className="block truncate text-xs text-[#857768]">Discover talented baristas, hire with confidence.</span>
-            </span>
-            <ChevronRight size={16} className="shrink-0 text-[#b6a98f] group-hover:text-[#3d2c1e]" />
-          </Link>
-        </div>
-      </section>
-
-      {/* Trio: jobs kiri, foto tengah (sempit), ekosistem kanan — porsi kecil */}
-      <section className="mx-auto w-full max-w-[1400px] px-4 sm:px-6 lg:min-h-0 lg:flex-1">
-        <div className="grid items-stretch gap-4 sm:grid-cols-2 lg:h-full lg:grid-cols-[1fr_0.62fr_0.85fr]">
-          <div className="min-w-0 sm:col-span-2 lg:col-span-1 lg:col-start-1 lg:row-start-1 lg:h-full lg:min-h-0 lg:overflow-y-auto lg:pr-1 lg:pb-1 no-scrollbar">
-            <LatestJobs jobs={jobs} />
-          </div>
-          <div className="min-w-0 lg:col-start-2 lg:row-start-1 lg:h-full lg:min-h-0 lg:pb-1">
-            <HeroPhotoBlock photo={heroMain} />
-          </div>
-          <div className="min-w-0 lg:col-start-3 lg:row-start-1 lg:h-full lg:min-h-0 lg:overflow-y-auto lg:pb-1 no-scrollbar">
+          <div className="min-w-0">
             <EcosystemCard />
           </div>
         </div>
       </section>
 
-      {/* Quad: featured | reviews | academy | smarter — porsi besar ke atas */}
-      <section className="mx-auto w-full max-w-[1400px] flex-1 px-4 pt-3 sm:px-6 lg:min-h-0 lg:flex-[1.5] lg:pt-3">
-        <div className="grid items-stretch gap-4 sm:grid-cols-2 lg:h-full lg:grid-cols-4">
+      {/* Bawah: jobs | featured+reviews | academy+smarter — scroll per kolom */}
+      <section className="mx-auto w-full max-w-[1400px] flex-1 px-4 sm:px-6 lg:min-h-0">
+        <div className="grid items-stretch gap-4 sm:grid-cols-2 lg:h-full lg:grid-cols-3">
           <div className="min-w-0 lg:h-full lg:min-h-0 lg:overflow-y-auto lg:pr-1 lg:pb-1 no-scrollbar">
-            <FeaturedBarista barista={featured} isAnon={!user} />
+            <LatestJobs jobs={jobs} />
           </div>
-          <div className="min-w-0 lg:h-full lg:min-h-0 lg:overflow-y-auto lg:pr-1 lg:pb-1 no-scrollbar">
+          <div className="min-w-0 space-y-4 lg:h-full lg:min-h-0 lg:overflow-y-auto lg:pr-1 lg:pb-1 no-scrollbar">
+            <FeaturedBarista barista={featured} isAnon={!user} />
             <ReviewsCard reviews={reviews} />
           </div>
-          <div className="min-w-0 lg:h-full lg:min-h-0 lg:overflow-y-auto lg:pr-1 lg:pb-1 no-scrollbar">
+          <div className="min-w-0 space-y-4 sm:col-span-2 lg:col-span-1 lg:h-full lg:min-h-0 lg:overflow-y-auto lg:pb-1 no-scrollbar">
             <AcademyCard image={academyPhoto} />
-          </div>
-          <div className="min-w-0 lg:h-full lg:min-h-0 lg:overflow-y-auto lg:pb-1 no-scrollbar">
             <SmarterOpsCard />
           </div>
         </div>
