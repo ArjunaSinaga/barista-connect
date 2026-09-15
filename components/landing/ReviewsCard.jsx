@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Star, Store, ChevronRight } from "lucide-react";
+import { relativeTime } from "@/lib/time";
 
 // Blok mandiri: review terbaru dari cafe owners (data asli tabel ratings).
 export default function ReviewsCard({ reviews }) {
@@ -20,10 +21,13 @@ export default function ReviewsCard({ reviews }) {
                 <Store size={13} className="shrink-0 text-[#857768]" />
                 <span className="truncate">{r.owner?.business_name ?? "Cafe owner"}</span>
               </p>
-              <span className="flex shrink-0 items-center gap-0.5" aria-label={`${r.stars} out of 5 stars`}>
-                {Array.from({ length: 5 }).map((_, s) => (
-                  <Star key={s} size={12} className={s < r.stars ? "fill-[#c98a2b] text-[#c98a2b]" : "text-[#d8cdae]"} />
-                ))}
+              <span className="flex shrink-0 items-center gap-1.5" aria-label={`${r.stars} out of 5 stars`}>
+                <span className="flex items-center gap-0.5">
+                  {Array.from({ length: 5 }).map((_, s) => (
+                    <Star key={s} size={12} className={s < r.stars ? "fill-[#c98a2b] text-[#c98a2b]" : "text-[#d8cdae]"} />
+                  ))}
+                </span>
+                {r.created_at && <span className="text-[10px] font-semibold text-[#b6a98f]">{relativeTime(r.created_at)}</span>}
               </span>
             </div>
             <p className="mt-1.5 text-[13px] leading-5 text-[#6f6252] italic">&ldquo;{r.comment}&rdquo;</p>

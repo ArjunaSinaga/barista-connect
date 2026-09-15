@@ -55,6 +55,22 @@ export default function Navbar({ user, role }) {
           >
             Talent
           </Link>
+          <span
+            title="Segera hadir"
+            className={light
+              ? "hidden cursor-not-allowed rounded-lg px-3 py-2 text-sm font-semibold text-[#2f2721]/35 lg:block"
+              : "hidden cursor-not-allowed rounded-lg px-3 py-2 text-sm font-semibold text-espresso-soft/40 lg:block"}
+          >
+            Reviews
+          </span>
+          <span
+            title="Segera hadir"
+            className={light
+              ? "hidden cursor-not-allowed rounded-lg px-3 py-2 text-sm font-semibold text-[#2f2721]/35 lg:block"
+              : "hidden cursor-not-allowed rounded-lg px-3 py-2 text-sm font-semibold text-espresso-soft/40 lg:block"}
+          >
+            Training
+          </span>
           {light && (
             <form action="/jobs" method="GET" className="ml-2 hidden min-w-0 flex-1 items-center gap-2 rounded-full border border-[#e0d5bd] bg-[#ffffff] px-3.5 py-1.5 xl:flex xl:max-w-xs">
               <Search size={14} className="shrink-0 text-[#b6a98f]" />

@@ -1,9 +1,10 @@
 import Link from "next/link";
-import { Star, MapPin, Briefcase } from "lucide-react";
+import { Star, MapPin, Briefcase, Clock3, Send } from "lucide-react";
 import Avatar from "@/components/ui/Avatar";
 import VerifiedBadge from "@/components/ui/VerifiedBadge";
 import Button from "@/components/ui/Button";
 import { avgStars } from "@/lib/ratings";
+import { EMPLOYMENT_LABELS } from "@/lib/constants";
 
 // Featured barista card — light kerja.inc style. All numbers computed from real data.
 export default function FeaturedBarista({ barista, isAnon }) {
@@ -37,6 +38,11 @@ export default function FeaturedBarista({ barista, isAnon }) {
             <span className="inline-flex items-center gap-1"><MapPin size={11} />{barista.location_place}</span>
             <span className="inline-flex items-center gap-1"><Briefcase size={11} />{barista.years_of_experience} yrs experience</span>
           </p>
+          {barista.open_to_types?.length > 0 && (
+            <p className="mt-1 flex items-center gap-1 text-xs text-[#857768]">
+              <Clock3 size={11} />Available for {barista.open_to_types.map((t) => (EMPLOYMENT_LABELS[t] ?? t).toLowerCase()).join(" & ")}
+            </p>
+          )}
         </div>
       </div>
       {(barista.cover_letter || barista.ideas_plus) && (
@@ -52,7 +58,7 @@ export default function FeaturedBarista({ barista, isAnon }) {
         </div>
       )}
       <div className="mt-4 flex gap-2">
-        <Button size="sm" full variant="coffee" href={inviteHref}>Invite to Interview</Button>
+        <Button size="sm" full variant="coffee" href={inviteHref}><Send size={13} />Invite to Interview</Button>
         <Link href={`/barista/${barista.id}`} className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-[#d8cdae] bg-[#ffffff] px-3 py-1.5 text-xs font-semibold text-[#3d2c1e] transition-all hover:border-[#3d2c1e] active:scale-[0.95]">
           View Full Profile
         </Link>

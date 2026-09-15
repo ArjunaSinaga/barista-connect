@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, Search, MapPin, ChevronRight, Coffee, Store } from "lucide-react";
+import { Search, ChevronRight, Coffee, Store } from "lucide-react";
 import { createClient, isSupabaseConfigured, getSessionSafe } from "@/lib/supabase/server";
 import LatestJobs from "@/components/landing/LatestJobs";
 import FeaturedBarista from "@/components/landing/FeaturedBarista";
@@ -18,29 +18,6 @@ async function getLatestJobs() {
       .order("created_at", { ascending: false })
       .limit(4);
     return data ?? [];
-  } catch {
-    return [];
-  }
-}
-
-async function getTopCities() {
-  if (!isSupabaseConfigured()) return [];
-  try {
-    const supabase = await createClient();
-    const { data } = await supabase
-      .from("cafes")
-      .select("location")
-      .eq("is_active", true)
-      .limit(200);
-    const count = {};
-    (data ?? []).forEach((c) => {
-      const city = (c.location || "").trim();
-      if (city) count[city] = (count[city] || 0) + 1;
-    });
-    return Object.entries(count)
-      .sort((a, b) => b[1] - a[1])
-      .slice(0, 3)
-      .map(([city]) => city);
   } catch {
     return [];
   }
@@ -114,10 +91,9 @@ async function getRecentReviews() {
 // Mobile tetap scroll normal.
 export default async function LandingPage() {
   const { user } = await getSessionSafe();
-  const [jobs, stats, topCities, featured, reviews] = await Promise.all([
+  const [jobs, stats, featured, reviews] = await Promise.all([
     getLatestJobs(),
     getLiveStats(),
-    getTopCities(),
     getFeaturedBarista(),
     getRecentReviews(),
   ]);
@@ -166,32 +142,23 @@ export default async function LandingPage() {
                 </div>
               ))}
             </dl>
-            <form action="/jobs" method="GET" className="mt-3 flex max-w-xl items-center gap-2 rounded-full border border-[#d8cdae] bg-[#ffffff] p-1 shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
-              <div className="flex min-h-[36px] flex-1 items-center gap-2 pl-4">
-                <Search size={14} className="shrink-0 text-[#b6a98f]" />
-                <input name="q" placeholder="Search jobs, baristas, or cafes..." aria-label="Search jobs" className="h-8 w-full bg-transparent text-[13px] text-[#2b2118] placeholder:text-[#b6a98f] focus:outline-none" />
-              </div>
-              {topCities.length > 0 && (
-                <span className="hidden items-center gap-1 text-xs font-semibold text-[#857768] md:inline-flex">
-                  <MapPin size={12} /> {topCities[0]}
-                </span>
-              )}
-              <button type="submit" className="inline-flex min-h-[36px] shrink-0 items-center gap-1.5 rounded-full bg-[#3d2c1e] px-4 text-xs font-bold text-white hover:bg-[#2e2015]">
-                Search <ArrowRight size={13} />
-              </button>
-            </form>
           </div>
 
           <div className="relative hidden min-h-[300px] lg:block">
             {heroMain ? (
               <>
                 <img src={heroMain.url} alt={heroMain.cafe ? `Photo of ${heroMain.cafe}` : "Cafe photo"} className="absolute inset-0 h-full w-full object-cover" />
-                <span className="font-chalk absolute top-5 left-1/2 -translate-x-1/2 -rotate-3 text-center text-2xl leading-6 text-white drop-shadow-[0_2px_6px_rgba(0,0,0,0.6)]">
+                <span aria-hidden="true" className="absolute inset-0" style={{ background: "linear-gradient(100deg, #ece2cd 0%, rgba(236,226,205,0.55) 22%, rgba(236,226,205,0) 45%)" }} />
+                <span aria-hidden="true" className="absolute -bottom-16 -left-16 h-56 w-72 rounded-[50%] bg-[#ece2cd]" />
+                <span className="font-chalk absolute top-8 left-4 -rotate-6 text-2xl leading-6 text-white drop-shadow-[0_2px_6px_rgba(0,0,0,0.6)]">
                   Good People<br />Better Coffee
                 </span>
-                <span className="absolute right-4 bottom-4 rounded-xl bg-[#f5f1e8]/95 px-4 py-2 text-right shadow">
+                <span className="absolute right-4 bottom-4 rounded-full bg-[#f5f1e8]/95 px-5 py-2.5 text-right shadow">
                   <span className="font-chalk block text-base leading-5 text-[#3d2c1e]">Same Passion<br />More Opportunities</span>
                   {heroMain.cafe && <span className="mt-0.5 block text-[10px] font-bold tracking-wide text-[#857768]">— {heroMain.cafe} —</span>}
+                </span>
+                <span className="absolute bottom-2 left-1/2 hidden -translate-x-1/2 text-[9px] font-bold tracking-[0.25em] whitespace-nowrap text-[#2b2118]/40 xl:block">
+                  JOBS&nbsp;&nbsp;•&nbsp;&nbsp;PEOPLE&nbsp;&nbsp;•&nbsp;&nbsp;TRAINING&nbsp;&nbsp;•&nbsp;&nbsp;STRONGER CAFES
                 </span>
               </>
             ) : (
@@ -264,6 +231,7 @@ export default async function LandingPage() {
               I&apos;m a Cafe Owner
             </Link>
           </div>
+          <p className="font-chalk hidden text-right text-sm leading-4 text-[#f5f1e8]/70 xl:block">Same People<br />Brighter Tomorrows</p>
         </div>
       </section>
     </div>
