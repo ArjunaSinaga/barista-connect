@@ -13,11 +13,11 @@ const SKILL_KEYWORDS = [
   "Hygiene", "Communication",
 ];
 
-function skillTags(job) {
+export function skillTags(job) {
   const text = `${job.title ?? ""} ${job.description ?? ""}`.toLowerCase();
   return SKILL_KEYWORDS.filter((k) => text.includes(k.toLowerCase())).slice(0, 4);
 }
-function CafeLogo({ job }) {
+export function CafeLogo({ job }) {
   const photo = job.cafes?.photo_urls?.[0];
   const name = job.cafes?.name ?? job.owners?.business_name ?? "C";
   if (photo) {
