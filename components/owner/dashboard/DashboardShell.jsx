@@ -10,7 +10,7 @@ import PelamarView from "@/components/owner/dashboard/PelamarView";
 import ReviewsView from "@/components/owner/dashboard/ReviewsView";
 import CafesView from "@/components/owner/dashboard/CafesView";
 import SettingsView from "@/components/owner/dashboard/SettingsView";
-import { TalentRow, TopCandidatesCompact } from "@/components/owner/dashboard/TopCandidates";
+import { TalentRow, TopCandidatesStrip } from "@/components/owner/dashboard/TopCandidates";
 import { SmarterOpsCard } from "@/components/landing/SidebarKerja";
 
 // Shell 3 kolom: sidebar tetap, hanya kolom TENGAH yang ganti
@@ -44,7 +44,7 @@ export default function DashboardShell({ initialView = "talenta", sidebar, middl
         </div>
         {(view === "active" || view === "pelamar") && middle.talenta.top3?.length > 0 && (
           <div className="shrink-0 lg:pr-1 lg:pb-1">
-            <TopCandidatesCompact baristas={middle.talenta.top3} />
+            <TopCandidatesStrip baristas={middle.talenta.top3} />
           </div>
         )}
       </div>
