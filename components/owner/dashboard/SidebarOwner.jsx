@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
-  LayoutDashboard, Briefcase, Users, Heart, Star, GraduationCap, Settings,
+  LayoutDashboard, Briefcase, Users, UsersRound, Heart, Star, GraduationCap, Settings,
   Camera, Crown, ArrowRight,
 } from "lucide-react";
 import Avatar from "@/components/ui/Avatar";
@@ -106,6 +106,11 @@ export default function SidebarOwner({ cafe, ownerName, completeness, completene
           <Users size={17} className="shrink-0" />
           <span className="flex-1 text-left">Pelamar</span>
           {countBadge(counts.applicants)}
+        </button>
+        <button type="button" onClick={() => onNavigate?.("team")} className={cls(isMain && view === "team")}>
+          <UsersRound size={17} className="shrink-0" />
+          <span className="flex-1 text-left">Tim Saya</span>
+          {countBadge(counts.team)}
         </button>
         <button type="button" onClick={() => onNavigate?.("saved")} className={cls(isMain && view === "saved")}>
           <Heart size={17} className="shrink-0" />
