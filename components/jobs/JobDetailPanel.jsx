@@ -5,6 +5,7 @@ import Link from "next/link";
 import { MapPin, Star, X } from "lucide-react";
 import VerifiedBadge from "@/components/ui/VerifiedBadge";
 import ApplyButton from "@/components/jobs/ApplyButton";
+import SaveButton from "@/components/jobs/SaveButton";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { EMPLOYMENT_LABELS } from "@/lib/constants";
 import { relativeTime } from "@/lib/time";
@@ -12,8 +13,8 @@ import { relativeTime } from "@/lib/time";
 const TABS = ["Overview", "About", "Reviews"];
 
 // Panel detail kanan ala board G1: galeri + info + tabs + Apply.
-// Props plain (serializable) dari server. Save menyusul di F3b.
-export default function JobDetailPanel({ job, cafeName, cafeHref, types, avg, count, reviews, applied, canApply }) {
+// Props plain (serializable) dari server.
+export default function JobDetailPanel({ job, cafeName, cafeHref, types, avg, count, reviews, applied, saved, canApply }) {
   const [tab, setTab] = useState("Overview");
   const photos = job.cafes?.photo_urls?.filter(Boolean).slice(0, 4) ?? [];
 
@@ -66,7 +67,10 @@ export default function JobDetailPanel({ job, cafeName, cafeHref, types, avg, co
 
         <div className="mt-3 flex gap-2">
           {canApply ? (
-            <ApplyButton jobId={job.id} applied={applied} jobTypes={types} size="md" full variant="coffee" label={applied ? "Sudah dilamar" : "Apply Now"} />
+            <>
+              <SaveButton jobId={job.id} initialSaved={saved} variant="full" />
+              <ApplyButton jobId={job.id} applied={applied} jobTypes={types} size="md" full variant="coffee" label={applied ? "Sudah dilamar" : "Apply Now"} />
+            </>
           ) : (
             <Link
               href={`/jobs/${job.id}`}

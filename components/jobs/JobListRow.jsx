@@ -1,13 +1,14 @@
 import Link from "next/link";
-import { MapPin, Bookmark } from "lucide-react";
+import { MapPin } from "lucide-react";
 import VerifiedBadge from "@/components/ui/VerifiedBadge";
 import ApplyButton from "@/components/jobs/ApplyButton";
+import SaveButton from "@/components/jobs/SaveButton";
 import { CafeLogo, skillTags } from "@/components/landing/LatestJobs";
 import { EMPLOYMENT_LABELS } from "@/lib/constants";
 import { relativeTime } from "@/lib/time";
 
 // Baris lowongan ala board G1: logo + info + View Job. Klik baris = ganti ?job= (panel kanan).
-export default function JobListRow({ job, active, applied, showApply }) {
+export default function JobListRow({ job, active, applied, saved, showApply }) {
   const types = job.employment_types?.length
     ? job.employment_types
     : job.employment_type
@@ -58,9 +59,7 @@ export default function JobListRow({ job, active, applied, showApply }) {
         <div className="flex shrink-0 flex-col items-end justify-between gap-2">
           <span className="flex items-center gap-2 text-[11px] text-[#b6a98f]">
             {relativeTime(job.created_at)}
-            <span title="Simpan lowongan (hadir di F3b)" aria-label="Simpan lowongan, segera hadir" className="text-[#b6a98f]">
-              <Bookmark size={15} aria-hidden="true" />
-            </span>
+            <SaveButton jobId={job.id} initialSaved={saved} />
           </span>
           <Link
             href={`/jobs?job=${job.id}`}

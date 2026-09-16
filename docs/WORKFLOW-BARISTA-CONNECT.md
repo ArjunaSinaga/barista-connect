@@ -12,7 +12,7 @@
 | F1 | Navbar + footer global aktif | 🟢 Selesai | — | — | Navbar baru (search/lokasi/bell/avatar/Post a Job), strip CTA global, /reviews real, /training ringan (F5-ringan ditarik maju agar nav tidak mati) |
 | F2 | Landing → G2 (polish) | 🟢 Selesai | — | — | Rebrand kerja.inc→BaristaConnect, ekosistem jadi link real, Academy→/training, SmarterOps tanpa angka palsu, Reviews→/reviews |
 | F3a | Jobs board shell 3 kolom + panel detail | 🟢 Selesai | — | — | Board G1: profil+nav, hero+filter+list, panel ?job= + tabs real (tanpa Save, tanpa Requirements/Benefits palsu) |
-| F3b | Save jobs + sort + applied badge | ⬜ Belum mulai | — | — | Butuh tabel `saved_jobs` |
+| F3b | Save jobs + sort + applied badge | 🟢 Selesai | — | — | Tabel saved_jobs + RLS, Save di list+panel, filter ?saved=1, sort recent/oldest/A–Z |
 | F3c | Kolom kiri profil barista + hapus JobFeed lama | ⬜ Belum mulai | — | — | — |
 | F4 | Owner dashboard → G3 | 🟡 Jalan (90%) | — | — | + strip login-gate, snooze 2x semua X, sidebar ramping + X Pro, kolom tengah tanpa scroll |
 | F5 | Training → G4 | 🟢 Selesai (ringan) | — | — | Katalog seed + filter server + waitlist; upgrade data real bila tabel ada |

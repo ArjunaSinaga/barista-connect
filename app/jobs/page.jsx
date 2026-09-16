@@ -25,6 +25,8 @@ export default async function JobsPage({ searchParams }) {
   const loc = (params?.loc ?? "").toString().trim();
   const type = (params?.type ?? "").toString().trim();
   const jobParam = (params?.job ?? "").toString().trim();
+  const savedOnly = params?.saved === "1";
+  const sort = ["oldest", "name"].includes(params?.sort) ? params.sort : "newest";
 
   const { user, profile } = await getSessionSafe();
   const isBarista = profile?.role === "barista";
@@ -34,11 +36,16 @@ export default async function JobsPage({ searchParams }) {
   if (isSupabaseConfigured()) {
     try {
       const supabase = await createClient();
+      const orderOpt = sort === "oldest"
+        ? { column: "created_at", ascending: true }
+        : sort === "name"
+          ? { column: "title", ascending: true }
+          : { column: "created_at", ascending: false };
       let req = supabase
         .from("job_posts")
         .select("*, owners(business_name, is_verified), cafes(id, name)")
         .eq("is_active", true)
-        .order("created_at", { ascending: false });
+        .order(orderOpt.column, { ascending: orderOpt.ascending });
       if (q) req = req.or(`title.ilike.%${q}%,description.ilike.%${q}%`);
       if (loc) req = req.ilike("location", `%${loc}%`);
       if (type && EMPLOYMENT_TYPES.some((t) => t.value === type)) req = req.overlaps("employment_types", [type]);
@@ -49,31 +56,48 @@ export default async function JobsPage({ searchParams }) {
     }
   }
 
-  const selectedId = jobParam || jobs[0]?.id || null;
-  const selected = jobs.find((j) => j.id === selectedId) ?? null;
+  const selectedId = jobParam || "__first__";
 
-  // Detail selected: rating cafe + ulasan + status lamaran.
+  // Detail selected: rating cafe + ulasan + status lamaran/simpanan.
   let cafeAvg = null;
   let cafeCount = 0;
   let cafeReviews = [];
   let appliedIds = new Set();
-  let appliedSelected = false;
+  let savedIds = new Set();
   let barista = null;
   let appliedCount = 0;
+  let savedCount = 0;
   if (isSupabaseConfigured()) {
     try {
       const supabase = await createClient();
       if (isBarista && user) {
-        const [{ data: bp }, { data: apps }] = await Promise.all([
+        const [{ data: bp }, { data: apps }, { data: saved }] = await Promise.all([
           supabase.from("barista_profiles").select("*").eq("id", user.id).maybeSingle(),
           supabase.from("applications").select("job_post_id").eq("barista_id", user.id),
+          supabase.from("saved_jobs").select("job_post_id").eq("barista_id", user.id),
         ]);
         barista = bp ?? null;
         appliedIds = new Set((apps ?? []).map((a) => a.job_post_id));
+        savedIds = new Set((saved ?? []).map((s) => s.job_post_id));
         appliedCount = appliedIds.size;
-        appliedSelected = selected ? appliedIds.has(selected.id) : false;
+        savedCount = savedIds.size;
       }
-      if (selected) {
+    } catch {
+      // diam: halaman tetap render dengan data parsial
+    }
+  }
+
+  if (savedOnly) {
+    jobs = isBarista ? jobs.filter((j) => savedIds.has(j.id)) : [];
+  }
+  const selected = jobs.find((j) => j.id === selectedId) ?? jobs[0] ?? null;
+  const appliedSelected = selected ? appliedIds.has(selected.id) : false;
+  const savedSelected = selected ? savedIds.has(selected.id) : false;
+
+  if (selected && isSupabaseConfigured()) {
+    try {
+      const supabase = await createClient();
+      {
         const { data: teams } = await supabase.from("team_members").select("id").eq("owner_id", selected.owner_id);
         const tids = (teams ?? []).map((t) => t.id);
         if (tids.length) {
@@ -89,7 +113,7 @@ export default async function JobsPage({ searchParams }) {
         }
       }
     } catch {
-      // diam: halaman tetap render dengan data parsial
+      // diam: panel tetap render tanpa rating
     }
   }
 
@@ -178,14 +202,34 @@ export default async function JobsPage({ searchParams }) {
               })}
             </div>
 
-            <p className="text-xs text-[#857768]" role="status">
-              {jobs.length} job{jobs.length === 1 ? "" : "s"} found
-              {(q || loc || type) && (
-                <Link href="/jobs" className="ml-2 font-bold text-[#2b6cb0] hover:underline">
-                  Reset filter
-                </Link>
-              )}
-            </p>
+            <div className="flex flex-wrap items-center justify-between gap-2">
+              <p className="text-xs text-[#857768]" role="status">
+                {savedOnly ? `${jobs.length} saved job${jobs.length === 1 ? "" : "s"}` : `${jobs.length} job${jobs.length === 1 ? "" : "s"} found`}
+                {(q || loc || type || savedOnly) && (
+                  <Link href="/jobs" className="ml-2 font-bold text-[#2b6cb0] hover:underline">
+                    Reset filter
+                  </Link>
+                )}
+              </p>
+              <form action="/jobs" method="GET" className="flex items-center gap-1.5 text-xs text-[#857768]">
+                {q && <input type="hidden" name="q" value={q} />}
+                {loc && <input type="hidden" name="loc" value={loc} />}
+                {type && <input type="hidden" name="type" value={type} />}
+                {savedOnly && <input type="hidden" name="saved" value="1" />}
+                <label htmlFor="jobs-sort">Sort by:</label>
+                <select
+                  id="jobs-sort"
+                  name="sort"
+                  defaultValue={sort}
+                  onChange={(e) => e.target.form.requestSubmit()}
+                  className="cursor-pointer rounded-full border border-[#e0d5bd] bg-[#ffffff] px-2.5 py-1 text-[11px] font-bold text-[#2b2118] outline-none"
+                >
+                  <option value="newest">Most recent</option>
+                  <option value="oldest">Oldest</option>
+                  <option value="name">Name A–Z</option>
+                </select>
+              </form>
+            </div>
 
             {!jobs.length ? (
               <EmptyState
@@ -203,6 +247,7 @@ export default async function JobsPage({ searchParams }) {
                     job={job}
                     active={job.id === selected?.id}
                     applied={appliedIds.has(job.id)}
+                    saved={savedIds.has(job.id)}
                     showApply={isBarista}
                   />
                 ))}
@@ -222,6 +267,7 @@ export default async function JobsPage({ searchParams }) {
                 count={cafeCount}
                 reviews={cafeReviews}
                 applied={appliedSelected}
+                saved={savedSelected}
                 canApply={!isOwner}
               />
             ) : (
@@ -235,7 +281,7 @@ export default async function JobsPage({ searchParams }) {
 
           {/* Kiri: profil */}
           <div className="order-3 min-w-0 lg:order-1 lg:h-full lg:min-h-0 lg:overflow-y-auto lg:pb-1 no-scrollbar">
-            <JobsProfileCard barista={barista} appliedCount={appliedCount} isOwner={isOwner} />
+            <JobsProfileCard barista={barista} appliedCount={appliedCount} savedCount={savedCount} isOwner={isOwner} />
           </div>
         </div>
       </div>
