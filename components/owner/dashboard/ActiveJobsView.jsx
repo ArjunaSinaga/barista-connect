@@ -50,14 +50,16 @@ export default function ActiveJobsView({ jobs, appCountByJob, totalJobs, activeJ
 
       {!jobs?.length ? (
         <EmptyState
-          icon={<Megaphone size={22} />}
+          compact
+          icon={<Megaphone size={20} />}
           title="Belum ada lowongan"
           subtitle="Buat lowongan pertama. Manager akan menilai dari kelengkapan data: lokasi, gaji, dan deskripsi yang jelas."
           actionLabel="Buat Lowongan"
           actionHref="/dashboard/owner/jobs/new"
         />
       ) : (
-        <ul className="space-y-3">
+        <div className="rounded-2xl border border-[#e8e0cf] bg-[#faf7ef] p-3">
+          <ul className="max-h-[300px] space-y-3 overflow-y-auto no-scrollbar">
           {jobs.map((job) => (
             <li key={job.id} className="rounded-2xl border border-[#e8e0cf] bg-[#ffffff] p-4">
               <div className="flex items-start justify-between gap-3">
@@ -86,7 +88,8 @@ export default function ActiveJobsView({ jobs, appCountByJob, totalJobs, activeJ
               </div>
             </li>
           ))}
-        </ul>
+          </ul>
+        </div>
       )}
     </>
   );

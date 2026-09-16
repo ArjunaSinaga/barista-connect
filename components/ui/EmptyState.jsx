@@ -1,10 +1,10 @@
 ﻿import Link from "next/link";
 
-export function EmptyState({ icon, title, subtitle, actionLabel, actionHref }) {
+export function EmptyState({ icon, title, subtitle, actionLabel, actionHref, compact }) {
   return (
-    <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-latte bg-[#faf7ef] px-6 py-16 text-center">
+    <div className={`flex flex-col items-center justify-center rounded-2xl border border-dashed border-latte bg-[#faf7ef] text-center ${compact ? "px-6 py-6" : "px-6 py-16"}`}>
       {icon && (
-        <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-cream-dark text-caramel">
+        <div className={`flex items-center justify-center rounded-full bg-cream-dark text-caramel ${compact ? "mb-2 h-10 w-10" : "mb-4 h-14 w-14"}`}>
           {icon}
         </div>
       )}
@@ -15,7 +15,7 @@ export function EmptyState({ icon, title, subtitle, actionLabel, actionHref }) {
       {actionLabel && actionHref && (
         <Link
           href={actionHref}
-          className="mt-5 inline-flex rounded-xl bg-caramel px-5 py-2.5 text-sm font-semibold text-white hover:bg-caramel-dark"
+          className={`inline-flex rounded-xl bg-caramel px-5 py-2.5 text-sm font-semibold text-white hover:bg-caramel-dark ${compact ? "mt-3" : "mt-5"}`}
         >
           {actionLabel}
         </Link>
