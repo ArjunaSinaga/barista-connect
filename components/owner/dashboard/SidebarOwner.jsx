@@ -5,14 +5,13 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
   LayoutDashboard, Briefcase, Users, Star, GraduationCap, Settings,
-  Camera, Crown, ArrowRight, X,
+  Camera, Crown, ArrowRight,
 } from "lucide-react";
 import Avatar from "@/components/ui/Avatar";
 import ProfileCompleteModal from "@/components/owner/dashboard/ProfileCompleteModal";
-import { useSnooze, snoozeCheck, snoozeHide } from "@/components/ui/useSnooze";
+import { snoozeCheck, snoozeHide } from "@/components/ui/useSnooze";
 
 const NUDGE_KEY = "hide-profile-nudge";
-const PRO_KEY = "hide-pro-upsell";
 
 // Sidebar dashboard owner ala mockup: kartu profil cafe + nav + upsell Pro.
 // Semua angka dari props (data real), bukan hardcode.
@@ -22,7 +21,6 @@ export default function SidebarOwner({ cafe, ownerName, completeness, completene
   const name = cafe?.name ?? ownerName ?? "Cafe Anda";
   const loc = cafe?.address ?? cafe?.location ?? "Lengkapi alamat cafe";
   const [modalOpen, setModalOpen] = useState(false);
-  const [proVisible, dismissPro] = useSnooze(PRO_KEY);
 
   // Auto-popup sekali, lalu snooze 2x tampil-buka bila di-X
   // (klik X → hilang → refresh 1 tetap hilang → refresh 2 muncul lagi).
@@ -132,17 +130,7 @@ export default function SidebarOwner({ cafe, ownerName, completeness, completene
         </span>
       </nav>
 
-      {proVisible === true && (
       <div className="relative shrink-0 rounded-2xl border border-[#e8e0cf] bg-[#efe9d9] p-4 shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
-        <button
-          type="button"
-          onClick={dismissPro}
-          aria-label="Sembunyikan penawaran Pro"
-          title="Sembunyikan"
-          className="absolute top-2 right-2 flex h-6 w-6 items-center justify-center rounded-full text-[#857768] hover:bg-[#2b2118]/10 hover:text-[#3d2c1e]"
-        >
-          <X size={13} />
-        </button>
         <p className="flex items-center gap-2 text-sm font-extrabold text-[#3d2c1e]">
           <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#3d2c1e] text-white"><Crown size={15} /></span>
           kerja.inc Pro
@@ -157,7 +145,6 @@ export default function SidebarOwner({ cafe, ownerName, completeness, completene
           Upgrade Sekarang <ArrowRight size={13} />
         </Link>
       </div>
-      )}
       <ProfileCompleteModal open={modalOpen} onClose={closeModal} items={completenessItems} onAction={(t) => onNavigate?.(t)} />
     </aside>
   );
