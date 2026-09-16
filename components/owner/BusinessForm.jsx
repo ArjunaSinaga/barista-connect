@@ -12,7 +12,7 @@ import { ownerBusinessSchema } from "@/lib/validation";
 import { CITIES, AVATAR_MIME_TYPES, AVATAR_MAX_BYTES } from "@/lib/constants";
 import { compressImage } from "@/lib/image";
 
-export default function BusinessForm({ initial, redirectTo }) {
+export default function BusinessForm({ initial, redirectTo, onSaved }) {
   const router = useRouter();
   const toast = useToast();
   const [form, setForm] = useState({
@@ -92,6 +92,7 @@ export default function BusinessForm({ initial, redirectTo }) {
       toast("Data bisnis tersimpan ✓");
       if (redirectTo) router.push(redirectTo);
       router.refresh();
+      onSaved?.();
     } catch {
       toast("Gagal menyimpan", "error");
     } finally {
