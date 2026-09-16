@@ -18,6 +18,7 @@ export default function BusinessForm({ initial, redirectTo }) {
   const [form, setForm] = useState({
     business_name: initial?.business_name ?? "",
     location: initial?.location ?? "",
+    whatsapp: initial?.whatsapp ?? "",
   });
   const [avatarUrl, setAvatarUrl] = useState(initial?.avatar_url ?? "");
   const [errors, setErrors] = useState({});
@@ -66,6 +67,7 @@ export default function BusinessForm({ initial, redirectTo }) {
     const clean = {
       business_name: (form.business_name ?? "").trim(),
       location: (form.location ?? "").trim(),
+      whatsapp: (form.whatsapp ?? "").trim(),
     };
     const parsed = ownerBusinessSchema.safeParse(clean);
     if (!parsed.success) {
@@ -144,6 +146,15 @@ export default function BusinessForm({ initial, redirectTo }) {
           value={form.location}
           error={errors.location}
           onChange={(e) => setForm((f) => ({ ...f, location: e.target.value }))}
+        />
+        <Input
+          name="whatsapp"
+          label="No HP / WA"
+          placeholder="08xxxxxxxxxx"
+          inputMode="tel"
+          value={form.whatsapp}
+          error={errors.whatsapp}
+          onChange={(e) => setForm((f) => ({ ...f, whatsapp: e.target.value }))}
         />
         <datalist id="biz-city-list">
           {CITIES.map((c) => (

@@ -1,6 +1,7 @@
 ﻿import { Suspense } from "react"
 import { createClient, getSessionSafe, isSupabaseConfigured } from "@/lib/supabase/server"
 import { avgStars } from "@/lib/ratings"
+import { getBusinessCompleteness } from "@/lib/profile-completeness"
 import DashboardShell from "@/components/owner/dashboard/DashboardShell"
 
 export const metadata = { title: "Dashboard Owner - Barista Connect" }
@@ -62,11 +63,7 @@ export default async function OwnerDashboardPage({ searchParams }) {
   const avgPerJob = totalJobs ? (totalApplicants/totalJobs).toFixed(1) : "0"
 
   const firstCafe = cafes[0] ?? null;
-  const checks = [
-    !!ownerRow?.business_name, !!ownerRow?.avatar_url, !!ownerRow?.whatsapp,
-    cafes.length > 0, !!firstCafe?.photo_urls?.length, !!(firstCafe?.address || firstCafe?.whatsapp),
-  ];
-  const completeness = Math.round(checks.filter(Boolean).length / checks.length * 100);
+  const { completeness, missing, items: completenessItems } = getBusinessCompleteness(ownerRow, cafes);
   const givenCount = givenRatings.length;
   const givenAvg = givenCount ? (givenRatings.reduce((s, r) => s + (r.stars ?? 0), 0) / givenCount).toFixed(1) : null;
 
@@ -94,6 +91,7 @@ export default async function OwnerDashboardPage({ searchParams }) {
               cafe: firstCafe,
               ownerName: ownerRow?.business_name,
               completeness,
+              completenessItems,
               counts: { activeJobs, applicants: totalApplicants, reviewsGiven: givenCount, cafes: cafes.length },
             }}
             middle={{

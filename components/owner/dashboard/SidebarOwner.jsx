@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
@@ -7,14 +8,29 @@ import {
   Camera, Crown, ArrowRight,
 } from "lucide-react";
 import Avatar from "@/components/ui/Avatar";
+import ProfileCompleteModal from "@/components/owner/dashboard/ProfileCompleteModal";
 
 // Sidebar dashboard owner ala mockup: kartu profil cafe + nav + upsell Pro.
 // Semua angka dari props (data real), bukan hardcode.
-export default function SidebarOwner({ cafe, ownerName, completeness, counts, view, onNavigate }) {
+export default function SidebarOwner({ cafe, ownerName, completeness, completenessItems = [], counts, view, onNavigate }) {
   const pathname = usePathname();
   const photo = cafe?.photo_urls?.[0] ?? null;
   const name = cafe?.name ?? ownerName ?? "Cafe Anda";
   const loc = cafe?.address ?? cafe?.location ?? "Lengkapi alamat cafe";
+  const [modalOpen, setModalOpen] = useState(false);
+
+  // Auto-popup sekali bila belum 100% (ingat via localStorage, ada tombol X).
+  useEffect(() => {
+    if (completeness >= 100 || typeof window === "undefined") return;
+    if (window.localStorage.getItem("hide-profile-nudge")) return;
+    const t = setTimeout(() => setModalOpen(true), 800);
+    return () => clearTimeout(t);
+  }, [completeness]);
+
+  const closeModal = () => {
+    setModalOpen(false);
+    try { window.localStorage.setItem("hide-profile-nudge", "1"); } catch {}
+  };
 
   const cls = (active) =>
     `flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-bold ${
@@ -54,6 +70,15 @@ export default function SidebarOwner({ cafe, ownerName, completeness, counts, vi
             <div className="h-full rounded-full bg-[#1f6b4a]" style={{ width: `${completeness}%` }} />
           </div>
           <p className="mt-1.5 text-[11px] leading-4 text-[#857768]">Lengkapi profil untuk menjangkau talenta terbaik.</p>
+          {completeness < 100 ? (
+            <button
+              type="button"
+              onClick={() => setModalOpen(true)}
+              className="mt-2 block w-full rounded-full bg-[#3d2c1e] px-4 py-2 text-center text-xs font-bold text-white hover:bg-[#2e2015]"
+            >
+              Lengkapi ke 100%
+            </button>
+          ) : null}
           <Link
             href="/dashboard/owner/profile"
             className="mt-2 block rounded-full bg-[#efe9d9] px-4 py-2 text-center text-xs font-bold text-[#3d2c1e] hover:bg-[#e5dcc4]"
@@ -116,6 +141,7 @@ export default function SidebarOwner({ cafe, ownerName, completeness, counts, vi
           Upgrade Sekarang <ArrowRight size={13} />
         </Link>
       </div>
+      <ProfileCompleteModal open={modalOpen} onClose={closeModal} items={completenessItems} onAction={(t) => onNavigate?.(t)} />
     </aside>
   );
 }
