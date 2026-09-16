@@ -6,6 +6,7 @@ import Avatar from "@/components/ui/Avatar";
 import Badge from "@/components/ui/Badge";
 import { Stars } from "@/components/ratings/RatingForm";
 import TeamRemoveButton from "@/components/owner/TeamRemoveButton";
+import { groupTeamByBarista, countTeamByCafe } from "@/lib/team";
 
 export const metadata = { title: "Tim Saya" };
 
@@ -53,27 +54,10 @@ export default async function TeamPage({ searchParams }) {
 
   // Filter cafe: hanya pekerja yang diterima di cafe tersebut (sudah daftar + diterima)
   const inCafe = (members ?? []).filter((m) => !activeCafe || m.cafe_id === activeCafe);
-  // Hitung per cafe untuk chip
-  const countByCafe = {};
-  for (const m of members ?? []) {
-    if (m.cafe_id) countByCafe[m.cafe_id] = (countByCafe[m.cafe_id] ?? 0) + 1;
-  }
+  const countByCafe = countTeamByCafe(members);
 
   // Grup: 1 baris per barista, tiap lowongan jadi sub-baris
-  const grouped = [];
-  const byBarista = new Map();
-  for (const m of inCafe) {
-    if (!byBarista.has(m.barista_id)) {
-      const g = { baristaId: m.barista_id, profile: m.barista_profiles, jobs: [] };
-      byBarista.set(m.barista_id, g);
-      grouped.push(g);
-    }
-    byBarista.get(m.barista_id).jobs.push(m);
-  }
-  for (const g of grouped) {
-    g.isActive = g.jobs.some((j) => j.status === "active");
-    g.memberIds = g.jobs.map((j) => j.id);
-  }
+  const grouped = groupTeamByBarista(inCafe);
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-8">
