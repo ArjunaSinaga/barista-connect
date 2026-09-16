@@ -196,6 +196,30 @@ export function TopCandidatesStrip({ baristas }) {
   );
 }
 
+// Grid penuh untuk view talenta: top 3 langsung kelihatan semua, tanpa geser.
+// Mobile menumpuk vertikal, desktop 3 sejajar (lebar kartu ikut ruang).
+export function TopCandidatesGrid({ baristas }) {
+  if (!baristas?.length) return null;
+  return (
+    <section aria-label="Top candidates">
+      <div className="flex items-end justify-between gap-2">
+        <div>
+          <h2 className="text-sm font-extrabold tracking-tight text-[#2b2118]">Top Candidates</h2>
+          <p className="text-[11px] text-[#857768]">Barista pilihan untuk cafe Anda.</p>
+        </div>
+        <Link href="/find-baristas" className="inline-flex shrink-0 items-center gap-0.5 text-xs font-bold text-[#2b6cb0] hover:underline">
+          Lihat semua talenta <ChevronRight size={13} aria-hidden="true" />
+        </Link>
+      </div>
+      <div className="mt-2 grid gap-3 md:grid-cols-3">
+        {baristas.map((b, i) => (
+          <CandidateCard key={b.id} barista={b} rank={i} compact />
+        ))}
+      </div>
+    </section>
+  );
+}
+
 export function TopCandidates({ baristas }) {
   if (!baristas?.length) {
     return (

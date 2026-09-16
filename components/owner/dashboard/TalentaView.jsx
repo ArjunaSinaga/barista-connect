@@ -1,5 +1,5 @@
 import HeroTalenta from "@/components/owner/dashboard/HeroTalenta";
-import { TopCandidatesStrip } from "@/components/owner/dashboard/TopCandidates";
+import { TopCandidatesGrid } from "@/components/owner/dashboard/TopCandidates";
 import StatCard from "@/components/ui/StatCard";
 import { Briefcase, Users, CalendarDays, Star } from "lucide-react";
 
@@ -19,7 +19,7 @@ export default function TalentaView({ heroPhoto, cafeName, cafeLocation, stats, 
           <StatCard key={s.label} icon={s.icon} label={s.label} value={s.value} sub={s.sub} delta={s.delta} chevron />
         ))}
       </div>
-      <TopCandidatesStrip baristas={top3} />
+      <TopCandidatesGrid baristas={top3} />
     </>
   );
 }
