@@ -2,6 +2,7 @@
 import { createClient, getSessionSafe, isSupabaseConfigured } from "@/lib/supabase/server"
 import { avgStars } from "@/lib/ratings"
 import { getBusinessCompleteness } from "@/lib/profile-completeness"
+import { countTeamByCafe } from "@/lib/team";
 import DashboardShell from "@/components/owner/dashboard/DashboardShell"
 
 export const metadata = { title: "Dashboard Owner - Barista Connect" }
@@ -127,6 +128,7 @@ export default async function OwnerDashboardPage({ searchParams }) {
               pelamar: { jobs, appCountByJob, statusByJob, totals },
               reviews: { reviews: givenRatings },
               cafes: { cafes, countByCafe },
+              teamCountByCafe: countTeamByCafe(teamMembers),
               team: { cafes, members: teamMembers, ratingMap: teamRatingMap },
               settings: { initial: ownerRow, publicHref: `/owner/${user.id}` },
             }}

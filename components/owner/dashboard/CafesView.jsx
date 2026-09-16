@@ -3,7 +3,7 @@ import { Plus, Store } from "lucide-react";
 import { EmptyState } from "@/components/ui/EmptyState";
 
 // Kolom tengah mode cafes: daftar cafe owner.
-export default function CafesView({ cafes, countByCafe, onBack }) {
+export default function CafesView({ cafes, countByCafe, teamCountByCafe = {}, onBack }) {
   return (
     <>
       <div className="flex flex-wrap items-start justify-between gap-3">
@@ -54,6 +54,12 @@ export default function CafesView({ cafes, countByCafe, onBack }) {
                   <p className="truncate text-[11px] text-[#857768]">
                     {c.location || "-"} • {countByCafe[c.id] || 0} lowongan aktif
                     {c.photo_urls?.length > 1 && ` • ${c.photo_urls.length} foto`}
+                  </p>
+                  <p className="truncate text-[11px] text-[#857768]">
+                    {teamCountByCafe[c.id] ?? 0} anggota tim ·{" "}
+                    <Link href="/dashboard/owner?tab=team" className="font-bold text-[#2b6cb0] hover:underline">
+                      Lihat tim
+                    </Link>
                   </p>
                 </div>
                 {!c.is_active && (

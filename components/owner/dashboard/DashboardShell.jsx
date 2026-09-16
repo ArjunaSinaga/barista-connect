@@ -37,7 +37,7 @@ export default function DashboardShell({ initialView = "talenta", sidebar, middl
           ) : view === "reviews" ? (
             <ReviewsView {...middle.reviews} onBack={() => setView("talenta")} />
           ) : view === "cafes" ? (
-            <CafesView {...middle.cafes} onBack={() => setView("talenta")} />
+            <CafesView {...middle.cafes} teamCountByCafe={middle.teamCountByCafe ?? {}} onBack={() => setView("talenta")} />
           ) : view === "settings" ? (
             <SettingsView {...middle.settings} onBack={() => setView("talenta")} />
           ) : view === "team" ? (
