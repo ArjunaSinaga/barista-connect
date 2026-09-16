@@ -1,5 +1,4 @@
 import HeroTalenta from "@/components/owner/dashboard/HeroTalenta";
-import { TopCandidatesCompact } from "@/components/owner/dashboard/TopCandidates";
 import { Briefcase, Users, CalendarDays, Star } from "lucide-react";
 
 // Kolom tengah mode talenta: hero + stat + kandidat.
@@ -25,7 +24,6 @@ export default function TalentaView({ heroPhoto, cafeName, stats, top3 }) {
           </div>
         ))}
       </div>
-      <TopCandidatesCompact baristas={top3} />
     </>
   );
 }

@@ -26,25 +26,26 @@ export default function DashboardShell({ initialView = "talenta", sidebar, middl
         <SidebarOwner {...sidebar} view={view} onNavigate={setView} />
       </div>
 
-      <div className="min-w-0 space-y-3 lg:h-full lg:min-h-0 lg:overflow-y-auto lg:pr-1 lg:pb-1 no-scrollbar">
-        {view === "active" ? (
-          <>
+      <div className="flex min-w-0 flex-col gap-3 lg:h-full lg:min-h-0 lg:overflow-hidden">
+        <div className="min-w-0 space-y-3 lg:min-h-0 lg:flex-1 lg:overflow-y-auto lg:pr-1 lg:pb-1 no-scrollbar">
+          {view === "active" ? (
             <ActiveJobsView {...middle.active} onBack={() => setView("talenta")} />
-            <TopCandidatesCompact baristas={middle.talenta.top3} />
-          </>
-        ) : view === "pelamar" ? (
-          <>
+          ) : view === "pelamar" ? (
             <PelamarView {...middle.pelamar} onBack={() => setView("talenta")} />
+          ) : view === "reviews" ? (
+            <ReviewsView {...middle.reviews} onBack={() => setView("talenta")} />
+          ) : view === "cafes" ? (
+            <CafesView {...middle.cafes} onBack={() => setView("talenta")} />
+          ) : view === "settings" ? (
+            <SettingsView {...middle.settings} onBack={() => setView("talenta")} />
+          ) : (
+            <TalentaView {...middle.talenta} />
+          )}
+        </div>
+        {(view === "talenta" || view === "active" || view === "pelamar") && middle.talenta.top3?.length > 0 && (
+          <div className="shrink-0 lg:pr-1 lg:pb-1">
             <TopCandidatesCompact baristas={middle.talenta.top3} />
-          </>
-        ) : view === "reviews" ? (
-          <ReviewsView {...middle.reviews} onBack={() => setView("talenta")} />
-        ) : view === "cafes" ? (
-          <CafesView {...middle.cafes} onBack={() => setView("talenta")} />
-        ) : view === "settings" ? (
-          <SettingsView {...middle.settings} onBack={() => setView("talenta")} />
-        ) : (
-          <TalentaView {...middle.talenta} />
+          </div>
         )}
       </div>
 
