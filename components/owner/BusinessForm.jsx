@@ -150,7 +150,7 @@ export default function BusinessForm({ initial, redirectTo, onSaved }) {
         />
         <Input
           name="whatsapp"
-          label="No HP / WA"
+          label="No HP / WA (opsional)"
           placeholder="08xxxxxxxxxx"
           inputMode="tel"
           value={form.whatsapp}
