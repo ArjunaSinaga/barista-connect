@@ -82,6 +82,36 @@ export function CandidateCard({ barista, rank }) {
   );
 }
 
+// Versi ringkas: 3 kartu kecil sejajar, muat penuh tanpa scroll dalam.
+// Dipakai persisten di bawah tab talenta/active/pelamar.
+export function TopCandidatesCompact({ baristas }) {
+  if (!baristas?.length) return null;
+  return (
+    <section className="rounded-2xl border border-[#e8e0cf] bg-[#ffffff] p-4 shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
+      <div className="flex items-end justify-between gap-2">
+        <div>
+          <h2 className="text-sm font-extrabold tracking-tight text-[#2b2118]">Top Candidates</h2>
+          <p className="text-[11px] text-[#857768]">Barista pilihan untuk cafe Anda.</p>
+        </div>
+        <Link href="/find-baristas" className="inline-flex shrink-0 items-center gap-0.5 text-xs font-bold text-[#2b6cb0] hover:underline">
+          Lihat semua <ChevronRight size={13} />
+        </Link>
+      </div>
+      <div className="mt-2 grid gap-2 sm:grid-cols-3">
+        {baristas.map((b) => (
+          <TalentRow
+            key={b.id}
+            barista={b}
+            tag={b.is_open_to_work
+              ? { label: "Available", cls: "bg-[#e3f0e8] text-[#1f6b4a]" }
+              : { label: "Top", cls: "bg-[#f5ecd4] text-[#8a6d1f]" }}
+          />
+        ))}
+      </div>
+    </section>
+  );
+}
+
 export function TopCandidates({ baristas }) {
   if (!baristas?.length) return null;
   return (

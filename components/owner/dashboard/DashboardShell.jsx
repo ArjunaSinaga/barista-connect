@@ -10,7 +10,7 @@ import PelamarView from "@/components/owner/dashboard/PelamarView";
 import ReviewsView from "@/components/owner/dashboard/ReviewsView";
 import CafesView from "@/components/owner/dashboard/CafesView";
 import SettingsView from "@/components/owner/dashboard/SettingsView";
-import { TalentRow } from "@/components/owner/dashboard/TopCandidates";
+import { TalentRow, TopCandidatesCompact } from "@/components/owner/dashboard/TopCandidates";
 import { SmarterOpsCard } from "@/components/landing/SidebarKerja";
 
 // Shell 3 kolom: sidebar tetap, hanya kolom TENGAH yang ganti
@@ -28,9 +28,15 @@ export default function DashboardShell({ initialView = "talenta", sidebar, middl
 
       <div className="min-w-0 space-y-3 lg:h-full lg:min-h-0 lg:overflow-y-auto lg:pr-1 lg:pb-1 no-scrollbar">
         {view === "active" ? (
-          <ActiveJobsView {...middle.active} onBack={() => setView("talenta")} />
+          <>
+            <ActiveJobsView {...middle.active} onBack={() => setView("talenta")} />
+            <TopCandidatesCompact baristas={middle.talenta.top3} />
+          </>
         ) : view === "pelamar" ? (
-          <PelamarView {...middle.pelamar} onBack={() => setView("talenta")} />
+          <>
+            <PelamarView {...middle.pelamar} onBack={() => setView("talenta")} />
+            <TopCandidatesCompact baristas={middle.talenta.top3} />
+          </>
         ) : view === "reviews" ? (
           <ReviewsView {...middle.reviews} onBack={() => setView("talenta")} />
         ) : view === "cafes" ? (
