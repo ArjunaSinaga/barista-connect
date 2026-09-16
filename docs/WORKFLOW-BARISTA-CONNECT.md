@@ -10,7 +10,7 @@
 |------|-------|--------|-----------|---------------|---------|
 | F0 | Fondasi: Navbar baru, FooterStrip, FilterPills, StatCard | 🟢 Selesai | — | — | StatCard+FilterPills dipakai di Talenta/Active/Pelamar/Hero |
 | F1 | Navbar + footer global aktif | 🟢 Selesai | — | — | Navbar baru (search/lokasi/bell/avatar/Post a Job), strip CTA global, /reviews real, /training ringan (F5-ringan ditarik maju agar nav tidak mati) |
-| F2 | Landing → G2 (polish) | ⬜ Belum mulai | — | — | Sudah ~70%, tinggal samakan |
+| F2 | Landing → G2 (polish) | 🟢 Selesai | — | — | Rebrand kerja.inc→BaristaConnect, ekosistem jadi link real, Academy→/training, SmarterOps tanpa angka palsu, Reviews→/reviews |
 | F3a | Jobs board shell 3 kolom + panel detail | ⬜ Belum mulai | — | — | Fase terbesar |
 | F3b | Save jobs + sort + applied badge | ⬜ Belum mulai | — | — | Butuh tabel `saved_jobs` |
 | F3c | Kolom kiri profil barista + hapus JobFeed lama | ⬜ Belum mulai | — | — | — |
