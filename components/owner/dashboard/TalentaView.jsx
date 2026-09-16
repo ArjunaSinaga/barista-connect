@@ -18,7 +18,8 @@ export default function TalentaView({ heroPhoto, cafeName, cafeLocation, stats, 
           <StatCard key={s.label} icon={s.icon} label={s.label} value={s.value} sub={s.sub} delta={s.delta} chevron />
         ))}
       </div>
-      {/* Top Candidates sekarang di bagian bawah DashboardShell */}
+      {/* Top Candidates: grid penuh di tab talenta (strip persisten hanya untuk tab lain di DashboardShell) */}
+      <TopCandidatesGrid baristas={top3} savedIds={savedIds} />
     </>
   );
 }
