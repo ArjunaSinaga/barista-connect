@@ -16,16 +16,16 @@ const FALLBACK_PHOTO = "https://images.unsplash.com/photo-1509042239860-f550ce71
 export default function HeroTalenta({ photo, cafeName, cafeLocation }) {
   const cover = photo || FALLBACK_PHOTO;
   return (
-    <div className="flex gap-0 overflow-hidden rounded-2xl border border-[#e8e0cf] bg-[#ece2cd] py-2.5 pr-0 pl-5 shadow-[0_2px_12px_rgba(43,33,24,0.10)] sm:pl-6">
-      <div className="min-w-0 flex-1 py-1 pr-5">
-        <h1 className="font-display text-balance text-xl leading-[1.05] font-semibold tracking-tight sm:text-2xl">
+    <div className="flex gap-0 overflow-hidden rounded-2xl border border-[#e8e0cf] bg-[#ece2cd] py-2 pr-0 pl-5 shadow-[0_2px_12px_rgba(43,33,24,0.10)] sm:pl-6">
+      <div className="min-w-0 flex-1 py-0.5 pr-5">
+        <h1 className="font-display text-balance text-lg leading-[1.05] font-semibold tracking-tight sm:text-xl">
           Hire better baristas. <span className="text-[#1f6b4a]">Build a stronger cafe team.</span>
         </h1>
         <p className="mt-1 max-w-[52ch] text-xs leading-5 text-[#6f6252]">
           Temukan barista berbakat dengan pengalaman terverifikasi, rating dari pemilik cafe lain,
           dan pelatihan industri terkemuka.
         </p>
-        <form action="/find-baristas" method="GET" role="search" aria-label="Cari barista" className="mt-2 flex items-center gap-2">
+        <form action="/find-baristas" method="GET" role="search" aria-label="Cari barista" className="mt-1.5 flex items-center gap-2">
           <div className="flex min-w-0 flex-1 items-center gap-2 rounded-full border border-[#e0d5bd] bg-[#ffffff] px-4 py-1.5 focus-within:border-[#3d2c1e]">
             <Search size={14} className="shrink-0 text-[#b6a98f]" aria-hidden="true" />
             <label htmlFor="hero-talent-q" className="sr-only">Cari barista berdasarkan nama, keahlian, atau lokasi</label>

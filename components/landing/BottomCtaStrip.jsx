@@ -1,33 +1,18 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
 import { X } from "lucide-react";
+import { useSnooze } from "@/components/ui/useSnooze";
 
 const HIDDEN_KEY = "hide-bottom-cta";
 
-function initialVisible() {
-  try {
-    return localStorage.getItem(HIDDEN_KEY) !== "1";
-  } catch {
-    return true;
-  }
-}
+// Strip CTA bawah: tidak pernah tampil saat login (hideForUser dari layout/server).
+// Untuk tamu: klik X → hilang → refresh 1 tetap hilang → refresh 2 muncul lagi.
+export default function BottomCtaStrip({ hideForUser = false }) {
+  const [visible, dismiss] = useSnooze(HIDDEN_KEY);
 
-// Strip CTA bawah — bisa di-X, pilihan diingat via localStorage.
-export default function BottomCtaStrip() {
-  const [visible, setVisible] = useState(initialVisible);
-
-  if (!visible) return null;
-
-  const dismiss = () => {
-    setVisible(false);
-    try {
-      localStorage.setItem(HIDDEN_KEY, "1");
-    } catch {
-      // abaikan
-    }
-  };
+  if (hideForUser) return null;
+  if (visible !== true) return null;
 
   return (
     <section className="mx-auto w-full max-w-[1400px] shrink-0 px-4 pb-3 sm:px-6">

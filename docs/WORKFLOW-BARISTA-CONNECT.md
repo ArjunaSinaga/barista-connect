@@ -14,7 +14,7 @@
 | F3a | Jobs board shell 3 kolom + panel detail | ⬜ Belum mulai | — | — | Fase terbesar |
 | F3b | Save jobs + sort + applied badge | ⬜ Belum mulai | — | — | Butuh tabel `saved_jobs` |
 | F3c | Kolom kiri profil barista + hapus JobFeed lama | ⬜ Belum mulai | — | — | — |
-| F4 | Owner dashboard → G3 | 🟡 Jalan (75%) | `35b73e4` | ✅ Live | Sisa: foto kanan, Saved Candidates |
+| F4 | Owner dashboard → G3 | 🟡 Jalan (90%) | — | — | + strip login-gate, snooze 2x semua X, sidebar ramping + X Pro, kolom tengah tanpa scroll |
 | F5 | Training → G4 | 🟢 Selesai (ringan) | — | — | Katalog seed + filter server + waitlist; upgrade data real bila tabel ada |
 | F6 | Bersih-bersih UI lama + bahasa + a11y | ⬜ Belum mulai | — | — | — |
 | F7 | Verifikasi akhir 5 rute + screenshot | ⬜ Belum mulai | — | — | Gate sebelum declare selesai |
@@ -99,3 +99,5 @@
 |---------|--------|-----|-------------|
 | 2026-09-16 | `35b73e4` | Top candidates strip + panah (Active/Pelamar) | barista-connect.vercel.app/dashboard/owner |
 | 2026-09-16 | `356a7cd` | Hero fidelity, stats delta, kandidat full | barista-connect.vercel.app/dashboard/owner |
+| 2026-09-16 | `1362097` | Navbar mockup, strip global, StatCard/FilterPills, /reviews, /training ringan | barista-connect.vercel.app |
+| 2026-09-16 | (baru) | Strip hilang saat login, snooze 2x semua X, sidebar ramping + X Pro, kolom tengah tanpa scroll | barista-connect.vercel.app/dashboard/owner |

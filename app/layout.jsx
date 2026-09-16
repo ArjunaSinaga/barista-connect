@@ -45,7 +45,7 @@ export default async function RootLayout({ children }) {
         <ToastProvider>
           <Navbar user={user} role={profile?.role} />
           <main className="flex-1">{children}</main>
-          <BottomCtaStrip />
+          <BottomCtaStrip hideForUser={!!user} />
           <Footer />
         </ToastProvider>
         <SpeedInsights />

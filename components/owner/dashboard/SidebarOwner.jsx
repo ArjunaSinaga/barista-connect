@@ -5,10 +5,14 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
   LayoutDashboard, Briefcase, Users, Star, GraduationCap, Settings,
-  Camera, Crown, ArrowRight,
+  Camera, Crown, ArrowRight, X,
 } from "lucide-react";
 import Avatar from "@/components/ui/Avatar";
 import ProfileCompleteModal from "@/components/owner/dashboard/ProfileCompleteModal";
+import { useSnooze, snoozeCheck, snoozeHide } from "@/components/ui/useSnooze";
+
+const NUDGE_KEY = "hide-profile-nudge";
+const PRO_KEY = "hide-pro-upsell";
 
 // Sidebar dashboard owner ala mockup: kartu profil cafe + nav + upsell Pro.
 // Semua angka dari props (data real), bukan hardcode.
@@ -18,22 +22,24 @@ export default function SidebarOwner({ cafe, ownerName, completeness, completene
   const name = cafe?.name ?? ownerName ?? "Cafe Anda";
   const loc = cafe?.address ?? cafe?.location ?? "Lengkapi alamat cafe";
   const [modalOpen, setModalOpen] = useState(false);
+  const [proVisible, dismissPro] = useSnooze(PRO_KEY);
 
-  // Auto-popup sekali bila belum 100% (ingat via localStorage, ada tombol X).
+  // Auto-popup sekali, lalu snooze 2x tampil-buka bila di-X
+  // (klik X → hilang → refresh 1 tetap hilang → refresh 2 muncul lagi).
   useEffect(() => {
     if (completeness >= 100 || typeof window === "undefined") return;
-    if (window.localStorage.getItem("hide-profile-nudge")) return;
+    if (!snoozeCheck(NUDGE_KEY)) return;
     const t = setTimeout(() => setModalOpen(true), 800);
     return () => clearTimeout(t);
   }, [completeness]);
 
   const closeModal = () => {
     setModalOpen(false);
-    try { window.localStorage.setItem("hide-profile-nudge", "1"); } catch {}
+    snoozeHide(NUDGE_KEY);
   };
 
   const cls = (active) =>
-    `flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-bold ${
+    `flex w-full items-center gap-3 rounded-xl px-3 py-2 text-sm font-bold ${
       active ? "bg-[#efe9d9] text-[#3d2c1e]" : "text-[#6f6252] hover:bg-[#faf7ef] hover:text-[#3d2c1e]"
     }`;
   const countBadge = (n) =>
@@ -44,23 +50,23 @@ export default function SidebarOwner({ cafe, ownerName, completeness, completene
   const isMain = !pathname?.startsWith("/dashboard/owner/cafes") && !pathname?.startsWith("/dashboard/owner/profile");
 
   return (
-    <aside className="min-w-0 space-y-4">
-      <div className="rounded-2xl border border-[#e8e0cf] bg-[#ffffff] p-5 text-center shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
-        <div className="relative mx-auto h-28 w-28">
+    <aside className="flex min-w-0 flex-col gap-3 lg:h-full">
+      <div className="shrink-0 rounded-2xl border border-[#e8e0cf] bg-[#ffffff] p-4 text-center shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
+        <div className="relative mx-auto h-20 w-20">
           {photo ? (
-            <img src={photo} alt={name} className="h-28 w-28 rounded-full border-4 border-[#efe9d9] object-cover" />
+            <img src={photo} alt={name} className="h-20 w-20 rounded-full border-4 border-[#efe9d9] object-cover" />
           ) : (
             <Avatar name={name} size="lg" />
           )}
           <Link
             href="/dashboard/owner/cafes"
             aria-label="Edit foto cafe"
-            className="absolute right-0 bottom-0 flex h-8 w-8 items-center justify-center rounded-full border border-[#e0d5bd] bg-[#ffffff] text-[#6f6252] hover:text-[#3d2c1e]"
+            className="absolute right-0 bottom-0 flex h-7 w-7 items-center justify-center rounded-full border border-[#e0d5bd] bg-[#ffffff] text-[#6f6252] hover:text-[#3d2c1e]"
           >
-            <Camera size={14} />
+            <Camera size={13} />
           </Link>
         </div>
-        <p className="mt-3 text-lg font-extrabold tracking-tight text-[#2b2118]">{name}</p>
+        <p className="mt-2 text-base font-extrabold tracking-tight text-[#2b2118]">{name}</p>
         <p className="mt-0.5 text-xs text-[#857768]">{loc}</p>
         <div className="mt-4 text-left">
           <p className="flex items-center justify-between text-xs font-bold text-[#2b2118]">
@@ -88,7 +94,7 @@ export default function SidebarOwner({ cafe, ownerName, completeness, completene
         </div>
       </div>
 
-      <nav className="rounded-2xl border border-[#e8e0cf] bg-[#ffffff] p-2 shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
+      <nav className="rounded-2xl border border-[#e8e0cf] bg-[#ffffff] p-2 shadow-[0_1px_3px_rgba(43,33,24,0.08)] lg:flex-1">
         <button type="button" onClick={() => onNavigate?.("talenta")} className={cls(isMain && view === "talenta")}>
           <LayoutDashboard size={17} className="shrink-0" />
           <span className="flex-1 text-left">Dashboard</span>
@@ -119,14 +125,24 @@ export default function SidebarOwner({ cafe, ownerName, completeness, completene
         </button>
         <span
           title="Segera hadir"
-          className="flex cursor-not-allowed items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-bold text-[#6f6252]/50"
+          className="flex cursor-not-allowed items-center gap-3 rounded-xl px-3 py-2 text-sm font-bold text-[#6f6252]/50"
         >
           <GraduationCap size={17} className="shrink-0" />
           <span className="flex-1">Training</span>
         </span>
       </nav>
 
-      <div className="rounded-2xl border border-[#e8e0cf] bg-[#efe9d9] p-5 shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
+      {proVisible === true && (
+      <div className="relative shrink-0 rounded-2xl border border-[#e8e0cf] bg-[#efe9d9] p-4 shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
+        <button
+          type="button"
+          onClick={dismissPro}
+          aria-label="Sembunyikan penawaran Pro"
+          title="Sembunyikan"
+          className="absolute top-2 right-2 flex h-6 w-6 items-center justify-center rounded-full text-[#857768] hover:bg-[#2b2118]/10 hover:text-[#3d2c1e]"
+        >
+          <X size={13} />
+        </button>
         <p className="flex items-center gap-2 text-sm font-extrabold text-[#3d2c1e]">
           <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#3d2c1e] text-white"><Crown size={15} /></span>
           kerja.inc Pro
@@ -141,6 +157,7 @@ export default function SidebarOwner({ cafe, ownerName, completeness, completene
           Upgrade Sekarang <ArrowRight size={13} />
         </Link>
       </div>
+      )}
       <ProfileCompleteModal open={modalOpen} onClose={closeModal} items={completenessItems} onAction={(t) => onNavigate?.(t)} />
     </aside>
   );

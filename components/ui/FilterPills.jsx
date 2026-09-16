@@ -3,7 +3,7 @@ import Link from "next/link";
 // Deret pills filter cepat bersama: items [{ label, href, icon: Component | "dot" }].
 export default function FilterPills({ items, prefix = "Filter Cepat:" }) {
   return (
-    <div className="mt-2 flex flex-wrap items-center gap-1.5">
+    <div className="mt-1.5 flex flex-wrap items-center gap-1.5">
       <span className="text-[11px] font-bold text-[#857768]">{prefix}</span>
       {items.map((f) => (
         <Link

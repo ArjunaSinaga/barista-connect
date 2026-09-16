@@ -27,7 +27,7 @@ export default function DashboardShell({ initialView = "talenta", sidebar, middl
       </div>
 
       <div className="flex min-w-0 flex-col gap-3 lg:h-full lg:min-h-0 lg:overflow-hidden">
-        <div className="min-w-0 space-y-3 lg:min-h-0 lg:flex-1 lg:overflow-y-auto lg:pr-1 lg:pb-1 no-scrollbar">
+        <div className="min-w-0 space-y-2 lg:min-h-0 lg:flex-1 lg:overflow-y-auto lg:pr-1 lg:pb-1 no-scrollbar">
           {view === "active" ? (
             <ActiveJobsView {...middle.active} onBack={() => setView("talenta")} />
           ) : view === "pelamar" ? (
