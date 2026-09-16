@@ -48,7 +48,7 @@ export default function HeroTalenta({ photo, cafeName, cafeLocation }) {
           items={[
             ...QUICK_FILTERS,
             ...(cafeLocation
-              ? [{ label: cafeLocation, href: "/find-baristas", icon: MapPin, short: true }]
+              ? [{ label: cafeLocation, href: `/find-baristas?loc=${encodeURIComponent(cafeLocation)}`, icon: MapPin, short: true }]
               : []),
           ]}
         />

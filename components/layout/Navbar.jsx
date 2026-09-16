@@ -24,6 +24,8 @@ export default function Navbar({ user, role }) {
   const postJobHref = role === "owner" ? "/dashboard/owner/jobs/new" : "/signup?role=owner";
   const initial = (user?.email?.[0] ?? "?").toUpperCase();
   const roleLabel = role === "owner" ? "Owner" : role === "barista" ? "Barista" : null;
+  // Search navbar: owner cari talenta, barista/anon cari lowongan.
+  const searchAction = role === "owner" ? "/find-baristas" : "/jobs";
 
   async function handleLogout() {
     setBusy(true);
@@ -81,7 +83,7 @@ export default function Navbar({ user, role }) {
         </nav>
 
         <form
-          action="/jobs"
+          action={searchAction}
           method="GET"
           role="search"
           className="ml-auto hidden min-w-0 items-center gap-2 rounded-full border border-[#e0d5bd] bg-[#ffffff] px-3.5 py-1.5 md:flex md:max-w-52 lg:max-w-xs lg:flex-1"

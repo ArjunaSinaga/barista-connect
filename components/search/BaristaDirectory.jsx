@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Search, SlidersHorizontal, UsersRound, X } from "lucide-react";
 import BaristaCard from "@/components/cards/BaristaCard";
 import EmptyState from "@/components/ui/EmptyState";
@@ -14,23 +14,41 @@ import { createClient } from "@/lib/supabase/client";
 
 export default function BaristaDirectory({ ownerId }) {
   const router = useRouter();
-  const [skills, setSkills] = useState([]);
-  const [loc, setLoc] = useState("");
+  const searchParams = useSearchParams();
+
+  // Normalisasi param URL (dipakai hero dashboard, quick filter, navbar owner).
+  // type: "full-time" (URL) -> "full_time" (enum DB).
+  const normType = (t) => (t ?? "").toString().trim().toLowerCase().replace(/-/g, "_");
+  const initQ = (searchParams.get("q") ?? "").toString();
+  const initAvailable = searchParams.get("available");
+  const initMinRating = parseFloat(searchParams.get("minRating") ?? "") || 0;
+  const initType = normType(searchParams.get("type"));
+  const initLoc = (searchParams.get("loc") ?? "").toString();
+
+  const [q, setQ] = useState(initQ);
+  const [skills, setSkills] = useState(() => (initQ && SKILL_PRESETS.some((s) => s.toLowerCase() === initQ.trim().toLowerCase()) ? [SKILL_PRESETS.find((s) => s.toLowerCase() === initQ.trim().toLowerCase())] : []));
+  const [loc, setLoc] = useState(initLoc);
   const [minExp, setMinExp] = useState(0);
-  const [openOnly, setOpenOnly] = useState(true);
+  const [openOnly, setOpenOnly] = useState(initAvailable === null ? true : initAvailable !== "0");
+  const [minRating, setMinRating] = useState(initMinRating);
+  const [typeFilter, setTypeFilter] = useState(initType);
   const [sort, setSort] = useState("open");
 
   const [list, setList] = useState(null);
   const [sheetOpen, setSheetOpen] = useState(false);
   const debounceRef = useRef(null);
 
+  // State diinisialisasi dari URL sekali saat mount; navigasi antar-query me-remount
+  // via key={...} dari page (lihat app/find-baristas/page.jsx).
+
   const fetchList = useCallback(async () => {
     const supabase = createClient();
-    let req = supabase.from("barista_profiles").select("*");
+    let req = supabase.from("barista_profiles").select("*, ratings(stars)");
     if (openOnly) req = req.eq("is_open_to_work", true);
     if (loc.trim()) req = req.ilike("location_place", `%${loc.trim()}%`);
     if (minExp > 0) req = req.gte("years_of_experience", minExp);
     if (skills.length > 0) req = req.overlaps("skills", skills);
+    if (typeFilter) req = req.overlaps("open_to_types", [typeFilter]);
 
     req =
       sort === "exp"
@@ -40,8 +58,31 @@ export default function BaristaDirectory({ ownerId }) {
             .order("years_of_experience", { ascending: false });
 
     const { data } = await req;
-    setList(data ?? []);
-  }, [skills, loc, minExp, openOnly, sort]);
+    let rows = data ?? [];
+
+    // q: cari di nama, lokasi, bio, + skill (client-side, karena array + or_ sekaligus ribet di PostgREST).
+    const needle = q.trim().toLowerCase();
+    if (needle) {
+      rows = rows.filter((b) =>
+        [b.full_name, b.location_place, b.ideas_plus, b.cover_letter, (b.skills ?? []).join(" ")]
+          .filter(Boolean)
+          .join(" ")
+          .toLowerCase()
+          .includes(needle)
+      );
+    }
+
+    // minRating: rata-rata dari join ratings.
+    if (minRating > 0) {
+      rows = rows.filter((b) => {
+        const rs = (b.ratings ?? []).map((r) => r.stars).filter((s) => typeof s === "number");
+        if (!rs.length) return false;
+        return rs.reduce((s, v) => s + v, 0) / rs.length >= minRating;
+      });
+    }
+
+    setList(rows);
+  }, [skills, loc, minExp, openOnly, sort, q, minRating, typeFilter]);
 
   useEffect(() => {
     clearTimeout(debounceRef.current);
@@ -65,7 +106,17 @@ export default function BaristaDirectory({ ownerId }) {
     );
   }
 
-  const activeFilters = skills.length + (loc ? 1 : 0) + (minExp > 0 ? 1 : 0);
+  const activeFilters = skills.length + (loc ? 1 : 0) + (minExp > 0 ? 1 : 0) + (minRating > 0 ? 1 : 0) + (typeFilter ? 1 : 0) + (q.trim() ? 1 : 0);
+  function resetAll() {
+    setSkills([]);
+    setLoc("");
+    setMinExp(0);
+    setOpenOnly(true);
+    setMinRating(0);
+    setTypeFilter("");
+    setQ("");
+    router.replace("/find-baristas", { scroll: false });
+  }
   const filterPanel = (
     <div className="space-y-6">
       <div>
@@ -131,6 +182,23 @@ export default function BaristaDirectory({ ownerId }) {
 
       {/* toolbar */}
       <div className="mt-5 flex flex-wrap items-center gap-2">
+        <div className="flex min-w-0 flex-1 items-center gap-2 rounded-full border border-latte card-dark px-4 py-2 focus-within:border-caramel sm:max-w-sm">
+          <Search size={15} className="shrink-0 text-espresso-soft" aria-hidden="true" />
+          <label htmlFor="dir-q" className="sr-only">Cari nama, skill, atau lokasi</label>
+          <input
+            id="dir-q"
+            value={q}
+            onChange={(e) => setQ(e.target.value)}
+            placeholder="Cari nama, skill, atau lokasi..."
+            autoComplete="off"
+            className="h-6 w-full bg-transparent text-sm text-espresso placeholder:text-espresso-soft/60 focus:outline-none"
+          />
+          {q && (
+            <button type="button" onClick={() => setQ("")} aria-label="Hapus pencarian" className="shrink-0 text-espresso-soft hover:text-espresso">
+              <X size={14} />
+            </button>
+          )}
+        </div>
         <button
           onClick={() => setSheetOpen(true)}
           className="relative inline-flex items-center gap-2 rounded-xl card-dark px-4 py-2.5 text-sm font-bold text-espresso hover:border-caramel hover:text-caramel md:hidden"
@@ -156,6 +224,22 @@ export default function BaristaDirectory({ ownerId }) {
         </div>
       </div>
 
+      {/* filter URL aktif dari hero/quick-filter */}
+      {(minRating > 0 || typeFilter) && (
+        <div className="mt-3 flex flex-wrap items-center gap-2 text-xs">
+          {minRating > 0 && (
+            <button type="button" onClick={() => setMinRating(0)} className="inline-flex items-center gap-1 rounded-full bg-caramel px-3 py-1 font-bold text-white">
+              Rating {minRating}+ <X size={12} />
+            </button>
+          )}
+          {typeFilter && (
+            <button type="button" onClick={() => setTypeFilter("")} className="inline-flex items-center gap-1 rounded-full bg-caramel px-3 py-1 font-bold text-white">
+              {typeFilter.replace(/_/g, "-")} <X size={12} />
+            </button>
+          )}
+        </div>
+      )}
+
       <div className="mt-6 grid gap-6 md:grid-cols-[240px_1fr]">
         {/* desktop sidebar */}
         <aside className="hidden self-start rounded-2xl card-dark p-5 md:sticky md:top-20 md:block">
@@ -163,11 +247,7 @@ export default function BaristaDirectory({ ownerId }) {
             Filter
             {activeFilters > 0 && (
               <button
-                onClick={() => {
-                  setSkills([]);
-                  setLoc("");
-                  setMinExp(0);
-                }}
+                onClick={resetAll}
                 className="text-[11px] font-bold text-caramel hover:underline"
               >
                 reset
@@ -227,10 +307,7 @@ export default function BaristaDirectory({ ownerId }) {
             variant="secondary"
             full
             onClick={() => {
-              setSkills([]);
-              setLoc("");
-              setMinExp(0);
-              setOpenOnly(false);
+              resetAll();
             }}
           >
             Reset
