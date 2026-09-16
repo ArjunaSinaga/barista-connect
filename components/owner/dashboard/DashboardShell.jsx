@@ -55,7 +55,7 @@ export default function DashboardShell({ initialView = "talenta", sidebar, middl
             <TalentaView {...middle.talenta} />
           )}
         </div>
-        {view !== "talenta" && middle.talenta.top3?.length > 0 && (
+        {middle.talenta.top3?.length > 0 && (
           <div className="shrink-0 lg:pr-1 lg:pb-1">
             <TopCandidatesStrip baristas={middle.talenta.top3} savedIds={middle.talenta.savedIds ?? []} />
           </div>

@@ -1,9 +1,8 @@
 import HeroTalenta from "@/components/owner/dashboard/HeroTalenta";
-import { TopCandidatesGrid } from "@/components/owner/dashboard/TopCandidates";
 import StatCard from "@/components/ui/StatCard";
 import { Briefcase, Users, CalendarDays, Star } from "lucide-react";
 
-export default function TalentaView({ heroPhoto, cafeName, cafeLocation, stats, top3, savedIds = [] }) {
+export default function TalentaView({ heroPhoto, cafeName, cafeLocation, stats }) {
   const STATS = [
     { icon: Briefcase, label: "Active Jobs", value: String(stats.activeJobs), sub: `dari ${stats.totalJobs} total`, delta: stats.jobsThisMonth > 0 ? `+${stats.jobsThisMonth} bulan ini` : null },
     { icon: Users, label: "New Applicants", value: String(stats.pendingApplicants), sub: "menunggu review", delta: null },
@@ -18,8 +17,7 @@ export default function TalentaView({ heroPhoto, cafeName, cafeLocation, stats, 
           <StatCard key={s.label} icon={s.icon} label={s.label} value={s.value} sub={s.sub} delta={s.delta} chevron />
         ))}
       </div>
-      {/* Top Candidates: grid penuh di tab talenta (strip persisten hanya untuk tab lain di DashboardShell) */}
-      <TopCandidatesGrid baristas={top3} savedIds={savedIds} />
+      {/* Top Candidates strip persisten di bawah via DashboardShell (sama kayak tab Active Jobs) */}
     </>
   );
 }
