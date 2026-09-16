@@ -3,7 +3,6 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 import { getSessionSafe } from "@/lib/supabase/server";
 import Navbar from "@/components/layout/Navbar";
-import Footer from "@/components/layout/Footer";
 import BottomCtaStrip from "@/components/landing/BottomCtaStrip";
 import { ToastProvider } from "@/components/ui/toast";
 
@@ -46,7 +45,6 @@ export default async function RootLayout({ children }) {
           <Navbar user={user} role={profile?.role} />
           <main className="flex-1">{children}</main>
           <BottomCtaStrip hideForUser={!!user} />
-          <Footer />
         </ToastProvider>
         <SpeedInsights />
       </body>
