@@ -42,14 +42,16 @@ export default function PelamarView({ jobs, appCountByJob, statusByJob, totals, 
 
       {!jobs?.length ? (
         <EmptyState
-          icon={<Users size={22} />}
+          compact
+          icon={<Users size={18} />}
           title="Belum ada lowongan"
           subtitle="Buat lowongan dulu, pelamar akan muncul di sini."
           actionLabel="Buat Lowongan"
           actionHref="/dashboard/owner/jobs/new"
         />
       ) : (
-        <ul className="space-y-3">
+        <div className="rounded-2xl border border-[#e8e0cf] bg-[#faf7ef] p-3">
+          <ul className="max-h-[300px] space-y-3 overflow-y-auto no-scrollbar">
           {jobs.map((job) => {
             const sb = statusByJob[job.id] ?? { pending: 0 };
             return (
@@ -75,7 +77,8 @@ export default function PelamarView({ jobs, appCountByJob, statusByJob, totals, 
               </li>
             );
           })}
-        </ul>
+          </ul>
+        </div>
       )}
     </>
   );
