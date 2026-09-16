@@ -31,6 +31,7 @@ export default async function OwnerDashboardPage({ searchParams }) {
   let givenRatings = []
   let convosWeek = []
   let baristas = []
+  let savedBaristaIds = []
   try {
     const supabase = await createClient()
     const res = await supabase.from("job_posts").select("id,title,location,salary_text,employment_type,employment_types,is_active,created_at,cafe_id,cafes(name)").eq("owner_id", user.id).order("created_at", { ascending: false })
@@ -40,18 +41,20 @@ export default async function OwnerDashboardPage({ searchParams }) {
       const r2 = await supabase.from("applications").select("job_post_id,status").in("job_post_id", jobIds)
       apps = r2.data ?? []
     }
-    const [o, c, gr, cw, b] = await Promise.all([
+    const [o, c, gr, cw, b, sv] = await Promise.all([
       supabase.from("owners").select("business_name,avatar_url,whatsapp,location").eq("id", user.id).maybeSingle(),
       supabase.from("cafes").select("id,name,address,location,photo_urls,is_active").eq("owner_id", user.id).order("created_at", { ascending: true }),
       supabase.from("ratings").select("stars,comment,created_at, barista:barista_profiles!ratings_barista_id_fkey(full_name,profile_picture_url)").eq("owner_id", user.id).order("created_at", { ascending: false }).limit(30),
       supabase.from("conversations").select("id").eq("owner_id", user.id).gte("created_at", new Date(Date.now() - 7 * 864e5).toISOString()),
       supabase.from("barista_profiles").select("*, ratings(stars)").eq("is_open_to_work", true).limit(30),
+      supabase.from("saved_baristas").select("barista_id").eq("owner_id", user.id),
     ]);
     ownerRow = o.data ?? null;
     cafes = c.data ?? [];
     givenRatings = gr.data ?? [];
     convosWeek = cw.data ?? [];
     baristas = b.data ?? [];
+    savedBaristaIds = (sv.data ?? []).map((s) => s.barista_id);
   } catch(e) { jobs = []; apps = [] }
 
   const appCountByJob = {}
@@ -70,6 +73,8 @@ export default async function OwnerDashboardPage({ searchParams }) {
   const jobsThisMonth = (jobs ?? []).filter((j) => j.created_at && new Date(j.created_at).getTime() >= monthAgo).length;
 
   const ranked = rankBaristas(baristas);
+  const savedSet = new Set(savedBaristaIds);
+  const savedList = ranked.filter((x) => savedSet.has(x.id));
   const countByCafe = {};
   (jobs ?? []).forEach((j) => { if (j.is_active && j.cafe_id) countByCafe[j.cafe_id] = (countByCafe[j.cafe_id] ?? 0) + 1; });
   const statusByJob = {};
@@ -94,7 +99,7 @@ export default async function OwnerDashboardPage({ searchParams }) {
               ownerName: ownerRow?.business_name,
               completeness,
               completenessItems,
-              counts: { activeJobs, applicants: totalApplicants, reviewsGiven: givenCount, cafes: cafes.length },
+              counts: { activeJobs, applicants: totalApplicants, reviewsGiven: givenCount, cafes: cafes.length, saved: savedList.length },
             }}
             middle={{
               talenta: {
@@ -103,7 +108,9 @@ export default async function OwnerDashboardPage({ searchParams }) {
                 cafeLocation: firstCafe?.address ?? firstCafe?.location ?? ownerRow?.location ?? null,
                 stats: { activeJobs, totalJobs, jobsThisMonth, pendingApplicants, interviewsWeek: convosWeek.length, givenAvg, givenCount },
                 top3: ranked.slice(0, 3),
+                savedIds: savedBaristaIds,
               },
+              saved: { list: savedList, savedIds: savedBaristaIds },
               active: { jobs, appCountByJob, totalJobs, activeJobs },
               pelamar: { jobs, appCountByJob, statusByJob, totals },
               reviews: { reviews: givenRatings },

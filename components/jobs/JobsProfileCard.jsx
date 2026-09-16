@@ -8,12 +8,12 @@ export default function JobsProfileCard({ barista, appliedCount, savedCount = 0,
   if (isOwner) {
     return (
       <div className="rounded-2xl border border-[#e8e0cf] bg-[#ffffff] p-5 text-center shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
-        <p className="text-sm font-extrabold text-[#2b2118]">Kelola lowongan cafemu di dashboard owner.</p>
+        <p className="text-sm font-extrabold text-[#2b2118]">Manage your cafes&apos; jobs from the owner dashboard.</p>
         <Link
           href="/dashboard/owner"
           className="mt-3 inline-flex min-h-[36px] items-center justify-center rounded-full bg-[#3d2c1e] px-5 text-xs font-bold text-white hover:bg-[#2e2015]"
         >
-          Buka Dashboard
+          Open Dashboard
         </Link>
       </div>
     );
@@ -23,7 +23,7 @@ export default function JobsProfileCard({ barista, appliedCount, savedCount = 0,
       <div className="rounded-2xl border border-[#e8e0cf] bg-[#ffffff] p-5 text-center shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
         <p className="text-sm font-extrabold text-[#2b2118]">Great coffee starts with great people.</p>
         <p className="mx-auto mt-1 max-w-55 text-xs leading-5 text-[#857768]">
-          Masuk untuk melamar, simpan lowongan, dan bangun reputasimu.
+          Log in to apply, save jobs, and build your reputation.
         </p>
         <Link
           href="/login?next=/jobs"

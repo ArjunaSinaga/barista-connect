@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Suspense } from "react";
 import { Search, MapPin } from "lucide-react";
 import { createClient, getSessionSafe, isSupabaseConfigured } from "@/lib/supabase/server";
 import { CITIES, EMPLOYMENT_TYPES } from "@/lib/constants";
@@ -7,6 +8,7 @@ import { EmptyState } from "@/components/ui/EmptyState";
 import JobsProfileCard from "@/components/jobs/JobsProfileCard";
 import JobListRow from "@/components/jobs/JobListRow";
 import JobDetailPanel from "@/components/jobs/JobDetailPanel";
+import SortSelect from "@/components/jobs/SortSelect";
 
 export const metadata = { title: "Jobs" };
 
@@ -211,32 +213,17 @@ export default async function JobsPage({ searchParams }) {
                   </Link>
                 )}
               </p>
-              <form action="/jobs" method="GET" className="flex items-center gap-1.5 text-xs text-[#857768]">
-                {q && <input type="hidden" name="q" value={q} />}
-                {loc && <input type="hidden" name="loc" value={loc} />}
-                {type && <input type="hidden" name="type" value={type} />}
-                {savedOnly && <input type="hidden" name="saved" value="1" />}
-                <label htmlFor="jobs-sort">Sort by:</label>
-                <select
-                  id="jobs-sort"
-                  name="sort"
-                  defaultValue={sort}
-                  onChange={(e) => e.target.form.requestSubmit()}
-                  className="cursor-pointer rounded-full border border-[#e0d5bd] bg-[#ffffff] px-2.5 py-1 text-[11px] font-bold text-[#2b2118] outline-none"
-                >
-                  <option value="newest">Most recent</option>
-                  <option value="oldest">Oldest</option>
-                  <option value="name">Name A–Z</option>
-                </select>
-              </form>
+              <Suspense>
+                <SortSelect value={sort} />
+              </Suspense>
             </div>
 
             {!jobs.length ? (
               <EmptyState
                 icon={<Search size={20} />}
-                title="Tidak ada lowongan cocok"
-                subtitle="Coba ubah kata kunci atau hapus filter."
-                actionLabel="Lihat semua"
+                title={savedOnly ? "No saved jobs" : "No matching jobs"}
+                subtitle={savedOnly ? "Tap the bookmark on any job to keep it here." : "Try different keywords or clear the filters."}
+                actionLabel="View all"
                 actionHref="/jobs"
               />
             ) : (
@@ -273,8 +260,8 @@ export default async function JobsPage({ searchParams }) {
             ) : (
               <EmptyState
                 icon={<Search size={20} />}
-                title="Pilih lowongan"
-                subtitle="Klik salah satu lowongan untuk melihat detailnya di sini."
+                title="Select a job"
+                subtitle="Click any job to see its details here."
               />
             )}
           </div>

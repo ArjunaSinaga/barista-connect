@@ -4,7 +4,7 @@ import StatCard from "@/components/ui/StatCard";
 import { Briefcase, Users, CalendarDays, Star } from "lucide-react";
 
 // Kolom tengah mode talenta: hero + stat + kandidat.
-export default function TalentaView({ heroPhoto, cafeName, cafeLocation, stats, top3 }) {
+export default function TalentaView({ heroPhoto, cafeName, cafeLocation, stats, top3, savedIds = [] }) {
   const STATS = [
     { icon: Briefcase, label: "Active Jobs", value: String(stats.activeJobs), sub: `dari ${stats.totalJobs} total`, delta: stats.jobsThisMonth > 0 ? `+${stats.jobsThisMonth} bulan ini` : null },
     { icon: Users, label: "New Applicants", value: String(stats.pendingApplicants), sub: "menunggu review", delta: null },
@@ -19,7 +19,7 @@ export default function TalentaView({ heroPhoto, cafeName, cafeLocation, stats, 
           <StatCard key={s.label} icon={s.icon} label={s.label} value={s.value} sub={s.sub} delta={s.delta} chevron />
         ))}
       </div>
-      <TopCandidatesGrid baristas={top3} />
+      <TopCandidatesGrid baristas={top3} savedIds={savedIds} />
     </>
   );
 }

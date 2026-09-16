@@ -1,11 +1,9 @@
 import Link from "next/link";
-import { Suspense } from "react";
-import { Briefcase, FileText, CheckCheck, FlagOff, MessagesSquare, Search } from "lucide-react";
+import { Briefcase, FileText, CheckCheck, FlagOff, MessagesSquare, ArrowRight } from "lucide-react";
 import { createClient, getSessionSafe, isSupabaseConfigured } from "@/lib/supabase/server";
 import { STATUS_META } from "@/lib/constants";
 import { relativeTime } from "@/lib/time";
 import Badge from "@/components/ui/Badge";
-import JobFeed from "@/components/jobs/JobFeed";
 
 export const metadata = { title: "Dashboard Barista" };
 
@@ -106,13 +104,15 @@ export default async function BaristaDashboardPage() {
         )}
       </div>
 
-      <div className="mb-4 flex items-center gap-2">
-        <Search size={16} className="text-caramel" />
-        <h2 className="text-sm font-black text-espresso">Cari Lowongan</h2>
+      <div className="flex items-center gap-4 rounded-2xl border border-[#e8e0cf] bg-[#ffffff] p-5 shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
+        <div className="min-w-0 flex-1">
+          <h2 className="text-sm font-extrabold text-[#2b2118]">Cari lowongan di job board</h2>
+          <p className="mt-0.5 text-xs text-[#857768]">Jelajahi lowongan aktif, simpan favoritmu, dan lamar langsung.</p>
+        </div>
+        <Link href="/jobs" className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-[#3d2c1e] px-5 py-2.5 text-sm font-bold text-white hover:bg-[#2e2015]">
+          Buka Jobs <ArrowRight size={15} />
+        </Link>
       </div>
-      <Suspense>
-        <JobFeed myRole={profile?.role ?? null} />
-      </Suspense>
     </div>
   );
 }

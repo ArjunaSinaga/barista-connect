@@ -2,9 +2,10 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { Star, MapPin, Briefcase, Send, ChevronRight, ChevronLeft, Heart } from "lucide-react";
+import { Star, MapPin, Briefcase, Send, ChevronRight, ChevronLeft } from "lucide-react";
 import Avatar from "@/components/ui/Avatar";
 import VerifiedBadge from "@/components/ui/VerifiedBadge";
+import SaveBaristaButton from "@/components/owner/dashboard/SaveBaristaButton";
 import { avgStars } from "@/lib/ratings";
 
 // Kartu kandidat ala mockup: foto + badge + nama + rating + quote + skill + 2 CTA.
@@ -15,7 +16,7 @@ export function badgeFor(b, rank) {
   return { label: "Top Match", cls: "bg-[#f5ecd4] text-[#8a6d1f]" };
 }
 
-export function CandidateCard({ barista, rank, compact = false }) {
+export function CandidateCard({ barista, rank, compact = false, saved = false }) {
   const avg = avgStars(barista.ratings);
   const count = barista.ratings?.length ?? 0;
   const badge = badgeFor(barista, rank ?? 99);
@@ -35,14 +36,7 @@ export function CandidateCard({ barista, rank, compact = false }) {
         <span className={`absolute top-2 left-2 rounded-full px-2.5 py-1 text-[10px] font-bold ${badge.cls}`}>
           {badge.label}
         </span>
-        <button
-          type="button"
-          aria-label={`Simpan ${barista.full_name} (segera hadir)`}
-          title="Simpan kandidat — segera hadir"
-          className="absolute top-2 right-2 flex h-7 w-7 items-center justify-center rounded-full bg-[#ffffff]/90 text-[#6f6252] transition-colors hover:text-[#3d2c1e]"
-        >
-          <Heart size={14} aria-hidden="true" />
-        </button>
+        <SaveBaristaButton baristaId={barista.id} baristaName={barista.full_name} initialSaved={saved} />
       </div>
       <div className={compact ? "flex flex-1 flex-col p-2.5" : "p-3"}>
         <p className="flex items-center gap-1.5 text-sm font-extrabold text-[#2b2118]">
@@ -94,39 +88,9 @@ export function CandidateCard({ barista, rank, compact = false }) {
   );
 }
 
-// Versi ringkas: 3 kartu kecil sejajar, muat penuh tanpa scroll dalam.
-// Dipakai persisten di bawah tab talenta/active/pelamar.
-export function TopCandidatesCompact({ baristas }) {
-  if (!baristas?.length) return null;
-  return (
-    <section className="rounded-2xl border border-[#e8e0cf] bg-[#ffffff] p-4 shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
-      <div className="flex items-end justify-between gap-2">
-        <div>
-          <h2 className="text-sm font-extrabold tracking-tight text-[#2b2118]">Top Candidates</h2>
-          <p className="text-[11px] text-[#857768]">Barista pilihan untuk cafe Anda.</p>
-        </div>
-        <Link href="/find-baristas" className="inline-flex shrink-0 items-center gap-0.5 text-xs font-bold text-[#2b6cb0] hover:underline">
-          Lihat semua <ChevronRight size={13} />
-        </Link>
-      </div>
-      <div className="mt-2 grid gap-2 sm:grid-cols-3">
-        {baristas.map((b) => (
-          <TalentRow
-            key={b.id}
-            barista={b}
-            tag={b.is_open_to_work
-              ? { label: "Available", cls: "bg-[#e3f0e8] text-[#1f6b4a]" }
-              : { label: "Top", cls: "bg-[#f5ecd4] text-[#8a6d1f]" }}
-          />
-        ))}
-      </div>
-    </section>
-  );
-}
-
 // Strip terbatas: kartu full (compact-pendek) dalam 1 baris carousel + panah.
 // Dipakai persisten di bawah tab active/pelamar — halaman tidak memanjang.
-export function TopCandidatesStrip({ baristas }) {
+export function TopCandidatesStrip({ baristas, savedIds = [] }) {
   const trackRef = useRef(null);
   const [canLeft, setCanLeft] = useState(false);
   const [canRight, setCanRight] = useState(false);
@@ -188,7 +152,7 @@ export function TopCandidatesStrip({ baristas }) {
       >
         {baristas.map((b, i) => (
           <div key={b.id} className="w-60 shrink-0 snap-start sm:w-64">
-            <CandidateCard barista={b} rank={i} compact />
+            <CandidateCard barista={b} rank={i} compact saved={savedIds.includes(b.id)} />
           </div>
         ))}
       </div>
@@ -198,7 +162,7 @@ export function TopCandidatesStrip({ baristas }) {
 
 // Grid penuh untuk view talenta: top 3 langsung kelihatan semua, tanpa geser.
 // Mobile menumpuk vertikal, desktop 3 sejajar (lebar kartu ikut ruang).
-export function TopCandidatesGrid({ baristas }) {
+export function TopCandidatesGrid({ baristas, savedIds = [] }) {
   if (!baristas?.length) return null;
   return (
     <section aria-label="Top candidates">
@@ -213,41 +177,7 @@ export function TopCandidatesGrid({ baristas }) {
       </div>
       <div className="mt-2 grid gap-3 md:grid-cols-3">
         {baristas.map((b, i) => (
-          <CandidateCard key={b.id} barista={b} rank={i} compact />
-        ))}
-      </div>
-    </section>
-  );
-}
-
-export function TopCandidates({ baristas }) {
-  if (!baristas?.length) {
-    return (
-      <section className="rounded-2xl border border-[#e8e0cf] bg-[#ffffff] p-5 text-center shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
-        <h2 className="text-sm font-extrabold tracking-tight text-[#2b2118]">Top Candidates</h2>
-        <p className="mx-auto mt-1 max-w-md text-xs leading-5 text-[#857768]">
-          Belum ada kandidat yang cocok. Posting lowongan aktif agar barista bisa melamar dan muncul di sini.
-        </p>
-        <Link href="/dashboard/owner/jobs/new" className="mt-3 inline-flex items-center justify-center rounded-full bg-[#3d2c1e] px-4 py-2 text-xs font-bold text-white hover:bg-[#2e2015]">
-          Posting Lowongan
-        </Link>
-      </section>
-    );
-  }
-  return (
-    <section>
-      <div className="flex items-end justify-between gap-2">
-        <div>
-          <h2 className="text-lg font-extrabold tracking-tight text-[#2b2118]">Top Candidates</h2>
-          <p className="text-xs text-[#857768]">Barista berkualitas yang sesuai dengan preferensi cafe Anda.</p>
-        </div>
-        <Link href="/find-baristas" className="inline-flex shrink-0 items-center gap-0.5 text-xs font-bold text-[#2b6cb0] hover:underline">
-          Lihat semua talenta <ChevronRight size={13} />
-        </Link>
-      </div>
-      <div className="mt-3 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-        {baristas.map((b, i) => (
-          <CandidateCard key={b.id} barista={b} rank={i} />
+          <CandidateCard key={b.id} barista={b} rank={i} compact saved={savedIds.includes(b.id)} />
         ))}
       </div>
     </section>

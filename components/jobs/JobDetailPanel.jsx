@@ -46,8 +46,8 @@ export default function JobDetailPanel({ job, cafeName, cafeHref, types, avg, co
           <Link
             href="/jobs"
             scroll={false}
-            aria-label="Tutup panel detail"
-            title="Tutup"
+            aria-label="Close detail panel"
+            title="Close"
             className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-[#e0d5bd] text-[#6f6252] hover:border-[#3d2c1e] hover:text-[#3d2c1e]"
           >
             <X size={14} />
@@ -82,11 +82,11 @@ export default function JobDetailPanel({ job, cafeName, cafeHref, types, avg, co
         </div>
         {!canApply && (
           <p className="mt-1.5 text-center text-[11px] text-[#857768]">
-            Buka halaman lowongan untuk melamar. <Link href={`/jobs/${job.id}`} className="font-bold text-[#2b6cb0] hover:underline">Lihat halaman →</Link>
+            Open the job page to apply. <Link href={`/jobs/${job.id}`} className="font-bold text-[#2b6cb0] hover:underline">Open page →</Link>
           </p>
         )}
 
-        <div role="tablist" aria-label="Detail lowongan" className="mt-3 flex gap-4 border-b border-[#efe9d9]">
+        <div role="tablist" aria-label="Job details" className="mt-3 flex gap-4 border-b border-[#efe9d9]">
           {TABS.map((t) => (
             <button
               key={t}
@@ -156,8 +156,8 @@ export default function JobDetailPanel({ job, cafeName, cafeHref, types, avg, co
                   <EmptyState
                     compact
                     icon={<Star size={18} />}
-                    title="Belum ada ulasan"
-                    subtitle="Cafe ini belum memiliki ulasan dari barista."
+                    title="No reviews yet"
+                    subtitle="This cafe has no reviews from baristas."
                   />
                 </div>
               ) : (

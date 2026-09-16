@@ -10,12 +10,13 @@ import PelamarView from "@/components/owner/dashboard/PelamarView";
 import ReviewsView from "@/components/owner/dashboard/ReviewsView";
 import CafesView from "@/components/owner/dashboard/CafesView";
 import SettingsView from "@/components/owner/dashboard/SettingsView";
-import { TalentRow, TopCandidatesStrip } from "@/components/owner/dashboard/TopCandidates";
+import { TalentRow, TopCandidatesStrip, TopCandidatesGrid } from "@/components/owner/dashboard/TopCandidates";
+import { EmptyState } from "@/components/ui/EmptyState";
 import { SmarterOpsCard } from "@/components/landing/SidebarKerja";
 
 // Shell 3 kolom: sidebar tetap, hanya kolom TENGAH yang ganti
 // (talenta/active/pelamar/reviews/cafes) tanpa navigasi halaman.
-const VIEWS = ["talenta", "active", "pelamar", "reviews", "cafes", "settings"];
+const VIEWS = ["talenta", "active", "pelamar", "reviews", "cafes", "settings", "saved"];
 const LEGACY = { lowongan: "active" }; // deep-link lama tetap jalan
 export default function DashboardShell({ initialView = "talenta", sidebar, middle, right }) {
   const start = LEGACY[initialView] ?? initialView;
@@ -38,13 +39,25 @@ export default function DashboardShell({ initialView = "talenta", sidebar, middl
             <CafesView {...middle.cafes} onBack={() => setView("talenta")} />
           ) : view === "settings" ? (
             <SettingsView {...middle.settings} onBack={() => setView("talenta")} />
+          ) : view === "saved" ? (
+            middle.saved?.list?.length ? (
+              <TopCandidatesGrid baristas={middle.saved.list} savedIds={middle.saved.savedIds ?? []} />
+            ) : (
+              <EmptyState
+                icon={<ChevronRight size={20} />}
+                title="Belum ada kandidat tersimpan"
+                subtitle="Klik ikon hati pada kartu kandidat untuk menyimpannya di sini."
+                actionLabel="Lihat talenta"
+                actionHref="/find-baristas"
+              />
+            )
           ) : (
             <TalentaView {...middle.talenta} />
           )}
         </div>
         {(view === "active" || view === "pelamar") && middle.talenta.top3?.length > 0 && (
           <div className="shrink-0 lg:pr-1 lg:pb-1">
-            <TopCandidatesStrip baristas={middle.talenta.top3} />
+            <TopCandidatesStrip baristas={middle.talenta.top3} savedIds={middle.talenta.savedIds ?? []} />
           </div>
         )}
       </div>
@@ -75,7 +88,7 @@ export default function DashboardShell({ initialView = "talenta", sidebar, middl
           <div className="flex items-start justify-between gap-2">
             <div>
               <h3 className="text-sm font-extrabold text-[#2b2118]">Certified Baristas</h3>
-              <p className="mt-0.5 text-[11px] text-[#857768]">Barista yang telah menyelesaikan pelatihan di kerja.inc.</p>
+              <p className="mt-0.5 text-[11px] text-[#857768]">Barista yang telah menyelesaikan pelatihan di BaristaConnect.</p>
             </div>
             <Link href="/find-baristas" className="inline-flex shrink-0 items-center gap-0.5 text-xs font-bold text-[#2b6cb0] hover:underline">
               Lihat semua <ChevronRight size={13} />

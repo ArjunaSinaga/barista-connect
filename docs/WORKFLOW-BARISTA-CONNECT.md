@@ -13,11 +13,11 @@
 | F2 | Landing → G2 (polish) | 🟢 Selesai | — | — | Rebrand kerja.inc→BaristaConnect, ekosistem jadi link real, Academy→/training, SmarterOps tanpa angka palsu, Reviews→/reviews |
 | F3a | Jobs board shell 3 kolom + panel detail | 🟢 Selesai | — | — | Board G1: profil+nav, hero+filter+list, panel ?job= + tabs real (tanpa Save, tanpa Requirements/Benefits palsu) |
 | F3b | Save jobs + sort + applied badge | 🟢 Selesai | — | — | Tabel saved_jobs + RLS, Save di list+panel, filter ?saved=1, sort recent/oldest/A–Z |
-| F3c | Kolom kiri profil barista + hapus JobFeed lama | ⬜ Belum mulai | — | — | — |
-| F4 | Owner dashboard → G3 | 🟡 Jalan (90%) | — | — | + strip login-gate, snooze 2x semua X, sidebar ramping + X Pro, kolom tengah tanpa scroll |
+| F3c | Kolom kiri profil barista + hapus JobFeed lama | 🟢 Selesai | — | — | Dashboard barista → CTA ke board; JobFeed.jsx dihapus |
+| F4 | Owner dashboard → G3 | 🟢 Selesai | — | — | + Saved Candidates beneran (tabel+hati+view), Training aktif, foto kanan ikut data |
 | F5 | Training → G4 | 🟢 Selesai (ringan) | — | — | Katalog seed + filter server + waitlist; upgrade data real bila tabel ada |
-| F6 | Bersih-bersih UI lama + bahasa + a11y | ⬜ Belum mulai | — | — | — |
-| F7 | Verifikasi akhir 5 rute + screenshot | ⬜ Belum mulai | — | — | Gate sebelum declare selesai |
+| F6 | Bersih-bersih UI lama + bahasa + a11y | 🟢 Selesai | — | — | Compact/Grid mati dihapus, /jobs full EN, footer bar dihapus, brand BaristaConnect |
+| F7 | Verifikasi akhir 5 rute + screenshot | 🟢 Selesai | — | — | Lint 0 error, build exit 0, 7/7 rute HTTP 200 lokal |
 
 ## ✅ Checklist per Fase
 

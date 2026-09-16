@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
-  LayoutDashboard, Briefcase, Users, Star, GraduationCap, Settings,
+  LayoutDashboard, Briefcase, Users, Heart, Star, GraduationCap, Settings,
   Camera, Crown, ArrowRight,
 } from "lucide-react";
 import Avatar from "@/components/ui/Avatar";
@@ -107,6 +107,11 @@ export default function SidebarOwner({ cafe, ownerName, completeness, completene
           <span className="flex-1 text-left">Pelamar</span>
           {countBadge(counts.applicants)}
         </button>
+        <button type="button" onClick={() => onNavigate?.("saved")} className={cls(isMain && view === "saved")}>
+          <Heart size={17} className="shrink-0" />
+          <span className="flex-1 text-left">Saved Candidates</span>
+          {countBadge(counts.saved)}
+        </button>
         <button type="button" onClick={() => onNavigate?.("reviews")} className={cls(isMain && view === "reviews")}>
           <Star size={17} className="shrink-0" />
           <span className="flex-1 text-left">Reviews Given</span>
@@ -121,13 +126,13 @@ export default function SidebarOwner({ cafe, ownerName, completeness, completene
           <Settings size={17} className="shrink-0" />
           <span className="flex-1 text-left">Settings</span>
         </button>
-        <span
-          title="Segera hadir"
-          className="flex cursor-not-allowed items-center gap-3 rounded-xl px-3 py-2 text-sm font-bold text-[#6f6252]/50"
+        <Link
+          href="/training"
+          className="flex items-center gap-3 rounded-xl px-3 py-2 text-sm font-bold text-[#6f6252] hover:bg-[#faf7ef] hover:text-[#3d2c1e]"
         >
           <GraduationCap size={17} className="shrink-0" />
           <span className="flex-1">Training</span>
-        </span>
+        </Link>
       </nav>
 
       <div className="relative shrink-0 rounded-2xl border border-[#e8e0cf] bg-[#efe9d9] p-4 shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
