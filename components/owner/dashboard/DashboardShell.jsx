@@ -42,7 +42,7 @@ export default function DashboardShell({ initialView = "talenta", sidebar, middl
             <TalentaView {...middle.talenta} />
           )}
         </div>
-        {(view === "talenta" || view === "active" || view === "pelamar") && middle.talenta.top3?.length > 0 && (
+        {(view === "active" || view === "pelamar") && middle.talenta.top3?.length > 0 && (
           <div className="shrink-0 lg:pr-1 lg:pb-1">
             <TopCandidatesCompact baristas={middle.talenta.top3} />
           </div>

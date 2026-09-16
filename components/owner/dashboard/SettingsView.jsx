@@ -24,7 +24,7 @@ export default function SettingsView({ initial, publicHref, onBack }) {
         </div>
       </div>
 
-      <div className="overflow-hidden rounded-2xl border border-[#e8e0cf] bg-[#ffffff]">
+      <div className="overflow-hidden rounded-xl border border-[#e8e0cf] bg-[#ffffff]">
         <BusinessForm initial={initial} onSaved={onBack} />
       </div>
     </>

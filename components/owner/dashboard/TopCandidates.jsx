@@ -30,9 +30,14 @@ export function CandidateCard({ barista, rank }) {
         <span className={`absolute top-2 left-2 rounded-full px-2.5 py-1 text-[10px] font-bold ${badge.cls}`}>
           {badge.label}
         </span>
-        <span className="absolute top-2 right-2 flex h-7 w-7 items-center justify-center rounded-full bg-[#ffffff]/90 text-[#6f6252]">
-          <Heart size={14} />
-        </span>
+        <button
+          type="button"
+          aria-label={`Simpan ${barista.full_name} (segera hadir)`}
+          title="Simpan kandidat — segera hadir"
+          className="absolute top-2 right-2 flex h-7 w-7 items-center justify-center rounded-full bg-[#ffffff]/90 text-[#6f6252] transition-colors hover:text-[#3d2c1e]"
+        >
+          <Heart size={14} aria-hidden="true" />
+        </button>
       </div>
       <div className="p-3">
         <p className="flex items-center gap-1.5 text-sm font-extrabold text-[#2b2118]">
@@ -113,7 +118,19 @@ export function TopCandidatesCompact({ baristas }) {
 }
 
 export function TopCandidates({ baristas }) {
-  if (!baristas?.length) return null;
+  if (!baristas?.length) {
+    return (
+      <section className="rounded-2xl border border-[#e8e0cf] bg-[#ffffff] p-5 text-center shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
+        <h2 className="text-sm font-extrabold tracking-tight text-[#2b2118]">Top Candidates</h2>
+        <p className="mx-auto mt-1 max-w-md text-xs leading-5 text-[#857768]">
+          Belum ada kandidat yang cocok. Posting lowongan aktif agar barista bisa melamar dan muncul di sini.
+        </p>
+        <Link href="/dashboard/owner/jobs/new" className="mt-3 inline-flex items-center justify-center rounded-full bg-[#3d2c1e] px-4 py-2 text-xs font-bold text-white hover:bg-[#2e2015]">
+          Posting Lowongan
+        </Link>
+      </section>
+    );
+  }
   return (
     <section>
       <div className="flex items-end justify-between gap-2">

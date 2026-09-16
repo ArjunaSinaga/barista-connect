@@ -66,6 +66,8 @@ export default async function OwnerDashboardPage({ searchParams }) {
   const { completeness, missing, items: completenessItems } = getBusinessCompleteness(ownerRow, cafes);
   const givenCount = givenRatings.length;
   const givenAvg = givenCount ? (givenRatings.reduce((s, r) => s + (r.stars ?? 0), 0) / givenCount).toFixed(1) : null;
+  const monthAgo = Date.now() - 30 * 864e5;
+  const jobsThisMonth = (jobs ?? []).filter((j) => j.created_at && new Date(j.created_at).getTime() >= monthAgo).length;
 
   const ranked = rankBaristas(baristas);
   const countByCafe = {};
@@ -98,7 +100,8 @@ export default async function OwnerDashboardPage({ searchParams }) {
               talenta: {
                 heroPhoto: firstCafe?.photo_urls?.[0] ?? null,
                 cafeName: firstCafe?.name,
-                stats: { activeJobs, totalJobs, pendingApplicants, interviewsWeek: convosWeek.length, givenAvg, givenCount },
+                cafeLocation: firstCafe?.address ?? firstCafe?.location ?? ownerRow?.location ?? null,
+                stats: { activeJobs, totalJobs, jobsThisMonth, pendingApplicants, interviewsWeek: convosWeek.length, givenAvg, givenCount },
                 top3: ranked.slice(0, 3),
               },
               active: { jobs, appCountByJob, totalJobs, activeJobs },

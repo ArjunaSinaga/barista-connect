@@ -1,40 +1,45 @@
 import Link from "next/link";
-import { Search } from "lucide-react";
+import { Search, Star, Briefcase, Clock, Coffee, CupSoda, MapPin } from "lucide-react";
 
 // Hero dashboard owner ala mockup: headline + cari talenta + filter cepat + foto cafe.
 export const QUICK_FILTERS = [
-  "Available Now",
-  "Rating 4.5+",
-  "Full-time",
-  "Part-time",
-  "Latte Art",
-  "Manual Brew",
+  { label: "Available Now", href: "/find-baristas?available=1", icon: "dot" },
+  { label: "Rating 4.5+", href: "/find-baristas?minRating=4.5", icon: Star },
+  { label: "Full-time", href: "/find-baristas?type=full-time", icon: Briefcase },
+  { label: "Part-time", href: "/find-baristas?type=part-time", icon: Clock },
+  { label: "Latte Art", href: "/find-baristas?q=Latte%20Art", icon: Coffee },
+  { label: "Manual Brew", href: "/find-baristas?q=Manual%20Brew", icon: CupSoda },
 ];
 
-export default function HeroTalenta({ photo, cafeName }) {
+const FALLBACK_PHOTO = "https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=640&q=70";
+
+export default function HeroTalenta({ photo, cafeName, cafeLocation }) {
+  const cover = photo || FALLBACK_PHOTO;
   return (
     <div className="flex gap-0 overflow-hidden rounded-2xl border border-[#e8e0cf] bg-[#ece2cd] py-2.5 pr-0 pl-5 shadow-[0_2px_12px_rgba(43,33,24,0.10)] sm:pl-6">
-      <div className="min-w-0 flex-1 pr-5">
-        <h1 className="font-display text-xl leading-[1.05] font-semibold tracking-tight sm:text-2xl">
+      <div className="min-w-0 flex-1 py-1 pr-5">
+        <h1 className="font-display text-balance text-xl leading-[1.05] font-semibold tracking-tight sm:text-2xl">
           Hire better baristas. <span className="text-[#1f6b4a]">Build a stronger cafe team.</span>
         </h1>
-        <p className="mt-1 max-w-xl text-xs leading-5 text-[#6f6252]">
+        <p className="mt-1 max-w-[52ch] text-xs leading-5 text-[#6f6252]">
           Temukan barista berbakat dengan pengalaman terverifikasi, rating dari pemilik cafe lain,
           dan pelatihan industri terkemuka.
         </p>
-        <form action="/find-baristas" method="GET" className="mt-2 flex items-center gap-2">
-          <div className="flex min-w-0 flex-1 items-center gap-2 rounded-full border border-[#e0d5bd] bg-[#ffffff] px-4 py-1.5">
-            <Search size={14} className="shrink-0 text-[#b6a98f]" />
+        <form action="/find-baristas" method="GET" role="search" aria-label="Cari barista" className="mt-2 flex items-center gap-2">
+          <div className="flex min-w-0 flex-1 items-center gap-2 rounded-full border border-[#e0d5bd] bg-[#ffffff] px-4 py-1.5 focus-within:border-[#3d2c1e]">
+            <Search size={14} className="shrink-0 text-[#b6a98f]" aria-hidden="true" />
+            <label htmlFor="hero-talent-q" className="sr-only">Cari barista berdasarkan nama, keahlian, atau lokasi</label>
             <input
+              id="hero-talent-q"
               name="q"
               placeholder="Cari barista berdasarkan nama, keahlian, atau lokasi..."
-              aria-label="Cari barista"
+              autoComplete="off"
               className="h-6 w-full bg-transparent text-xs text-[#2b2118] placeholder:text-[#b6a98f] focus:outline-none"
             />
           </div>
           <button
             type="submit"
-            className="inline-flex min-h-[34px] shrink-0 items-center rounded-full bg-[#3d2c1e] px-4 text-xs font-bold text-white hover:bg-[#2e2015]"
+            className="inline-flex min-h-[34px] shrink-0 items-center rounded-full bg-[#3d2c1e] px-4 text-xs font-bold text-white transition-colors hover:bg-[#2e2015] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#3d2c1e]"
           >
             Cari Talenta
           </button>
@@ -43,31 +48,38 @@ export default function HeroTalenta({ photo, cafeName }) {
           <span className="text-[11px] font-bold text-[#857768]">Filter Cepat:</span>
           {QUICK_FILTERS.map((f) => (
             <Link
-              key={f}
-              href="/find-baristas"
-              className="rounded-full border border-[#e0d5bd] bg-[#ffffff] px-2.5 py-0.5 text-[11px] font-bold text-[#6f6252] hover:border-[#3d2c1e] hover:text-[#3d2c1e]"
+              key={f.label}
+              href={f.href}
+              className="inline-flex items-center gap-1 rounded-full border border-[#e0d5bd] bg-[#ffffff] px-2.5 py-0.5 text-[11px] font-bold text-[#6f6252] hover:border-[#3d2c1e] hover:text-[#3d2c1e]"
             >
-              {f}
+              {f.icon === "dot" ? (
+                <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-[#1f6b4a]" />
+              ) : (
+                <f.icon size={11} aria-hidden="true" />
+              )}
+              {f.label}
             </Link>
           ))}
+          {cafeLocation ? (
+            <Link
+              href="/find-baristas"
+              className="inline-flex items-center gap-1 rounded-full border border-[#e0d5bd] bg-[#ffffff] px-2.5 py-0.5 text-[11px] font-bold text-[#6f6252] hover:border-[#3d2c1e] hover:text-[#3d2c1e]"
+            >
+              <MapPin size={11} aria-hidden="true" />
+              <span className="max-w-28 truncate">{cafeLocation}</span>
+            </Link>
+          ) : null}
         </div>
       </div>
       <div className="relative hidden w-56 shrink-0 self-stretch sm:block lg:w-64">
-        {photo ? (
-          <>
-            <img src={photo} alt={cafeName ?? "Cafe"} loading="lazy" className="absolute inset-0 h-full w-full object-cover" />
-            <span className="font-chalk absolute top-4 left-4 -rotate-6 text-xl leading-5 text-white drop-shadow-[0_2px_6px_rgba(0,0,0,0.6)]">
-              Great<br />Baristas<br />Greater<br />Stories
-            </span>
-            <span className="absolute right-3 bottom-3 rounded-full bg-[#f5f1e8]/95 px-4 py-2 text-right shadow">
-              <span className="font-chalk block text-sm leading-4 text-[#3d2c1e]">Same Passion<br />More People</span>
-            </span>
-          </>
-        ) : (
-          <div className="absolute inset-0 flex items-center justify-center bg-[#e5dcc4] px-6 text-center">
-            <p className="text-sm leading-6 text-[#857768]">Tambahkan foto cafe di Cafe Saya.</p>
-          </div>
-        )}
+        <img src={cover} alt={photo ? (cafeName ?? "Foto cafe") : "Barista menuang latte art"} loading="lazy" className="absolute inset-0 h-full w-full object-cover" />
+        <span aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent" />
+        <span className="font-chalk absolute top-4 left-4 -rotate-6 text-xl leading-5 text-white drop-shadow-[0_2px_6px_rgba(0,0,0,0.6)]">
+          Great<br />Baristas<br />Greater<br />Stories
+        </span>
+        <span className="absolute right-3 bottom-3 rounded-full bg-[#f5f1e8]/95 px-4 py-2 text-right shadow">
+          <span className="font-chalk block text-sm leading-4 text-[#3d2c1e]">Same Passion<br />More People</span>
+        </span>
       </div>
     </div>
   );

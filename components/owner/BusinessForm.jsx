@@ -101,29 +101,29 @@ export default function BusinessForm({ initial, redirectTo, onSaved }) {
   }
 
   return (
-    <div className="mx-auto max-w-lg px-4 py-8">
-      <div className="mb-6 text-center">
-        <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-caramel text-white">
-          <Store size={26} />
+    <div className="mx-auto max-w-md px-4 py-5">
+      <div className="mb-4 text-center">
+        <span className="mx-auto flex h-11 w-11 items-center justify-center rounded-xl bg-caramel text-white">
+          <Store size={20} />
         </span>
-        <h1 className="mt-4 text-2xl font-extrabold text-espresso">
+        <h1 className="mt-2.5 text-lg font-extrabold text-espresso">
           Data Bisnis
         </h1>
-        <p className="mt-1 text-sm text-espresso-soft">
+        <p className="mt-0.5 text-xs text-espresso-soft">
           Nama ini yang dilihat barista pada lowongan kamu.
         </p>
       </div>
 
       <form
         onSubmit={handleSubmit}
-        className="space-y-4 rounded-2xl card-dark p-6"
+        className="space-y-3 rounded-xl card-dark p-4 sm:p-5"
       >
         <div>
           <p className="mb-2 text-sm font-bold text-espresso">
             Foto profil <span className="text-red-500">*</span>
           </p>
           <div className="flex items-center gap-3">
-            <Avatar src={avatarUrl} name={form.business_name || "Owner"} size="lg" />
+            <Avatar src={avatarUrl} name={form.business_name || "Owner"} size="md" />
             <input ref={fileRef} type="file" accept="image/jpeg,image/png,image/webp" className="hidden" onChange={handleAvatar} />
             <Button type="button" variant="secondary" size="sm" disabled={uploading} onClick={() => fileRef.current?.click()}>
               {uploading ? <LoaderCircle size={14} className="animate-spin" /> : <Camera size={14} />}
@@ -162,7 +162,7 @@ export default function BusinessForm({ initial, redirectTo, onSaved }) {
             <option key={c} value={c} />
           ))}
         </datalist>
-        <Button type="submit" full size="lg" disabled={busy}>
+        <Button type="submit" full size="md" disabled={busy}>
           <Save size={16} /> {busy ? "Menyimpan..." : "Simpan"}
         </Button>
       </form>
