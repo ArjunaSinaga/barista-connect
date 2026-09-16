@@ -21,7 +21,7 @@ export default async function OwnerProfilePage({ searchParams }) {
         <Link href="/dashboard/owner/profile" className="text-sm font-bold text-caramel hover:underline">
           ← Kembali ke profil
         </Link>
-        <div className="mt-4"><BusinessForm initial={row ?? null} /></div>
+        <div className="mt-4"><BusinessForm initial={row ?? null} redirectTo="/dashboard/owner/profile" /></div>
       </div>
       </div>
     );

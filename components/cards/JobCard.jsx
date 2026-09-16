@@ -19,20 +19,20 @@ export default function JobCard({
   actions = null,
 }) {
   return (
-    <div className="relative rounded-2xl card-dark p-5 shadow-sm transition-shadow hover:shadow-md">
-      <div className="flex items-start justify-between gap-3">
+    <div className="relative flex min-w-0 flex-col rounded-2xl card-dark p-4 shadow-sm transition-shadow hover:shadow-md">
+      <div className="flex items-start justify-between gap-2">
         <div className="min-w-0">
           <Link
             href={`/jobs/${job.id}`}
-            className="block truncate text-base font-bold text-espresso hover:text-caramel"
+            className="block truncate text-sm font-bold text-espresso hover:text-caramel"
           >
             {job.title}
           </Link>
-          <p className="mt-0.5 flex items-center gap-1 truncate text-xs font-medium text-espresso-soft">
-            <Store size={12} /> {ownerName ?? "Coffee Shop"}{ownerVerified && <VerifiedBadge size={13} />}
+          <p className="mt-0.5 flex items-center gap-1 truncate text-[11px] font-medium text-espresso-soft">
+            <Store size={11} /> {ownerName ?? "Coffee Shop"}{ownerVerified && <VerifiedBadge size={12} />}
           </p>
         </div>
-        <div className="flex flex-wrap gap-1 shrink-0 justify-end">
+        <div className="flex shrink-0 flex-wrap gap-1 justify-end">
           {(job.employment_types?.length ? job.employment_types : (job.employment_type ? [job.employment_type] : [])).map(t=>(
             <Badge key={t} classes={TYPE_CLASSES[t]}>{EMPLOYMENT_LABELS[t] ?? t}</Badge>
           ))}
@@ -40,24 +40,24 @@ export default function JobCard({
       </div>
 
       {job.description && (
-        <p className="mt-3 line-clamp-2 text-sm leading-relaxed text-espresso-soft">
+        <p className="mt-2 line-clamp-2 text-xs leading-5 text-espresso-soft">
           {job.description}
         </p>
       )}
 
-      <div className="mt-4 flex items-center justify-between gap-3">
-        <span className="flex items-center gap-1 text-xs font-semibold text-espresso-soft">
-          <MapPin size={13} className="text-caramel" />
-          {job.location}
+      <div className="mt-2.5 flex items-center justify-between gap-2">
+        <span className="flex min-w-0 items-center gap-1 truncate text-[11px] font-semibold text-espresso-soft">
+          <MapPin size={12} className="shrink-0 text-caramel" />
+          <span className="truncate">{job.location}</span>
         </span>
-        <span className="flex items-center gap-2 text-[11px]">
+        <span className="flex shrink-0 items-center gap-2 text-[10px]">
           {job.salary_text && <span className="font-bold text-espresso">{job.salary_text}</span>}
           <span className="text-espresso-soft/70">{relativeTime(job.created_at)}</span>
         </span>
       </div>
 
       {(applied || actions) && (
-        <div className="mt-4 flex items-center gap-2 border-t border-latte/60 pt-4">
+        <div className="mt-2.5 flex items-center gap-2 border-t border-latte/60 pt-2.5">
           {applied && !actions && (
             <Badge classes="bg-matcha/15 text-matcha">✓ Sudah dilamar</Badge>
           )}

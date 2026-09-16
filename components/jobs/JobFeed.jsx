@@ -89,7 +89,7 @@ export default function JobFeed({ myRole }) {
     (query ? 1 : 0);
 
   return (
-    <div className="mx-auto max-w-3xl px-4 py-8">
+    <div className="mx-auto max-w-5xl px-4 py-8">
       <h1 className="text-2xl font-extrabold text-espresso">
         Lowongan Barista
       </h1>
@@ -138,8 +138,8 @@ export default function JobFeed({ myRole }) {
         </div>
       </div>
 
-      {/* Results */}
-      <div className="mt-5 space-y-4 pb-20">
+      {/* Results: 2 kolom kiri-kanan */}
+      <div className="mt-5 grid gap-3 pb-20 sm:grid-cols-2">
         {jobs === null &&
           Array.from({ length: 4 }).map((_, i) => <CardSkeleton key={i} />)}
 
