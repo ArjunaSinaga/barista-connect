@@ -32,6 +32,7 @@ export default async function OwnerDashboardPage({ searchParams }) {
   let convosWeek = []
   let baristas = []
   let savedBaristaIds = []
+  let teamMembers = []
   try {
     const supabase = await createClient()
     const res = await supabase.from("job_posts").select("id,title,location,salary_text,employment_type,employment_types,is_active,created_at,cafe_id,cafes(name)").eq("owner_id", user.id).order("created_at", { ascending: false })
@@ -41,13 +42,14 @@ export default async function OwnerDashboardPage({ searchParams }) {
       const r2 = await supabase.from("applications").select("job_post_id,status").in("job_post_id", jobIds)
       apps = r2.data ?? []
     }
-    const [o, c, gr, cw, b, sv] = await Promise.all([
+    const [o, c, gr, cw, b, sv, tm] = await Promise.all([
       supabase.from("owners").select("business_name,avatar_url,whatsapp,location").eq("id", user.id).maybeSingle(),
       supabase.from("cafes").select("id,name,address,location,photo_urls,is_active").eq("owner_id", user.id).order("created_at", { ascending: true }),
       supabase.from("ratings").select("stars,comment,created_at, barista:barista_profiles!ratings_barista_id_fkey(full_name,profile_picture_url)").eq("owner_id", user.id).order("created_at", { ascending: false }).limit(30),
       supabase.from("conversations").select("id").eq("owner_id", user.id).gte("created_at", new Date(Date.now() - 7 * 864e5).toISOString()),
       supabase.from("barista_profiles").select("*, ratings(stars)").eq("is_open_to_work", true).limit(30),
       supabase.from("saved_baristas").select("barista_id").eq("owner_id", user.id),
+      supabase.from("team_members").select("id, status, job_title, job_post_id, application_id, hired_at, barista_id, cafe_id, cafes(id, name), barista_profiles(id, full_name, profile_picture_url, location_place, years_of_experience)").eq("owner_id", user.id).in("status", ["active", "terminated"]).order("hired_at", { ascending: false }),
     ]);
     ownerRow = o.data ?? null;
     cafes = c.data ?? [];
@@ -55,6 +57,7 @@ export default async function OwnerDashboardPage({ searchParams }) {
     convosWeek = cw.data ?? [];
     baristas = b.data ?? [];
     savedBaristaIds = (sv.data ?? []).map((s) => s.barista_id);
+    teamMembers = tm.data ?? [];
   } catch(e) { jobs = []; apps = [] }
 
   const appCountByJob = {}
@@ -69,6 +72,15 @@ export default async function OwnerDashboardPage({ searchParams }) {
   const { completeness, missing, items: completenessItems } = getBusinessCompleteness(ownerRow, cafes);
   const givenCount = givenRatings.length;
   const givenAvg = givenCount ? (givenRatings.reduce((s, r) => s + (r.stars ?? 0), 0) / givenCount).toFixed(1) : null;
+  const teamIds = teamMembers.map((m) => m.id);
+  let teamRatingMap = {};
+  if (teamIds.length) {
+    try {
+      const supabase2 = await createClient();
+      const { data: tr } = await supabase2.from("ratings").select("team_member_id, stars, comment").in("team_member_id", teamIds);
+      (tr ?? []).forEach((r) => { teamRatingMap[r.team_member_id] = r; });
+    } catch { teamRatingMap = {}; }
+  }
   const monthAgo = Date.now() - 30 * 864e5;
   const jobsThisMonth = (jobs ?? []).filter((j) => j.created_at && new Date(j.created_at).getTime() >= monthAgo).length;
 
@@ -99,7 +111,7 @@ export default async function OwnerDashboardPage({ searchParams }) {
               ownerName: ownerRow?.business_name,
               completeness,
               completenessItems,
-              counts: { activeJobs, applicants: totalApplicants, reviewsGiven: givenCount, cafes: cafes.length, saved: savedList.length },
+              counts: { activeJobs, applicants: totalApplicants, reviewsGiven: givenCount, cafes: cafes.length, saved: savedList.length, team: teamMembers.length },
             }}
             middle={{
               talenta: {
@@ -115,6 +127,7 @@ export default async function OwnerDashboardPage({ searchParams }) {
               pelamar: { jobs, appCountByJob, statusByJob, totals },
               reviews: { reviews: givenRatings },
               cafes: { cafes, countByCafe },
+              team: { cafes, members: teamMembers, ratingMap: teamRatingMap },
               settings: { initial: ownerRow, publicHref: `/owner/${user.id}` },
             }}
             right={{ recs: ranked.slice(3, 6), certified: ranked.filter(b => (b.certificates?.length ?? 0) > 0).slice(0, 3) }}
