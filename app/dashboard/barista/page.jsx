@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Suspense } from "react";
 import { Briefcase, FileText, CheckCheck, FlagOff, MessagesSquare, Search } from "lucide-react";
 import { createClient, getSessionSafe, isSupabaseConfigured } from "@/lib/supabase/server";
 import { STATUS_META } from "@/lib/constants";
@@ -109,7 +110,9 @@ export default async function BaristaDashboardPage() {
         <Search size={16} className="text-caramel" />
         <h2 className="text-sm font-black text-espresso">Cari Lowongan</h2>
       </div>
-      <JobFeed myRole={profile?.role ?? null} />
+      <Suspense>
+        <JobFeed myRole={profile?.role ?? null} />
+      </Suspense>
     </div>
   );
 }

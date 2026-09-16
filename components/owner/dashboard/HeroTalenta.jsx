@@ -1,5 +1,5 @@
-import Link from "next/link";
 import { Search, Star, Briefcase, Clock, Coffee, CupSoda, MapPin } from "lucide-react";
+import FilterPills from "@/components/ui/FilterPills";
 
 // Hero dashboard owner ala mockup: headline + cari talenta + filter cepat + foto cafe.
 export const QUICK_FILTERS = [
@@ -44,32 +44,14 @@ export default function HeroTalenta({ photo, cafeName, cafeLocation }) {
             Cari Talenta
           </button>
         </form>
-        <div className="mt-2 flex flex-wrap items-center gap-1.5">
-          <span className="text-[11px] font-bold text-[#857768]">Filter Cepat:</span>
-          {QUICK_FILTERS.map((f) => (
-            <Link
-              key={f.label}
-              href={f.href}
-              className="inline-flex items-center gap-1 rounded-full border border-[#e0d5bd] bg-[#ffffff] px-2.5 py-0.5 text-[11px] font-bold text-[#6f6252] hover:border-[#3d2c1e] hover:text-[#3d2c1e]"
-            >
-              {f.icon === "dot" ? (
-                <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-[#1f6b4a]" />
-              ) : (
-                <f.icon size={11} aria-hidden="true" />
-              )}
-              {f.label}
-            </Link>
-          ))}
-          {cafeLocation ? (
-            <Link
-              href="/find-baristas"
-              className="inline-flex items-center gap-1 rounded-full border border-[#e0d5bd] bg-[#ffffff] px-2.5 py-0.5 text-[11px] font-bold text-[#6f6252] hover:border-[#3d2c1e] hover:text-[#3d2c1e]"
-            >
-              <MapPin size={11} aria-hidden="true" />
-              <span className="max-w-28 truncate">{cafeLocation}</span>
-            </Link>
-          ) : null}
-        </div>
+        <FilterPills
+          items={[
+            ...QUICK_FILTERS,
+            ...(cafeLocation
+              ? [{ label: cafeLocation, href: "/find-baristas", icon: MapPin, short: true }]
+              : []),
+          ]}
+        />
       </div>
       <div className="relative hidden w-56 shrink-0 self-stretch sm:block lg:w-64">
         <img src={cover} alt={photo ? (cafeName ?? "Foto cafe") : "Barista menuang latte art"} loading="lazy" className="absolute inset-0 h-full w-full object-cover" />

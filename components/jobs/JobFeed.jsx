@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { Search, SlidersHorizontal, X } from "lucide-react";
 import JobCard from "@/components/cards/JobCard";
 import ApplyButton from "@/components/jobs/ApplyButton";
@@ -12,8 +13,9 @@ import { EMPLOYMENT_TYPES } from "@/lib/constants";
 import { createClient } from "@/lib/supabase/client";
 
 export default function JobFeed({ myRole }) {
-  const [query, setQuery] = useState("");
-  const [loc, setLoc] = useState("");
+  const params = useSearchParams();
+  const [query, setQuery] = useState(params.get("q") ?? "");
+  const [loc, setLoc] = useState(params.get("loc") ?? "");
   const [types, setTypes] = useState([]);
   const [sheetOpen, setSheetOpen] = useState(false);
 

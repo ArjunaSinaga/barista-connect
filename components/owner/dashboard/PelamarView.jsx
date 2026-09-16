@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Users, Eye, Store, Clock3, CheckCircle2, XCircle } from "lucide-react";
 import { EmptyState } from "@/components/ui/EmptyState";
+import StatCard from "@/components/ui/StatCard";
 
 // Kolom tengah mode pelamar: tiap lowongan + pelamarnya, fokus ke Kelola.
 export default function PelamarView({ jobs, appCountByJob, statusByJob, totals, onBack }) {
@@ -22,22 +23,10 @@ export default function PelamarView({ jobs, appCountByJob, statusByJob, totals, 
       </div>
 
       <div className="grid grid-cols-2 gap-3 xl:grid-cols-4">
-        <div className="rounded-2xl border border-[#e8e0cf] bg-[#ffffff] p-3">
-          <p className="flex items-center gap-1.5 text-[11px] font-bold tracking-widest text-[#857768] uppercase"><Users size={12} />Total</p>
-          <p className="mt-1 text-2xl font-black text-[#2b2118]">{totals.total}</p>
-        </div>
-        <div className="rounded-2xl border border-[#e8e0cf] bg-[#ffffff] p-3">
-          <p className="flex items-center gap-1.5 text-[11px] font-bold tracking-widest text-[#857768] uppercase"><Clock3 size={12} />Menunggu</p>
-          <p className="mt-1 text-2xl font-black text-[#9a6a2f]">{totals.pending}</p>
-        </div>
-        <div className="rounded-2xl border border-[#e8e0cf] bg-[#ffffff] p-3">
-          <p className="flex items-center gap-1.5 text-[11px] font-bold tracking-widest text-[#857768] uppercase"><CheckCircle2 size={12} />Diterima</p>
-          <p className="mt-1 text-2xl font-black text-[#1f6b4a]">{totals.accepted}</p>
-        </div>
-        <div className="rounded-2xl border border-[#e8e0cf] bg-[#ffffff] p-3">
-          <p className="flex items-center gap-1.5 text-[11px] font-bold tracking-widest text-[#857768] uppercase"><XCircle size={12} />Ditolak</p>
-          <p className="mt-1 text-2xl font-black text-[#6f6252]">{totals.rejected}</p>
-        </div>
+        <StatCard icon={Users} label="Total" value={totals.total} circled={false} />
+        <StatCard icon={Clock3} label="Menunggu" value={totals.pending} valueClass="text-[#9a6a2f]" circled={false} />
+        <StatCard icon={CheckCircle2} label="Diterima" value={totals.accepted} valueClass="text-[#1f6b4a]" circled={false} />
+        <StatCard icon={XCircle} label="Ditolak" value={totals.rejected} valueClass="text-[#6f6252]" circled={false} />
       </div>
 
       {!jobs?.length ? (

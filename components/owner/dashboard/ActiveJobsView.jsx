@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Plus, Briefcase, Megaphone, TrendingUp, Store } from "lucide-react";
 import { EmptyState } from "@/components/ui/EmptyState";
+import StatCard from "@/components/ui/StatCard";
 import JobDeleteButton from "@/components/jobs/JobDeleteButton";
 
 // Kolom tengah mode active jobs: kelola lowongan murni (edit/lihat/hapus).
@@ -29,23 +30,10 @@ export default function ActiveJobsView({ jobs, appCountByJob, totalJobs, activeJ
       </div>
 
       <div className="grid grid-cols-2 gap-3 xl:grid-cols-4">
-        <div className="rounded-2xl border border-[#e8e0cf] bg-[#ffffff] p-3">
-          <p className="flex items-center gap-1.5 text-[11px] font-bold tracking-widest text-[#857768] uppercase"><Briefcase size={12} />Total</p>
-          <p className="mt-1 text-2xl font-black text-[#2b2118]">{totalJobs}</p>
-        </div>
-        <div className="rounded-2xl border border-[#e8e0cf] bg-[#ffffff] p-3">
-          <p className="flex items-center gap-1.5 text-[11px] font-bold tracking-widest text-[#857768] uppercase"><Megaphone size={12} />Aktif</p>
-          <p className="mt-1 text-2xl font-black text-[#1f6b4a]">{activeJobs}</p>
-        </div>
-        <div className="rounded-2xl bg-[#3d2c1e] p-3 text-white">
-          <p className="text-[11px] font-bold tracking-widest text-[#f5f1e8]/70 uppercase">Nonaktif</p>
-          <p className="mt-1 text-2xl font-black">{inactive}</p>
-          <p className="mt-0.5 text-[11px] text-[#f5f1e8]/70">butuh aksi</p>
-        </div>
-        <div className="rounded-2xl border border-[#e8e0cf] bg-[#ffffff] p-3">
-          <p className="flex items-center gap-1.5 text-[11px] font-bold tracking-widest text-[#857768] uppercase"><TrendingUp size={12} />Rasio Aktif</p>
-          <p className="mt-1 text-2xl font-black text-[#9a6a2f]">{totalJobs ? Math.round(activeJobs / totalJobs * 100) : 0}%</p>
-        </div>
+        <StatCard icon={Briefcase} label="Total" value={totalJobs} circled={false} />
+        <StatCard icon={Megaphone} label="Aktif" value={activeJobs} valueClass="text-[#1f6b4a]" circled={false} />
+        <StatCard label="Nonaktif" value={inactive} sub="butuh aksi" dark />
+        <StatCard icon={TrendingUp} label="Rasio Aktif" value={`${totalJobs ? Math.round(activeJobs / totalJobs * 100) : 0}%`} valueClass="text-[#9a6a2f]" circled={false} />
       </div>
 
       {!jobs?.length ? (

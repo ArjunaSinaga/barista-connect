@@ -5,7 +5,6 @@ import LatestJobs from "@/components/landing/LatestJobs";
 import FeaturedBarista from "@/components/landing/FeaturedBarista";
 import ReviewsCard from "@/components/landing/ReviewsCard";
 import { EcosystemCard, AcademyCard, SmarterOpsCard } from "@/components/landing/SidebarKerja";
-import BottomCtaStrip from "@/components/landing/BottomCtaStrip";
 import { avgStars } from "@/lib/ratings";
 
 async function getLatestJobs() {
@@ -216,9 +215,6 @@ export default async function LandingPage() {
           </div>
         </div>
       </section>
-
-      {/* Strip bawah — bisa di-X */}
-      <BottomCtaStrip />
     </div>
   );
 }

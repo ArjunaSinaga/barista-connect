@@ -3,18 +3,27 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
-import { Coffee, MessageSquareText, LogOut, Search, MapPin } from "lucide-react";
+import { Bell, ChevronDown, Coffee, LogOut, MapPin, MessageSquareText, Search } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
-import { APP_NAME } from "@/lib/constants";
+import { APP_NAME, CITIES } from "@/lib/constants";
+
+const NAV = [
+  { label: "Jobs", href: "/jobs", match: ["/jobs"] },
+  { label: "Talent", href: "/find-baristas", match: ["/find-baristas", "/barista"] },
+  { label: "Reviews", href: "/reviews", match: ["/reviews"] },
+  { label: "Training", href: "/training", match: ["/training"] },
+];
 
 export default function Navbar({ user, role }) {
   const router = useRouter();
   const pathname = usePathname();
   const [busy, setBusy] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const home = role === "owner" ? "/dashboard/owner" : "/dashboard/barista";
   const profileHref = role === "owner" ? "/dashboard/owner/profile" : "/dashboard/barista/profile";
-  // Jembatan terang-gelap: landing + auth terang ikut kertas, dalam ikut dark roast.
-  const light = pathname === "/" || pathname === "/login" || pathname === "/signup";
+  const postJobHref = role === "owner" ? "/dashboard/owner/jobs/new" : "/signup?role=owner";
+  const initial = (user?.email?.[0] ?? "?").toUpperCase();
+  const roleLabel = role === "owner" ? "Owner" : role === "barista" ? "Barista" : null;
 
   async function handleLogout() {
     setBusy(true);
@@ -24,128 +33,166 @@ export default function Navbar({ user, role }) {
     router.refresh();
   }
 
+  function goJobsWithLoc(loc) {
+    if (!loc) return;
+    router.push(`/jobs?loc=${encodeURIComponent(loc)}`);
+  }
+
+  const isActive = (m) => m.some((p) => pathname === p || pathname?.startsWith(p + "/"));
+  const forOwnersActive = pathname?.startsWith("/dashboard/owner") || pathname === "/signup";
+
   return (
-    <header className={light
-      ? "sticky top-0 z-40 border-b border-[#e0d5bd] bg-[#f5f1e8]/90 backdrop-blur"
-      : "sticky top-0 z-40 border-b border-latte/60 bg-cream/85 backdrop-blur"}>
-      <div className={`mx-auto flex h-14 items-center justify-between px-4 sm:px-6 ${light ? "max-w-[1400px]" : "max-w-6xl"}`}>
-        <span className="flex items-center gap-2 font-extrabold tracking-tight">
+    <header className="sticky top-0 z-40 border-b border-[#e0d5bd] bg-[#f5f1e8]/90 backdrop-blur">
+      <div className="mx-auto flex h-14 max-w-[1400px] items-center gap-2 px-4 sm:px-6">
+        <span className="flex shrink-0 items-center gap-2 font-extrabold tracking-tight">
           <Link href="/" aria-label="Beranda" title="Beranda" className="flex h-8 w-8 items-center justify-center rounded-xl bg-caramel text-white hover:bg-caramel-dark">
             <Coffee size={17} />
           </Link>
-          <Link href={user ? home : "/"} title={user ? "Dashboard" : "Beranda"} className={light ? "text-[#2f2721] hover:text-[#6f5a3e]" : "text-espresso hover:text-caramel"}>
+          <Link href={user ? home : "/"} title={user ? "Dashboard" : "Beranda"} className="hidden text-[#2f2721] hover:text-[#6f5a3e] min-[400px]:block">
             {APP_NAME}
           </Link>
         </span>
 
-        <nav className="flex items-center gap-1 sm:gap-2">
-          <Link
-            href="/jobs"
-            className={light
-              ? "rounded-lg px-3 py-2 text-sm font-semibold text-[#2f2721]/70 hover:text-[#6f5a3e]"
-              : "rounded-lg px-3 py-2 text-sm font-semibold text-espresso-soft hover:text-caramel"}
-          >
-            Jobs
-          </Link>
-          <Link
-            href="/find-baristas"
-            className={light
-              ? "hidden rounded-lg px-3 py-2 text-sm font-semibold text-[#2f2721]/70 hover:text-[#6f5a3e] sm:block"
-              : "hidden rounded-lg px-3 py-2 text-sm font-semibold text-espresso-soft hover:text-caramel sm:block"}
-          >
-            Talent
-          </Link>
-          <span
-            title="Segera hadir"
-            className={light
-              ? "hidden cursor-not-allowed rounded-lg px-3 py-2 text-sm font-semibold text-[#2f2721]/35 lg:block"
-              : "hidden cursor-not-allowed rounded-lg px-3 py-2 text-sm font-semibold text-espresso-soft/40 lg:block"}
-          >
-            Reviews
-          </span>
-          <span
-            title="Segera hadir"
-            className={light
-              ? "hidden cursor-not-allowed rounded-lg px-3 py-2 text-sm font-semibold text-[#2f2721]/35 lg:block"
-              : "hidden cursor-not-allowed rounded-lg px-3 py-2 text-sm font-semibold text-espresso-soft/40 lg:block"}
-          >
-            Training
-          </span>
+        <nav aria-label="Utama" className="flex min-w-0 flex-1 items-center gap-0.5 overflow-x-auto no-scrollbar sm:gap-1">
+          {NAV.map((n) => (
+            <Link
+              key={n.label}
+              href={n.href}
+              aria-current={isActive(n.match) ? "page" : undefined}
+              className={`shrink-0 rounded-lg px-2.5 py-2 text-sm font-semibold whitespace-nowrap sm:px-3 ${
+                isActive(n.match)
+                  ? "text-[#2f2721] underline decoration-[#3d2c1e] decoration-2 underline-offset-8"
+                  : "text-[#2f2721]/70 hover:text-[#6f5a3e]"
+              }`}
+            >
+              {n.label}
+            </Link>
+          ))}
           <Link
             href={user ? home : "/signup?role=owner"}
-            className={light
-              ? "hidden rounded-lg px-3 py-2 text-sm font-semibold text-[#2f2721]/70 hover:text-[#6f5a3e] lg:block"
-              : "hidden rounded-lg px-3 py-2 text-sm font-semibold text-espresso-soft hover:text-caramel lg:block"}
+            className={`hidden shrink-0 rounded-lg px-2.5 py-2 text-sm font-semibold whitespace-nowrap sm:px-3 lg:block ${
+              forOwnersActive
+                ? "text-[#2f2721] underline decoration-[#3d2c1e] decoration-2 underline-offset-8"
+                : "text-[#2f2721]/70 hover:text-[#6f5a3e]"
+            }`}
           >
             For Owners
           </Link>
-          {light && (
-            <form action="/jobs" method="GET" className="ml-2 hidden min-w-0 flex-1 items-center gap-2 rounded-full border border-[#e0d5bd] bg-[#ffffff] px-3.5 py-1.5 xl:flex xl:max-w-xs">
-              <Search size={14} className="shrink-0 text-[#b6a98f]" />
-              <input name="q" placeholder="Search jobs, baristas, or cafes..." aria-label="Search" className="h-6 w-full bg-transparent text-xs text-[#2b2118] placeholder:text-[#b6a98f] focus:outline-none" />
-            </form>
-          )}
-          {light && (
-            <span className="ml-1 hidden items-center gap-1 rounded-full px-2 py-2 text-xs font-bold text-[#2f2721]/70 lg:inline-flex">
-              <MapPin size={14} /> Yogyakarta
-            </span>
-          )}
-          {user ? (
-            <>
-              <Link
-                href={profileHref}
-                className={light
-                  ? "hidden rounded-lg px-3 py-2 text-sm font-semibold text-[#2f2721]/70 hover:text-[#6f5a3e] sm:block"
-                  : "hidden rounded-lg px-3 py-2 text-sm font-semibold text-espresso-soft hover:text-caramel sm:block"}
-              >
-                Profil
-              </Link>
-              <Link
-                href="/messages"
-                aria-label="Pesan"
-                className={light
-                  ? "rounded-full p-2 text-[#2f2721]/70 hover:bg-[#2f2721]/10 hover:text-[#6f5a3e]"
-                  : "rounded-full p-2 text-espresso-soft hover:bg-cream-dark hover:text-caramel"}
-              >
-                <MessageSquareText size={19} />
-              </Link>
-              <button
-                onClick={handleLogout}
-                disabled={busy}
-                aria-label="Keluar"
-                title="Keluar"
-                className={light
-                  ? "rounded-full p-2 text-[#2f2721]/70 hover:bg-[#2f2721]/10 hover:text-red-700 disabled:opacity-50"
-                  : "rounded-full p-2 text-espresso-soft hover:bg-cream-dark hover:text-red-500 disabled:opacity-50"}
-              >
-                <LogOut size={18} />
-              </button>
-            </>
-          ) : (
-            <>
-              <Link
-                href="/login"
-                className={light
-                  ? "rounded-xl px-4 py-2 text-sm font-bold text-[#2f2721] hover:text-[#6f5a3e]"
-                  : "rounded-xl px-4 py-2 text-sm font-bold text-espresso hover:text-caramel"}
-              >
-                Masuk
-              </Link>
-              <Link
-                href="/signup?role=owner"
-                className="hidden rounded-full bg-[#3d2c1e] px-4 py-2 text-sm font-bold text-white hover:bg-[#2e2015] sm:block"
-              >
-                Post a Job
-              </Link>
-              <Link
-                href="/signup"
-                className="rounded-xl bg-caramel px-4 py-2 text-sm font-bold text-white shadow-sm hover:bg-caramel-dark"
-              >
-                Daftar
-              </Link>
-            </>
-          )}
         </nav>
+
+        <form
+          action="/jobs"
+          method="GET"
+          role="search"
+          className="ml-auto hidden min-w-0 items-center gap-2 rounded-full border border-[#e0d5bd] bg-[#ffffff] px-3.5 py-1.5 md:flex md:max-w-52 lg:max-w-xs lg:flex-1"
+        >
+          <Search size={14} className="shrink-0 text-[#b6a98f]" aria-hidden="true" />
+          <label htmlFor="nav-search" className="sr-only">Cari lowongan, barista, atau cafe</label>
+          <input id="nav-search" name="q" placeholder="Search jobs, baristas, or cafés..." autoComplete="off" className="h-6 w-full bg-transparent text-xs text-[#2b2118] placeholder:text-[#b6a98f] focus:outline-none" />
+        </form>
+
+        <label className="hidden items-center gap-1 rounded-full px-1 py-2 text-xs font-bold text-[#2f2721]/70 lg:inline-flex">
+          <MapPin size={14} aria-hidden="true" />
+          <span className="sr-only">Pilih lokasi</span>
+          <select
+            defaultValue=""
+            onChange={(e) => goJobsWithLoc(e.target.value)}
+            aria-label="Pilih lokasi"
+            className="max-w-28 cursor-pointer bg-transparent outline-none"
+          >
+            <option value="">Semua lokasi</option>
+            {CITIES.map((c) => (
+              <option key={c} value={c}>{c}</option>
+            ))}
+          </select>
+        </label>
+
+        {user ? (
+          <>
+            <Link
+              href="/messages"
+              aria-label="Pesan"
+              title="Pesan"
+              className="shrink-0 rounded-full p-2 text-[#2f2721]/70 hover:bg-[#2f2721]/10 hover:text-[#6f5a3e]"
+            >
+              <MessageSquareText size={19} />
+            </Link>
+            <Link
+              href="/messages"
+              aria-label="Notifikasi"
+              title="Notifikasi"
+              className="hidden shrink-0 rounded-full p-2 text-[#2f2721]/70 hover:bg-[#2f2721]/10 hover:text-[#6f5a3e] sm:block"
+            >
+              <Bell size={19} />
+            </Link>
+            <div className="relative shrink-0">
+              <button
+                type="button"
+                onClick={() => setMenuOpen((o) => !o)}
+                aria-expanded={menuOpen}
+                aria-haspopup="menu"
+                className="flex items-center gap-1.5 rounded-full py-1 pr-1 pl-1 hover:bg-[#2f2721]/10"
+              >
+                <span aria-hidden="true" className="flex h-8 w-8 items-center justify-center rounded-full bg-[#3d2c1e] text-xs font-extrabold text-white">
+                  {initial}
+                </span>
+                {roleLabel && (
+                  <span className="hidden text-left leading-tight xl:block">
+                    <span className="block max-w-24 truncate text-xs font-bold text-[#2f2721]">{user.email?.split("@")[0]}</span>
+                    <span className="block text-[10px] text-[#2f2721]/60">{roleLabel}</span>
+                  </span>
+                )}
+                <ChevronDown size={14} className="text-[#2f2721]/60" aria-hidden="true" />
+              </button>
+              {menuOpen && (
+                <div role="menu" className="absolute right-0 mt-1 w-44 overflow-hidden rounded-xl border border-[#e0d5bd] bg-[#ffffff] py-1 shadow-lg">
+                  <Link href={home} role="menuitem" onClick={() => setMenuOpen(false)} className="block px-4 py-2 text-sm font-semibold text-[#2f2721] hover:bg-[#f5f1e8]">
+                    Dashboard
+                  </Link>
+                  <Link href={profileHref} role="menuitem" onClick={() => setMenuOpen(false)} className="block px-4 py-2 text-sm font-semibold text-[#2f2721] hover:bg-[#f5f1e8]">
+                    Profil
+                  </Link>
+                  <button
+                    type="button"
+                    role="menuitem"
+                    onClick={handleLogout}
+                    disabled={busy}
+                    className="flex w-full items-center gap-2 px-4 py-2 text-left text-sm font-semibold text-red-700 hover:bg-[#f5f1e8] disabled:opacity-50"
+                  >
+                    <LogOut size={15} /> Keluar
+                  </button>
+                </div>
+              )}
+            </div>
+            <Link
+              href={postJobHref}
+              className="hidden shrink-0 rounded-full bg-[#3d2c1e] px-4 py-2 text-sm font-bold whitespace-nowrap text-white hover:bg-[#2e2015] sm:block"
+            >
+              Post a Job
+            </Link>
+          </>
+        ) : (
+          <>
+            <Link
+              href="/login"
+              className="shrink-0 rounded-xl px-3 py-2 text-sm font-bold whitespace-nowrap text-[#2f2721] hover:text-[#6f5a3e]"
+            >
+              Masuk
+            </Link>
+            <Link
+              href="/signup?role=owner"
+              className="hidden shrink-0 rounded-full bg-[#3d2c1e] px-4 py-2 text-sm font-bold whitespace-nowrap text-white hover:bg-[#2e2015] md:block"
+            >
+              Post a Job
+            </Link>
+            <Link
+              href="/signup"
+              className="shrink-0 rounded-xl bg-caramel px-4 py-2 text-sm font-bold whitespace-nowrap text-white shadow-sm hover:bg-caramel-dark"
+            >
+              Daftar
+            </Link>
+          </>
+        )}
       </div>
     </header>
   );
