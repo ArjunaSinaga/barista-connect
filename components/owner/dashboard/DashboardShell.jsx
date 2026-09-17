@@ -55,7 +55,7 @@ export default function DashboardShell({ initialView = "talenta", sidebar, middl
               />
             )
           ) : (
-            <TalentaView {...middle.talenta} />
+            <TalentaView {...middle.talenta} onNavigate={setView} />
           )}
         </div>
         {middle.talenta.top3?.length > 0 && (

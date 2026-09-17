@@ -1,6 +1,8 @@
+import Link from "next/link";
 import { ChevronRight } from "lucide-react";
 
 // Kartu statistik bersama: varian lingkaran-ikon (talenta) & label-inline (active/pelamar).
+// Tanpa onSelect/href: <div> statis seperti sebelumnya. Dengan salah satunya: interaktif penuh (button/link).
 export default function StatCard({
   icon: Icon,
   label,
@@ -11,6 +13,8 @@ export default function StatCard({
   chevron = false,
   circled = true,
   valueClass = "text-[#2b2118]",
+  onSelect = null,
+  href = null,
 }) {
   if (dark) {
     return (
@@ -21,8 +25,8 @@ export default function StatCard({
       </div>
     );
   }
-  return (
-    <div className="rounded-2xl border border-[#e8e0cf] bg-[#ffffff] p-3 shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
+  const inner = (
+    <>
       <p
         className={
           circled
@@ -37,7 +41,7 @@ export default function StatCard({
         )}
         {Icon && !circled && <Icon size={12} aria-hidden="true" />}
         <span className="min-w-0 flex-1 truncate">{label}</span>
-        {chevron && <ChevronRight size={13} aria-hidden="true" className="shrink-0 text-[#b6a98f]" />}
+        {(chevron || onSelect || href) && <ChevronRight size={13} aria-hidden="true" className="shrink-0 text-[#b6a98f]" />}
       </p>
       <p className={`mt-1 text-xl font-black tracking-tight tabular-nums ${valueClass}`}>{value}</p>
       {(sub || delta) && (
@@ -46,6 +50,34 @@ export default function StatCard({
           {sub}
         </p>
       )}
+    </>
+  );
+  if (onSelect) {
+    return (
+      <button
+        type="button"
+        onClick={onSelect}
+        aria-label={`Lihat ${label}`}
+        className="block w-full cursor-pointer rounded-2xl border border-[#e8e0cf] bg-[#ffffff] p-3 text-left shadow-[0_1px_3px_rgba(43,33,24,0.08)] hover:border-[#3d2c1e]"
+      >
+        {inner}
+      </button>
+    );
+  }
+  if (href) {
+    return (
+      <Link
+        href={href}
+        aria-label={`Lihat ${label}`}
+        className="block rounded-2xl border border-[#e8e0cf] bg-[#ffffff] p-3 shadow-[0_1px_3px_rgba(43,33,24,0.08)] hover:border-[#3d2c1e]"
+      >
+        {inner}
+      </Link>
+    );
+  }
+  return (
+    <div className="rounded-2xl border border-[#e8e0cf] bg-[#ffffff] p-3 shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
+      {inner}
     </div>
   );
 }
