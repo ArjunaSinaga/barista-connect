@@ -109,7 +109,9 @@ function SignupForm() {
       const msg =
         err?.code === "user_already_exists"
           ? "Email sudah terdaftar, coba masuk"
-          : err?.message || "Gagal mendaftar";
+          : err?.code === "email_provider_disabled"
+            ? "Pendaftaran sedang dimatikan sementara, coba lagi nanti"
+            : err?.message || "Gagal mendaftar";
       toast(msg, "error");
     } finally {
       setBusy(false);
