@@ -8,6 +8,7 @@ import Button from "@/components/ui/Button";
 import { Input } from "@/components/ui/Field";
 import { useToast } from "@/components/ui/toast";
 import { createClient } from "@/lib/supabase/client";
+import { SITE_URL } from "@/lib/site";
 
 export default function ForgotPasswordPage() {
   return (
@@ -31,7 +32,8 @@ function ForgotPasswordForm() {
     try {
       const supabase = createClient();
       const { error } = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: `${window.location.origin}/auth/confirm?next=/update-password`,
+        // Selalu ke website live — link dari localhost bakal mati di tangan user
+        redirectTo: `${SITE_URL}/auth/confirm?next=/update-password`,
       });
       if (error) throw error;
       setSent(true);

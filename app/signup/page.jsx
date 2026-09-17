@@ -8,6 +8,7 @@ import Button from "@/components/ui/Button";
 import { Input } from "@/components/ui/Field";
 import { useToast } from "@/components/ui/toast";
 import { createClient } from "@/lib/supabase/client";
+import { SITE_URL } from "@/lib/site";
 import { signUpSchema } from "@/lib/validation";
 import { isPwned } from "@/lib/pwned";
 
@@ -65,6 +66,10 @@ function SignupForm() {
       const { data, error } = await supabase.auth.signUp({
         email,
         password,
+        options: {
+          // Email konfirmasi selalu mendarat di website live, bukan localhost
+          emailRedirectTo: `${SITE_URL}/auth/confirm?next=/onboarding/${role}`,
+        },
       });
       if (error) throw error;
 
