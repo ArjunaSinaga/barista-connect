@@ -14,15 +14,13 @@ export default async function InboxPage() {
   const isOwner = profile?.role === "owner";
 
   const supabase = await createClient();
-  const { data: convs } = await supabase
+  const { data: convRows } = await supabase
     .from("conversations")
-    .select(
-      `id, owner_id, barista_id, needs_human,
-       owners ( id, business_name ),
-       barista_profiles ( id, full_name, profile_picture_url )`
-    )
+    .select("id, owner_id, barista_id, needs_human")
     .or(`owner_id.eq.${user.id},barista_id.eq.${user.id}`)
     .order("created_at", { ascending: false });
+  const { attachConversationNames } = await import("@/lib/publicProfiles");
+  const convs = await attachConversationNames(convRows ?? [], supabase);
 
   // last message per thread
   let lastByConv = {};
@@ -92,12 +90,12 @@ export default async function InboxPage() {
                       {counterpart.name}
                     </p>
                     {c.needs_human && (
-                      <Badge classes="bg-caramel/10 text-caramel">✨ butuh kamu</Badge>
+                      <Badge classes="bg-caramel/10 text-caramel">butuh kamu</Badge>
                     )}
                   </div>
                   <p className="truncate text-xs text-espresso-soft">
                     {last
-                      ? `${last.is_ai ? "✨ " : ""}${last.body}`
+                      ? `${last.is_ai ? "[AI] " : ""}${last.body}`
                       : "Belum ada pesan — mulai ngobrol!"}
                   </p>
                 </div>

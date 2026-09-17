@@ -21,6 +21,7 @@ export default function ChatWindow({
   const [input, setInput] = useState("");
   const [sending, setSending] = useState(false);
   const [suggesting, setSuggesting] = useState(false);
+  const [suggestFailed, setSuggestFailed] = useState(false);
   const [aiHandedOff, setAiHandedOff] = useState(false);
   const bottomRef = useRef(null);
 
@@ -112,28 +113,32 @@ export default function ChatWindow({
   async function handleSuggest() {
     if (suggesting) return;
     setSuggesting(true);
+    setSuggestFailed(false);
     let json = null;
-    try {
-      const res = await fetch("/api/ai/suggest", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ conversationId }),
-      });
-      json = await res.json();
-      if (!res.ok || !json.draft) {
-        throw new Error(json.error || "no draft");
+    for (let attempt = 0; attempt < 2; attempt++) {
+      try {
+        const res = await fetch("/api/ai/suggest", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ conversationId }),
+        });
+        json = await res.json();
+        if (!res.ok || !json.draft) throw new Error(json.error || "no draft");
+        setInput(json.draft);
+        setSuggesting(false);
+        return;
+      } catch {
+        if (attempt === 0) continue; // coba sekali lagi otomatis
+        setSuggestFailed(true);
+        toast(
+          json?.error === "AI not configured"
+            ? "AI belum aktif — isi GEMINI_API_KEY di .env.local"
+            : "AI sedang tidak tersedia, coba lagi",
+          "error"
+        );
       }
-      setInput(json.draft);
-    } catch {
-      toast(
-        json?.error === "AI not configured"
-          ? "AI belum aktif — isi GEMINI_API_KEY di .env.local"
-          : "AI sedang tidak tersedia",
-        "error"
-      );
-    } finally {
-      setSuggesting(false);
     }
+    setSuggesting(false);
   }
 
   return (
@@ -249,7 +254,7 @@ export default function ChatWindow({
               </>
             ) : (
               <>
-                <Sparkles size={11} /> Sarankan balasan
+                <Sparkles size={11} /> {suggestFailed ? "Coba lagi" : "Sarankan balasan"}
               </>
             )}
           </button>

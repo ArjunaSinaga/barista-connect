@@ -12,16 +12,13 @@ export default async function ThreadPage({ params }) {
   const supabase = await createClient();
   const isOwner = profile?.role === "owner";
 
-  const { data: conv } = await supabase
+  const { data: convRow } = await supabase
     .from("conversations")
-    .select(
-      `id, owner_id, barista_id,
-       owners ( business_name ),
-       barista_profiles ( full_name, profile_picture_url ),
-       job_posts ( title )`
-    )
+    .select("id, owner_id, barista_id, job_posts ( title )")
     .eq("id", id)
     .maybeSingle();
+  const { attachConversationNames } = await import("@/lib/publicProfiles");
+  const [conv] = await attachConversationNames(convRow ? [convRow] : [], supabase);
 
   if (!conv || ![conv.owner_id, conv.barista_id].includes(user.id)) notFound();
 
