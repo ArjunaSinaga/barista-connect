@@ -3,10 +3,10 @@ import { ShieldCheck, Star, GraduationCap, BarChart3, ChevronRight } from "lucid
 
 // Tiap blok mandiri (kartu putih sendiri). Tanpa DB — statis kecuali foto.
 const ITEMS = [
-  { icon: <ShieldCheck size={18} className="text-[#1f6b4a]" />, tint: "bg-[#e3f0e8]", title: "Verified Experience", desc: "Work history verified by cafes", href: "/find-baristas" },
-  { icon: <Star size={18} className="text-[#8a6d1f]" />, tint: "bg-[#f5ecd4]", title: "Cafe Reviews & Ratings", desc: "Real feedback from employers", href: "/reviews" },
-  { icon: <GraduationCap size={18} className="text-[#1f6b4a]" />, tint: "bg-[#e3f0e8]", title: "Skilled Talent from Training", desc: "Baristas trained and certified by BaristaConnect", href: "/training" },
-  { icon: <BarChart3 size={18} className="text-[#1f6b4a]" />, tint: "bg-[#e3f0e8]", title: "Attendance & Shift Summary", desc: "Track attendance, shift fulfilment and reliability", badge: "Segera hadir", href: null },
+  { icon: <ShieldCheck size={18} className="text-[#1f6b4a]" />, tint: "bg-[#e3f0e8]", title: "Pengalaman Terverifikasi", desc: "Riwayat kerja diverifikasi kafe", href: "/find-baristas" },
+  { icon: <Star size={18} className="text-[#8a6d1f]" />, tint: "bg-[#f5ecd4]", title: "Ulasan & Rating Kafe", desc: "Penilaian asli dari pemberi kerja", href: "/reviews" },
+  { icon: <GraduationCap size={18} className="text-[#1f6b4a]" />, tint: "bg-[#e3f0e8]", title: "Talenta Hasil Pelatihan", desc: "Barista dilatih dan disertifikasi BaristaConnect", href: "/training" },
+  { icon: <BarChart3 size={18} className="text-[#1f6b4a]" />, tint: "bg-[#e3f0e8]", title: "Rekap Hadir & Shift", desc: "Pantau kehadiran dan reliabilitas tim", badge: "Segera hadir", href: null },
 ];
 
 function EcosystemRow({ it }) {
@@ -34,8 +34,8 @@ function EcosystemRow({ it }) {
 export function EcosystemCard() {
   return (
     <div className="rounded-2xl border border-[#e8e0cf] bg-[#ffffff] p-4 shadow-[0_1px_3px_rgba(43,33,24,0.08)] lg:min-h-full">
-      <h3 className="text-sm font-extrabold text-[#2b2118]">More than a job board</h3>
-      <p className="mt-0.5 text-xs text-[#857768]">A complete coffee hiring ecosystem.</p>
+      <h3 className="text-sm font-extrabold text-[#2b2118]">Lebih dari papan loker</h3>
+      <p className="mt-0.5 text-xs text-[#857768]">Ekosistem rekrutmen kopi yang lengkap.</p>
       <ul className="mt-2 space-y-1">
         {ITEMS.map((it) => (
           <li key={it.title}>
@@ -48,23 +48,23 @@ export function EcosystemCard() {
 }
 
 export function AcademyCard({ image }) {
-  const points = ["Beginner to Advanced", "Learn from Industry Experts", "Get Certified by BaristaConnect"];
+  const points = ["Pemula sampai Mahir", "Belajar dari Praktisi Industri", "Sertifikasi BaristaConnect"];
   return (
     <div className="rounded-2xl border border-[#e8e0cf] bg-[#ffffff] p-4 shadow-[0_1px_3px_rgba(43,33,24,0.08)] lg:min-h-full">
       <div className="flex items-center justify-between">
         <h3 className="text-sm font-extrabold text-[#2b2118]">BaristaConnect Academy</h3>
         <Link href="/training" className="inline-flex shrink-0 items-center gap-0.5 text-xs font-bold text-[#2b6cb0] hover:underline">
-          View all courses <ChevronRight size={13} />
+          Lihat semua kursus <ChevronRight size={13} />
         </Link>
       </div>
       <div className="mt-2 grid grid-cols-2 items-stretch gap-2">
         <div className="min-w-0">
-          <p className="text-[15px] leading-6 font-extrabold text-[#2b2118]">Barista training for a brighter tomorrow.</p>
+          <p className="text-[15px] leading-6 font-extrabold text-[#2b2118]">Pelatihan barista untuk hari esok yang cerah.</p>
           <p className="mt-1 text-xs leading-5 text-[#857768]">
-            From beginner to advanced, our industry-led courses help baristas build real skills and cafe-ready confidence.
+            Dari pemula sampai mahir, kursus berbasis industri membantu barista membangun skill asli dan kepercayaan diri siap kafe.
           </p>
           <Link href="/training" className="mt-3 inline-flex min-h-[40px] items-center justify-center rounded-full bg-[#3d2c1e] px-5 text-[13px] font-bold text-white hover:bg-[#2e2015]">
-            Explore Courses
+            Jelajahi Kursus
           </Link>
         </div>
         <div className="relative min-h-44 overflow-hidden rounded-xl">

@@ -36,11 +36,11 @@ export default function LatestJobs({ jobs }) {
     <div className="rounded-2xl border border-[#e8e0cf] bg-[#ffffff] p-5 shadow-[0_1px_3px_rgba(43,33,24,0.08)] lg:min-h-full">
       <div className="flex items-start justify-between gap-2">
         <div>
-          <h2 className="text-base font-extrabold tracking-tight text-[#2b2118]">Latest Barista Jobs <span className="ml-1 rounded-full bg-[#efe9d9] px-2 py-0.5 text-[11px] font-bold text-[#6f6252]">{jobs.length}</span></h2>
-          <p className="mt-0.5 text-[11px] text-[#857768]">Great cafes. Real opportunities. Find your next role in coffee.</p>
+          <h2 className="text-base font-extrabold tracking-tight text-[#2b2118]">Loker Barista Terbaru <span className="ml-1 rounded-full bg-[#efe9d9] px-2 py-0.5 text-[11px] font-bold text-[#6f6252]">{jobs.length}</span></h2>
+          <p className="mt-0.5 text-[11px] text-[#857768]">Kafe hebat. Peluang nyata. Temukan peran kopimu berikutnya.</p>
         </div>
         <Link href="/jobs" className="inline-flex shrink-0 items-center gap-0.5 text-xs font-bold text-[#2b6cb0] hover:underline">
-          View all jobs <ChevronRight size={13} />
+          Lihat semua loker <ChevronRight size={13} />
         </Link>
       </div>
       {jobs.length === 0 ? (
@@ -86,7 +86,7 @@ export default function LatestJobs({ jobs }) {
                       <Bookmark size={15} />
                     </button>
                   </span>
-                  <ApplyButton jobId={job.id} size="sm" variant="coffee" label="Quick Apply" jobTypes={types} />
+                  <ApplyButton jobId={job.id} size="sm" variant="coffee" label="Lamar" jobTypes={types} />
                 </div>
               </li>
             );
