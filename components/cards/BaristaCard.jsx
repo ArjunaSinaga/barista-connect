@@ -45,7 +45,7 @@ export default function BaristaCard({ barista, actions = null }) {
           </div>
         </div>
         <span className="shrink-0 rounded-xl bg-cream-dark px-2.5 py-1 text-[11px] font-extrabold text-espresso-soft">
-          {barista.years_of_experience} th exp
+          {barista.years_of_experience} thn
         </span>
       </div>
 

@@ -54,10 +54,10 @@ export default async function TrainingPage({ searchParams }) {
   return (
     <div className="mx-auto max-w-5xl px-4 py-8">
       <p className="text-[11px] font-bold tracking-[0.18em] text-[#857768] uppercase">
-        A stronger coffee community
+        Komunitas kopi yang kuat
       </p>
       <h1 className="font-display mt-1 text-2xl font-semibold tracking-tight text-[#2b2118] sm:text-3xl">
-        Build a stronger team <span className="text-[#1f6b4a]">through training.</span>
+        Bangun tim kuat <span className="text-[#1f6b4a]">lewat pelatihan.</span>
       </h1>
       <p className="mt-1 max-w-xl text-sm leading-6 text-[#6f6252]">
         Katalog kursus barista — dari dasar sampai mahir. Pendaftaran dibuka bertahap,
