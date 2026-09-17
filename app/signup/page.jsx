@@ -31,14 +31,17 @@ function SignupForm() {
   const params = useSearchParams();
   const toast = useToast();
   const [role, setRole] = useState(params.get("role") === "owner" ? "owner" : "");
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
+  const [confirm, setConfirm] = useState("");
   const [errors, setErrors] = useState({});
   const [busy, setBusy] = useState(false);
 
   async function handleSubmit(e) {
     e.preventDefault();
-    const parsed = signUpSchema.safeParse({ email, password });
+    const parsed = signUpSchema.safeParse({ name, email, phone, password, confirm });
     if (!parsed.success) {
       const errs = {};
       parsed.error.issues.forEach((i) => (errs[i.path[0]] = i.message));
@@ -76,6 +79,17 @@ function SignupForm() {
         .from("profiles")
         .insert({ id: data.user.id, role, email });
       if (profileError) throw profileError;
+
+      // Prefill nama/HP ke tabel detail biar tak hilang sebelum onboarding (abaikan gagal — onboarding yang lengkapi).
+      try {
+        if (role === "owner") {
+          await supabase.from("owners").insert({ id: data.user.id, business_name: name, whatsapp: phone || null });
+        } else {
+          await supabase.from("barista_profiles").insert({ id: data.user.id, full_name: name, whatsapp: phone || null });
+        }
+      } catch {
+        // diam: onboarding tetap jalan
+      }
 
       router.push(`/onboarding/${role}`);
       router.refresh();
@@ -133,6 +147,16 @@ function SignupForm() {
 
       <form onSubmit={handleSubmit} className="mt-6 space-y-4">
         <Input
+          name="name"
+          type="text"
+          label="Nama"
+          placeholder="Nama lengkap / nama usaha"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          error={errors.name}
+          autoComplete="name"
+        />
+        <Input
           name="email"
           type="email"
           label="Email"
@@ -143,6 +167,16 @@ function SignupForm() {
           autoComplete="email"
         />
         <Input
+          name="phone"
+          type="tel"
+          label="No. HP / WA"
+          placeholder="08xxxxxxxxxx"
+          value={phone}
+          onChange={(e) => setPhone(e.target.value)}
+          error={errors.phone}
+          autoComplete="tel"
+        />
+        <Input
           name="password"
           type="password"
           label="Password"
@@ -150,6 +184,16 @@ function SignupForm() {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           error={errors.password}
+          autoComplete="new-password"
+        />
+        <Input
+          name="confirm"
+          type="password"
+          label="Konfirmasi password"
+          placeholder="Ulangi password"
+          value={confirm}
+          onChange={(e) => setConfirm(e.target.value)}
+          error={errors.confirm}
           autoComplete="new-password"
         />
         <Button type="submit" full size="lg" variant="coffee" disabled={busy}>

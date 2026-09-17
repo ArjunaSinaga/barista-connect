@@ -3,9 +3,9 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
-import { Bell, ChevronDown, Coffee, LogOut, MapPin, MessageSquareText, Search } from "lucide-react";
+import { Bell, ChevronDown, Coffee, LogOut, MessageSquareText } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
-import { APP_NAME, CITIES } from "@/lib/constants";
+import { APP_NAME } from "@/lib/constants";
 
 const NAV = [
   { label: "Jobs", href: "/jobs", match: ["/jobs"] },
@@ -24,8 +24,6 @@ export default function Navbar({ user, role }) {
   const postJobHref = role === "owner" ? "/dashboard/owner/jobs/new" : "/signup?role=owner";
   const initial = (user?.email?.[0] ?? "?").toUpperCase();
   const roleLabel = role === "owner" ? "Owner" : role === "barista" ? "Barista" : null;
-  // Search navbar: owner cari talenta, barista/anon cari lowongan.
-  const searchAction = role === "owner" ? "/find-baristas" : "/jobs";
 
   async function handleLogout() {
     setBusy(true);
@@ -35,10 +33,7 @@ export default function Navbar({ user, role }) {
     router.refresh();
   }
 
-  function goJobsWithLoc(loc) {
-    if (!loc) return;
-    router.push(`/jobs?loc=${encodeURIComponent(loc)}`);
-  }
+
 
   const isActive = (m) => m.some((p) => pathname === p || pathname?.startsWith(p + "/"));
   const forOwnersActive = pathname?.startsWith("/dashboard/owner") || pathname === "/signup";
@@ -81,33 +76,6 @@ export default function Navbar({ user, role }) {
             For Owners
           </Link>
         </nav>
-
-        <form
-          action={searchAction}
-          method="GET"
-          role="search"
-          className="ml-auto hidden min-w-0 items-center gap-2 rounded-full border border-[#e0d5bd] bg-[#ffffff] px-3.5 py-1.5 md:flex md:max-w-52 lg:max-w-xs lg:flex-1"
-        >
-          <Search size={14} className="shrink-0 text-[#b6a98f]" aria-hidden="true" />
-          <label htmlFor="nav-search" className="sr-only">Cari lowongan, barista, atau cafe</label>
-          <input id="nav-search" name="q" placeholder="Search jobs, baristas, or cafés..." autoComplete="off" className="h-6 w-full bg-transparent text-xs text-[#2b2118] placeholder:text-[#b6a98f] focus:outline-none" />
-        </form>
-
-        <label className="hidden items-center gap-1 rounded-full px-1 py-2 text-xs font-bold text-[#2f2721]/70 lg:inline-flex">
-          <MapPin size={14} aria-hidden="true" />
-          <span className="sr-only">Pilih lokasi</span>
-          <select
-            defaultValue=""
-            onChange={(e) => goJobsWithLoc(e.target.value)}
-            aria-label="Pilih lokasi"
-            className="max-w-28 cursor-pointer bg-transparent outline-none"
-          >
-            <option value="">Semua lokasi</option>
-            {CITIES.map((c) => (
-              <option key={c} value={c}>{c}</option>
-            ))}
-          </select>
-        </label>
 
         {user ? (
           <>
@@ -176,16 +144,16 @@ export default function Navbar({ user, role }) {
         ) : (
           <>
             <Link
+              href="/signup?role=owner"
+              className="ml-auto hidden shrink-0 rounded-full bg-[#3d2c1e] px-4 py-2 text-sm font-bold whitespace-nowrap text-white hover:bg-[#2e2015] md:block"
+            >
+              Post a Job
+            </Link>
+            <Link
               href="/login"
               className="shrink-0 rounded-xl px-3 py-2 text-sm font-bold whitespace-nowrap text-[#2f2721] hover:text-[#6f5a3e]"
             >
               Masuk
-            </Link>
-            <Link
-              href="/signup?role=owner"
-              className="hidden shrink-0 rounded-full bg-[#3d2c1e] px-4 py-2 text-sm font-bold whitespace-nowrap text-white hover:bg-[#2e2015] md:block"
-            >
-              Post a Job
             </Link>
             <Link
               href="/signup"

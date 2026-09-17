@@ -1,13 +1,14 @@
 import Link from "next/link";
 import { Suspense } from "react";
-import { Search, MapPin } from "lucide-react";
+import { Search } from "lucide-react";
 import { createClient, getSessionSafe, isSupabaseConfigured } from "@/lib/supabase/server";
-import { CITIES, EMPLOYMENT_TYPES } from "@/lib/constants";
+import { EMPLOYMENT_TYPES } from "@/lib/constants";
 import { avgStars } from "@/lib/ratings";
 import { EmptyState } from "@/components/ui/EmptyState";
 import JobsProfileCard from "@/components/jobs/JobsProfileCard";
 import JobListRow from "@/components/jobs/JobListRow";
 import JobDetailPanel from "@/components/jobs/JobDetailPanel";
+import JobsSearchForm from "@/components/jobs/JobsSearchForm";
 import SortSelect from "@/components/jobs/SortSelect";
 
 export const metadata = { title: "Jobs" };
@@ -141,44 +142,7 @@ export default async function JobsPage({ searchParams }) {
               <p className="mt-1 max-w-xl text-xs leading-5 text-white/70">
                 Jobs for people who live and breathe coffee.
               </p>
-              <form action="/jobs" method="GET" role="search" className="mt-3 flex flex-col gap-2 sm:flex-row">
-                <div className="flex min-w-0 flex-1 items-center gap-2 rounded-full bg-[#ffffff] px-4 py-2">
-                  <Search size={14} className="shrink-0 text-[#b6a98f]" aria-hidden="true" />
-                  <label htmlFor="jobs-q" className="sr-only">Cari lowongan</label>
-                  <input
-                    id="jobs-q"
-                    name="q"
-                    defaultValue={q}
-                    placeholder="Search job title, café, or keyword..."
-                    autoComplete="off"
-                    className="h-6 w-full bg-transparent text-xs text-[#2b2118] placeholder:text-[#b6a98f] focus:outline-none"
-                  />
-                </div>
-                <div className="flex min-w-0 items-center gap-2">
-                  <div className="flex min-w-0 flex-1 items-center gap-1.5 rounded-full bg-[#ffffff] px-4 py-2 sm:flex-none">
-                    <MapPin size={14} className="shrink-0 text-[#b6a98f]" aria-hidden="true" />
-                    <label htmlFor="jobs-loc" className="sr-only">Lokasi</label>
-                    <select
-                      id="jobs-loc"
-                      name="loc"
-                      defaultValue={loc}
-                      className="h-6 w-full cursor-pointer bg-transparent text-xs font-bold text-[#2b2118] outline-none sm:w-32"
-                    >
-                      <option value="">Semua lokasi</option>
-                      {CITIES.map((c) => (
-                        <option key={c} value={c}>{c}</option>
-                      ))}
-                    </select>
-                  </div>
-                  {type && <input type="hidden" name="type" value={type} />}
-                  <button
-                    type="submit"
-                    className="inline-flex min-h-[36px] shrink-0 items-center rounded-full bg-[#c98a2b] px-5 text-xs font-bold text-white hover:brightness-95"
-                  >
-                    Search
-                  </button>
-                </div>
-              </form>
+              <JobsSearchForm q={q} loc={loc} type={type} />
             </div>
 
             <div className="flex flex-wrap items-center gap-1.5">
