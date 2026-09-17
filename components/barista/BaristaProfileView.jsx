@@ -15,7 +15,7 @@ export default function BaristaProfileView({
       {isSelf && (
         <div className="mb-4 flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-caramel/30 bg-caramel/10 px-5 py-3.5">
           <p className="text-sm font-semibold text-espresso">
-            Ini tampilan publik profilmu — begini owner lain melihatmu.
+            Ini tampilan publik profilmu — begini kafe lain melihatmu.
           </p>
           {editHref && (
             <Link href={editHref} className="rounded-xl bg-[#3d2c1e] px-4 py-2 text-sm font-bold text-white hover:bg-[#2e2015]">
@@ -77,7 +77,7 @@ export default function BaristaProfileView({
       )}
 
       <section className="mt-4 rounded-2xl card-dark p-6 text-center">
-        <h2 className="text-xs font-extrabold tracking-wide text-espresso uppercase">Rating dari owner ({ratings?.length ?? 0})</h2>
+        <h2 className="text-xs font-extrabold tracking-wide text-espresso uppercase">Rating dari kafe ({ratings?.length ?? 0})</h2>
         {isOwner && rateableTeam && (
           <div className="mt-3">
             <RatingForm teamMemberId={rateableTeam.id} ownerId={viewerId} baristaId={b.id} existing={myRating} />

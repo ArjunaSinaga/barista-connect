@@ -96,21 +96,21 @@ export function SmarterOpsCard() {
   return (
     <div className="rounded-2xl border border-[#e8e0cf] bg-[#ffffff] p-4 shadow-[0_1px_3px_rgba(43,33,24,0.08)] lg:min-h-full">
       <div className="flex items-center justify-between gap-2">
-        <h3 className="text-sm font-extrabold text-[#2b2118]">For Cafe Owners: Smarter Operations</h3>
-        <span className="shrink-0 rounded-full bg-[#e3ecf5] px-2 py-0.5 text-[10px] font-bold text-[#2b5f8a]">Coming Soon</span>
+        <h3 className="text-sm font-extrabold text-[#2b2118]">Untuk Pemilik Kafe: Operasional Cerdas</h3>
+        <span className="shrink-0 rounded-full bg-[#e3ecf5] px-2 py-0.5 text-[10px] font-bold text-[#2b5f8a]">Segera Hadir</span>
       </div>
-      <p className="mt-1 text-[15px] leading-6 font-extrabold text-[#2b2118]">See more than just talent. Build a better team.</p>
+      <p className="mt-1 text-[15px] leading-6 font-extrabold text-[#2b2118]">Lihat lebih dari sekadar talenta. Bangun tim lebih baik.</p>
       <p className="mt-1 text-xs leading-5 text-[#857768]">
-        Track attendance, shift fulfilment, reliability scores and more. Make data-driven decisions and run a smoother, stronger cafe.
+        Pantau kehadiran, shift, dan skor reliabilitas. Ambil keputusan berbasis data dan jalankan kafe lebih rapi.
       </p>
       <div className="mt-3 rounded-xl border-2 border-dashed border-[#e0d5bd] bg-[#faf7ef] p-4 text-center">
-        <p className="text-xs font-extrabold text-[#2b2118]">Team Overview (Phase 2)</p>
+        <p className="text-xs font-extrabold text-[#2b2118]">Ringkasan Tim</p>
         <p className="mx-auto mt-1 max-w-55 text-[11px] leading-4 text-[#857768]">
           Pratinjau tampilan — grafik kehadiran &amp; reliabilitas tim tampil di sini saat fitur rilis. Tanpa angka contoh.
         </p>
       </div>
       <Link href="/signup" className="mt-3 inline-flex min-h-[40px] items-center justify-center rounded-full border border-[#d8cdae] px-5 text-[13px] font-bold text-[#3d2c1e] hover:border-[#3d2c1e]">
-        Join the Waitlist
+        Ikut Daftar Tunggu
       </Link>
     </div>
   );

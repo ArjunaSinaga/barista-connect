@@ -23,7 +23,7 @@ export default function Navbar({ user, role }) {
   const profileHref = role === "owner" ? "/dashboard/owner/profile" : "/dashboard/barista/profile";
   const postJobHref = role === "owner" ? "/dashboard/owner/jobs/new" : "/signup?role=owner";
   const initial = (user?.email?.[0] ?? "?").toUpperCase();
-  const roleLabel = role === "owner" ? "Owner" : role === "barista" ? "Barista" : null;
+  const roleLabel = role === "owner" ? "Pemilik Kafe" : role === "barista" ? "Barista" : null;
 
   async function handleLogout() {
     setBusy(true);

@@ -26,15 +26,15 @@ export default function BottomCtaStrip({ hideForUser = false }) {
           <X size={15} strokeWidth={2.5} />
         </button>
         <div className="min-w-0 flex-1">
-          <p className="text-sm font-bold text-[#f5f1e8]">Good people make great coffee.</p>
-          <p className="truncate text-[11px] text-[#f5f1e8]/60">Join thousands of baristas and cafe owners building a stronger coffee community.</p>
+          <p className="text-sm font-bold text-[#f5f1e8]">Orang hebat meracik kopi hebat.</p>
+          <p className="truncate text-[11px] text-[#f5f1e8]/60">Gabung ribuan barista dan pemilik kafe membangun komunitas kopi.</p>
         </div>
         <div className="flex shrink-0 items-center gap-2 pr-6">
           <Link href="/signup?role=barista" className="inline-flex min-h-[36px] items-center rounded-full bg-[#f5f1e8] px-5 text-xs font-bold text-[#2b1c11] hover:bg-white">
-            I&apos;m a Barista
+            Saya Barista
           </Link>
           <Link href="/signup?role=owner" className="inline-flex min-h-[36px] items-center rounded-full border border-[#f5f1e8]/40 px-5 text-xs font-bold text-[#f5f1e8] hover:border-[#f5f1e8]">
-            I&apos;m a Cafe Owner
+            Saya Pemilik Kafe
           </Link>
         </div>
         <p className="font-chalk hidden pr-10 text-right text-sm leading-4 text-[#f5f1e8]/70 xl:block">Same People<br />Brighter Tomorrows</p>
