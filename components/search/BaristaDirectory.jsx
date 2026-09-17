@@ -58,8 +58,8 @@ export default function BaristaDirectory({ ownerId }) {
             .order("years_of_experience", { ascending: false });
 
     const { data } = await req;
-    const { attachRatings } = await import("@/lib/publicProfiles");
-    let rows = await attachRatings(data ?? [], supabase);
+    const { attachRatings } = await import("@/lib/publicProfilesClient");
+    let rows = await attachRatings(data ?? []);
 
     // q: cari di nama, lokasi, bio, + skill (client-side, karena array + or_ sekaligus ribet di PostgREST).
     const needle = q.trim().toLowerCase();

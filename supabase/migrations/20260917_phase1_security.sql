@@ -1,17 +1,10 @@
--- Phase 1: kunci keamanan + Gratis vs Bayar (centang biru).
--- ATURAN MAIN: STEP A bisa jalan kapan aja (aman). STEP B jalan BARENG
--- dengan code aplikasi di commit ini (query publik sudah pindah ke views).
---
+-- Phase 1: kunci keamanan + Gratis vs Bayar (centang biru). APPLIED 2026-09-17.
 -- Model akses:
---   GRATIS (anon / login biasa) : etalase saja via views (tanpa WA/CV/alamat).
---   BAYAR (is_verified=true)    : kontak terbuka — owner verified baca penuh
---                                 profil barista, barista verified baca penuh
---                                 profil owner. Plus hubungan lamaran (owner
---                                 lihat kontak pelamarnya sendiri) tetap jalan.
+--   GRATIS (anon / login biasa) : etalase via views (tanpa WA/CV/alamat).
+--   BAYAR (is_verified=true)    : kontak terbuka antar peran terverifikasi.
+--   Owner tetap baca penuh pelamar ke lokernya sendiri.
 
--- ============ STEP A (aman, tanpa ubah aplikasi) ============
--- Owner hanya bisa edit/hapus lowongan MILIKNYA (dulu: semua owner bisa
--- edit/hapus loker owner lain).
+-- 1. Owner hanya bisa edit/hapus lowongan MILIKNYA.
 drop policy if exists jobs_update_own on public.job_posts;
 create policy jobs_update_own on public.job_posts
   for update using (owner_id = (select auth.uid()));
@@ -20,8 +13,20 @@ drop policy if exists jobs_delete_own on public.job_posts;
 create policy jobs_delete_own on public.job_posts
   for delete using (owner_id = (select auth.uid()));
 
--- ============ STEP B (bareng code aplikasi) ============
--- 1. Etalase publik: views tanpa kolom sensitif.
+-- 2. Policy loker dipecah: anon tanpa sentuh tabel owners (subquery owners
+--    bikin anon 401 setelah revoke). Owner login lihat aktif + miliknya.
+drop policy if exists jobs_public_read_active on public.job_posts;
+drop policy if exists jobs_public_read_anon on public.job_posts;
+create policy jobs_public_read_anon on public.job_posts
+  for select to anon using (is_active = true);
+drop policy if exists jobs_read_owner on public.job_posts;
+create policy jobs_read_owner on public.job_posts
+  for select to authenticated using (
+    is_active = true
+    or owner_id = (select auth.uid())
+  );
+
+-- 3. Etalase publik: views tanpa kolom sensitif.
 create or replace view public.owners_public as
   select id, business_name, avatar_url, location, is_verified, created_at
   from public.owners;
@@ -35,19 +40,22 @@ create or replace view public.baristas_public as
 grant select on public.owners_public to anon, authenticated;
 grant select on public.baristas_public to anon, authenticated;
 
--- 2. Cabut baca langsung tabel oleh anon; yang login baca seperlunya.
+-- 4. Cabut baca langsung tabel oleh anon; yang login baca data sendiri.
 revoke select on public.owners from anon;
 revoke select on public.barista_profiles from anon;
 
 drop policy if exists owners_public_read on public.owners;
+drop policy if exists owners_read_own on public.owners;
 create policy owners_read_own on public.owners
   for select to authenticated using (id = (select auth.uid()));
 
 drop policy if exists barista_public_read on public.barista_profiles;
+drop policy if exists barista_read_own on public.barista_profiles;
 create policy barista_read_own on public.barista_profiles
   for select to authenticated using (id = (select auth.uid()));
 
--- 3. BAYAR: kontak terbuka untuk yang centang biru.
+-- 5. BAYAR: kontak terbuka untuk yang centang biru.
+drop policy if exists barista_read_by_verified_owner on public.barista_profiles;
 create policy barista_read_by_verified_owner on public.barista_profiles
   for select to authenticated using (
     exists (
@@ -56,6 +64,7 @@ create policy barista_read_by_verified_owner on public.barista_profiles
     )
   );
 
+drop policy if exists owners_read_by_verified_barista on public.owners;
 create policy owners_read_by_verified_barista on public.owners
   for select to authenticated using (
     exists (
@@ -64,7 +73,8 @@ create policy owners_read_by_verified_barista on public.owners
     )
   );
 
--- 4. GRATIS tapi relevan: owner lihat penuh pelamar yang melamar ke lokernya.
+-- 6. GRATIS tapi relevan: owner lihat penuh pelamar yang melamar ke lokernya.
+drop policy if exists barista_read_by_job_owner on public.barista_profiles;
 create policy barista_read_by_job_owner on public.barista_profiles
   for select to authenticated using (
     exists (
@@ -75,7 +85,7 @@ create policy barista_read_by_job_owner on public.barista_profiles
     )
   );
 
--- 5. Baca CV diperketat: cocokkan akhir URL persis (dulu LIKE longgar,
+-- 7. Baca CV diperketat: cocokkan akhir URL persis (dulu LIKE longgar,
 --    karakter % dan _ di nama file bisa bocor ke CV orang lain).
 drop policy if exists cvs_owner_read on storage.objects;
 create policy cvs_owner_read on storage.objects
