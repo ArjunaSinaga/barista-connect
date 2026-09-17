@@ -186,9 +186,9 @@ export default async function JobsPage({ searchParams }) {
             {!jobs.length ? (
               <EmptyState
                 icon={<Search size={20} />}
-                title={savedOnly ? "No saved jobs" : "No matching jobs"}
-                subtitle={savedOnly ? "Tap the bookmark on any job to keep it here." : "Try different keywords or clear the filters."}
-                actionLabel="View all"
+                title={savedOnly ? "Belum ada loker tersimpan" : "Tidak ada loker cocok"}
+                subtitle={savedOnly ? "Ketuk bookmark di loker mana pun untuk menyimpannya di sini." : "Coba kata kunci lain atau hapus filter."}
+                actionLabel="Lihat semua"
                 actionHref="/jobs"
               />
             ) : (
@@ -225,8 +225,8 @@ export default async function JobsPage({ searchParams }) {
             ) : (
               <EmptyState
                 icon={<Search size={20} />}
-                title="Select a job"
-                subtitle="Click any job to see its details here."
+                title="Pilih loker"
+                subtitle="Klik loker mana pun untuk melihat detailnya di sini."
               />
             )}
           </div>

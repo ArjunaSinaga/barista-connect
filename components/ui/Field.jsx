@@ -1,5 +1,11 @@
-export function Input({ label, error, className = "", id, ...props }) {
+"use client";
+import { useState } from "react";
+import { Eye, EyeOff } from "lucide-react";
+
+export function Input({ label, error, className = "", id, type, ...props }) {
   const fieldId = id || props.name;
+  const [show, setShow] = useState(false);
+  const isPassword = type === "password";
   return (
     <div className="w-full">
       {label && (
@@ -10,13 +16,26 @@ export function Input({ label, error, className = "", id, ...props }) {
           {label}
         </label>
       )}
+      <div className="relative">
       <input
         id={fieldId}
+        type={isPassword && show ? "text" : type}
         className={`w-full rounded-xl border bg-[#ffffff] px-4 py-2.5 text-sm text-[#2b2118] outline-none transition-colors placeholder:text-[#b6a98f] focus:border-[#3d2c1e] focus:ring-2 focus:ring-[#3d2c1e]/15 ${
           error ? "border-red-400" : "border-white/10"
-        } ${className}`}
+        } ${isPassword ? "pr-11" : ""} ${className}`}
         {...props}
       />
+      {isPassword && (
+        <button
+          type="button"
+          onClick={() => setShow((s) => !s)}
+          aria-label={show ? "Sembunyikan password" : "Tampilkan password"}
+          className="absolute top-1/2 right-3 -translate-y-1/2 text-[#857768] hover:text-[#3d2c1e]"
+        >
+          {show ? <EyeOff size={17} /> : <Eye size={17} />}
+        </button>
+      )}
+      </div>
       {error && <p className="mt-1 text-xs font-medium text-red-500">{error}</p>}
     </div>
   );

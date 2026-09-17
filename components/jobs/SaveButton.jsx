@@ -68,7 +68,7 @@ export default function SaveButton({ jobId, initialSaved = false, variant = "ico
         }`}
       >
         <Bookmark size={15} className={saved ? "fill-[#3d2c1e]" : ""} aria-hidden="true" />
-        {saved ? "Saved" : "Save"}
+          {saved ? "Tersimpan" : "Simpan"}
       </button>
     );
   }

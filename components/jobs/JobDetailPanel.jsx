@@ -10,12 +10,12 @@ import { EmptyState } from "@/components/ui/EmptyState";
 import { EMPLOYMENT_LABELS } from "@/lib/constants";
 import { relativeTime } from "@/lib/time";
 
-const TABS = ["Overview", "About", "Reviews"];
+const TABS = ["Ringkasan", "Tentang", "Ulasan"];
 
 // Panel detail kanan ala board G1: galeri + info + tabs + Apply.
 // Props plain (serializable) dari server.
 export default function JobDetailPanel({ job, cafeName, cafeHref, types, avg, count, reviews, applied, saved, canApply }) {
-  const [tab, setTab] = useState("Overview");
+  const [tab, setTab] = useState("Ringkasan");
   const photos = job.cafes?.photo_urls?.filter(Boolean).slice(0, 4) ?? [];
 
   return (
@@ -69,20 +69,20 @@ export default function JobDetailPanel({ job, cafeName, cafeHref, types, avg, co
           {canApply ? (
             <>
               <SaveButton jobId={job.id} initialSaved={saved} variant="full" />
-              <ApplyButton jobId={job.id} applied={applied} jobTypes={types} size="md" full variant="coffee" label={applied ? "Sudah dilamar" : "Apply Now"} />
+              <ApplyButton jobId={job.id} applied={applied} jobTypes={types} size="md" full variant="coffee" label={applied ? "Sudah dilamar" : "Lamar"} />
             </>
           ) : (
             <Link
               href={`/jobs/${job.id}`}
               className="inline-flex min-h-[38px] flex-1 items-center justify-center rounded-full bg-[#3d2c1e] px-4 text-sm font-bold text-white hover:bg-[#2e2015]"
             >
-              Apply Now
+              Lihat & Lamar
             </Link>
           )}
         </div>
         {!canApply && (
           <p className="mt-1.5 text-center text-[11px] text-[#857768]">
-            Open the job page to apply. <Link href={`/jobs/${job.id}`} className="font-bold text-[#2b6cb0] hover:underline">Open page →</Link>
+            Buka halaman loker untuk melamar. <Link href={`/jobs/${job.id}`} className="font-bold text-[#2b6cb0] hover:underline">Buka →</Link>
           </p>
         )}
 
@@ -99,15 +99,15 @@ export default function JobDetailPanel({ job, cafeName, cafeHref, types, avg, co
               }`}
             >
               {t}
-              {t === "Reviews" && count > 0 && <span className="ml-1 text-[#b6a98f]">({count})</span>}
+              {t === "Ulasan" && count > 0 && <span className="ml-1 text-[#b6a98f]">({count})</span>}
             </button>
           ))}
         </div>
 
         <div className="py-3">
-          {tab === "Overview" && (
+          {tab === "Ringkasan" && (
             <div>
-              <h3 className="text-sm font-extrabold text-[#2b2118]">Job Description</h3>
+              <h3 className="text-sm font-extrabold text-[#2b2118]">Deskripsi Loker</h3>
               <p className="mt-1.5 text-[13px] leading-6 whitespace-pre-line text-[#6f6252]">
                 {job.description || "Belum ada deskripsi."}
               </p>
@@ -122,9 +122,9 @@ export default function JobDetailPanel({ job, cafeName, cafeHref, types, avg, co
               )}
             </div>
           )}
-          {tab === "About" && (
+          {tab === "Tentang" && (
             <div>
-              <h3 className="text-sm font-extrabold text-[#2b2118]">About {cafeName}</h3>
+              <h3 className="text-sm font-extrabold text-[#2b2118]">Tentang {cafeName}</h3>
               <p className="mt-1.5 flex items-center gap-1.5 text-[13px] text-[#6f6252]">
                 {cafeHref ? (
                   <Link href={cafeHref} className="font-bold text-[#2b6cb0] hover:underline">{cafeName}</Link>
@@ -143,21 +143,21 @@ export default function JobDetailPanel({ job, cafeName, cafeHref, types, avg, co
               </p>
               {cafeHref && (
                 <Link href={cafeHref} className="mt-2 inline-block text-xs font-bold text-[#2b6cb0] hover:underline">
-                  Visit Cafe →
+                  Kunjungi Kafe →
                 </Link>
               )}
             </div>
           )}
-          {tab === "Reviews" && (
+          {tab === "Ulasan" && (
             <div>
-              <h3 className="text-sm font-extrabold text-[#2b2118]">Cafe Reviews</h3>
+              <h3 className="text-sm font-extrabold text-[#2b2118]">Ulasan Kafe</h3>
               {!reviews?.length ? (
                 <div className="mt-2">
                   <EmptyState
                     compact
                     icon={<Star size={18} />}
-                    title="No reviews yet"
-                    subtitle="This cafe has no reviews from baristas."
+                    title="Belum ada ulasan"
+                    subtitle="Kafe ini belum punya ulasan dari barista."
                   />
                 </div>
               ) : (

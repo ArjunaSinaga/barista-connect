@@ -25,9 +25,9 @@ async function getLatestJobs() {
 
 async function getLiveStats() {
   const fallback = [
-    ["0", "Baristas on platform"],
-    ["0", "Cafes hiring"],
-    ["0", "Active jobs"],
+    ["0", "Barista di platform"],
+    ["0", "Kafe merekrut"],
+    ["0", "Loker aktif"],
   ];
   if (!isSupabaseConfigured()) return fallback;
   try {
@@ -38,9 +38,9 @@ async function getLiveStats() {
       supabase.from("job_posts").select("id", { count: "exact", head: true }).eq("is_active", true),
     ]);
     return [
-      [`${(baristas ?? 0).toLocaleString()}+`, "Baristas on platform"],
-      [`${(cafes ?? 0).toLocaleString()}+`, "Cafes hiring"],
-      [`${(jobs ?? 0).toLocaleString()}`, "Active jobs"],
+      [`${(baristas ?? 0).toLocaleString()}+`, "Barista di platform"],
+      [`${(cafes ?? 0).toLocaleString()}+`, "Kafe merekrut"],
+      [`${(jobs ?? 0).toLocaleString()}`, "Loker aktif"],
     ];
   } catch {
     return fallback;

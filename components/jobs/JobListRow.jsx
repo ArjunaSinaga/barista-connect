@@ -72,7 +72,7 @@ export default function JobListRow({ job, active, applied, saved, showApply }) {
       </div>
       {showApply && (
         <div className="mt-2.5 border-t border-[#efe9d9] pt-2.5">
-          <ApplyButton jobId={job.id} applied={applied} jobTypes={types} size="sm" variant="coffee" label="Quick Apply" />
+          <ApplyButton jobId={job.id} applied={applied} jobTypes={types} size="sm" variant="coffee" label="Lamar" />
         </div>
       )}
     </li>

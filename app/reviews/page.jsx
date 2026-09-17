@@ -4,7 +4,16 @@ import { createClient, isSupabaseConfigured } from "@/lib/supabase/server";
 import { relativeTime } from "@/lib/time";
 import { EmptyState } from "@/components/ui/EmptyState";
 
-export const metadata = { title: "Reviews" };
+export const metadata = { title: "Ulasan" };
+
+// ponytail: mask kata kasar di display (ceiling: filter server-side + moderasi saat v2)
+const KASAR = ["goblok", "tolol", "bego", "anjing", "bangsat", "bajingan", "idiot", "kampret"];
+function maskKasar(text) {
+  if (!text) return text;
+  let out = text;
+  for (const w of KASAR) out = out.replace(new RegExp(w, "gi"), "***");
+  return out;
+}
 
 function Stars({ value, size = 13 }) {
   return (
@@ -61,7 +70,7 @@ export default async function ReviewsPage({ searchParams }) {
   return (
     <div className="mx-auto max-w-3xl px-4 py-8">
       <p className="text-[11px] font-bold tracking-[0.18em] text-[#857768] uppercase">Ulasan komunitas</p>
-      <h1 className="font-display mt-1 text-2xl font-semibold tracking-tight text-[#2b2118]">Reviews</h1>
+      <h1 className="font-display mt-1 text-2xl font-semibold tracking-tight text-[#2b2118]">Ulasan</h1>
       <p className="mt-1 text-sm text-[#6f6252]">Top barista berdasarkan penilaian real pemilik cafe. Klik untuk lihat ulasannya.</p>
 
       <form action="/reviews" method="GET" className="mt-4 flex flex-wrap items-center gap-2">
@@ -116,7 +125,7 @@ export default async function ReviewsPage({ searchParams }) {
                   {g.items.map((r, i) => (
                     <li key={`${r.created_at}-${i}`} className="rounded-xl bg-[#ffffff] p-3">
                       <Stars value={r.stars ?? 0} />
-                      {r.comment && <p className="mt-1.5 text-sm leading-6 text-[#2b2118]">&ldquo;{r.comment}&rdquo;</p>}
+                      {r.comment && <p className="mt-1.5 text-sm leading-6 text-[#2b2118]">&ldquo;{maskKasar(r.comment)}&rdquo;</p>}
                       <p className="mt-1 text-xs text-[#857768]">
                         dinilai oleh {r.owner?.business_name ?? "Cafe"} • {relativeTime(r.created_at)}
                       </p>

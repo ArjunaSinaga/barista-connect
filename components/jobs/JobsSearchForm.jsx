@@ -14,7 +14,7 @@ export default function JobsSearchForm({ q, loc, type }) {
           id="jobs-q"
           name="q"
           defaultValue={q}
-          placeholder="Search job title, café, or keyword..."
+          placeholder="Cari judul, kafe, atau kata kunci..."
           autoComplete="off"
           className="h-6 w-full bg-transparent text-xs text-[#2b2118] placeholder:text-[#b6a98f] focus:outline-none"
         />
@@ -41,7 +41,7 @@ export default function JobsSearchForm({ q, loc, type }) {
           type="submit"
           className="inline-flex min-h-[36px] shrink-0 items-center rounded-full bg-[#c98a2b] px-5 text-xs font-bold text-white hover:brightness-95"
         >
-          Search
+          Cari
         </button>
       </div>
     </form>
