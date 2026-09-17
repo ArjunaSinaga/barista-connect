@@ -3,6 +3,7 @@ import { Plus, Briefcase, Megaphone, TrendingUp, Store } from "lucide-react";
 import { EmptyState } from "@/components/ui/EmptyState";
 import StatCard from "@/components/ui/StatCard";
 import JobDeleteButton from "@/components/jobs/JobDeleteButton";
+import JobActiveToggle from "@/components/jobs/JobActiveToggle";
 
 // Kolom tengah mode active jobs: kelola lowongan murni (edit/lihat/hapus).
 export default function ActiveJobsView({ jobs, appCountByJob, totalJobs, activeJobs, onBack }) {
@@ -69,6 +70,7 @@ export default function ActiveJobsView({ jobs, appCountByJob, totalJobs, activeJ
                 <Link href={`/dashboard/owner/jobs/${job.id}/edit`} className="inline-flex items-center rounded-full bg-[#3d2c1e] px-4 py-1.5 text-[11px] font-bold text-white hover:bg-[#2e2015]">
                   Edit
                 </Link>
+                <JobActiveToggle jobId={job.id} isActive={job.is_active} />
                 <Link href={`/jobs/${job.id}`} className="inline-flex items-center rounded-full border border-[#e0d5bd] px-4 py-1.5 text-[11px] font-bold text-[#3d2c1e] hover:border-[#3d2c1e]">
                   Lihat
                 </Link>
