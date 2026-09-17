@@ -66,7 +66,7 @@ export default function JobListRow({ job, active, applied, saved, showApply }) {
             scroll={false}
             className="inline-flex min-h-[32px] items-center rounded-full bg-[#3d2c1e] px-4 text-[11px] font-bold text-white hover:bg-[#2e2015]"
           >
-            View Job
+            Lihat
           </Link>
         </div>
       </div>

@@ -15,16 +15,16 @@ export default function SortSelect({ value }) {
 
   return (
     <span className="flex items-center gap-1.5 text-xs text-[#857768]">
-      <label htmlFor="jobs-sort">Sort by:</label>
+      <label htmlFor="jobs-sort">Urutkan:</label>
       <select
         id="jobs-sort"
         value={value}
         onChange={(e) => change(e.target.value)}
         className="cursor-pointer rounded-full border border-[#e0d5bd] bg-[#ffffff] px-2.5 py-1 text-[11px] font-bold text-[#2b2118] outline-none"
       >
-        <option value="newest">Most recent</option>
-        <option value="oldest">Oldest</option>
-        <option value="name">Name A–Z</option>
+        <option value="newest">Terbaru</option>
+        <option value="oldest">Terlama</option>
+        <option value="name">Nama A–Z</option>
       </select>
     </span>
   );

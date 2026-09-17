@@ -11,15 +11,25 @@ import JobDetailPanel from "@/components/jobs/JobDetailPanel";
 import JobsSearchForm from "@/components/jobs/JobsSearchForm";
 import SortSelect from "@/components/jobs/SortSelect";
 
-export const metadata = { title: "Jobs" };
+export const metadata = { title: "Loker" };
+
+// Pills akumulatif: klik pill tak me-reset filter lain (loc/q ikut dibawa).
+function pillHref(base, patch) {
+  const p = new URLSearchParams();
+  const cur = { q: base.q, loc: base.loc, type: base.type };
+  const next = { ...cur, ...patch };
+  for (const [k, v] of Object.entries(next)) if (v) p.set(k, v);
+  const s = p.toString();
+  return s ? `/jobs?${s}` : "/jobs";
+}
 
 const ROLE_PILLS = [
-  { label: "All", href: "/jobs" },
-  { label: "Barista", href: "/jobs?q=Barista" },
-  { label: "Head Barista", href: "/jobs?q=Head" },
-  { label: "Full-time", href: "/jobs?type=full_time" },
-  { label: "Part-time", href: "/jobs?type=part_time" },
-  { label: "Casual", href: "/jobs?type=casual" },
+  { label: "Semua", patch: { q: "", type: "" }, active: (f) => !f.q && !f.type },
+  { label: "Barista", patch: { q: "Barista" }, active: (f) => f.q === "Barista" },
+  { label: "Kepala Barista", patch: { q: "Head" }, active: (f) => f.q === "Head" },
+  { label: "Penuh Waktu", patch: { type: "full_time" }, active: (f) => f.type === "full_time" },
+  { label: "Paruh Waktu", patch: { type: "part_time" }, active: (f) => f.type === "part_time" },
+  { label: "Harian", patch: { type: "casual" }, active: (f) => f.type === "casual" },
 ];
 
 export default async function JobsPage({ searchParams }) {
@@ -138,24 +148,22 @@ export default async function JobsPage({ searchParams }) {
           <div className="order-1 min-w-0 space-y-3 lg:order-2 lg:h-full lg:min-h-0 lg:overflow-y-auto lg:pr-1 lg:pb-1 no-scrollbar">
             <div className="relative overflow-hidden rounded-2xl bg-[#2b1c11] px-5 py-5 text-white sm:px-6">
               <h1 className="font-display max-w-xl text-balance text-xl leading-tight font-semibold tracking-tight sm:text-2xl">
-                Find a career brewing with purpose.
+                Temukan karier yang diseduh dengan tujuan.
               </h1>
               <p className="mt-1 max-w-xl text-xs leading-5 text-white/70">
-                Jobs for people who live and breathe coffee.
+                Loker untuk orang yang hidup dan bernapas kopi.
               </p>
               <JobsSearchForm q={q} loc={loc} type={type} />
             </div>
 
             <div className="flex flex-wrap items-center gap-1.5">
               {ROLE_PILLS.map((p) => {
-                const activePill =
-                  (p.label === "All" && !q && !type) ||
-                  (p.href.includes("?q=") && q === decodeURIComponent(p.href.split("?q=")[1])) ||
-                  (p.href.includes("?type=") && type === p.href.split("?type=")[1]);
+                const f = { q, loc, type };
+                const activePill = p.active(f);
                 return (
                   <Link
                     key={p.label}
-                    href={p.href}
+                    href={pillHref(f, p.patch)}
                     aria-current={activePill ? "page" : undefined}
                     className={`rounded-full border px-3 py-1 text-[11px] font-bold ${
                       activePill
@@ -171,10 +179,10 @@ export default async function JobsPage({ searchParams }) {
 
             <div className="flex flex-wrap items-center justify-between gap-2">
               <p className="text-xs text-[#857768]" role="status">
-                {savedOnly ? `${jobs.length} saved job${jobs.length === 1 ? "" : "s"}` : `${jobs.length} job${jobs.length === 1 ? "" : "s"} found`}
+                {savedOnly ? `${jobs.length} loker tersimpan` : `${jobs.length} loker ditemukan`}
                 {(q || loc || type || savedOnly) && (
                   <Link href="/jobs" className="ml-2 font-bold text-[#2b6cb0] hover:underline">
-                    Reset filter
+                    Hapus filter
                   </Link>
                 )}
               </p>

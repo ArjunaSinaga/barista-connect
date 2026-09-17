@@ -37,7 +37,7 @@ export default function BottomCtaStrip({ hideForUser = false }) {
             Saya Pemilik Kafe
           </Link>
         </div>
-        <p className="font-chalk hidden pr-10 text-right text-sm leading-4 text-[#f5f1e8]/70 xl:block">Same People<br />Brighter Tomorrows</p>
+        <p className="font-chalk hidden pr-10 text-right text-sm leading-4 text-[#f5f1e8]/70 xl:block">Orang Hebat<br />Kopi Hebat</p>
       </div>
     </section>
   );
