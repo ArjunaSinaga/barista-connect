@@ -143,30 +143,29 @@ export default async function LandingPage() {
       <section className="mx-auto w-full max-w-[1400px] shrink-0 px-4 pt-2 pb-2 sm:px-6">
         <div className="grid items-stretch gap-4 lg:grid-cols-[1fr_1fr_0.85fr]">
           <div className="min-w-0 lg:col-span-2">
-            <div className="flex gap-0 overflow-hidden rounded-2xl border border-[#e8e0cf] bg-[#ece2cd] py-3 pr-0 pl-5 shadow-[0_2px_12px_rgba(43,33,24,0.10)] sm:pl-6">
+            <div className="flex gap-0 overflow-hidden rounded-2xl border border-[#e8e0cf] bg-[#ece2cd] py-2 pr-0 pl-5 shadow-[0_2px_12px_rgba(43,33,24,0.10)] sm:pl-6">
               <div className="min-w-0 flex-1 pr-5">
-                <p className="text-[11px] font-bold tracking-[0.18em] text-[#857768] uppercase">
-                  A stronger coffee community
+                <p className="text-[10px] font-bold tracking-[0.18em] text-[#857768] uppercase">
+                  Komunitas kopi yang kuat
                 </p>
-                <h1 className="font-display mt-1 text-[1.7rem] leading-[1.05] font-semibold tracking-tight sm:text-3xl">
-                  Hire better baristas. <span className="text-[#1f6b4a]">Find better cafe jobs.</span>
+                <h1 className="font-display mt-0.5 text-[1.4rem] leading-[1.05] font-semibold tracking-tight sm:text-[1.6rem]">
+                  Rekrut barista hebat. <span className="text-[#1f6b4a]">Temukan loker kafe terbaik.</span>
                 </h1>
-                <p className="mt-1 max-w-xl text-[13px] leading-5 text-[#6f6252]">
-                  BaristaConnect connects passionate baristas and cafe owners with verified
-                  experience, ratings, and reviews. More than a job board — the coffee hiring ecosystem.
+                <p className="mt-1 max-w-xl text-xs leading-5 text-[#6f6252]">
+                  BaristaConnect menghubungkan barista dan pemilik kafe: pengalaman terverifikasi, rating, dan ulasan real. Lebih dari papan loker — ekosistem rekrutmen kopi.
                 </p>
-                <div className="mt-2 flex flex-wrap items-center gap-2">
-                  <Link href="/jobs" className="inline-flex min-h-[36px] items-center gap-2 rounded-full bg-[#3d2c1e] px-5 text-[13px] font-bold text-white hover:bg-[#2e2015]">
-                    <Search size={14} /> Find Jobs
+                <div className="mt-1.5 flex flex-wrap items-center gap-2">
+                  <Link href="/jobs" className="inline-flex min-h-[32px] items-center gap-2 rounded-full bg-[#3d2c1e] px-4 text-xs font-bold text-white hover:bg-[#2e2015]">
+                    <Search size={13} /> Cari Loker
                   </Link>
-                  <Link href="/find-baristas" className="inline-flex min-h-[36px] items-center gap-2 rounded-full border border-[#c9b992] bg-[#ffffff] px-5 text-[13px] font-bold text-[#3d2c1e] hover:border-[#3d2c1e]">
-                    <Store size={14} /> Hire Baristas
+                  <Link href="/find-baristas" className="inline-flex min-h-[32px] items-center gap-2 rounded-full border border-[#c9b992] bg-[#ffffff] px-4 text-xs font-bold text-[#3d2c1e] hover:border-[#3d2c1e]">
+                    <Store size={13} /> Rekrut Barista
                   </Link>
                 </div>
-                <dl className="mt-2 flex items-stretch gap-5">
+                <dl className="mt-1.5 flex items-stretch gap-4">
                   {stats.map(([v, l], i) => (
                     <div key={l} className={i > 0 ? "border-l border-[#3d2c1e]/15 pl-5" : ""}>
-                      <dd className="text-xl leading-6 font-extrabold tracking-tight text-[#2b2118]">{v}</dd>
+                      <dd className="text-lg leading-6 font-extrabold tracking-tight text-[#2b2118]">{v}</dd>
                       <dt className="mt-0.5 text-[10px] leading-3 text-[#857768]">{l}</dt>
                     </div>
                   ))}
@@ -176,20 +175,20 @@ export default async function LandingPage() {
                 <HeroPhotoBlock photo={heroMain} flush />
               </div>
             </div>
-            <div className="mt-3 grid gap-3 sm:grid-cols-2">
+            <div className="mt-2 grid gap-2.5 sm:grid-cols-2">
               <Link href="/signup" className="group flex items-center gap-3 rounded-2xl border border-[#e8e0cf] bg-[#ffffff] px-4 py-2 shadow-[0_1px_3px_rgba(43,33,24,0.08)] hover:border-[#3d2c1e]">
                 <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#efe8d8]"><Coffee size={17} className="text-[#3d2c1e]" /></span>
                 <span className="min-w-0 flex-1">
-                  <span className="block text-[13px] font-bold">For Baristas</span>
-                  <span className="block truncate text-xs text-[#857768]">Find jobs, grow your skills, build your reputation.</span>
+                  <span className="block text-[13px] font-bold">Untuk Barista</span>
+                  <span className="block truncate text-xs text-[#857768]">Cari loker, asah skill, bangun reputasi.</span>
                 </span>
                 <ChevronRight size={16} className="shrink-0 text-[#b6a98f] group-hover:text-[#3d2c1e]" />
               </Link>
               <Link href="/find-baristas" className="group flex items-center gap-3 rounded-2xl border border-[#e8e0cf] bg-[#ffffff] px-4 py-2 shadow-[0_1px_3px_rgba(43,33,24,0.08)] hover:border-[#3d2c1e]">
                 <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#efe8d8]"><Store size={17} className="text-[#3d2c1e]" /></span>
                 <span className="min-w-0 flex-1">
-                  <span className="block text-[13px] font-bold">For Cafe Owners</span>
-                  <span className="block truncate text-xs text-[#857768]">Discover talented baristas, hire with confidence.</span>
+                  <span className="block text-[13px] font-bold">Untuk Pemilik Kafe</span>
+                  <span className="block truncate text-xs text-[#857768]">Temukan barista berbakat, rekrut dengan yakin.</span>
                 </span>
                 <ChevronRight size={16} className="shrink-0 text-[#b6a98f] group-hover:text-[#3d2c1e]" />
               </Link>
