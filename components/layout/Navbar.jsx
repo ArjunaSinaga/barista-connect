@@ -8,10 +8,10 @@ import { createClient } from "@/lib/supabase/client";
 import { APP_NAME } from "@/lib/constants";
 
 const NAV = [
-  { label: "Jobs", href: "/jobs", match: ["/jobs"] },
-  { label: "Talent", href: "/find-baristas", match: ["/find-baristas", "/barista"] },
-  { label: "Reviews", href: "/reviews", match: ["/reviews"] },
-  { label: "Training", href: "/training", match: ["/training"] },
+  { label: "Loker", href: "/jobs", match: ["/jobs"] },
+  { label: "Talenta", href: "/find-baristas", match: ["/find-baristas", "/barista"] },
+  { label: "Ulasan", href: "/reviews", match: ["/reviews"] },
+  { label: "Pelatihan", href: "/training", match: ["/training"] },
 ];
 
 export default function Navbar({ user, role }) {
@@ -73,7 +73,7 @@ export default function Navbar({ user, role }) {
                 : "text-[#2f2721]/70 hover:text-[#6f5a3e]"
             }`}
           >
-            For Owners
+            Untuk Owner
           </Link>
         </nav>
 
@@ -138,7 +138,7 @@ export default function Navbar({ user, role }) {
               href={postJobHref}
               className="hidden shrink-0 rounded-full bg-[#3d2c1e] px-4 py-2 text-sm font-bold whitespace-nowrap text-white hover:bg-[#2e2015] sm:block"
             >
-              Post a Job
+              Pasang Loker
             </Link>
           </>
         ) : (
@@ -147,7 +147,7 @@ export default function Navbar({ user, role }) {
               href="/signup?role=owner"
               className="ml-auto hidden shrink-0 rounded-full bg-[#3d2c1e] px-4 py-2 text-sm font-bold whitespace-nowrap text-white hover:bg-[#2e2015] md:block"
             >
-              Post a Job
+              Pasang Loker
             </Link>
             <Link
               href="/login"

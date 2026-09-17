@@ -210,5 +210,5 @@ Sengaja: peta OpenStreetMap dihapus. Owner sekarang input manual Nama Cafe + Ala
 
 **Success criteria:** Pembaca baru mengikuti tutorial ini dari `/signup` -> onboarding -> `/jobs` -> lamar 1 lowongan -> chat -> diterima -> employment aktif -> rating -> keluar & lamar lowongan baru tanpa bantuan tambahan. Semua langkah di atas sudah bisa dijalankan.
 
-> Dokumen ini juga tersimpan sebagai PDF di Desktop: `Blueprint-Barista-Connect.pdf` + HTML. Untuk deploy: push sudah ke `https://github.com/ArjunaSinaga/barista-connect` (master -> main). Untuk publish tanpa Netlify, hubungkan repo ke Vercel: Import Project -> set env Supabase -> Deploy. Database tetap Supabase pusat, semua pengunjung pakai DB yang sama, repo private pun website tetap publik via URL Vercel.
+> Dokumen ini juga tersimpan sebagai PDF di Desktop: `Blueprint-Barista-Connect.pdf` + HTML. Untuk deploy: push sudah ke `https://github.com/ArjunaSinaga/barista-connect` (master -> main). Untuk publish, hubungkan repo ke Vercel: Import Project -> set env Supabase -> Deploy. Database tetap Supabase pusat, semua pengunjung pakai DB yang sama, repo private pun website tetap publik via URL Vercel.
 

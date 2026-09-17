@@ -78,23 +78,23 @@ Open <http://localhost:3000>.
 
 ---
 
-## 4. Deploy to Netlify (free)
+## 4. Deploy to Vercel (free)
 
 1. Push this repo to GitHub.
-2. Go to <https://app.netlify.com> → sign up with GitHub → **Add new site → Import an existing project** → pick the repo.
-3. Netlify auto-detects Next.js. Before deploying, add environment variables under
-   **Site configuration → Environment variables**:
+2. Go to <https://vercel.com> → sign up with GitHub → **Add New → Project** → pick the repo.
+3. Vercel auto-detects Next.js. Before deploying, add environment variables under
+   **Settings → Environment Variables**:
 
-   | Key | Value |
-   |---|---|
-   | `NEXT_PUBLIC_SUPABASE_URL` | your Supabase URL |
-   | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | your anon key |
-   | `GEMINI_API_KEY` | your Gemini key |
+    | Key | Value |
+    |---|---|
+    | `NEXT_PUBLIC_SUPABASE_URL` | your Supabase URL |
+    | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | your anon key |
+    | `GEMINI_API_KEY` | your Gemini key |
 
-4. Click **Deploy**. Your site goes live at `https://<name>.netlify.app`.
+4. Click **Deploy**. Your site goes live at `https://<name>.vercel.app`.
 5. Every future `git push` auto-deploys.
 
-Free tier limits: 100 GB bandwidth/mo, 300 build minutes/mo — far more than this app needs.
+Free tier limits: 100 GB bandwidth/mo — far more than this app needs.
 
 ---
 

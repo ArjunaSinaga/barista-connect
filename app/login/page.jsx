@@ -46,14 +46,14 @@ function LoginForm() {
       if (error) {
         const msg = error.message ?? "";
         if (msg.includes("Failed to fetch") || msg.includes("fetch")) {
-          toast("Gagal terhubung ke Supabase. Cek env di Netlify dan Site URL di Supabase Auth → URL Configuration.", "error");
+          toast("Gagal terhubung ke Supabase. Cek env di Vercel dan Site URL di Supabase Auth → URL Configuration.", "error");
         } else {
           toast(msg === "Invalid login credentials" ? "Email atau password salah" : msg, "error");
         }
         return;
       }
       if (!data?.user) {
-        toast("Login gagal tanpa session. Cek env/cookie di Netlify (pastikan deploy ulang setelah set env).", "error");
+        toast("Login gagal tanpa session. Cek env/cookie di Vercel (pastikan deploy ulang setelah set env).", "error");
         return;
       }
 

@@ -2,7 +2,7 @@
 
 Platform pencarian kerja khusus **barista & casual worker** — pemilik coffee shop memasang lowongan, barista melengkapi profil sekali lalu melamar. Termasuk chat real-time berbantu AI.
 
-**Stack:** Next.js 16 (App Router) · Tailwind CSS v4 · Supabase (Postgres + Auth + Storage + Realtime) · Google Gemini · Netlify
+**Stack:** Next.js 16 (App Router) · Tailwind CSS v4 · Supabase (Postgres + Auth + Storage + Realtime) · Google Gemini · Vercel
 
 ## Menjalankan lokal
 
@@ -49,4 +49,4 @@ proxy.js              guard sesi & peran (Next.js 16 proxy)
 
 ## Deployment
 
-Panduan lengkap deploy gratis ke Netlify ada di [SETUP.md](./SETUP.md).
+Panduan lengkap deploy gratis ke Vercel ada di [SETUP.md](./SETUP.md).

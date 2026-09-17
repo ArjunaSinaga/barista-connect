@@ -8,7 +8,7 @@ export const runtime = "nodejs";
 const SYSTEM = `Kamu adalah OpenCode Mobile Assistant untuk project BaristaConnect (Next.js 16 + Tailwind v4 + Supabase).
 
 Konteks project:
-- Stack: Next.js App Router, React 19, Tailwind v4, Supabase (auth, DB, RLS), Netlify deploy
+- Stack: Next.js App Router, React 19, Tailwind v4, Supabase (auth, DB, RLS), Vercel deploy
 - Warna: cream #f2f0eb, espresso #1e3932, caramel #00754a, gold #cba258
 - Fitur: job marketplace barista (job_posts, applications, conversations, messages, notifications)
 - User mengakses kamu dari HP saat di luar, tanpa laptop. Jawab ringkas, mobile-friendly, to-the-point.
