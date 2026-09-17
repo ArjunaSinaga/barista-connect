@@ -32,7 +32,7 @@ export default function ReviewsView({ reviews, onBack }) {
           title="Belum ada ulasan"
           subtitle="Nilai barista setelah mereka bekerja agar profil mereka terverifikasi."
           actionLabel="Lihat Tim Saya"
-          actionHref="/dashboard/owner/team"
+          actionHref="/dashboard/owner?tab=team"
         />
       ) : (
         <ul className="space-y-3">
