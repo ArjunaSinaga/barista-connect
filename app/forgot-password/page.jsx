@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import { useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 import { MailCheck } from "lucide-react";
 import Button from "@/components/ui/Button";
 import { Input } from "@/components/ui/Field";
@@ -8,7 +10,16 @@ import { useToast } from "@/components/ui/toast";
 import { createClient } from "@/lib/supabase/client";
 
 export default function ForgotPasswordPage() {
+  return (
+    <Suspense>
+      <ForgotPasswordForm />
+    </Suspense>
+  );
+}
+
+function ForgotPasswordForm() {
   const toast = useToast();
+  const linkError = useSearchParams().get("error");
   const [email, setEmail] = useState("");
   const [sent, setSent] = useState(false);
   const [busy, setBusy] = useState(false);
@@ -20,7 +31,7 @@ export default function ForgotPasswordPage() {
     try {
       const supabase = createClient();
       const { error } = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: `${window.location.origin}/update-password`,
+        redirectTo: `${window.location.origin}/auth/confirm?next=/update-password`,
       });
       if (error) throw error;
       setSent(true);
@@ -56,6 +67,11 @@ export default function ForgotPasswordPage() {
           <p className="mt-1 mb-8 text-center text-sm text-espresso-soft">
             Masukkan email terdaftar, kami kirim tautan reset.
           </p>
+          {linkError ? (
+            <p className="mb-4 rounded-xl border border-red-300 bg-red-50 px-4 py-3 text-center text-sm font-semibold text-red-700">
+              {linkError}
+            </p>
+          ) : null}
           <form onSubmit={handleSubmit} className="space-y-4">
             <Input
               name="email"

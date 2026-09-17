@@ -16,16 +16,18 @@ export default function UpdatePasswordPage() {
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    // Recovery links establish a session client-side
+    // Sesi recovery dibuat oleh /auth/confirm sebelum mendarat di sini.
+    // Tanpa sesi (mis. tautan basi) beri pesan jelas, bukan lempar diam-diam.
     const supabase = createClient();
     supabase.auth.getUser().then(({ data }) => {
       if (data.user) {
         setReady(true);
       } else {
-        router.replace("/login");
+        toast("Tautan reset tidak valid atau sudah dipakai. Minta tautan baru.", "error");
+        router.replace("/forgot-password");
       }
     });
-  }, [router]);
+  }, [router, toast]);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -42,8 +44,28 @@ export default function UpdatePasswordPage() {
       const supabase = createClient();
       const { error } = await supabase.auth.updateUser({ password });
       if (error) throw error;
+      // Arahkan sesuai peran + status onboarding, sama seperti login
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      let dest = "/login";
+      if (user) {
+        const { data: profile } = await supabase
+          .from("profiles")
+          .select("role")
+          .eq("id", user.id)
+          .single();
+        const role = profile?.role ?? "barista";
+        const table = role === "owner" ? "owners" : "barista_profiles";
+        const { data: detail } = await supabase
+          .from(table)
+          .select("id")
+          .eq("id", user.id)
+          .maybeSingle();
+        dest = detail ? `/dashboard/${role}` : `/onboarding/${role}`;
+      }
       toast("Password berhasil diubah");
-      router.push("/dashboard/barista");
+      router.push(dest);
       router.refresh();
     } catch {
       toast("Gagal mengubah password", "error");
