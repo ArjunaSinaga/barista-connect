@@ -8,6 +8,7 @@ import { Textarea } from "@/components/ui/Field";
 import { useToast } from "@/components/ui/toast";
 import { createClient } from "@/lib/supabase/client";
 import { EMPLOYMENT_LABELS } from "@/lib/constants";
+import { focusFirstError } from "@/lib/focusFirstError";
 
 export default function ApplyButton({ jobId, applied=false, size="md", full=false, jobTypes=[], variant="primary", label="Lamar" }) {
   const router = useRouter();
@@ -44,7 +45,7 @@ export default function ApplyButton({ jobId, applied=false, size="md", full=fals
       else if (cv.size>5*1024*1024) e.cv="CV maksimal 5MB";
     } else if (!profileCv) e.cv="CV belum ada di profil — upload PDF dulu";
     if (!cover.trim() || cover.trim().length<20) e.cover="Cover letter minimal 20 karakter";
-    if (Object.keys(e).length) { setErrors(e); return; }
+    if (Object.keys(e).length) { setErrors(e); focusFirstError(e); return; }
     setErrors({});
     setBusy(true);
     try {

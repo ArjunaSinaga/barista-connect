@@ -12,6 +12,7 @@ import { createClient } from "@/lib/supabase/client";
 import { SKILL_PRESETS, AVATAR_MIME_TYPES, AVATAR_MAX_BYTES } from "@/lib/constants";
 import { compressImage, formatBytes } from "@/lib/image";
 import { profileUpdateSchema } from "@/lib/validation";
+import { focusFirstError } from "@/lib/focusFirstError";
 
 export default function ProfileEditor({ initial }) {
   const router = useRouter();
@@ -101,6 +102,7 @@ export default function ProfileEditor({ initial }) {
       parsed.error.issues.forEach((i) => (errs[i.path[0]] = i.message));
       setErrors(errs);
       toast("Periksa kembali isian kamu", "error");
+      focusFirstError(errs);
       return;
     }
     if (!photoUrl) {

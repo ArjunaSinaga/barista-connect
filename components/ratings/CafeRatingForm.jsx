@@ -43,6 +43,9 @@ export default function CafeRatingForm({
       toast("Komentar maksimal 500 karakter", "error");
       return;
     }
+    if (saved && !window.confirm(`Ganti rating cafe jadi ${stars} bintang? Baru bisa diubah lagi minggu depan.`)) {
+      return;
+    }
     setBusy(true);
     try {
       const supabase = createClient();

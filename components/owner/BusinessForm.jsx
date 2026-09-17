@@ -11,6 +11,7 @@ import { createClient } from "@/lib/supabase/client";
 import { ownerBusinessSchema } from "@/lib/validation";
 import { CITIES, AVATAR_MIME_TYPES, AVATAR_MAX_BYTES } from "@/lib/constants";
 import { compressImage } from "@/lib/image";
+import { focusFirstError } from "@/lib/focusFirstError";
 
 export default function BusinessForm({ initial, redirectTo, onSaved }) {
   const router = useRouter();
@@ -75,6 +76,7 @@ export default function BusinessForm({ initial, redirectTo, onSaved }) {
       parsed.error.issues.forEach((i) => { if (i.path[0]) errs[i.path[0]] = i.message; });
       setErrors(errs);
       toast(parsed.error.issues[0]?.message ?? "Periksa isian", "error");
+      focusFirstError(errs);
       return;
     }
     setErrors({});

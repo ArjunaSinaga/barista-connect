@@ -66,6 +66,9 @@ export default function RatingForm({
       toast("Komentar maksimal 500 karakter", "error");
       return;
     }
+    if (saved && !window.confirm(`Ganti rating jadi ${stars} bintang? Baru bisa diubah lagi minggu depan.`)) {
+      return;
+    }
     setBusy(true);
     try {
       const supabase = createClient();

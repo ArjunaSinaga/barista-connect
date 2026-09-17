@@ -10,6 +10,7 @@ import { useToast } from "@/components/ui/toast";
 import { createClient } from "@/lib/supabase/client";
 import { jobPostSchema } from "@/lib/validation";
 import { EMPLOYMENT_LABELS, EMPLOYMENT_TYPES } from "@/lib/constants";
+import { focusFirstError } from "@/lib/focusFirstError";
 
 const TYPE_CLASSES = {
   full_time: "bg-caramel/10 text-caramel",
@@ -116,6 +117,7 @@ export default function JobPostForm({ initial = null }) {
     const parsed = jobPostSchema.safeParse(withAuto);
     if (!parsed.success) {
       toast(parsed.error.issues[0]?.message ?? "Periksa isian", "error");
+      focusFirstError({ [parsed.error.issues[0]?.path?.[0] ?? "title"]: 1 });
       return;
     }
     if (!withAuto.location) {

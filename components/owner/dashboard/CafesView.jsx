@@ -38,10 +38,7 @@ export default function CafesView({ cafes, countByCafe, teamCountByCafe = {}, on
         <ul className="space-y-3">
           {(cafes ?? []).map((c) => (
             <li key={c.id}>
-              <Link
-                href={`/dashboard/owner/cafes/${c.id}/edit`}
-                className="flex items-center gap-4 rounded-2xl border border-[#e8e0cf] bg-[#ffffff] p-4 shadow-[0_1px_3px_rgba(43,33,24,0.08)] hover:border-[#3d2c1e]"
-              >
+              <div className="flex items-center gap-4 rounded-2xl border border-[#e8e0cf] bg-[#ffffff] p-4 shadow-[0_1px_3px_rgba(43,33,24,0.08)] hover:border-[#3d2c1e]">
                 {c.photo_urls?.[0] ? (
                   <img src={c.photo_urls[0]} alt={c.name} loading="lazy" className="h-14 w-14 shrink-0 rounded-xl object-cover" />
                 ) : (
@@ -50,7 +47,12 @@ export default function CafesView({ cafes, countByCafe, teamCountByCafe = {}, on
                   </span>
                 )}
                 <div className="min-w-0 flex-1">
-                  <p className="truncate text-sm font-bold text-[#2b2118]">{c.name}</p>
+                  <p className="truncate text-sm font-bold text-[#2b2118]">
+                    {c.name}{" "}
+                    <Link href={`/dashboard/owner/cafes/${c.id}/edit`} className="font-bold text-[#2b6cb0] hover:underline">
+                      Edit
+                    </Link>
+                  </p>
                   <p className="truncate text-[11px] text-[#857768]">
                     {c.location || "-"} • {countByCafe[c.id] || 0} lowongan aktif
                     {c.photo_urls?.length > 1 && ` • ${c.photo_urls.length} foto`}
@@ -65,7 +67,7 @@ export default function CafesView({ cafes, countByCafe, teamCountByCafe = {}, on
                 {!c.is_active && (
                   <span className="shrink-0 rounded-full bg-[#efe9d9] px-2 py-1 text-[11px] font-bold text-[#857768]">Nonaktif</span>
                 )}
-              </Link>
+              </div>
             </li>
           ))}
         </ul>

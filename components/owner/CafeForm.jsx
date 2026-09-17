@@ -9,6 +9,7 @@ import { useToast } from "@/components/ui/toast";
 import { createClient } from "@/lib/supabase/client";
 import { AVATAR_MIME_TYPES, AVATAR_MAX_BYTES, CITIES } from "@/lib/constants";
 import { compressImage } from "@/lib/image";
+import { focusFirstError } from "@/lib/focusFirstError";
 
 const MAX_PHOTOS = 5;
 
@@ -76,6 +77,7 @@ export default function CafeForm({ initial = null }) {
     e.preventDefault();
     if (form.name.trim().length < 2) {
       toast("Nama cafe minimal 2 karakter", "error");
+      focusFirstError({ name: 1 });
       return;
     }
     if (!photos.length) {
