@@ -68,7 +68,7 @@ function SignupForm() {
         password,
         options: {
           // Email konfirmasi selalu mendarat di website live, bukan localhost
-          emailRedirectTo: `${SITE_URL}/auth/confirm?next=/onboarding/${role}`,
+          emailRedirectTo: `${SITE_URL}/auth/confirm?next=/auth/verified&role=${role}`,
         },
       });
       if (error) throw error;
@@ -81,9 +81,8 @@ function SignupForm() {
       }
 
       if (!data.session) {
-        // email confirmation is enabled on this project
-        toast("Cek email kamu untuk konfirmasi akun");
-        router.push("/login");
+        // Verifikasi email aktif: tahan di halaman cek-email sampai klik link
+        router.push(`/signup/check-email?email=${encodeURIComponent(email)}`);
         return;
       }
 

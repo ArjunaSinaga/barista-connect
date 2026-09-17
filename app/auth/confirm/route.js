@@ -9,7 +9,8 @@ import { createClient } from "@/lib/supabase/server";
 export async function GET(request) {
   const url = new URL(request.url);
   const code = url.searchParams.get("code");
-  const rawNext = url.searchParams.get("next") || "/update-password";
+  const rawNext = url.searchParams.get("next") || "/auth/verified";
+  const role = url.searchParams.get("role") === "owner" ? "owner" : "barista";
 
   // Hanya izinkan redirect internal biar tak bisa dibajak ke situs lain
   const next = rawNext.startsWith("/") && !rawNext.startsWith("//") ? rawNext : "/update-password";
@@ -20,12 +21,32 @@ export async function GET(request) {
   }
 
   const supabase = await createClient();
-  const { error } = await supabase.auth.exchangeCodeForSession(code);
+  const { data, error } = await supabase.auth.exchangeCodeForSession(code);
 
   if (error) {
     return redirect(
       `/forgot-password?error=${encodeURIComponent("Tautan sudah kedaluwarsa atau sudah dipakai. Minta tautan baru di bawah.")}`
     );
+  }
+
+  // Catat peran sejak verifikasi biar login tak salah peran (signup tanpa
+  // sesi belum membuat baris profiles). Hanya bila belum ada — jangan
+  // timpa peran user lama (mis. alur lupa password).
+  try {
+    const { data: existing } = await supabase
+      .from("profiles")
+      .select("id")
+      .eq("id", data.user.id)
+      .maybeSingle();
+    if (!existing) {
+      await supabase.from("profiles").insert({
+        id: data.user.id,
+        role,
+        email: data.user.email,
+      });
+    }
+  } catch {
+    // diam: onboarding/login tetap jalan, peran default barista
   }
 
   return redirect(next);
