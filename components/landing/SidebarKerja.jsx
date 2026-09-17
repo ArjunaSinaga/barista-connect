@@ -6,8 +6,30 @@ const ITEMS = [
   { icon: <ShieldCheck size={18} className="text-[#1f6b4a]" />, tint: "bg-[#e3f0e8]", title: "Verified Experience", desc: "Work history verified by cafes", href: "/find-baristas" },
   { icon: <Star size={18} className="text-[#8a6d1f]" />, tint: "bg-[#f5ecd4]", title: "Cafe Reviews & Ratings", desc: "Real feedback from employers", href: "/reviews" },
   { icon: <GraduationCap size={18} className="text-[#1f6b4a]" />, tint: "bg-[#e3f0e8]", title: "Skilled Talent from Training", desc: "Baristas trained and certified by BaristaConnect", href: "/training" },
-  { icon: <BarChart3 size={18} className="text-[#1f6b4a]" />, tint: "bg-[#e3f0e8]", title: "Attendance & Shift Summary", desc: "Track attendance, shift fulfilment and reliability", badge: "Phase 2", href: "/signup" },
+  { icon: <BarChart3 size={18} className="text-[#1f6b4a]" />, tint: "bg-[#e3f0e8]", title: "Attendance & Shift Summary", desc: "Track attendance, shift fulfilment and reliability", badge: "Segera hadir", href: null },
 ];
+
+function EcosystemRow({ it }) {
+  const body = (
+    <>
+      <span className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full ${it.tint}`}>{it.icon}</span>
+      <span className="min-w-0 flex-1">
+        <span className="flex items-center gap-2 text-[13px] font-extrabold text-[#2b2118]">
+          <span className="truncate">{it.title}</span>
+          {it.badge && (
+            <span className="shrink-0 rounded-full bg-[#e3ecf5] px-2 py-0.5 text-[10px] font-bold text-[#2b5f8a]">{it.badge}</span>
+          )}
+        </span>
+        <span className="block truncate text-[11px] text-[#857768]">{it.desc}</span>
+      </span>
+      {it.href ? <ChevronRight size={15} className="shrink-0 text-[#b6a98f]" aria-hidden="true" /> : null}
+    </>
+  );
+  if (!it.href) {
+    return <span className="flex items-center gap-3 rounded-xl px-2 py-2 opacity-80">{body}</span>;
+  }
+  return <Link href={it.href} className="flex items-center gap-3 rounded-xl px-2 py-2 hover:bg-[#faf7ef]">{body}</Link>;
+}
 
 export function EcosystemCard() {
   return (
@@ -17,19 +39,7 @@ export function EcosystemCard() {
       <ul className="mt-2 space-y-1">
         {ITEMS.map((it) => (
           <li key={it.title}>
-            <Link href={it.href} className="flex items-center gap-3 rounded-xl px-2 py-2 hover:bg-[#faf7ef]">
-              <span className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full ${it.tint}`}>{it.icon}</span>
-              <span className="min-w-0 flex-1">
-                <span className="flex items-center gap-2 text-[13px] font-extrabold text-[#2b2118]">
-                  <span className="truncate">{it.title}</span>
-                  {it.badge && (
-                    <span className="shrink-0 rounded-full bg-[#e3ecf5] px-2 py-0.5 text-[10px] font-bold text-[#2b5f8a]">{it.badge}</span>
-                  )}
-                </span>
-                <span className="block truncate text-[11px] text-[#857768]">{it.desc}</span>
-              </span>
-              <ChevronRight size={15} className="shrink-0 text-[#b6a98f]" aria-hidden="true" />
-            </Link>
+            <EcosystemRow it={it} />
           </li>
         ))}
       </ul>

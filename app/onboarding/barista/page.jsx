@@ -13,7 +13,7 @@ import { baristaStep1Schema, skillsSchema } from "@/lib/validation";
 import { SKILL_PRESETS, CITIES, AVATAR_MIME_TYPES, AVATAR_MAX_BYTES, EMPLOYMENT_TYPES } from "@/lib/constants";
 import { compressImage, formatBytes } from "@/lib/image";
 
-const STEPS = ["Data Diri", "Foto Profil", "Skill & Sertifikat", "Dokumen & Tipe", "Siap Kerja"];
+const STEPS = ["Data Diri & Foto", "Skill & Dokumen", "Siap Kerja"];
 
 export default function BaristaOnboardingPage() {
   const router = useRouter();
@@ -62,11 +62,11 @@ export default function BaristaOnboardingPage() {
       }
       setErrors({});
     }
-    if (step === 1 && !photo.url) {
+    if (step === 0 && !photo.url) {
       toast("Foto profil wajib diunggah dulu ya", "error");
       return;
     }
-    if (step === 2) {
+    if (step === 1) {
       const parsed = skillsSchema.safeParse(form);
       if (!parsed.success) {
         const errs = {};
@@ -76,7 +76,7 @@ export default function BaristaOnboardingPage() {
       }
       setErrors({});
     }
-    if (step === 3) {
+    if (step === 2) {
       const errs = {};
       if (!form.open_to_types || form.open_to_types.length === 0) errs.open_to_types = "Pilih minimal 1 tipe pekerjaan";
       if (!form.cv && !form.cvUrl) errs.cv = "CV PDF wajib diunggah (max 5MB)";
@@ -234,7 +234,7 @@ export default function BaristaOnboardingPage() {
               >
                 {i < step ? <CheckCircle2 size={16} /> : i + 1}
               </span>
-              <span className="hidden text-[10px] font-bold text-espresso-soft sm:block">
+              <span className="text-[10px] font-bold text-espresso-soft">
                 {label}
               </span>
             </div>
@@ -298,19 +298,14 @@ export default function BaristaOnboardingPage() {
             error={errors.whatsapp}
           />
           </div>
-        </section>
-      )}
-
-      {/* STEP 2: Foto */}
-      {step === 1 && (
-        <section className="animate-rise">
-          <h1 className="text-xl font-extrabold text-espresso">
-            Foto profil kamu
-          </h1>
-          <p className="mt-1 text-sm text-espresso-soft">
-            Foto jadi bukti kamu orang sungguhan — pemilik usaha jauh lebih
-            percaya pada profil berfoto.
-          </p>
+          <div className="pt-2">
+            <p className="text-sm font-bold text-espresso">
+              Foto profil <span className="text-red-500">*</span>
+            </p>
+            <p className="mt-1 text-sm text-espresso-soft">
+              Foto jadi bukti kamu orang sungguhan — pemilik usaha jauh lebih
+              percaya pada profil berfoto.
+            </p>
 
           <div className="mt-8 flex flex-col items-center">
             <div className="relative">
@@ -354,11 +349,12 @@ export default function BaristaOnboardingPage() {
                 ` • terkirim ${formatBytes(photo.size)}`}
             </p>
           </div>
+          </div>
         </section>
       )}
 
-      {/* STEP 3: Skill & sertifikat */}
-      {step === 2 && (
+      {/* STEP 2: Skill, sertifikat & ide */}
+      {step === 1 && (
         <section className="animate-rise space-y-6">
           <div>
             <h1 className="text-xl font-extrabold text-espresso">Keahlian</h1>
@@ -489,8 +485,8 @@ export default function BaristaOnboardingPage() {
         </section>
       )}
 
-      {/* STEP 4: Dokumen & Tipe (Wajib) */}
-      {step === 3 && (
+      {/* STEP 3: Dokumen, tipe & siap kerja */}
+      {step === 2 && (
         <section className="animate-rise space-y-6">
           <div>
             <h1 className="text-xl font-extrabold text-espresso">Dokumen & tipe kerja</h1>
@@ -529,20 +525,7 @@ export default function BaristaOnboardingPage() {
             error={errors.cover_letter}
           />
           <p className="-mt-3 text-right text-[11px] text-espresso-soft">{form.cover_letter.length}/1000 (min 20)</p>
-        </section>
-      )}
-
-      {/* STEP 5: Siap kerja */}
-      {step === 4 && (
-        <section className="animate-rise">
-          <h1 className="text-xl font-extrabold text-espresso">
-            Terakhir — status siap kerja
-          </h1>
-          <p className="mt-1 text-sm text-espresso-soft">
-            Bisa kamu ubah kapan saja dari halaman profil.
-          </p>
-
-          <div className="mt-6 rounded-2xl card-dark p-5">
+          <div className="rounded-2xl card-dark p-5">
             <Toggle
               checked={form.is_open_to_work}
               onChange={(v) => set("is_open_to_work", v)}
@@ -553,25 +536,6 @@ export default function BaristaOnboardingPage() {
                   : "Profilmu disembunyikan dari pencarian"
               }
             />
-          </div>
-
-          <div className="mt-6 rounded-2xl card-dark p-5 text-sm">
-            <p className="font-bold text-espresso">Ringkasan</p>
-            <div className="mt-3 flex items-center gap-3">
-              <Avatar src={photo.url} name={form.full_name} size="lg" />
-              <div className="min-w-0">
-                <p className="truncate font-bold text-espresso">{form.full_name || "—"}</p>
-                <p className="text-xs text-espresso-soft">Foto profil ✓</p>
-              </div>
-            </div>
-            <ul className="mt-3 space-y-1 text-espresso-soft">
-              <li>👤 {form.full_name}, {form.age} th — 📍 {form.location_place}</li>
-              <li>📱 {form.whatsapp || "—"} • {form.is_open_to_work ? "Buka peluang" : "Tutup"}</li>
-              <li>🛠️ {form.skills.join(", ")}</li>
-              <li>📜 {form.certificates.length} sertifikat</li>
-              <li>💼 {form.open_to_types.length ? form.open_to_types.join(", ") : "—"} • CV: {form.cv ? form.cv.name : form.cvUrl ? "terunggah" : "—"}</li>
-              <li>✉️ Cover: {form.cover_letter.length} karakter</li>
-            </ul>
           </div>
         </section>
       )}
@@ -589,7 +553,7 @@ export default function BaristaOnboardingPage() {
         )}
         {step < STEPS.length - 1 ? (
           <Button onClick={next} full disabled={photo.uploading}>
-            Lanjut
+            Lanjut ({step + 1} dari {STEPS.length})
           </Button>
         ) : (
           <Button onClick={handleSubmit} full disabled={!canSubmit || submitting}>

@@ -72,7 +72,7 @@ export default async function TrainingPage({ searchParams }) {
             id="training-q"
             name="q"
             defaultValue={params?.q ?? ""}
-            placeholder="Search courses, skills, or certifications..."
+            placeholder="Cari kursus, skill, atau sertifikat..."
             autoComplete="off"
             className="h-6 w-full bg-transparent text-sm text-[#2b2118] placeholder:text-[#b6a98f] focus:outline-none"
           />
@@ -98,31 +98,21 @@ export default async function TrainingPage({ searchParams }) {
           {courses.map((c) => (
             <article key={c.id} className="flex flex-col rounded-2xl border border-[#e8e0cf] bg-[#ffffff] p-4 shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
               <p className="inline-flex w-fit items-center gap-1 rounded-full bg-[#e3f0e8] px-2.5 py-0.5 text-[10px] font-bold text-[#1f6b4a]">
-                <BadgeCheck size={11} aria-hidden="true" /> Kursus seed
+                <BadgeCheck size={11} aria-hidden="true" /> Contoh kurikulum
               </p>
               <h2 className="mt-2 text-base font-extrabold tracking-tight text-[#2b2118]">{c.title}</h2>
               <p className="text-xs text-[#857768]">By {c.by}</p>
-              <p className="mt-1 flex items-center gap-1 text-xs font-bold text-[#2b2118]">
-                <Star size={11} className="fill-[#c98a2b] text-[#c98a2b]" aria-hidden="true" />
-                {c.rating} <span className="font-semibold text-[#857768]">({c.reviews})</span>
-              </p>
               <p className="mt-1 flex items-center gap-1.5 text-[11px] text-[#857768]">
                 <Clock3 size={11} aria-hidden="true" /> {c.meta}
               </p>
               <p className="mt-1.5 line-clamp-2 text-xs leading-5 text-[#6f6252]">{c.desc}</p>
-              <p className="mt-1.5 text-sm font-extrabold text-[#2b2118]">{c.price}</p>
+              <p className="mt-1.5 text-xs font-bold text-[#857768]">Harga & jadwal menyusul</p>
               <div className="mt-auto flex gap-1.5 pt-3">
-                <Link
-                  href="/signup"
-                  className="inline-flex min-h-[34px] flex-1 items-center justify-center rounded-full border border-[#d8cdae] px-2 text-[11px] font-bold text-[#3d2c1e] hover:border-[#3d2c1e]"
-                >
-                  Detail
-                </Link>
                 <Link
                   href="/signup"
                   className="inline-flex min-h-[34px] flex-1 items-center justify-center rounded-full bg-[#3d2c1e] px-2 text-[11px] font-bold text-white hover:bg-[#2e2015]"
                 >
-                  Join Waitlist
+                  Ikut waitlist
                 </Link>
               </div>
             </article>
