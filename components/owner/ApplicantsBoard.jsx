@@ -222,11 +222,15 @@ export default function ApplicantsBoard({
                         <FileText size={12}/> Lihat CV PDF
                       </a>
                     )}
-                    {b?.whatsapp && (
+                    {app.status === "accepted" && b?.whatsapp ? (
                       <a href={`https://wa.me/${b.whatsapp.replace(/\D/g,"")}`} target="_blank" rel="noopener" className="inline-flex items-center gap-1 rounded-full bg-[#25D366] px-3 py-1 text-xs font-bold text-white hover:bg-[#20bd5a]">
                         <Phone size={12}/> WA {b.whatsapp}
                       </a>
-                    )}
+                    ) : b?.whatsapp ? (
+                      <span className="inline-flex items-center gap-1 rounded-full bg-[#efe9d9] px-3 py-1 text-xs font-bold text-[#857768]">
+                        <Phone size={12}/> WA tersedia setelah diterima
+                      </span>
+                    ) : null}
                     {app.cv_url?.endsWith?.(".pdf") ? null : null}
                   </div>
 
