@@ -73,6 +73,13 @@ function SignupForm() {
       });
       if (error) throw error;
 
+      // Email sudah terdaftar (Supabase bungkam demi privasi): arahkan login, bukan janji email baru
+      if (!data.session && (data.user?.identities?.length ?? 1) === 0) {
+        toast("Email sudah terdaftar, silakan masuk", "error");
+        router.push("/login");
+        return;
+      }
+
       if (!data.session) {
         // email confirmation is enabled on this project
         toast("Cek email kamu untuk konfirmasi akun");
