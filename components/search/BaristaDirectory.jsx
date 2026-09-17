@@ -43,7 +43,7 @@ export default function BaristaDirectory({ ownerId }) {
 
   const fetchList = useCallback(async () => {
     const supabase = createClient();
-    let req = supabase.from("barista_profiles").select("*, ratings(stars)");
+    let req = supabase.from("baristas_public").select("*");
     if (openOnly) req = req.eq("is_open_to_work", true);
     if (loc.trim()) req = req.ilike("location_place", `%${loc.trim()}%`);
     if (minExp > 0) req = req.gte("years_of_experience", minExp);
@@ -58,7 +58,8 @@ export default function BaristaDirectory({ ownerId }) {
             .order("years_of_experience", { ascending: false });
 
     const { data } = await req;
-    let rows = data ?? [];
+    const { attachRatings } = await import("@/lib/publicProfiles");
+    let rows = await attachRatings(data ?? [], supabase);
 
     // q: cari di nama, lokasi, bio, + skill (client-side, karena array + or_ sekaligus ribet di PostgREST).
     const needle = q.trim().toLowerCase();

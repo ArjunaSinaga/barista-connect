@@ -34,10 +34,11 @@ export default async function ReviewsPage({ searchParams }) {
     const supabase = await createClient();
     const { data } = await supabase
       .from("ratings")
-      .select("stars,comment,created_at, barista:barista_profiles!ratings_barista_id_fkey(full_name), owner:owners!ratings_owner_id_fkey(business_name)")
+      .select("stars,comment,created_at,barista_id,owner_id")
       .order("created_at", { ascending: false })
       .limit(100);
-    reviews = data ?? [];
+    const { attachBaristaNames } = await import("@/lib/publicProfiles");
+    reviews = await attachBaristaNames(data ?? [], supabase);
   } catch {
     reviews = [];
   }

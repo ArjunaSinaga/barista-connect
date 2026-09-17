@@ -43,22 +43,29 @@ export default async function OwnerDashboardPage({ searchParams }) {
       const r2 = await supabase.from("applications").select("job_post_id,status").in("job_post_id", jobIds)
       apps = r2.data ?? []
     }
-    const [o, c, gr, cw, b, sv, tm] = await Promise.all([
+    const [o, c, grRaw, cw, bRaw, sv, tmRaw] = await Promise.all([
       supabase.from("owners").select("business_name,avatar_url,whatsapp,location").eq("id", user.id).maybeSingle(),
       supabase.from("cafes").select("id,name,address,location,photo_urls,is_active").eq("owner_id", user.id).order("created_at", { ascending: true }),
-      supabase.from("ratings").select("id,stars,comment,created_at, barista:barista_profiles!ratings_barista_id_fkey(full_name,profile_picture_url)").eq("owner_id", user.id).order("created_at", { ascending: false }).limit(30),
+      supabase.from("ratings").select("id,stars,comment,created_at,barista_id").eq("owner_id", user.id).order("created_at", { ascending: false }).limit(30),
       supabase.from("conversations").select("id").eq("owner_id", user.id).gte("created_at", new Date(Date.now() - 7 * 864e5).toISOString()),
-      supabase.from("barista_profiles").select("*, ratings(stars)").eq("is_open_to_work", true).limit(30),
+      supabase.from("baristas_public").select("*").eq("is_open_to_work", true).limit(30),
       supabase.from("saved_baristas").select("barista_id").eq("owner_id", user.id),
-      supabase.from("team_members").select("id, status, job_title, job_post_id, application_id, hired_at, barista_id, cafe_id, cafes(id, name), barista_profiles(id, full_name, profile_picture_url, location_place, years_of_experience)").eq("owner_id", user.id).in("status", ["active", "terminated"]).order("hired_at", { ascending: false }),
+      supabase.from("team_members").select("id, status, job_title, job_post_id, application_id, hired_at, barista_id, cafe_id, cafes(id, name)").eq("owner_id", user.id).in("status", ["active", "terminated"]).order("hired_at", { ascending: false }),
     ]);
+    const { attachBaristaNames, attachRatings } = await import("@/lib/publicProfiles");
+    const grWithNames = await attachBaristaNames(grRaw.data ?? [], supabase);
+    givenRatings = grWithNames.map((r) => ({ ...r, barista: r.barista ? { full_name: r.barista.full_name } : null }));
+    baristas = await attachRatings(bRaw.data ?? [], supabase);
+    const tmIds = [...new Set((tmRaw.data ?? []).map((t) => t.barista_id).filter(Boolean))];
+    const { data: tmProfiles } = tmIds.length
+      ? await supabase.from("baristas_public").select("id, full_name, profile_picture_url, location_place, years_of_experience").in("id", tmIds)
+      : { data: [] };
+    const tmMap = new Map((tmProfiles ?? []).map((p) => [p.id, { id: p.id, full_name: p.full_name, profile_picture_url: p.profile_picture_url, location_place: p.location_place, years_of_experience: p.years_of_experience }]));
+    teamMembers = (tmRaw.data ?? []).map((t) => ({ ...t, barista_profiles: tmMap.get(t.barista_id) ?? null }));
     ownerRow = o.data ?? null;
     cafes = c.data ?? [];
-    givenRatings = gr.data ?? [];
     convosWeek = cw.data ?? [];
-    baristas = b.data ?? [];
     savedBaristaIds = (sv.data ?? []).map((s) => s.barista_id);
-    teamMembers = tm.data ?? [];
   } catch(e) { jobs = []; apps = [] }
 
   const appCountByJob = {}

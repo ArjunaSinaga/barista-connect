@@ -46,11 +46,13 @@ export default async function JobDetailPage({ params }) {
   if (!isSupabaseConfigured()) notFound();
 
   const supabase = await createClient();
-  const { data: job } = await supabase
+  const { data: jobRow } = await supabase
     .from("job_posts")
-    .select("*, owners(business_name, location, avatar_url, is_verified), cafes(id, name, location, address, photo_urls)")
+    .select("*, cafes(id, name, location, address, photo_urls)")
     .eq("id", id)
     .maybeSingle();
+  const { attachOwners } = await import("@/lib/publicProfiles");
+  const [job] = await attachOwners(jobRow ? [jobRow] : [], supabase);
 
   // Inactive jobs visible only to their owner
   if (!job || (!job.is_active && job.owner_id !== user?.id)) notFound();

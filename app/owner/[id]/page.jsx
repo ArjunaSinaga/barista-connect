@@ -12,7 +12,7 @@ export default async function OwnerPublicPage({ params }) {
   const { id } = await params;
   const supabase = await createClient();
 
-  const { data: o } = await supabase.from("owners").select("*").eq("id", id).maybeSingle();
+  const { data: o } = await supabase.from("owners_public").select("*").eq("id", id).maybeSingle();
   if (!o) notFound();
 
   const { user, profile } = await getSessionSafe();

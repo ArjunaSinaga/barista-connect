@@ -46,14 +46,15 @@ export default async function JobsPage({ searchParams }) {
           : { column: "created_at", ascending: false };
       let req = supabase
         .from("job_posts")
-        .select("*, owners(business_name, is_verified), cafes(id, name)")
+        .select("*, cafes(id, name)")
         .eq("is_active", true)
         .order(orderOpt.column, { ascending: orderOpt.ascending });
       if (q) req = req.or(`title.ilike.%${q}%,description.ilike.%${q}%`);
       if (loc) req = req.ilike("location", `%${loc}%`);
       if (type && EMPLOYMENT_TYPES.some((t) => t.value === type)) req = req.overlaps("employment_types", [type]);
       const { data } = await req;
-      jobs = data ?? [];
+      const { attachOwners } = await import("@/lib/publicProfiles");
+      jobs = await attachOwners(data ?? [], supabase);
     } catch {
       jobs = [];
     }

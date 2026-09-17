@@ -6,6 +6,7 @@ import FeaturedBarista from "@/components/landing/FeaturedBarista";
 import ReviewsCard from "@/components/landing/ReviewsCard";
 import { EcosystemCard, AcademyCard, SmarterOpsCard } from "@/components/landing/SidebarKerja";
 import { avgStars } from "@/lib/ratings";
+import { attachOwners, attachBaristaNames, attachRatings } from "@/lib/publicProfiles";
 
 async function getLatestJobs() {
   if (!isSupabaseConfigured()) return [];
@@ -13,10 +14,10 @@ async function getLatestJobs() {
     const supabase = await createClient();
     const { data } = await supabase
       .from("job_posts")
-      .select("*, owners(business_name,is_verified), cafes(name, photo_urls)")
+      .select("*, cafes(name, photo_urls)")
       .eq("is_active", true)
       .order("created_at", { ascending: false });
-    return data ?? [];
+    return attachOwners(data ?? [], supabase);
   } catch {
     return [];
   }
@@ -51,13 +52,14 @@ async function getFeaturedBarista() {
   try {
     const supabase = await createClient();
     const { data } = await supabase
-      .from("barista_profiles")
-      .select("*, ratings(stars)")
+      .from("baristas_public")
+      .select("*")
       .eq("is_open_to_work", true)
       .order("years_of_experience", { ascending: false })
       .limit(10);
-    if (!data?.length) return null;
-    const ranked = [...data].sort((a, b) => {
+    const rows = await attachRatings(data ?? [], supabase);
+    if (!rows.length) return null;
+    const ranked = [...rows].sort((a, b) => {
       const aa = parseFloat(avgStars(a.ratings) ?? "-1");
       const bb = parseFloat(avgStars(b.ratings) ?? "-1");
       if (bb !== aa) return bb - aa;
@@ -75,9 +77,9 @@ async function getRecentReviews() {
     const supabase = await createClient();
     const { data } = await supabase
       .from("ratings")
-      .select("stars,comment,created_at, barista:barista_profiles!ratings_barista_id_fkey(full_name), owner:owners!ratings_owner_id_fkey(business_name)")
+      .select("stars,comment,created_at,barista_id,owner_id")
       .order("created_at", { ascending: false });
-    return data ?? [];
+    return attachBaristaNames(data ?? [], supabase);
   } catch {
     return [];
   }
