@@ -35,6 +35,7 @@ export default function BaristaDirectory({ ownerId }) {
   const [sort, setSort] = useState("open");
 
   const [list, setList] = useState(null);
+  const [loadError, setLoadError] = useState(false);
   const [sheetOpen, setSheetOpen] = useState(false);
   const debounceRef = useRef(null);
 
@@ -42,6 +43,8 @@ export default function BaristaDirectory({ ownerId }) {
   // via key={...} dari page (lihat app/find-baristas/page.jsx).
 
   const fetchList = useCallback(async () => {
+    setLoadError(false);
+    try {
     const supabase = createClient();
     let req = supabase.from("baristas_public").select("*");
     if (openOnly) req = req.eq("is_open_to_work", true);
@@ -83,6 +86,10 @@ export default function BaristaDirectory({ ownerId }) {
     }
 
     setList(rows);
+    } catch {
+      setLoadError(true);
+      setList([]);
+    }
   }, [skills, loc, minExp, openOnly, sort, q, minRating, typeFilter]);
 
   useEffect(() => {
@@ -179,7 +186,17 @@ export default function BaristaDirectory({ ownerId }) {
       <h1 className="text-2xl font-extrabold text-espresso">Cari Barista</h1>
       <p className="mt-1 text-sm text-espresso-soft">
         {list === null ? "Memuat..." : `${list.length} barista ditemukan`}
+        {!ownerId && " · Lihat dulu bebas, login untuk chat."}
       </p>
+      {loadError && (
+        <button
+          type="button"
+          onClick={() => { setList(null); fetchList(); }}
+          className="mt-2 rounded-full border border-red-300 bg-red-50 px-4 py-2 text-xs font-bold text-red-600 hover:border-red-500"
+        >
+          Gagal memuat — coba lagi
+        </button>
+      )}
 
       {/* toolbar */}
       <div className="mt-5 flex flex-wrap items-center gap-2">

@@ -8,7 +8,14 @@ import Badge from "@/components/ui/Badge";
 export const metadata = { title: "Dashboard Barista" };
 
 export default async function BaristaDashboardPage() {
-  if (!isSupabaseConfigured()) return null;
+  if (!isSupabaseConfigured()) {
+    return (
+      <div className="p-8 text-center">
+        <p className="text-sm font-bold text-espresso">Koneksi database belum siap.</p>
+        <p className="mt-1 text-sm text-espresso-soft">Coba muat ulang halaman ini.</p>
+      </div>
+    );
+  }
   const { user, profile } = await getSessionSafe();
   if (!user) {
     return (
@@ -20,9 +27,21 @@ export default async function BaristaDashboardPage() {
   const supabase = await createClient();
   const { data: apps } = await supabase
     .from("applications")
-    .select("id, status, created_at, job_posts ( id, title, owners ( business_name ) )")
+    .select("id, status, created_at, job_post_id, job_posts ( id, title )")
     .eq("barista_id", user.id)
     .order("created_at", { ascending: false });
+  const jobOwnerIds = [...new Set((apps ?? []).map((a) => a.job_posts?.id).filter(Boolean))];
+  let ownerMap = new Map();
+  if (jobOwnerIds.length) {
+    const { data: jobs } = await supabase.from("job_posts").select("id, owner_id").in("id", jobOwnerIds);
+    const oIds = [...new Set((jobs ?? []).map((j) => j.owner_id).filter(Boolean))];
+    const jobMap = new Map((jobs ?? []).map((j) => [j.id, j.owner_id]));
+    if (oIds.length) {
+      const { data: owners } = await supabase.from("owners_public").select("id, business_name").in("id", oIds);
+      const oMap = new Map((owners ?? []).map((o) => [o.id, o.business_name]));
+      for (const a of apps ?? []) ownerMap.set(a.id, oMap.get(jobMap.get(a.job_post_id)) ?? null);
+    }
+  }
 
   const list = apps ?? [];
   const count = (s) => list.filter((a) => a.status === s).length;
@@ -81,9 +100,14 @@ export default async function BaristaDashboardPage() {
           <Link href="/dashboard/barista/applications" className="text-xs font-bold text-caramel hover:underline">Lihat semua</Link>
         </div>
         {recent.length === 0 ? (
-          <p className="px-5 py-6 text-sm text-espresso-soft">
-            Belum ada lamaran. Cari lowongan di bawah dan kirim lamaran pertamamu.
-          </p>
+          <div className="px-5 py-6">
+            <p className="text-sm text-espresso-soft">
+              Belum ada lamaran. Cari lowongan di bawah dan kirim lamaran pertamamu.
+            </p>
+            <Link href="/jobs" className="mt-3 inline-flex min-h-[40px] items-center rounded-full bg-[#3d2c1e] px-5 text-[13px] font-bold text-white hover:bg-[#2e2015]">
+              Cari lowongan
+            </Link>
+          </div>
         ) : (
           <ul className="divide-y divide-latte">
             {recent.map((a) => {
@@ -93,7 +117,7 @@ export default async function BaristaDashboardPage() {
                   <div className="min-w-0">
                     <p className="truncate text-sm font-bold text-espresso">{a.job_posts?.title ?? "Lowongan dihapus"}</p>
                     <p className="truncate text-xs text-espresso-soft">
-                      {a.job_posts?.owners?.business_name ?? "-"} • {relativeTime(a.created_at)}
+                      {ownerMap.get(a.id) ?? "-"} • {relativeTime(a.created_at)}
                     </p>
                   </div>
                   <Badge classes={meta.classes}>{meta.label}</Badge>

@@ -34,6 +34,7 @@ export default async function OwnerDashboardPage({ searchParams }) {
   let baristas = []
   let savedBaristaIds = []
   let teamMembers = []
+  let loadError = false
   try {
     const supabase = await createClient()
     const res = await supabase.from("job_posts").select("id,title,location,salary_text,employment_type,employment_types,is_active,created_at,cafe_id,cafes(name)").eq("owner_id", user.id).order("created_at", { ascending: false })
@@ -66,7 +67,7 @@ export default async function OwnerDashboardPage({ searchParams }) {
     cafes = c.data ?? [];
     convosWeek = cw.data ?? [];
     savedBaristaIds = (sv.data ?? []).map((s) => s.barista_id);
-  } catch(e) { jobs = []; apps = [] }
+  } catch(e) { jobs = []; apps = []; loadError = true }
 
   const appCountByJob = {}
   ;(apps||[]).forEach(a => { appCountByJob[a.job_post_id] = (appCountByJob[a.job_post_id]||0)+1 })
@@ -111,6 +112,11 @@ export default async function OwnerDashboardPage({ searchParams }) {
   return (
     <div className="min-h-screen bg-[#f5f1e8] text-[#2b2118] lg:flex lg:h-[calc(100dvh-3.5rem)] lg:min-h-0 lg:flex-col lg:overflow-hidden">
       <div className="mx-auto w-full max-w-[1400px] px-4 py-4 sm:px-6 lg:min-h-0 lg:flex-1">
+        {loadError && (
+          <p className="mb-3 rounded-xl border border-red-300 bg-red-50 px-4 py-3 text-xs font-bold text-red-600">
+            Data gagal dimuat — periksa koneksi lalu muat ulang halaman ini.
+          </p>
+        )}
         <Suspense fallback={null}>
           <DashboardShell
             initialView={params?.tab}

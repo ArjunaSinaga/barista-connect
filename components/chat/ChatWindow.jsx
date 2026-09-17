@@ -205,7 +205,7 @@ export default function ChatWindow({
                       onClick={() => handleDeleteMessage(m.id)}
                       title="Hapus pesan"
                       aria-label="Hapus pesan"
-                      className="absolute -left-8 top-1/2 -translate-y-1/2 rounded-full p-1.5 text-espresso-soft/40 opacity-0 transition-opacity hover:bg-red-50 hover:text-red-600 group-hover:opacity-100"
+                      className="absolute -left-8 top-1/2 -translate-y-1/2 rounded-full p-1.5 text-espresso-soft/40 opacity-60 transition-opacity hover:bg-red-50 hover:text-red-600 md:opacity-0 md:group-hover:opacity-100"
                     >
                       <X size={14} />
                     </button>

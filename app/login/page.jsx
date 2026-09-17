@@ -16,7 +16,6 @@ function LoginForm() {
   const toast = useToast();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loginAs, setLoginAs] = useState("barista");
   const [showPw, setShowPw] = useState(false);
   const [errors, setErrors] = useState({});
   const [busy, setBusy] = useState(false);
@@ -63,14 +62,8 @@ function LoginForm() {
         .select("role")
         .eq("id", data.user.id)
         .single();
+      // Peran dibaca dari database — user tak perlu menebak.
       const role = profile?.role ?? "barista";
-
-      // Guard: akun barista & owner hidup di tabel berbeda — tolak bila pilihan tak cocok.
-      if (role !== loginAs) {
-        await supabase.auth.signOut();
-        toast(`Akun ini terdaftar sebagai ${role === "owner" ? "pemilik usaha" : "barista"}. Pilih peran yang sesuai.`, "error");
-        return;
-      }
 
       const table = role === "owner" ? "owners" : "barista_profiles";
       const { data: detail } = await supabase
@@ -105,29 +98,6 @@ function LoginForm() {
       </p>
 
       <form onSubmit={handleSubmit} className="mt-8 space-y-4">
-        <fieldset>
-          <legend className="text-sm font-bold text-[#2b2118]">Masuk sebagai</legend>
-          <div className="mt-2 grid grid-cols-2 gap-2" role="radiogroup" aria-label="Masuk sebagai">
-            {[["barista", "Barista"], ["owner", "Pemilik Usaha"]].map(([v, label]) => (
-              <label
-                key={v}
-                className={`flex cursor-pointer items-center justify-center gap-2 rounded-full border-2 px-3 py-2 text-sm font-bold transition-all ${
-                  loginAs === v ? "border-[#3d2c1e] bg-[#3d2c1e] text-white" : "border-[#e8e0cf] bg-[#ffffff] text-[#2b2118]"
-                }`}
-              >
-                <input
-                  type="radio"
-                  name="loginAs"
-                  value={v}
-                  checked={loginAs === v}
-                  onChange={() => setLoginAs(v)}
-                  className="sr-only"
-                />
-                {label}
-              </label>
-            ))}
-          </div>
-        </fieldset>
         <Input
           name="email"
           type="email"
