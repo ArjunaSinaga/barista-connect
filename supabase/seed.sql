@@ -20,7 +20,7 @@ insert into auth.users (
   '00000000-0000-0000-0000-000000000000',
   '11111111-1111-4111-8111-111111111111',
   'authenticated', 'authenticated', 'owner.senja@bc-demo.id',
-  crypt('password123', gen_random_uuid()::text), now(), now(),
+  crypt('password123', gen_salt('bf')), now(), now(),
   '{"provider":"email","providers":["email"]}'::jsonb, '{}'::jsonb,
   '', '', '', '',
   now(), now()
@@ -29,7 +29,7 @@ insert into auth.users (
   '00000000-0000-0000-0000-000000000000',
   '11111111-1111-4111-8111-222222222222',
   'authenticated', 'authenticated', 'owner.brewok@bc-demo.id',
-  crypt('password123', gen_random_uuid()::text), now(), now(),
+  crypt('password123', gen_salt('bf')), now(), now(),
   '{"provider":"email","providers":["email"]}'::jsonb, '{}'::jsonb,
   '', '', '', '',
   now(), now()
@@ -65,7 +65,7 @@ select
   '00000000-0000-0000-0000-000000000000',
   ('bbbbbbbb-0000-4000-8000-' || lpad((n)::text, 12, '0'))::uuid,
   'authenticated', 'authenticated', 'barista' || n || '@bc-demo.id',
-  crypt('password123', gen_random_uuid()::text), now(), now(),
+  crypt('password123', gen_salt('bf')), now(), now(),
   '{"provider":"email","providers":["email"]}'::jsonb, '{}'::jsonb,
   '', '', '', '',
   now(), now()

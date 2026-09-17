@@ -137,7 +137,7 @@ as $rpc$
 declare
   cid uuid;
 begin
-  if auth.uid() is null or auth.uid() not in (p_owner, p_barista) then
+  if (select auth.uid()) is null or (select auth.uid()) not in (p_owner, p_barista) then
     raise exception 'NOT_PARTICIPANT';
   end if;
 
@@ -175,11 +175,11 @@ alter table public.messages enable row level security;
 -- profiles: owner-only rows
 drop policy if exists profiles_select_own on public.profiles;
 create policy profiles_select_own on public.profiles
-  for select using (auth.uid() = id);
+  for select using ((select auth.uid()) = id);
 
 drop policy if exists profiles_insert_own on public.profiles;
 create policy profiles_insert_own on public.profiles
-  for insert with check (auth.uid() = id);
+  for insert with check ((select auth.uid()) = id);
 
 -- owners: public read (job feed shows business names)
 drop policy if exists owners_public_read on public.owners;
@@ -189,16 +189,16 @@ create policy owners_public_read on public.owners
 drop policy if exists owners_write_own on public.owners;
 create policy owners_write_own on public.owners
   for insert with check (
-    auth.uid() = id
+    (select auth.uid()) = id
     and exists (
       select 1 from public.profiles p
-      where p.id = auth.uid() and p.role = 'owner'
+      where p.id = (select auth.uid()) and p.role = 'owner'
     )
   );
 
 drop policy if exists owners_update_own on public.owners;
 create policy owners_update_own on public.owners
-  for update using (auth.uid() = id);
+  for update using ((select auth.uid()) = id);
 
 -- barista_profiles: public read (directory + public profile page)
 drop policy if exists barista_public_read on public.barista_profiles;
@@ -208,23 +208,23 @@ create policy barista_public_read on public.barista_profiles
 drop policy if exists barista_insert_own on public.barista_profiles;
 create policy barista_insert_own on public.barista_profiles
   for insert with check (
-    auth.uid() = id
+    (select auth.uid()) = id
     and exists (
       select 1 from public.profiles p
-      where p.id = auth.uid() and p.role = 'barista'
+      where p.id = (select auth.uid()) and p.role = 'barista'
     )
   );
 
 drop policy if exists barista_update_own on public.barista_profiles;
 create policy barista_update_own on public.barista_profiles
-  for update using (auth.uid() = id);
+  for update using ((select auth.uid()) = id);
 
 -- job_posts: anon sees active only; owner sees own incl. paused
 drop policy if exists jobs_public_read_active on public.job_posts;
 create policy jobs_public_read_active on public.job_posts
   for select using (
     is_active = true
-    or exists (select 1 from public.owners o where o.id = auth.uid())
+    or exists (select 1 from public.owners o where o.id = (select auth.uid()))
   );
 
 drop policy if exists jobs_insert_own on public.job_posts;
@@ -233,20 +233,20 @@ create policy jobs_insert_own on public.job_posts
     exists (
       select 1 from public.owners o
       join public.profiles p on p.id = o.id
-      where o.id = auth.uid() and p.role = 'owner'
+      where o.id = (select auth.uid()) and p.role = 'owner'
     )
   );
 
 drop policy if exists jobs_update_own on public.job_posts;
 create policy jobs_update_own on public.job_posts
   for update using (
-    exists (select 1 from public.owners o where o.id = auth.uid())
+    exists (select 1 from public.owners o where o.id = (select auth.uid()))
   );
 
 drop policy if exists jobs_delete_own on public.job_posts;
 create policy jobs_delete_own on public.job_posts
   for delete using (
-    exists (select 1 from public.owners o where o.id = auth.uid())
+    exists (select 1 from public.owners o where o.id = (select auth.uid()))
   );
 
 -- applications: applicant sees own; job owner sees all for their jobs
@@ -255,11 +255,11 @@ create policy apps_select_parties on public.applications
   for select using (
     exists (
       select 1 from public.barista_profiles b
-      where b.id = auth.uid() and b.id = barista_id
+      where b.id = (select auth.uid()) and b.id = barista_id
     )
     or exists (
       select 1 from public.job_posts j
-      where j.id = job_post_id and j.owner_id = auth.uid()
+      where j.id = job_post_id and j.owner_id = (select auth.uid())
     )
   );
 
@@ -268,7 +268,7 @@ create policy apps_insert_barista on public.applications
   for insert with check (
     exists (
       select 1 from public.barista_profiles b
-      where b.id = auth.uid() and b.id = barista_id
+      where b.id = (select auth.uid()) and b.id = barista_id
     )
     and exists (
       select 1 from public.job_posts j
@@ -281,12 +281,12 @@ create policy apps_update_parties on public.applications
   for update using (
     exists (
       select 1 from public.job_posts j
-      where j.id = job_post_id and j.owner_id = auth.uid()
+      where j.id = job_post_id and j.owner_id = (select auth.uid())
     )
     or (
       exists (
         select 1 from public.barista_profiles b
-        where b.id = auth.uid() and b.id = barista_id
+        where b.id = (select auth.uid()) and b.id = barista_id
       )
       and status = 'pending'
     )
@@ -295,11 +295,11 @@ create policy apps_update_parties on public.applications
 -- conversations: participants only
 drop policy if exists conv_select_participants on public.conversations;
 create policy conv_select_participants on public.conversations
-  for select using (auth.uid() in (owner_id, barista_id));
+  for select using ((select auth.uid()) in (owner_id, barista_id));
 
 drop policy if exists conv_update_participants on public.conversations;
 create policy conv_update_participants on public.conversations
-  for update using (auth.uid() in (owner_id, barista_id));
+  for update using ((select auth.uid()) in (owner_id, barista_id));
 
 -- messages: participants read; sender must be participant
 drop policy if exists msg_select_participants on public.messages;
@@ -308,18 +308,18 @@ create policy msg_select_participants on public.messages
     exists (
       select 1 from public.conversations c
       where c.id = conversation_id
-        and auth.uid() in (c.owner_id, c.barista_id)
+        and (select auth.uid()) in (c.owner_id, c.barista_id)
     )
   );
 
 drop policy if exists msg_insert_participant on public.messages;
 create policy msg_insert_participant on public.messages
   for insert with check (
-    sender_id = auth.uid()
+    sender_id = (select auth.uid())
     and exists (
       select 1 from public.conversations c
       where c.id = conversation_id
-        and auth.uid() in (c.owner_id, c.barista_id)
+        and (select auth.uid()) in (c.owner_id, c.barista_id)
     )
   );
 
@@ -358,7 +358,7 @@ create policy avatars_user_insert on storage.objects
   for insert to authenticated
   with check (
     bucket_id = 'avatars'
-    and (storage.foldername(name))[1] = auth.uid()::text
+    and (storage.foldername(name))[1] = (select auth.uid())::text
   );
 
 drop policy if exists avatars_user_update on storage.objects;
@@ -366,5 +366,5 @@ create policy avatars_user_update on storage.objects
   for update to authenticated
   using (
     bucket_id = 'avatars'
-    and (storage.foldername(name))[1] = auth.uid()::text
+    and (storage.foldername(name))[1] = (select auth.uid())::text
   );

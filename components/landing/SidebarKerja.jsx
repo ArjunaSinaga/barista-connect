@@ -38,7 +38,6 @@ export function EcosystemCard() {
 }
 
 export function AcademyCard({ image }) {
-  const src = image ?? `https://picsum.photos/seed/barista-training/640/320`;
   const points = ["Beginner to Advanced", "Learn from Industry Experts", "Get Certified by BaristaConnect"];
   return (
     <div className="rounded-2xl border border-[#e8e0cf] bg-[#ffffff] p-4 shadow-[0_1px_3px_rgba(43,33,24,0.08)] lg:min-h-full">
@@ -59,7 +58,14 @@ export function AcademyCard({ image }) {
           </Link>
         </div>
         <div className="relative min-h-44 overflow-hidden rounded-xl">
-          <img src={src} alt="Barista training" loading="lazy" className="absolute inset-0 h-full w-full object-cover" />
+          {image ? (
+            <img src={image} alt="Barista training" loading="lazy" className="absolute inset-0 h-full w-full object-cover" />
+          ) : (
+            <div className="absolute inset-0 flex flex-col items-center justify-center gap-1 bg-[#ece2cd] px-4 text-center">
+              <GraduationCap size={26} className="text-[#9a6a2f]" />
+              <p className="text-[11px] font-bold text-[#6f6252]">Foto training asli menyusul</p>
+            </div>
+          )}
           <ul className="absolute top-2 left-2 space-y-1 rounded-lg bg-[#ffffff]/95 p-2 shadow">
             {points.map((t) => (
               <li key={t} className="flex items-center gap-1.5 text-[10px] leading-3 font-semibold text-[#3d2c1e]">
