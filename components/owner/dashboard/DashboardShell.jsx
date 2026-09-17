@@ -44,7 +44,7 @@ export default function DashboardShell({ initialView = "talenta", initialCafeId 
             <TeamView {...middle.team} initialCafeId={initialCafeId} onBack={() => setView("talenta")} />
           ) : view === "saved" ? (
             middle.saved?.list?.length ? (
-              <TopCandidatesGrid baristas={middle.saved.list} savedIds={middle.saved.savedIds ?? []} />
+              <TopCandidatesGrid baristas={middle.saved.list} savedIds={middle.saved.savedIds ?? []} ownerId={middle.ownerId} />
             ) : (
               <EmptyState
                 icon={<ChevronRight size={20} />}
@@ -60,7 +60,7 @@ export default function DashboardShell({ initialView = "talenta", initialCafeId 
         </div>
         {middle.talenta.top3?.length > 0 && (
           <div className="shrink-0 lg:pr-1 lg:pb-1">
-            <TopCandidatesStrip baristas={middle.talenta.top3} savedIds={middle.talenta.savedIds ?? []} />
+            <TopCandidatesStrip baristas={middle.talenta.top3} savedIds={middle.talenta.savedIds ?? []} ownerId={middle.ownerId} />
           </div>
         )}
       </div>

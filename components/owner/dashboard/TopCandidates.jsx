@@ -6,6 +6,7 @@ import { Star, MapPin, Briefcase, Send, ChevronRight, ChevronLeft } from "lucide
 import Avatar from "@/components/ui/Avatar";
 import VerifiedBadge from "@/components/ui/VerifiedBadge";
 import SaveBaristaButton from "@/components/owner/dashboard/SaveBaristaButton";
+import InviteButton from "@/components/owner/dashboard/InviteButton";
 import { avgStars } from "@/lib/ratings";
 
 // Kartu kandidat ala mockup: foto + badge + nama + rating + quote + skill + 2 CTA.
@@ -16,7 +17,7 @@ export function badgeFor(b, rank) {
   return { label: "Top Match", cls: "bg-[#f5ecd4] text-[#8a6d1f]" };
 }
 
-export function CandidateCard({ barista, rank, compact = false, strip = false, saved = false }) {
+export function CandidateCard({ barista, rank, compact = false, strip = false, saved = false, ownerId = null }) {
   const avg = avgStars(barista.ratings);
   const count = barista.ratings?.length ?? 0;
   const badge = badgeFor(barista, rank ?? 99);
@@ -76,12 +77,12 @@ export function CandidateCard({ barista, rank, compact = false, strip = false, s
               >
                 Profile
               </Link>
-              <Link
-                href={`/barista/${barista.id}`}
-                className="inline-flex items-center justify-center gap-0.5 rounded bg-[#3d2c1e] px-2 py-1 text-[10px] font-bold text-white hover:bg-[#2e2015]"
-              >
-                <Send size={9} /> Invite
-              </Link>
+              <InviteButton
+                ownerId={ownerId}
+                baristaId={barista.id}
+                iconSize={9}
+                className="inline-flex items-center justify-center gap-0.5 rounded bg-[#3d2c1e] px-2 py-1 text-[10px] font-bold text-white hover:bg-[#2e2015] disabled:opacity-50"
+              />
             </div>
           </div>
         </div>
@@ -144,12 +145,12 @@ export function CandidateCard({ barista, rank, compact = false, strip = false, s
           >
             View Profile
           </Link>
-          <Link
-            href={`/barista/${barista.id}`}
-            className="inline-flex min-h-[34px] flex-1 items-center justify-center gap-1 rounded-full bg-[#3d2c1e] px-2 py-1.5 text-[11px] font-bold text-white hover:bg-[#2e2015]"
-          >
-            <Send size={11} /> Invite
-          </Link>
+          <InviteButton
+            ownerId={ownerId}
+            baristaId={barista.id}
+            iconSize={11}
+            className="inline-flex min-h-[34px] flex-1 items-center justify-center gap-1 rounded-full bg-[#3d2c1e] px-2 py-1.5 text-[11px] font-bold text-white hover:bg-[#2e2015] disabled:opacity-50"
+          />
         </div>
       </div>
     </div>
@@ -158,7 +159,7 @@ export function CandidateCard({ barista, rank, compact = false, strip = false, s
 
 // Strip terbatas: kartu full (compact-pendek) dalam 1 baris carousel + panah.
 // Dipakai persisten di bawah tab active/pelamar — halaman tidak memanjang.
-export function TopCandidatesStrip({ baristas, savedIds = [] }) {
+export function TopCandidatesStrip({ baristas, savedIds = [], ownerId = null }) {
   const trackRef = useRef(null);
   const [canLeft, setCanLeft] = useState(false);
   const [canRight, setCanRight] = useState(false);
@@ -220,7 +221,7 @@ export function TopCandidatesStrip({ baristas, savedIds = [] }) {
       >
         {baristas.map((b, i) => (
           <div key={b.id} className="w-[280px] shrink-0 snap-start sm:w-[300px]">
-            <CandidateCard barista={b} rank={i} strip saved={savedIds.includes(b.id)} />
+            <CandidateCard barista={b} rank={i} strip saved={savedIds.includes(b.id)} ownerId={ownerId} />
           </div>
         ))}
       </div>
@@ -230,7 +231,7 @@ export function TopCandidatesStrip({ baristas, savedIds = [] }) {
 
 // Grid penuh untuk view talenta: top 3 langsung kelihatan semua, tanpa geser.
 // Mobile menumpuk vertikal, desktop 3 sejajar (lebar kartu ikut ruang).
-export function TopCandidatesGrid({ baristas, savedIds = [] }) {
+export function TopCandidatesGrid({ baristas, savedIds = [], ownerId = null }) {
   if (!baristas?.length) return null;
   return (
     <section aria-label="Top candidates">
@@ -245,7 +246,7 @@ export function TopCandidatesGrid({ baristas, savedIds = [] }) {
       </div>
       <div className="mt-2 grid gap-3 md:grid-cols-3">
         {baristas.map((b, i) => (
-          <CandidateCard key={b.id} barista={b} rank={i} compact saved={savedIds.includes(b.id)} />
+          <CandidateCard key={b.id} barista={b} rank={i} compact saved={savedIds.includes(b.id)} ownerId={ownerId} />
         ))}
       </div>
     </section>

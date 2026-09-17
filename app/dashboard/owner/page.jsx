@@ -116,6 +116,7 @@ export default async function OwnerDashboardPage({ searchParams }) {
               counts: { activeJobs, applicants: totalApplicants, reviewsGiven: givenCount, cafes: cafes.length, saved: savedList.length, team: teamMembers.length },
             }}
             middle={{
+              ownerId: user.id,
               talenta: {
                 heroPhoto: firstCafe?.photo_urls?.[0] ?? null,
                 cafeName: firstCafe?.name,
