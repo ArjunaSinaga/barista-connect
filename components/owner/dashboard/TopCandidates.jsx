@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { Star, MapPin, Briefcase, Send, ChevronRight, ChevronLeft } from "lucide-react";
+import { Star, MapPin, Briefcase, ChevronRight, ChevronLeft } from "lucide-react";
 import Avatar from "@/components/ui/Avatar";
 import VerifiedBadge from "@/components/ui/VerifiedBadge";
 import SaveBaristaButton from "@/components/owner/dashboard/SaveBaristaButton";
