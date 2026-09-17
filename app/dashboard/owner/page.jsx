@@ -46,7 +46,7 @@ export default async function OwnerDashboardPage({ searchParams }) {
     const [o, c, gr, cw, b, sv, tm] = await Promise.all([
       supabase.from("owners").select("business_name,avatar_url,whatsapp,location").eq("id", user.id).maybeSingle(),
       supabase.from("cafes").select("id,name,address,location,photo_urls,is_active").eq("owner_id", user.id).order("created_at", { ascending: true }),
-      supabase.from("ratings").select("stars,comment,created_at, barista:barista_profiles!ratings_barista_id_fkey(full_name,profile_picture_url)").eq("owner_id", user.id).order("created_at", { ascending: false }).limit(30),
+      supabase.from("ratings").select("id,stars,comment,created_at, barista:barista_profiles!ratings_barista_id_fkey(full_name,profile_picture_url)").eq("owner_id", user.id).order("created_at", { ascending: false }).limit(30),
       supabase.from("conversations").select("id").eq("owner_id", user.id).gte("created_at", new Date(Date.now() - 7 * 864e5).toISOString()),
       supabase.from("barista_profiles").select("*, ratings(stars)").eq("is_open_to_work", true).limit(30),
       supabase.from("saved_baristas").select("barista_id").eq("owner_id", user.id),

@@ -36,8 +36,8 @@ export default function ReviewsView({ reviews, onBack }) {
         />
       ) : (
         <ul className="space-y-3">
-          {reviews.map((r, i) => (
-            <li key={i} className="rounded-2xl border border-[#e8e0cf] bg-[#ffffff] p-4">
+          {reviews.map((r) => (
+            <li key={r.id ?? `${r.barista?.full_name}-${r.created_at}`} className="rounded-2xl border border-[#e8e0cf] bg-[#ffffff] p-4">
               <div className="flex items-center gap-3">
                 <Avatar src={r.barista?.profile_picture_url} name={r.barista?.full_name ?? "?"} size="md" />
                 <div className="min-w-0 flex-1">
