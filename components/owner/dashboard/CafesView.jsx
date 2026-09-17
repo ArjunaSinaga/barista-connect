@@ -57,7 +57,7 @@ export default function CafesView({ cafes, countByCafe, teamCountByCafe = {}, on
                   </p>
                   <p className="truncate text-[11px] text-[#857768]">
                     {teamCountByCafe[c.id] ?? 0} anggota tim ·{" "}
-                    <Link href="/dashboard/owner?tab=team" className="font-bold text-[#2b6cb0] hover:underline">
+                    <Link href={`/dashboard/owner?tab=team&cafe=${c.id}`} className="font-bold text-[#2b6cb0] hover:underline">
                       Lihat tim
                     </Link>
                   </p>

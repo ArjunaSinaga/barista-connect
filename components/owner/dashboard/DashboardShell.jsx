@@ -19,7 +19,7 @@ import { SmarterOpsCard } from "@/components/landing/SidebarKerja";
 // (talenta/active/pelamar/reviews/cafes) tanpa navigasi halaman.
 const VIEWS = ["talenta", "active", "pelamar", "reviews", "cafes", "settings", "saved", "team"];
 const LEGACY = { lowongan: "active", tim: "team" }; // deep-link lama tetap jalan
-export default function DashboardShell({ initialView = "talenta", sidebar, middle, right }) {
+export default function DashboardShell({ initialView = "talenta", initialCafeId = null, sidebar, middle, right }) {
   const start = LEGACY[initialView] ?? initialView;
   const [view, setView] = useState(VIEWS.includes(start) ? start : "talenta");
   return (
@@ -41,7 +41,7 @@ export default function DashboardShell({ initialView = "talenta", sidebar, middl
           ) : view === "settings" ? (
             <SettingsView {...middle.settings} onBack={() => setView("talenta")} />
           ) : view === "team" ? (
-            <TeamView {...middle.team} onBack={() => setView("talenta")} />
+            <TeamView {...middle.team} initialCafeId={initialCafeId} onBack={() => setView("talenta")} />
           ) : view === "saved" ? (
             middle.saved?.list?.length ? (
               <TopCandidatesGrid baristas={middle.saved.list} savedIds={middle.saved.savedIds ?? []} />
