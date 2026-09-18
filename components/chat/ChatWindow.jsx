@@ -15,6 +15,7 @@ export default function ChatWindow({
   counterpartAvatar,
   jobTitle,
   initialMessages = [],
+  suggestedOpener = null,
 }) {
   const toast = useToast();
   const [messages, setMessages] = useState(initialMessages);
@@ -240,6 +241,15 @@ export default function ChatWindow({
         onSubmit={handleSend}
         className="sticky bottom-16 space-y-2 rounded-2xl card-dark border border-latte p-3 shadow-lg md:bottom-2"
       >
+        {messages.length === 0 && suggestedOpener && !input.trim() && (
+          <button
+            type="button"
+            onClick={() => setInput(suggestedOpener)}
+            className="inline-flex items-center gap-1 rounded-full bg-caramel/10 px-3 py-1.5 text-[11px] font-bold text-caramel hover:bg-caramel/20"
+          >
+            👋 Sapa duluan
+          </button>
+        )}
         {!sending && (
           <button
             type="button"

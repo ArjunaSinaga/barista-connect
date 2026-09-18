@@ -23,6 +23,14 @@ const TABS = [
   { key: "terminated", label: "Selesai" },
 ];
 
+// ponytail: timeline 3 titik dari status — tanpa tabel history baru
+const TIMELINE = ["Terkirim", "Dilihat", "Keputusan"];
+function timelineIdx(status) {
+  if (status === "pending") return 0;
+  if (status === "viewed") return 1;
+  return 2;
+}
+
 export default function ApplicationsList() {
   const router = useRouter();
   const toast = useToast();
@@ -199,6 +207,23 @@ export default function ApplicationsList() {
                 </div>
                 <Badge classes={`${meta.classes}`}>{meta.label}</Badge>
               </div>
+
+              <ol className="mt-3 flex items-center gap-1" aria-label="Progres lamaran">
+                {TIMELINE.map((t, i) => {
+                  const cur = timelineIdx(app.status);
+                  return (
+                    <li key={t} className="flex flex-1 items-center gap-1 last:flex-none">
+                      <span
+                        className={`h-1.5 flex-1 rounded-full ${i <= cur ? "bg-caramel" : "bg-latte"}`}
+                        aria-hidden="true"
+                      />
+                      <span className={`text-[10px] font-bold whitespace-nowrap ${i <= cur ? "text-espresso" : "text-espresso-soft/60"}`}>
+                        {t}
+                      </span>
+                    </li>
+                  );
+                })}
+              </ol>
 
               {app.message && (
                 <p className="mt-3 line-clamp-2 rounded-xl bg-cream px-4 py-2.5 text-sm text-espresso-soft italic">

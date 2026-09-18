@@ -47,6 +47,11 @@ export default async function ThreadPage({ params }) {
       counterpartAvatar={counterpart.avatar}
       jobTitle={conv.job_posts?.title ?? null}
       initialMessages={msgs ?? []}
+      suggestedOpener={
+        (msgs ?? []).length === 0
+          ? `Halo ${counterpart.name}! Saya tertarik${conv.job_posts?.title ? ` dengan loker "${conv.job_posts.title}"` : ""}. Apakah masih tersedia?`
+          : null
+      }
     />
   );
 }

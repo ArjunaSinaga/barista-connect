@@ -9,6 +9,7 @@ import { useToast } from "@/components/ui/toast";
 import { createClient } from "@/lib/supabase/client";
 import { EMPLOYMENT_LABELS } from "@/lib/constants";
 import { focusFirstError } from "@/lib/focusFirstError";
+import { friendlyUpload } from "@/lib/errors";
 
 export default function ApplyButton({ jobId, applied=false, size="md", full=false, jobTypes=[], variant="primary", label="Lamar" }) {
   const router = useRouter();
@@ -89,7 +90,7 @@ export default function ApplyButton({ jobId, applied=false, size="md", full=fals
       setOpen(false);
       setCover(""); setMessage(""); setCv(null); setTypes([]);
     } catch (err) {
-      toast(err?.message || "Gagal mengirim lamaran, coba lagi","error");
+      toast(friendlyUpload(err), "error");
     } finally { setBusy(false); }
   }
 

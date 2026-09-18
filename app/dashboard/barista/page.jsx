@@ -55,7 +55,7 @@ export default async function BaristaDashboardPage() {
     <div className="mx-auto max-w-6xl px-5 py-8">
       <div className="flex flex-wrap items-start justify-between gap-4 mb-6">
         <div>
-          <p className="text-xs font-bold tracking-widest text-caramel uppercase">Barista View</p>
+          <p className="text-xs font-bold tracking-widest text-caramel uppercase">Dasbor Barista</p>
           <h1 className="text-3xl font-black text-espresso leading-none mt-1">Dashboard Saya</h1>
           <p className="text-sm text-espresso-soft mt-2 max-w-xl">
             Pantau lamaran, lanjutkan yang diterima, dan nilai cafe tempatmu selesai bekerja.
@@ -93,6 +93,32 @@ export default async function BaristaDashboardPage() {
           <p className="text-xs text-latte mt-1 flex items-center gap-1"><FlagOff size={12} />bisa dinilai</p>
         </div>
       </div>
+
+      {total === 0 && (
+        <div className="rounded-2xl border border-caramel/40 bg-caramel/10 p-5 mb-8">
+          <h2 className="text-sm font-black text-espresso">3 langkah mulai kerja 🚀</h2>
+          <ol className="mt-3 space-y-2">
+            <li>
+              <Link href="/dashboard/barista/profile" className="flex items-center gap-3 text-sm font-bold text-espresso hover:text-caramel">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-caramel text-xs font-black text-white">1</span>
+                Lengkapi profil + foto + CV
+              </Link>
+            </li>
+            <li>
+              <Link href="/jobs" className="flex items-center gap-3 text-sm font-bold text-espresso hover:text-caramel">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-caramel text-xs font-black text-white">2</span>
+                Lamar 1 lowongan pertama
+              </Link>
+            </li>
+            <li>
+              <Link href="/messages" className="flex items-center gap-3 text-sm font-bold text-espresso hover:text-caramel">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-caramel text-xs font-black text-white">3</span>
+                Cek kabar di Pesan
+              </Link>
+            </li>
+          </ol>
+        </div>
+      )}
 
       <div className="rounded-2xl bg-white border border-latte overflow-hidden mb-8">
         <div className="flex items-center justify-between px-5 py-4 border-b border-latte">
@@ -134,7 +160,7 @@ export default async function BaristaDashboardPage() {
           <p className="mt-0.5 text-xs text-[#857768]">Jelajahi lowongan aktif, simpan favoritmu, dan lamar langsung.</p>
         </div>
         <Link href="/jobs" className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-[#3d2c1e] px-5 py-2.5 text-sm font-bold text-white hover:bg-[#2e2015]">
-          Buka Jobs <ArrowRight size={15} />
+          Buka Loker <ArrowRight size={15} />
         </Link>
       </div>
     </div>

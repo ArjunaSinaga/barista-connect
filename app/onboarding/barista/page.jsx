@@ -13,6 +13,7 @@ import { baristaStep1Schema, skillsSchema } from "@/lib/validation";
 import { toMonths } from "@/lib/exp";
 import { SKILL_PRESETS, CITIES, AVATAR_MIME_TYPES, AVATAR_MAX_BYTES, EMPLOYMENT_TYPES } from "@/lib/constants";
 import { compressImage, formatBytes } from "@/lib/image";
+import { friendlyUpload } from "@/lib/errors";
 
 const STEPS = ["Data Diri & Foto", "Skill & Dokumen", "Siap Kerja"];
 
@@ -127,8 +128,8 @@ export default function BaristaOnboardingPage() {
       const { data } = supabase.storage.from("avatars").getPublicUrl(path);
       setPhoto({ url: data.publicUrl, uploading: false, size: blob.size });
       toast("Foto berhasil diunggah");
-    } catch {
-      toast("Gagal mengunggah foto, coba lagi", "error");
+    } catch (err) {
+      toast(friendlyUpload(err), "error");
       setPhoto((p) => ({ ...p, uploading: false }));
     }
   }
@@ -204,7 +205,7 @@ export default function BaristaOnboardingPage() {
       router.push("/dashboard/barista");
       router.refresh();
     } catch (err) {
-      toast(err.message || "Gagal menyimpan profil", "error");
+      toast(friendlyUpload(err.message || err), "error");
     } finally {
       setSubmitting(false);
     }
