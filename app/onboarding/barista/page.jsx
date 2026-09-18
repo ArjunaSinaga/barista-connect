@@ -26,6 +26,7 @@ export default function BaristaOnboardingPage() {
     full_name: "",
     age: "",
     location_place: "",
+    years_of_experience: "",
   whatsapp: "",
   open_to_types: [],
   cover_letter: "",
@@ -180,7 +181,7 @@ export default function BaristaOnboardingPage() {
         age: Number(form.age),
         location_place: form.location_place.trim(),
         profile_picture_url: photo.url,
-        years_of_experience: 0,
+        years_of_experience: Math.max(0, Math.min(50, Number(form.years_of_experience) || 0)),
         skills: form.skills,
         whatsapp: form.whatsapp?.replace(/\D/g,"") || null,
         open_to_types: form.open_to_types,
@@ -296,6 +297,17 @@ export default function BaristaOnboardingPage() {
             value={form.whatsapp}
             onChange={(e) => set("whatsapp", e.target.value)}
             error={errors.whatsapp}
+          />
+          <Input
+            name="years_of_experience"
+            type="number"
+            min={0}
+            max={50}
+            label="Pengalaman (tahun)"
+            placeholder="cth. 2 (0 bila baru mulai)"
+            value={form.years_of_experience}
+            onChange={(e) => set("years_of_experience", e.target.value)}
+            error={errors.years_of_experience}
           />
           </div>
           <div className="pt-2">
