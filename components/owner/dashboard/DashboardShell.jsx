@@ -67,6 +67,7 @@ export default function DashboardShell({ initialView = "talenta", initialCafeId 
 
       <div className="min-w-0 space-y-4 lg:col-span-2 lg:h-full lg:min-h-0 lg:overflow-y-auto lg:pb-1 xl:col-span-1 no-scrollbar">
         {right.recs.length === 0 && right.certified.length === 0 ? (
+          (middle.talenta.top3?.length ?? 0) === 0 ? (
           <div className="rounded-2xl border border-[#e8e0cf] bg-[#ffffff] p-4 text-center shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
             <h3 className="text-sm font-extrabold text-[#2b2118]">Belum ada talenta</h3>
             <p className="mt-0.5 text-[11px] text-[#857768]">Barista baru yang daftar akan muncul di sini.</p>
@@ -74,6 +75,7 @@ export default function DashboardShell({ initialView = "talenta", initialCafeId 
               Cari talenta
             </Link>
           </div>
+          ) : null
         ) : (
           <>
         <div className="rounded-2xl border border-[#e8e0cf] bg-[#ffffff] p-4 shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
