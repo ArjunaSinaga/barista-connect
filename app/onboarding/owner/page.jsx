@@ -1,5 +1,5 @@
 "use client";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Store, Camera, LoaderCircle } from "lucide-react";
 import Button from "@/components/ui/Button";
@@ -16,6 +16,19 @@ export default function OwnerOnboardingPage() {
   const toast = useToast();
   const fileRef = useRef(null);
   const [businessName, setBusinessName] = useState("");
+  const [nameLocked, setNameLocked] = useState(false);
+  // prefill dari pendaftaran — field yg sudah ada disembunyikan
+  useEffect(() => {
+    (async () => {
+      try {
+        const supabase = createClient();
+        const { data: { user } } = await supabase.auth.getUser();
+        if (!user) return;
+        const { data } = await supabase.from("owners").select("business_name").eq("id", user.id).maybeSingle();
+        if (data?.business_name) { setBusinessName(data.business_name); setNameLocked(true); }
+      } catch { /* diam: form tetap tampil */ }
+    })();
+  }, []);
   const [avatarUrl, setAvatarUrl] = useState("");
   const [uploading, setUploading] = useState(false);
   const [busy, setBusy] = useState(false);
@@ -109,6 +122,7 @@ export default function OwnerOnboardingPage() {
             </Button>
           </div>
         </div>
+        {!nameLocked && (
         <Input
           name="business_name"
           label="Nama usaha"
@@ -116,6 +130,7 @@ export default function OwnerOnboardingPage() {
           value={businessName}
           onChange={(e) => setBusinessName(e.target.value)}
         />
+        )}
         <Button type="submit" full size="lg" disabled={busy || uploading}>
           {busy ? "Menyimpan..." : "Lanjut Daftarkan Cafe"}
         </Button>

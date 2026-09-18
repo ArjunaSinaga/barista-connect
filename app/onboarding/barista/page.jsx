@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Camera, CheckCircle2, LoaderCircle, Trash2, UserRound } from "lucide-react";
 import Button from "@/components/ui/Button";
@@ -47,6 +47,24 @@ export default function BaristaOnboardingPage() {
   // photo
   const [photo, setPhoto] = useState({ url: "", uploading: false, size: 0 });
   const [submitting, setSubmitting] = useState(false);
+
+  // prefill dari pendaftaran (nama+WA sudah diisi saat signup) — field yg sudah ada disembunyikan
+  const [locked, setLocked] = useState({ full_name: false, whatsapp: false });
+  useEffect(() => {
+    (async () => {
+      try {
+        const supabase = createClient();
+        const { data: { user } } = await supabase.auth.getUser();
+        if (!user) return;
+        const { data } = await supabase.from("barista_profiles").select("full_name, whatsapp").eq("id", user.id).maybeSingle();
+        if (!data) return;
+        const l = {};
+        if (data.full_name) { setForm((f) => ({ ...f, full_name: data.full_name })); l.full_name = true; }
+        if (data.whatsapp) { setForm((f) => ({ ...f, whatsapp: data.whatsapp })); l.whatsapp = true; }
+        if (Object.keys(l).length) setLocked((p) => ({ ...p, ...l }));
+      } catch { /* diam: form tetap tampil */ }
+    })();
+  }, []);
 
   const set = (key, value) => setForm((f) => ({ ...f, [key]: value }));
 
@@ -261,6 +279,7 @@ export default function BaristaOnboardingPage() {
           <h1 className="text-xl font-extrabold text-espresso">
             Kenalan dulu yuk 👋
           </h1>
+          {!locked.full_name && (
           <Input
             name="full_name"
             label="Nama lengkap"
@@ -269,6 +288,7 @@ export default function BaristaOnboardingPage() {
             onChange={(e) => set("full_name", e.target.value)}
             error={errors.full_name}
           />
+          )}
           <Input
             name="age"
             type="number"
@@ -295,6 +315,7 @@ export default function BaristaOnboardingPage() {
                 <option key={c} value={c} />
               ))}
             </datalist>
+          {!locked.whatsapp && (
           <Input
             name="whatsapp"
             label="WhatsApp (opsional)"
@@ -303,6 +324,7 @@ export default function BaristaOnboardingPage() {
             onChange={(e) => set("whatsapp", e.target.value)}
             error={errors.whatsapp}
           />
+          )}
           <div className="grid grid-cols-2 gap-3">
             <Input
               name="exp_years"
