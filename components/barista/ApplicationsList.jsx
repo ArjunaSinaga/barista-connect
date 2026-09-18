@@ -205,7 +205,7 @@ export default function ApplicationsList() {
                     )}
                   </p>
                 </div>
-                <Badge classes={`${meta.classes}`}>{meta.label}</Badge>
+                <Badge classes={`${meta.classes}`}>{app.status === "terminated" ? "Selesai" : meta.label}</Badge>
               </div>
 
               <ol className="mt-3 flex items-center gap-1" aria-label="Progres lamaran">

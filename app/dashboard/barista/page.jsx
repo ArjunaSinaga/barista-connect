@@ -31,6 +31,13 @@ export default async function BaristaDashboardPage({ searchParams }) {
       </div>
     );
   }
+  if (profile?.role !== "barista") {
+    return (
+      <div className="mx-auto max-w-3xl px-4 py-8">
+        <EmptyState icon={<FileText size={22} />} title="Khusus barista" subtitle="Halaman ini hanya untuk akun barista." actionLabel="Ke Dashboard" actionHref="/dashboard/owner" />
+      </div>
+    );
+  }
   const supabase = await createClient();
   const { data: bp } = await supabase.from("barista_profiles").select("*").eq("id", user.id).maybeSingle();
   const { data: apps } = await supabase
@@ -183,7 +190,7 @@ export default async function BaristaDashboardPage({ searchParams }) {
                     <p className="truncate text-sm font-bold text-espresso">{a.job_posts?.title ?? "Lowongan dihapus"}</p>
                     <p className="truncate text-xs text-espresso-soft">{ownerMap.get(a.id) ?? "-"} • {relativeTime(a.created_at)}</p>
                   </div>
-                  <Badge classes={meta.classes}>{meta.label}</Badge>
+                  <Badge classes={meta.classes}>{a.status === "terminated" ? "Selesai" : meta.label}</Badge>
                 </li>
               );
             })}
