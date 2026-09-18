@@ -43,6 +43,12 @@ function SignupForm() {
 
   async function handleSubmit(e) {
     e.preventDefault();
+    // ponytail: cooldown lokal 60 dtk, anti-spam klik; server tetap dijaga rate limit email Supabase.
+    const last = Number(localStorage.getItem("bc-signup-at") || 0);
+    if (Date.now() - last < 60_000) {
+      toast("Tunggu sebentar sebelum daftar lagi", "error");
+      return;
+    }
     const parsed = signUpSchema.safeParse({ name, email, phone, password, confirm });
     if (!parsed.success) {
       const errs = {};
@@ -62,6 +68,7 @@ function SignupForm() {
     }
 
     setBusy(true);
+    localStorage.setItem("bc-signup-at", String(Date.now()));
     try {
       const supabase = createClient();
       const { data, error } = await supabase.auth.signUp({

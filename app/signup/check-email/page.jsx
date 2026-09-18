@@ -16,7 +16,14 @@ function CheckEmailInner() {
 
   async function resend() {
     if (!email) return;
+    // ponytail: cooldown lokal 60 dtk, anti-spam kirim ulang; server tetap dijaga rate limit email Supabase.
+    const last = Number(localStorage.getItem("bc-resend-at") || 0);
+    if (Date.now() - last < 60_000) {
+      toast("Tunggu sebentar sebelum kirim ulang");
+      return;
+    }
     setBusy(true);
+    localStorage.setItem("bc-resend-at", String(Date.now()));
     try {
       const supabase = createClient();
       const { error } = await supabase.auth.resend({ type: "signup", email });
