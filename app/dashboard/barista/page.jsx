@@ -244,7 +244,7 @@ export default async function BaristaDashboardPage({ searchParams }) {
       <div className="mx-auto w-full max-w-[1400px] px-4 py-4 sm:px-6 lg:min-h-0 lg:flex-1">
         <BaristaShell
           initialView={tab}
-          sidebar={{ barista: bp ? { ...bp, id: user.id } : { id: user.id }, counts: { applied: total, saved: savedIds.size } }}
+          sidebar={{ barista: { ...(bp ?? {}), id: user.id, hasProfile: Boolean(bp) }, counts: { applied: total, saved: savedIds.size } }}
           middle={{ ringkasan, lamaran, tersimpan, pengaturan, waiting }}
           right={{ latestJobs: latestJobs ?? [], ratingAvg, ratingCount }}
         />

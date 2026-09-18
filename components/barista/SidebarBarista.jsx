@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import {
   LayoutDashboard, FileText, Bookmark, MessagesSquare, GraduationCap, UserRound, Settings,
@@ -15,11 +16,18 @@ import { formatExpShort } from "@/lib/exp";
 // Sidebar dashboard barista — kerangka sama dengan SidebarOwner, konteks barista.
 export default function SidebarBarista({ barista, counts, view, onNavigate }) {
   const toast = useToast();
+  const router = useRouter();
   const [open, setOpen] = useState(barista?.is_open_to_work ?? true);
   const [busy, setBusy] = useState(false);
 
   async function toggleWork(v) {
     if (busy) return;
+    // ponytail: tanpa baris profil, update no-op diam-diam — arahkan onboarding dulu
+    if (!barista?.hasProfile) {
+      toast("Lengkapi profil dulu sebelum atur status", "error");
+      router.push("/onboarding/barista");
+      return;
+    }
     setOpen(v);
     setBusy(true);
     try {
