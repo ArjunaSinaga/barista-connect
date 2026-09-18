@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 
 // Polaroid hero: rotasi foto CAFE (cafes.photo_urls) tiap 4 detik.
 // Bukan foto owner (owners.avatar_url tidak pernah masuk ke `photos`).
@@ -19,12 +20,14 @@ export default function HeroPhoto({ photos }) {
     <figure className="rotate-2 rounded-sm bg-[#c6bba2] p-3 pb-4 shadow-[0_10px_30px_rgba(26,15,10,0.18)]">
       <div className="relative aspect-[4/3] overflow-hidden rounded-[2px]">
         {photos.map((p, i) => (
-          <img
+          <Image
             key={p.url}
             src={p.url}
             alt={p.cafe ? `Foto ${p.cafe}` : "Foto cafe"}
+            fill
+            sizes="(max-width: 640px) 90vw, 300px"
             loading={i === 0 ? "eager" : "lazy"}
-            className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ${
+            className={`object-cover transition-opacity duration-700 ${
               i === idx ? "opacity-100" : "opacity-0"
             }`}
           />

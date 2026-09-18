@@ -31,17 +31,16 @@ export default async function BaristaDashboardPage() {
     .eq("barista_id", user.id)
     .order("created_at", { ascending: false });
   const jobOwnerIds = [...new Set((apps ?? []).map((a) => a.job_posts?.id).filter(Boolean))];
-  let ownerMap = new Map();
-  if (jobOwnerIds.length) {
-    const { data: jobs } = await supabase.from("job_posts").select("id, owner_id").in("id", jobOwnerIds);
-    const oIds = [...new Set((jobs ?? []).map((j) => j.owner_id).filter(Boolean))];
-    const jobMap = new Map((jobs ?? []).map((j) => [j.id, j.owner_id]));
-    if (oIds.length) {
-      const { data: owners } = await supabase.from("owners_public").select("id, business_name").in("id", oIds);
-      const oMap = new Map((owners ?? []).map((o) => [o.id, o.business_name]));
-      for (const a of apps ?? []) ownerMap.set(a.id, oMap.get(jobMap.get(a.job_post_id)) ?? null);
-    }
-  }
+  const { data: jobs } = jobOwnerIds.length
+    ? await supabase.from("job_posts").select("id, owner_id").in("id", jobOwnerIds)
+    : { data: [] };
+  const jobMap = new Map((jobs ?? []).map((j) => [j.id, j.owner_id]));
+  const oIds = [...new Set([...jobMap.values()].filter(Boolean))];
+  const { data: owners } = oIds.length
+    ? await supabase.from("owners_public").select("id, business_name").in("id", oIds)
+    : { data: [] };
+  const oMap = new Map((owners ?? []).map((o) => [o.id, o.business_name]));
+  const ownerMap = new Map((apps ?? []).map((a) => [a.id, oMap.get(jobMap.get(a.job_post_id)) ?? null]));
 
   const list = apps ?? [];
   const count = (s) => list.filter((a) => a.status === s).length;

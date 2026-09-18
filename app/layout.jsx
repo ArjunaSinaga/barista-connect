@@ -4,6 +4,7 @@ import "./globals.css";
 import { getSessionSafe } from "@/lib/supabase/server";
 import Navbar from "@/components/layout/Navbar";
 import BottomCtaStrip from "@/components/landing/BottomCtaStrip";
+import ClientErrorHook from "@/components/layout/ClientErrorHook";
 import { ToastProvider } from "@/components/ui/toast";
 
 const jakarta = Plus_Jakarta_Sans({
@@ -43,6 +44,7 @@ export default async function RootLayout({ children }) {
       <body className="flex min-h-full flex-col">
         <ToastProvider>
           <Navbar user={user} role={profile?.role} />
+          <ClientErrorHook />
           <main className="flex-1">{children}</main>
           <BottomCtaStrip hideForUser={!!user} />
         </ToastProvider>
