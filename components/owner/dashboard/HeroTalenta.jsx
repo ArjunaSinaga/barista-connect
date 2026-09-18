@@ -11,10 +11,7 @@ export const QUICK_FILTERS = [
   { label: "Manual Brew", href: "/find-baristas?q=Manual%20Brew", icon: CupSoda },
 ];
 
-const FALLBACK_PHOTO = "https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=640&q=70";
-
 export default function HeroTalenta({ photo, cafeName, cafeLocation }) {
-  const cover = photo || FALLBACK_PHOTO;
   return (
     <div className="flex gap-0 overflow-hidden rounded-2xl border border-[#e8e0cf] bg-[#ece2cd] py-2 pr-0 pl-5 shadow-[0_2px_12px_rgba(43,33,24,0.10)] sm:pl-6">
       <div className="min-w-0 flex-1 py-0.5 pr-5">
@@ -54,7 +51,13 @@ export default function HeroTalenta({ photo, cafeName, cafeLocation }) {
         />
       </div>
       <div className="relative hidden w-56 shrink-0 self-stretch sm:block lg:w-64">
-        <img src={cover} alt={photo ? (cafeName ?? "Foto cafe") : "Barista menuang latte art"} loading="lazy" className="absolute inset-0 h-full w-full object-cover" />
+        {photo ? (
+          <img src={photo} alt={cafeName ?? "Foto cafe"} loading="lazy" className="absolute inset-0 h-full w-full object-cover" />
+        ) : (
+          <div className="absolute inset-0 flex items-center justify-center bg-[#e0d5bd] px-4 text-center">
+            <p className="text-[11px] leading-5 text-[#857768]">Foto cafemu tampil di sini setelah ditambahkan di Kafe Saya.</p>
+          </div>
+        )}
         <span aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent" />
         <span className="font-chalk absolute top-4 left-4 -rotate-6 text-xl leading-5 text-white drop-shadow-[0_2px_6px_rgba(0,0,0,0.6)]">
           Great<br />Baristas<br />Greater<br />Stories
