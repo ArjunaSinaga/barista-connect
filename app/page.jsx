@@ -33,7 +33,7 @@ async function getLiveStats() {
   try {
     const supabase = await createClient();
     const [{ count: baristas }, { count: cafes }, { count: jobs }] = await Promise.all([
-      supabase.from("barista_profiles").select("id", { count: "exact", head: true }),
+      supabase.from("baristas_public").select("id", { count: "exact", head: true }),
       supabase.from("cafes").select("id", { count: "exact", head: true }).eq("is_active", true),
       supabase.from("job_posts").select("id", { count: "exact", head: true }).eq("is_active", true),
     ]);
