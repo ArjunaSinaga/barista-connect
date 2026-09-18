@@ -1,7 +1,8 @@
 import Link from "next/link";
-import { Search, Star, Clock3, Signal, GraduationCap, BadgeCheck, HeartHandshake } from "lucide-react";
+import { Search, Star, Clock3, Signal, GraduationCap, BadgeCheck, HeartHandshake, Award } from "lucide-react";
 import { EmptyState } from "@/components/ui/EmptyState";
 import WaitlistButton from "@/components/training/WaitlistButton";
+import { createClient, isSupabaseConfigured } from "@/lib/supabase/server";
 
 export const metadata = { title: "Pelatihan" };
 
@@ -51,6 +52,30 @@ export default async function TrainingPage({ searchParams }) {
         `${c.title} ${c.by} ${c.tags.join(" ")}`.toLowerCase().includes(q)
       )
     : SEED_COURSES;
+
+  // Statistik sertifikasi real: 1 query, normalisasi lower+trim (ejaan beda = entri beda).
+  // ponytail: tanpa tabel master/trigger; hitung live, tanpa cache.
+  let certStats = { total: 0, members: 0, top: null };
+  if (isSupabaseConfigured()) {
+    try {
+      const supabase = await createClient();
+      const { data } = await supabase.from("baristas_public").select("certificates");
+      const counts = new Map();
+      let members = 0;
+      for (const row of data ?? []) {
+        const clean = [...new Set((row.certificates ?? []).map((c) => (c ?? "").trim()).filter(Boolean))];
+        if (clean.length) members += 1;
+        for (const c of clean) {
+          const key = c.toLowerCase();
+          const hit = counts.get(key);
+          if (hit) hit.n += 1;
+          else counts.set(key, { label: c, n: 1 });
+        }
+      }
+      const top = [...counts.values()].sort((a, b) => b.n - a.n)[0] ?? null;
+      certStats = { total: [...counts.values()].reduce((s, x) => s + x.n, 0), members, top };
+    } catch { /* diam: kartu tetap render nol */ }
+  }
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-8">
@@ -114,6 +139,29 @@ export default async function TrainingPage({ searchParams }) {
             </article>
           ))}
         </div>
+      )}
+
+      <div className="mt-6 grid gap-3 sm:grid-cols-3">
+        <div className="rounded-2xl border border-[#e8e0cf] bg-[#ffffff] p-4 text-center">
+          <p className="text-2xl font-black text-[#2b2118]">{certStats.total}</p>
+          <p className="mt-0.5 text-xs text-[#857768]">Sertifikat terdaftar</p>
+        </div>
+        <div className="rounded-2xl border border-[#e8e0cf] bg-[#ffffff] p-4 text-center">
+          <p className="text-2xl font-black text-[#2b2118]">{certStats.members}</p>
+          <p className="mt-0.5 text-xs text-[#857768]">Member bersertifikat</p>
+        </div>
+        <div className="rounded-2xl border border-[#e8e0cf] bg-[#ffffff] p-4 text-center">
+          <p className="flex items-center justify-center gap-1.5 text-base font-extrabold text-[#2b2118]">
+            <Award size={16} className="text-[#9a6a2f]" aria-hidden="true" />
+            {certStats.top ? `${certStats.top.label} (${certStats.top.n})` : "—"}
+          </p>
+          <p className="mt-0.5 text-xs text-[#857768]">Paling banyak diambil</p>
+        </div>
+      </div>
+      {!certStats.total && (
+        <p className="mt-3 text-center text-xs text-[#857768]">
+          Belum ada sertifikat. <Link href="/dashboard/barista/profile" className="font-bold text-[#1f6b4a] hover:underline">Lengkapi profilmu</Link> untuk tampil di sini.
+        </p>
       )}
 
       <div className="mt-8 grid gap-3 sm:grid-cols-3">
