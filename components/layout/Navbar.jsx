@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
-import { Bell, ChevronDown, Coffee, LogOut, MessageSquareText } from "lucide-react";
+import { ChevronDown, Coffee, LogOut, MessageSquareText } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import { APP_NAME } from "@/lib/constants";
 
@@ -86,14 +86,6 @@ export default function Navbar({ user, role }) {
               className="shrink-0 rounded-full p-2 text-[#2f2721]/70 hover:bg-[#2f2721]/10 hover:text-[#6f5a3e]"
             >
               <MessageSquareText size={19} />
-            </Link>
-            <Link
-              href="/messages"
-              aria-label="Notifikasi"
-              title="Notifikasi"
-              className="hidden shrink-0 rounded-full p-2 text-[#2f2721]/70 hover:bg-[#2f2721]/10 hover:text-[#6f5a3e] sm:block"
-            >
-              <Bell size={19} />
             </Link>
             <div className="relative shrink-0">
               <button

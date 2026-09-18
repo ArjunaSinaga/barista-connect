@@ -1,8 +1,9 @@
 import Link from "next/link";
 import { Search, Star, Clock3, Signal, GraduationCap, BadgeCheck, HeartHandshake } from "lucide-react";
 import { EmptyState } from "@/components/ui/EmptyState";
+import WaitlistButton from "@/components/training/WaitlistButton";
 
-export const metadata = { title: "Training" };
+export const metadata = { title: "Pelatihan" };
 
 // F5 ringan: katalog kursus statis (seed jelas, bukan data palsu) + waitlist.
 // Di-upgrade ke data real bila tabel courses/enrollments sudah ada.
@@ -108,12 +109,7 @@ export default async function TrainingPage({ searchParams }) {
               <p className="mt-1.5 line-clamp-2 text-xs leading-5 text-[#6f6252]">{c.desc}</p>
               <p className="mt-1.5 text-xs font-bold text-[#857768]">Harga & jadwal menyusul</p>
               <div className="mt-auto flex gap-1.5 pt-3">
-                <Link
-                  href="/signup"
-                  className="inline-flex min-h-[34px] flex-1 items-center justify-center rounded-full bg-[#3d2c1e] px-2 text-[11px] font-bold text-white hover:bg-[#2e2015]"
-                >
-                  Ikut waitlist
-                </Link>
+                <WaitlistButton topic={`course-${c.id}`} label="Ikut waitlist" />
               </div>
             </article>
           ))}

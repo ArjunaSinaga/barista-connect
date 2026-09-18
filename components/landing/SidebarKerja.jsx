@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ShieldCheck, Star, GraduationCap, BarChart3, ChevronRight } from "lucide-react";
+import WaitlistButton from "@/components/training/WaitlistButton";
 
 // Tiap blok mandiri (kartu putih sendiri). Tanpa DB — statis kecuali foto.
 const ITEMS = [
@@ -109,9 +110,7 @@ export function SmarterOpsCard() {
           Pratinjau tampilan — grafik kehadiran &amp; reliabilitas tim tampil di sini saat fitur rilis. Tanpa angka contoh.
         </p>
       </div>
-      <Link href="/signup" className="mt-3 inline-flex min-h-[40px] items-center justify-center rounded-full border border-[#d8cdae] px-5 text-[13px] font-bold text-[#3d2c1e] hover:border-[#3d2c1e]">
-        Ikut Daftar Tunggu
-      </Link>
+      <WaitlistButton topic="smarter-ops" label="Ikut Daftar Tunggu" outline className="mt-3 w-full" />
     </div>
   );
 }

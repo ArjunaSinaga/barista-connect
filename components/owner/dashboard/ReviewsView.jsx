@@ -11,7 +11,7 @@ export default function ReviewsView({ reviews, onBack }) {
     <>
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
-          <p className="text-[11px] font-bold tracking-[0.18em] text-[#857768] uppercase">Reviews Given</p>
+          <p className="text-[11px] font-bold tracking-[0.18em] text-[#857768] uppercase">Ulasan Diberi</p>
           <h2 className="font-display mt-0.5 text-2xl font-semibold tracking-tight">Ulasan Saya</h2>
           <p className="mt-0.5 max-w-xl text-xs leading-5 text-[#6f6252]">
             {reviews?.length ? `${reviews.length} ulasan untuk barista tim Anda.` : "Penilaian jujur membangun reputasi tim."}

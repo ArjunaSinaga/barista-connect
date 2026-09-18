@@ -99,7 +99,7 @@ export default function SidebarOwner({ cafe, ownerName, completeness, completene
         </button>
         <button type="button" onClick={() => onNavigate?.("active")} className={cls(isMain && view === "active")}>
           <Briefcase size={17} className="shrink-0" />
-          <span className="flex-1 text-left">Active Jobs</span>
+          <span className="flex-1 text-left">Loker Aktif</span>
           {countBadge(counts.activeJobs)}
         </button>
         <button type="button" onClick={() => onNavigate?.("pelamar")} className={cls(isMain && view === "pelamar")}>
@@ -114,29 +114,29 @@ export default function SidebarOwner({ cafe, ownerName, completeness, completene
         </button>
         <button type="button" onClick={() => onNavigate?.("saved")} className={cls(isMain && view === "saved")}>
           <Heart size={17} className="shrink-0" />
-          <span className="flex-1 text-left">Saved Candidates</span>
+          <span className="flex-1 text-left">Kandidat Tersimpan</span>
           {countBadge(counts.saved)}
         </button>
         <button type="button" onClick={() => onNavigate?.("reviews")} className={cls(isMain && view === "reviews")}>
           <Star size={17} className="shrink-0" />
-          <span className="flex-1 text-left">Reviews Given</span>
+          <span className="flex-1 text-left">Ulasan Diberi</span>
           {countBadge(counts.reviewsGiven)}
         </button>
         <button type="button" onClick={() => onNavigate?.("cafes")} className={cls(isMain && view === "cafes")}>
           <Camera size={17} className="shrink-0" />
-          <span className="flex-1 text-left">Cafe Saya</span>
+          <span className="flex-1 text-left">Kafe Saya</span>
           {countBadge(counts.cafes)}
         </button>
         <button type="button" onClick={() => onNavigate?.("settings")} className={cls(isMain && view === "settings")}>
           <Settings size={17} className="shrink-0" />
-          <span className="flex-1 text-left">Settings</span>
+          <span className="flex-1 text-left">Pengaturan</span>
         </button>
         <Link
           href="/training"
           className="flex items-center gap-3 rounded-xl px-3 py-2 text-sm font-bold text-[#6f6252] hover:bg-[#faf7ef] hover:text-[#3d2c1e]"
         >
           <GraduationCap size={17} className="shrink-0" />
-          <span className="flex-1">Training</span>
+          <span className="flex-1">Pelatihan</span>
         </Link>
       </nav>
 
