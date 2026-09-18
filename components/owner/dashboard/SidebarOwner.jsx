@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
   LayoutDashboard, Briefcase, Users, UsersRound, Heart, Star, GraduationCap, Settings,
-  Camera, Crown, ArrowRight,
+  Camera, Crown, ArrowRight, Building2,
 } from "lucide-react";
 import Avatar from "@/components/ui/Avatar";
 import ProfileCompleteModal from "@/components/owner/dashboard/ProfileCompleteModal";
@@ -126,6 +126,11 @@ export default function SidebarOwner({ cafe, ownerName, completeness, completene
           <Camera size={17} className="shrink-0" />
           <span className="flex-1 text-left">Kafe Saya</span>
           {countBadge(counts.cafes)}
+        </button>
+        <button type="button" onClick={() => onNavigate?.("org")} className={cls(isMain && view === "org")}>
+          <Building2 size={17} className="shrink-0" />
+          <span className="flex-1 text-left">PT / Organisasi</span>
+          {countBadge(counts.orgs)}
         </button>
         <button type="button" onClick={() => onNavigate?.("settings")} className={cls(isMain && view === "settings")}>
           <Settings size={17} className="shrink-0" />

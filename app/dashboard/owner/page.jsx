@@ -29,6 +29,8 @@ export default async function OwnerDashboardPage({ searchParams }) {
   let apps = []
   let ownerRow = null
   let cafes = []
+  let orgs = []
+  let orgMembers = []
   let givenRatings = []
   let convosWeek = []
   let baristas = []
@@ -65,6 +67,26 @@ export default async function OwnerDashboardPage({ searchParams }) {
     teamMembers = (tmRaw.data ?? []).map((t) => ({ ...t, barista_profiles: tmMap.get(t.barista_id) ?? null }));
     ownerRow = o.data ?? null;
     cafes = c.data ?? [];
+    // Organisasi: milik sendiri + diikuti sebagai manager (baca via policy org_read/members_read)
+    try {
+      const supabase3 = await createClient();
+      const { data: owned } = await supabase3.from("organizations").select("id,name,owner_id,needs_owner,owner_code,manager_code,created_at").eq("owner_id", user.id);
+      const { data: mem } = await supabase3.from("org_members").select("org_id,scope_cafe_ids").eq("user_id", user.id);
+      const memOrgIds = (mem ?? []).map((m) => m.org_id).filter((id) => !(owned ?? []).some((x) => x.id === id));
+      let joined = [];
+      if (memOrgIds.length) {
+        const { data } = await supabase3.from("organizations").select("id,name,owner_id,needs_owner,owner_code,manager_code,created_at").in("id", memOrgIds);
+        joined = data ?? [];
+      }
+      const allOrgs = [...(owned ?? []), ...joined];
+      const withMembers = [];
+      for (const org of allOrgs) {
+        const { data: members } = await supabase3.rpc("org_member_list", { p_org: org.id });
+        withMembers.push({ ...org, isOwner: org.owner_id === user.id, members: members ?? [] });
+      }
+      orgs = withMembers;
+      orgMembers = [];
+    } catch { orgs = []; orgMembers = []; }
     convosWeek = cw.data ?? [];
     savedBaristaIds = (sv.data ?? []).map((s) => s.barista_id);
   } catch(e) { jobs = []; apps = []; loadError = true }
@@ -126,7 +148,7 @@ export default async function OwnerDashboardPage({ searchParams }) {
               ownerName: ownerRow?.business_name,
               completeness,
               completenessItems,
-              counts: { activeJobs, applicants: totalApplicants, reviewsGiven: givenCount, cafes: cafes.length, saved: savedList.length, team: teamMembers.length },
+              counts: { activeJobs, applicants: totalApplicants, reviewsGiven: givenCount, cafes: cafes.length, saved: savedList.length, team: teamMembers.length, orgs: orgs.length },
             }}
             middle={{
               ownerId: user.id,
@@ -143,6 +165,7 @@ export default async function OwnerDashboardPage({ searchParams }) {
               pelamar: { jobs, appCountByJob, statusByJob, totals },
               reviews: { reviews: givenRatings },
               cafes: { cafes, countByCafe },
+              orgs,
               teamCountByCafe: countTeamByCafe(teamMembers),
               team: { cafes, members: teamMembers, ratingMap: teamRatingMap },
               settings: { initial: ownerRow, publicHref: `/owner/${user.id}` },

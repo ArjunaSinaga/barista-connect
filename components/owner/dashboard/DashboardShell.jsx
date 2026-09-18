@@ -11,13 +11,14 @@ import ReviewsView from "@/components/owner/dashboard/ReviewsView";
 import CafesView from "@/components/owner/dashboard/CafesView";
 import SettingsView from "@/components/owner/dashboard/SettingsView";
 import TeamView from "@/components/owner/dashboard/TeamView";
+import OrgView from "@/components/owner/dashboard/OrgView";
 import { TalentRow, TopCandidatesStrip, TopCandidatesGrid } from "@/components/owner/dashboard/TopCandidates";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { SmarterOpsCard } from "@/components/landing/SidebarKerja";
 
 // Shell 3 kolom: sidebar tetap, hanya kolom TENGAH yang ganti
 // (talenta/active/pelamar/reviews/cafes) tanpa navigasi halaman.
-const VIEWS = ["talenta", "active", "pelamar", "reviews", "cafes", "settings", "saved", "team"];
+const VIEWS = ["talenta", "active", "pelamar", "reviews", "cafes", "settings", "saved", "team", "org"];
 const LEGACY = { lowongan: "active", tim: "team" }; // deep-link lama tetap jalan
 export default function DashboardShell({ initialView = "talenta", initialCafeId = null, sidebar, middle, right }) {
   const start = LEGACY[initialView] ?? initialView;
@@ -42,6 +43,8 @@ export default function DashboardShell({ initialView = "talenta", initialCafeId 
             <SettingsView {...middle.settings} onBack={() => setView("talenta")} />
           ) : view === "team" ? (
             <TeamView {...middle.team} initialCafeId={initialCafeId} onBack={() => setView("talenta")} />
+          ) : view === "org" ? (
+            <OrgView orgs={middle.orgs ?? []} cafes={middle.cafes?.cafes ?? []} onBack={() => setView("talenta")} />
           ) : view === "saved" ? (
             middle.saved?.list?.length ? (
               <TopCandidatesGrid baristas={middle.saved.list} savedIds={middle.saved.savedIds ?? []} ownerId={middle.ownerId} />
