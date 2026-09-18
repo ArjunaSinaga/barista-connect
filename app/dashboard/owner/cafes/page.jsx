@@ -3,7 +3,7 @@ import { Plus, Store } from "lucide-react";
 import { createClient, getSessionSafe, isSupabaseConfigured } from "@/lib/supabase/server";
 import { EmptyState } from "@/components/ui/EmptyState";
 
-export const metadata = { title: "Cafe Saya" };
+export const metadata = { title: "Kafe Saya" };
 
 export default async function CafesPage() {
   if (!isSupabaseConfigured()) return null;

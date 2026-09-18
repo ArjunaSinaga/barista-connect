@@ -3,7 +3,7 @@ import CafeForm from "@/components/owner/CafeForm";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { Store } from "lucide-react";
 
-export const metadata = { title: "Edit Cafe" };
+export const metadata = { title: "Edit Kafe" };
 
 export default async function EditCafePage({ params }) {
   const { id } = await params;

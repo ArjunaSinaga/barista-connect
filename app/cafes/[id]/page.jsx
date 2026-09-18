@@ -7,7 +7,7 @@ import { avgStars, visibleCafeRatings } from "@/lib/ratings";
 
 export async function generateMetadata({ params }) {
   const { id } = await params;
-  return { title: "Profil Cafe" };
+  return { title: "Profil Kafe" };
 }
 
 export default async function CafePublicPage({ params }) {
