@@ -4,6 +4,7 @@ import Avatar from "@/components/ui/Avatar";
 import VerifiedBadge from "@/components/ui/VerifiedBadge";
 import StartChatButton from "@/components/chat/StartChatButton";
 import RatingForm, { Stars } from "@/components/ratings/RatingForm";
+import { formatExp } from "@/lib/exp";
 
 export default function BaristaProfileView({
   b, workHistory = [], ratings = [], avg = null,
@@ -50,7 +51,7 @@ export default function BaristaProfileView({
       </div>
 
       <div className="mt-4 grid grid-cols-3 gap-3">
-        <StatCard icon={<BriefcaseBusiness size={16} />} label="Pengalaman" value={`${b.years_of_experience} tahun`} />
+        <StatCard icon={<BriefcaseBusiness size={16} />} label="Pengalaman" value={formatExp(b.experience_months, b.years_of_experience)} />
         <StatCard icon={<BadgeCheck size={16} />} label="Skill" value={`${b.skills?.length ?? 0}`} />
         <StatCard icon={<Award size={16} />} label="Sertifikat" value={`${b.certificates?.length ?? 0}`} />
       </div>

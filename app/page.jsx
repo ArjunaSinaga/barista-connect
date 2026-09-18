@@ -55,7 +55,7 @@ async function getFeaturedBarista() {
       .from("baristas_public")
       .select("*")
       .eq("is_open_to_work", true)
-      .order("years_of_experience", { ascending: false })
+      .order("experience_months", { ascending: false })
       .limit(10);
     const rows = await attachRatings(data ?? [], supabase);
     if (!rows.length) return null;

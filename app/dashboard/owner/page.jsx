@@ -59,9 +59,9 @@ export default async function OwnerDashboardPage({ searchParams }) {
     baristas = await attachRatings(bRaw.data ?? [], supabase);
     const tmIds = [...new Set((tmRaw.data ?? []).map((t) => t.barista_id).filter(Boolean))];
     const { data: tmProfiles } = tmIds.length
-      ? await supabase.from("baristas_public").select("id, full_name, profile_picture_url, location_place, years_of_experience").in("id", tmIds)
+      ? await supabase.from("baristas_public").select("id, full_name, profile_picture_url, location_place, years_of_experience, experience_months").in("id", tmIds)
       : { data: [] };
-    const tmMap = new Map((tmProfiles ?? []).map((p) => [p.id, { id: p.id, full_name: p.full_name, profile_picture_url: p.profile_picture_url, location_place: p.location_place, years_of_experience: p.years_of_experience }]));
+    const tmMap = new Map((tmProfiles ?? []).map((p) => [p.id, { id: p.id, full_name: p.full_name, profile_picture_url: p.profile_picture_url, location_place: p.location_place, years_of_experience: p.years_of_experience, experience_months: p.experience_months }]));
     teamMembers = (tmRaw.data ?? []).map((t) => ({ ...t, barista_profiles: tmMap.get(t.barista_id) ?? null }));
     ownerRow = o.data ?? null;
     cafes = c.data ?? [];

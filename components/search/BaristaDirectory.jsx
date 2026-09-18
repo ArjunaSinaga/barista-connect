@@ -49,16 +49,16 @@ export default function BaristaDirectory({ ownerId }) {
     let req = supabase.from("baristas_public").select("*");
     if (openOnly) req = req.eq("is_open_to_work", true);
     if (loc.trim()) req = req.ilike("location_place", `%${loc.trim()}%`);
-    if (minExp > 0) req = req.gte("years_of_experience", minExp);
+    if (minExp > 0) req = req.gte("experience_months", minExp * 12);
     if (skills.length > 0) req = req.overlaps("skills", skills);
     if (typeFilter) req = req.overlaps("open_to_types", [typeFilter]);
 
     req =
       sort === "exp"
-        ? req.order("years_of_experience", { ascending: false })
+        ? req.order("experience_months", { ascending: false })
         : req
             .order("is_open_to_work", { ascending: false })
-            .order("years_of_experience", { ascending: false });
+            .order("experience_months", { ascending: false });
 
     const { data } = await req;
     const { attachRatings } = await import("@/lib/publicProfilesClient");

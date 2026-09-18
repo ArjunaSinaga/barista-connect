@@ -7,6 +7,7 @@ import Badge from "@/components/ui/Badge";
 import { Stars } from "@/components/ratings/RatingForm";
 import TeamRemoveButton from "@/components/owner/TeamRemoveButton";
 import { groupTeamByBarista, countTeamByCafe } from "@/lib/team";
+import { formatExpShort } from "@/lib/exp";
 
 export const metadata = { title: "Tim Saya" };
 
@@ -36,7 +37,7 @@ export default async function TeamPage({ searchParams }) {
     .select(
       `id, status, job_title, job_post_id, application_id, hired_at, barista_id, cafe_id,
        cafes ( id, name ),
-       barista_profiles ( id, full_name, profile_picture_url, location_place, years_of_experience )`
+        barista_profiles ( id, full_name, profile_picture_url, location_place, years_of_experience, experience_months )`
     )
     .eq("owner_id", user.id)
     .in("status", ["active", "terminated"])
@@ -114,7 +115,7 @@ export default async function TeamPage({ searchParams }) {
                     <Badge classes={meta.classes}>{meta.label}</Badge>
                   </div>
                   <p className="mt-0.5 truncate text-xs text-espresso-soft">
-                    {b?.location_place ?? "-"} • {b?.years_of_experience ?? 0} th pengalaman • {g.jobs.length} lowongan
+                    {b?.location_place ?? "-"} • {formatExpShort(b?.experience_months, b?.years_of_experience)} pengalaman • {g.jobs.length} lowongan
                   </p>
                 </div>
                 <Link

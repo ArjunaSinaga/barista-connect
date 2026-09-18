@@ -9,6 +9,7 @@ import { EmptyState } from "@/components/ui/EmptyState";
 import { Stars } from "@/components/ratings/RatingForm";
 import TeamRemoveButton from "@/components/owner/TeamRemoveButton";
 import { groupTeamByBarista, countTeamByCafe } from "@/lib/team";
+import { formatExpShort } from "@/lib/exp";
 
 const TEAM_META = {
   active: { label: "Aktif", classes: "bg-green-100 text-green-700" },
@@ -85,7 +86,7 @@ export default function TeamView({ cafes = [], members = [], ratingMap = {}, ini
                     <Badge classes={meta.classes}>{meta.label}</Badge>
                   </div>
                   <p className="mt-0.5 truncate text-xs text-[#857768]">
-                    {b?.location_place ?? "-"} • {b?.years_of_experience ?? 0} th pengalaman • {g.jobs.length} lowongan
+                    {b?.location_place ?? "-"} • {formatExpShort(b?.experience_months, b?.years_of_experience)} pengalaman • {g.jobs.length} lowongan
                   </p>
                 </div>
                 <Link href={`/barista/${b?.id}`} className="shrink-0 text-xs font-bold text-[#6f6252] hover:text-[#3d2c1e]">

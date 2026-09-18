@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Briefcase, Bookmark, FileText, Bell, BookOpen, Store } from "lucide-react";
 import Avatar from "@/components/ui/Avatar";
+import { formatExpShort } from "@/lib/exp";
 
 // Kolom kiri board: kartu profil barista + nav (Jobs aktif, Applied real).
 // Saved/Alerts menyusul di F3b — tidak dirender agar tidak ada link mati.
@@ -49,8 +50,8 @@ export default function JobsProfileCard({ barista, appliedCount, savedCount = 0,
         <p className="mt-0.5 truncate text-xs text-[#857768]">{barista.location_place ?? "-"}</p>
         <div className="mt-3 flex items-stretch justify-center gap-4 text-center">
           <div>
-            <p className="text-sm font-extrabold text-[#2b2118] tabular-nums">{barista.years_of_experience ?? 0}</p>
-            <p className="text-[10px] text-[#857768]">Thn Pengalaman</p>
+            <p className="text-sm font-extrabold text-[#2b2118] tabular-nums">{formatExpShort(barista.experience_months, barista.years_of_experience)}</p>
+            <p className="text-[10px] text-[#857768]">Pengalaman</p>
           </div>
           <div className="border-l border-[#e8e0cf] pl-4">
             <p className="text-sm font-extrabold text-[#2b2118] tabular-nums">{barista.skills?.length ?? 0}</p>

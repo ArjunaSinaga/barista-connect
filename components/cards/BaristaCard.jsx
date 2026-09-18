@@ -2,6 +2,7 @@ import Link from "next/link";
 import { MapPin } from "lucide-react";
 import Avatar from "@/components/ui/Avatar";
 import Badge from "@/components/ui/Badge";
+import { formatExpShort } from "@/lib/exp";
 
 export function OpenToWorkDot({ open }) {
   return (
@@ -45,7 +46,7 @@ export default function BaristaCard({ barista, actions = null }) {
           </div>
         </div>
         <span className="shrink-0 rounded-xl bg-cream-dark px-2.5 py-1 text-[11px] font-extrabold text-espresso-soft">
-          {barista.years_of_experience} thn
+          {formatExpShort(barista.experience_months, barista.years_of_experience)}
         </span>
       </div>
 

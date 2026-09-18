@@ -5,6 +5,7 @@ import VerifiedBadge from "@/components/ui/VerifiedBadge";
 import Button from "@/components/ui/Button";
 import { avgStars } from "@/lib/ratings";
 import { EMPLOYMENT_LABELS } from "@/lib/constants";
+import { formatExp } from "@/lib/exp";
 
 // Featured barista card — light kerja.inc style. All numbers computed from real data.
 export default function FeaturedBarista({ barista, isAnon }) {
@@ -36,7 +37,7 @@ export default function FeaturedBarista({ barista, isAnon }) {
           </p>
           <p className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-0.5 text-xs text-[#857768]">
             <span className="inline-flex items-center gap-1"><MapPin size={11} />{barista.location_place}</span>
-            <span className="inline-flex items-center gap-1"><Briefcase size={11} />{barista.years_of_experience} thn pengalaman</span>
+            <span className="inline-flex items-center gap-1"><Briefcase size={11} />{formatExp(barista.experience_months, barista.years_of_experience)} pengalaman</span>
           </p>
           {barista.open_to_types?.length > 0 && (
             <p className="mt-1 flex items-center gap-1 text-xs text-[#857768]">

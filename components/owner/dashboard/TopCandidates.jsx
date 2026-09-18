@@ -8,6 +8,7 @@ import VerifiedBadge from "@/components/ui/VerifiedBadge";
 import SaveBaristaButton from "@/components/owner/dashboard/SaveBaristaButton";
 import InviteButton from "@/components/owner/dashboard/InviteButton";
 import { avgStars } from "@/lib/ratings";
+import { formatExpShort } from "@/lib/exp";
 
 // Kartu kandidat ala mockup: foto + badge + nama + rating + quote + skill + 2 CTA.
 export function badgeFor(b, rank) {
@@ -55,7 +56,7 @@ export function CandidateCard({ barista, rank, compact = false, strip = false, s
           </div>
           <p className="mt-0.5 flex flex-wrap items-center gap-x-2 text-[10px] text-[#857768]">
             <span className="inline-flex items-center gap-0.5"><MapPin size={9} />{barista.location_place ?? "-"}</span>
-            <span className="inline-flex items-center gap-0.5"><Briefcase size={9} />{barista.years_of_experience ?? 0} thn</span>
+            <span className="inline-flex items-center gap-0.5"><Briefcase size={9} />{formatExpShort(barista.experience_months, barista.years_of_experience)}</span>
           </p>
           {quote && (
             <p className="mt-0.5 line-clamp-1 text-[10px] leading-3 text-[#857768] italic">
@@ -115,7 +116,7 @@ export function CandidateCard({ barista, rank, compact = false, strip = false, s
         <p className="text-[11px] text-[#857768]">Barista</p>
         <p className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[11px] text-[#857768]">
           <span className="inline-flex items-center gap-1"><MapPin size={10} />{barista.location_place ?? "-"}</span>
-          <span className="inline-flex items-center gap-1"><Briefcase size={10} />{barista.years_of_experience ?? 0} thn</span>
+          <span className="inline-flex items-center gap-1"><Briefcase size={10} />{formatExpShort(barista.experience_months, barista.years_of_experience)}</span>
         </p>
         <p className="mt-1 flex items-center gap-1 text-xs font-bold text-[#2b2118]">
           <Star size={11} className="fill-[#c98a2b] text-[#c98a2b]" />
@@ -269,7 +270,7 @@ export function TalentRow({ barista, tag }) {
         </span>
         <span className="mt-0.5 block text-[11px] text-[#857768]">
           <Star size={10} className="mr-1 inline fill-[#c98a2b] text-[#c98a2b]" />
-          {avg ?? "-"} ({count}) · {barista.years_of_experience ?? 0} tahun
+          {avg ?? "-"} ({count}) · {formatExpShort(barista.experience_months, barista.years_of_experience)}
         </span>
         <span className="mt-0.5 block truncate text-[11px] text-[#857768]">
           {barista.location_place ?? ""}{barista.skills?.length ? ` · ${barista.skills.slice(0, 2).join(", ")}` : ""}

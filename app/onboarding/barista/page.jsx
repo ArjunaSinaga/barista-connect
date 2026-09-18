@@ -10,6 +10,7 @@ import Avatar from "@/components/ui/Avatar";
 import { useToast } from "@/components/ui/toast";
 import { createClient } from "@/lib/supabase/client";
 import { baristaStep1Schema, skillsSchema } from "@/lib/validation";
+import { toMonths } from "@/lib/exp";
 import { SKILL_PRESETS, CITIES, AVATAR_MIME_TYPES, AVATAR_MAX_BYTES, EMPLOYMENT_TYPES } from "@/lib/constants";
 import { compressImage, formatBytes } from "@/lib/image";
 
@@ -26,7 +27,8 @@ export default function BaristaOnboardingPage() {
     full_name: "",
     age: "",
     location_place: "",
-    years_of_experience: "",
+    exp_years: "",
+    exp_months: "",
   whatsapp: "",
   open_to_types: [],
   cover_letter: "",
@@ -175,13 +177,15 @@ export default function BaristaOnboardingPage() {
       cvUrlToSave = cvData.publicUrl;
     }
 
+      const expMonths = toMonths(form.exp_years, form.exp_months);
       const payload = {
         id: user.id,
         full_name: form.full_name.trim(),
         age: Number(form.age),
         location_place: form.location_place.trim(),
         profile_picture_url: photo.url,
-        years_of_experience: Math.max(0, Math.min(50, Number(form.years_of_experience) || 0)),
+        years_of_experience: Math.floor(expMonths / 12),
+        experience_months: expMonths,
         skills: form.skills,
         whatsapp: form.whatsapp?.replace(/\D/g,"") || null,
         open_to_types: form.open_to_types,
@@ -298,17 +302,28 @@ export default function BaristaOnboardingPage() {
             onChange={(e) => set("whatsapp", e.target.value)}
             error={errors.whatsapp}
           />
-          <Input
-            name="years_of_experience"
-            type="number"
-            min={0}
-            max={50}
-            label="Pengalaman (tahun)"
-            placeholder="cth. 2 (0 bila baru mulai)"
-            value={form.years_of_experience}
-            onChange={(e) => set("years_of_experience", e.target.value)}
-            error={errors.years_of_experience}
-          />
+          <div className="grid grid-cols-2 gap-3">
+            <Input
+              name="exp_years"
+              type="number"
+              min={0}
+              max={50}
+              label="Pengalaman (tahun)"
+              placeholder="cth. 1"
+              value={form.exp_years}
+              onChange={(e) => set("exp_years", e.target.value)}
+            />
+            <Input
+              name="exp_months"
+              type="number"
+              min={0}
+              max={11}
+              label="Plus (bulan)"
+              placeholder="cth. 2"
+              value={form.exp_months}
+              onChange={(e) => set("exp_months", e.target.value)}
+            />
+          </div>
           </div>
           <div className="pt-2">
             <p className="text-sm font-bold text-espresso">

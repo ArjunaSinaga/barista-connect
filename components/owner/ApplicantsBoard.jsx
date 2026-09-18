@@ -21,6 +21,7 @@ import EmptyState from "@/components/ui/EmptyState";
 import { useToast } from "@/components/ui/toast";
 import { STATUS_META } from "@/lib/constants";
 import { relativeTime } from "@/lib/time";
+import { formatExpShort } from "@/lib/exp";
 import { createClient } from "@/lib/supabase/client";
 import RatingForm from "@/components/ratings/RatingForm";
 
@@ -177,7 +178,7 @@ export default function ApplicantsBoard({
                         {b?.full_name ?? "Barista"}
                       </Link>
                       <p className="mt-0.5 text-xs font-semibold text-espresso-soft">
-                        {b?.age} th • {b?.years_of_experience} th pengalaman •{" "}
+                        {b?.age} th • {formatExpShort(b?.experience_months, b?.years_of_experience)} pengalaman •{" "}
                         <span className="inline-flex items-center">
                           <MapPin size={10} /> {b?.location_place}
                         </span>

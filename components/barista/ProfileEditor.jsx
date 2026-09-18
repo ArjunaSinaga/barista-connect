@@ -13,17 +13,20 @@ import { SKILL_PRESETS, AVATAR_MIME_TYPES, AVATAR_MAX_BYTES } from "@/lib/consta
 import { compressImage, formatBytes } from "@/lib/image";
 import { profileUpdateSchema } from "@/lib/validation";
 import { focusFirstError } from "@/lib/focusFirstError";
+import { splitMonths, toMonths } from "@/lib/exp";
 
 export default function ProfileEditor({ initial }) {
   const router = useRouter();
   const toast = useToast();
   const fileRef = useRef(null);
 
+  const initExp = splitMonths(initial.experience_months ?? (initial.years_of_experience ?? 0) * 12);
   const [form, setForm] = useState({
     full_name: initial.full_name ?? "",
     age: initial.age ?? "",
     location_place: initial.location_place ?? "",
-    years_of_experience: initial.years_of_experience ?? 0,
+    exp_years: initExp.years,
+    exp_months: initExp.months,
     skills: initial.skills ?? [],
     certificates: initial.certificates ?? [],
     ideas_plus: initial.ideas_plus ?? "",
@@ -114,9 +117,11 @@ export default function ProfileEditor({ initial }) {
     try {
       const supabase = createClient();
       const { data: { user } } = await supabase.auth.getUser();
+      const months = toMonths(parsed.data.exp_years, parsed.data.exp_months);
+      const { exp_years, exp_months, ...rest } = parsed.data;
       const { error } = await supabase
         .from("barista_profiles")
-        .update({ ...parsed.data, profile_picture_url: photoUrl })
+        .update({ ...rest, years_of_experience: Math.floor(months / 12), experience_months: months, profile_picture_url: photoUrl })
         .eq("id", user.id);
       if (error) throw error;
       toast("Profil tersimpan ✓");
@@ -195,16 +200,28 @@ export default function ProfileEditor({ initial }) {
             onChange={(e) => set("age", e.target.value)}
             error={errors.age}
           />
-          <Input
-            name="years_of_experience"
-            type="number"
-            min={0}
-            max={50}
-            label="Pengalaman (tahun)"
-            value={form.years_of_experience}
-            onChange={(e) => set("years_of_experience", e.target.value)}
-            error={errors.years_of_experience}
-          />
+          <div className="grid grid-cols-2 gap-3">
+            <Input
+              name="exp_years"
+              type="number"
+              min={0}
+              max={50}
+              label="Pengalaman (tahun)"
+              value={form.exp_years}
+              onChange={(e) => set("exp_years", e.target.value)}
+              error={errors.exp_years}
+            />
+            <Input
+              name="exp_months"
+              type="number"
+              min={0}
+              max={11}
+              label="Plus (bulan)"
+              value={form.exp_months}
+              onChange={(e) => set("exp_months", e.target.value)}
+              error={errors.exp_months}
+            />
+          </div>
         </div>
         <Input
           name="location_place"
