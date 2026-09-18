@@ -44,9 +44,12 @@ export default function LatestJobs({ jobs }) {
         </Link>
       </div>
       {jobs.length === 0 ? (
-        <div className="mt-3 rounded-xl border-2 border-dashed border-[#e0d5bd] p-8 text-center">
-          <p className="text-sm font-bold text-[#2b2118]">No jobs posted yet.</p>
-          <p className="mt-1 text-xs text-[#857768]">Be the first cafe to post today.</p>
+        <div className="mt-3 rounded-xl border-2 border-dashed border-[#e0d5bd] p-6 text-center">
+          <p className="text-sm font-bold text-[#2b2118]">Belum ada loker — jadilah kafe pertama.</p>
+          <p className="mt-1 text-xs text-[#857768]">Gratis, 2 menit, langsung tampil di sini.</p>
+          <Link href="/signup?role=owner" className="mt-3 inline-flex min-h-[32px] items-center rounded-full bg-[#3d2c1e] px-4 text-xs font-bold text-white hover:bg-[#2e2015]">
+            Pasang loker gratis
+          </Link>
         </div>
       ) : (
         <ul className="mt-1 divide-y divide-[#e7ddc8]">

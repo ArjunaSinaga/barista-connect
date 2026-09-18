@@ -113,7 +113,35 @@ function HeroPhotoBlock({ photo, flush }) {
   );
 }
 
-// Homepage = 1 layar tanpa scroll halaman (desktop): hero (teks+foto) + kartu peran
+// Kolom tengah saat DB masih kosong: 3 langkah cara kerja (statis, tanpa data).
+// ponytail: tampil hanya bila featured+reviews kosong; hapus bila konten real sudah ramai.
+function CaraKerja() {
+  const steps = [
+    ["1", "Daftar gratis", "Barista / pemilik kafe, 2 menit."],
+    ["2", "Lamar / pasang loker", "Profil + rating terverifikasi."],
+    ["3", "Chat & kerja", "Interview langsung di platform."],
+  ];
+  return (
+    <div className="rounded-2xl border border-[#e8e0cf] bg-[#ffffff] p-5 shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
+      <h3 className="text-[15px] font-extrabold text-[#2b2118]">Cara kerja</h3>
+      <ol className="mt-3 space-y-3">
+        {steps.map(([n, t, d]) => (
+          <li key={n} className="flex items-start gap-3">
+            <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-[#3d2c1e] text-xs font-extrabold text-white">{n}</span>
+            <span className="min-w-0">
+              <span className="block text-[13px] font-bold text-[#2b2118]">{t}</span>
+              <span className="block text-xs text-[#857768]">{d}</span>
+            </span>
+          </li>
+        ))}
+      </ol>
+      <div className="mt-4 flex gap-2">
+        <Link href="/signup?role=barista" className="inline-flex flex-1 min-h-[32px] items-center justify-center rounded-full bg-[#3d2c1e] px-3 text-xs font-bold text-white hover:bg-[#2e2015]">Daftar barista</Link>
+        <Link href="/signup?role=owner" className="inline-flex flex-1 min-h-[32px] items-center justify-center rounded-full border border-[#d8cdae] px-3 text-xs font-bold text-[#3d2c1e] hover:border-[#3d2c1e]">Pasang loker</Link>
+      </div>
+    </div>
+  );
+}
 // di kiri, ekosistem kanan; bawahnya 3 kolom (jobs | featured+reviews | academy+smarter).
 // Tiap kolom bawah scroll di dalam kotaknya sendiri tanpa scrollbar kelihatan.
 // Mobile tetap scroll normal.
@@ -207,8 +235,14 @@ export default async function LandingPage() {
             <LatestJobs jobs={jobs} />
           </div>
           <div className="min-w-0 space-y-4 lg:h-full lg:min-h-0 lg:overflow-y-auto lg:pr-1 lg:pb-1 no-scrollbar">
-            <FeaturedBarista barista={featured} isAnon={!user} />
-            <ReviewsCard reviews={reviews} />
+            {!featured && reviews.length === 0 ? (
+              <CaraKerja />
+            ) : (
+              <>
+                <FeaturedBarista barista={featured} isAnon={!user} />
+                <ReviewsCard reviews={reviews} />
+              </>
+            )}
           </div>
           <div className="min-w-0 space-y-4 sm:col-span-2 lg:col-span-1 lg:h-full lg:min-h-0 lg:overflow-y-auto lg:pb-1 no-scrollbar">
             <AcademyCard image={academyPhoto} />
