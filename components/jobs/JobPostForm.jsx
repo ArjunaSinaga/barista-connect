@@ -78,12 +78,12 @@ export default function JobPostForm({ initial = null }) {
       const supabase = createClient();
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return;
-      const { data } = await supabase
-        .from("cafes")
-        .select("id, name, location")
-        .eq("owner_id", user.id)
-        .eq("is_active", true)
-        .order("created_at", { ascending: true });
+      // Kafe milik sendiri + dalam scope org (manager). Sertakan owner agar loker nyangkut ke pemiliknya.
+      const { data: scopeIds } = await supabase.rpc("my_scope_cafes");
+      const ids = (scopeIds ?? []).filter(Boolean);
+      const { data } = ids.length
+        ? await supabase.from("cafes").select("id, name, location, owner_id").in("id", ids).eq("is_active", true).order("created_at", { ascending: true })
+        : await supabase.from("cafes").select("id, name, location, owner_id").eq("owner_id", user.id).eq("is_active", true).order("created_at", { ascending: true });
       setCafes(data ?? []);
     }
     loadCafes();
@@ -148,9 +148,10 @@ export default function JobPostForm({ initial = null }) {
         const {
           data: { user },
         } = await supabase.auth.getUser();
+        // owner_id ikut kafe (manager pasang loker = milik owner kafe itu)
         const { error } = await supabase.from("job_posts").insert({
           ...payload,
-          owner_id: user.id,
+          owner_id: cafe?.owner_id ?? user.id,
         });
         if (error) throw error;
         toast("Lowongan tayang! 🎉");

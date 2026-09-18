@@ -15,10 +15,15 @@ export default async function EditCafePage({ params }) {
     .from("cafes")
     .select("*")
     .eq("id", id)
-    .eq("owner_id", user.id)
     .maybeSingle();
+  // Pemilik atau manager dalam scope (via RPC, bukan owner_id mentah)
+  let allowed = cafe && cafe.owner_id === user.id;
+  if (cafe && !allowed) {
+    const { data: ok } = await supabase.rpc("can_manage_cafe", { c: id });
+    allowed = ok === true;
+  }
 
-  if (!cafe) {
+  if (!cafe || !allowed) {
     return (
       <div className="mx-auto max-w-3xl px-4 py-8">
         <EmptyState

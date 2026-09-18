@@ -4,7 +4,7 @@ import { EmptyState } from "@/components/ui/EmptyState";
 import CafeInvite from "@/components/owner/dashboard/CafeInvite";
 
 // Kolom tengah mode cafes: daftar cafe owner.
-export default function CafesView({ cafes, countByCafe, teamCountByCafe = {}, onBack }) {
+export default function CafesView({ cafes, countByCafe, teamCountByCafe = {}, canAdd = true, onBack }) {
   return (
     <>
       <div className="flex flex-wrap items-start justify-between gap-3">
@@ -21,9 +21,11 @@ export default function CafesView({ cafes, countByCafe, teamCountByCafe = {}, on
           >
             <Store size={14} /> Dashboard
           </button>
+          {canAdd && (
           <Link href="/dashboard/owner/cafes/new" className="inline-flex items-center gap-2 rounded-full bg-[#3d2c1e] px-4 py-2 text-xs font-bold text-white hover:bg-[#2e2015]">
             <Plus size={14} /> Tambah Cafe
           </Link>
+          )}
         </div>
       </div>
 

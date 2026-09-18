@@ -14,36 +14,38 @@ export default async function ApplicantsPage({ params }) {
   if (!user || !isSupabaseConfigured()) return null;
   const supabase = await createClient();
 
-  // Job must belong to this owner
-  const { data: job } = await supabase
+  // Job must belong to this owner (atau manager dalam scope kafe-nya)
+  const { data: jobRow } = await supabase
     .from("job_posts")
-    .select("id, title, is_active")
+    .select("id, title, is_active, cafe_id, owner_id")
     .eq("id", id)
-    .eq("owner_id", user.id)
     .maybeSingle();
-  if (!job) {
-    // Bukan 404 misterius: lowongan tidak ada / sudah dihapus / milik akun lain
-    const { data: anyJob } = await supabase
-      .from("job_posts")
-      .select("id, owner_id")
-      .eq("id", id)
-      .maybeSingle();
+  if (!jobRow) {
+    return (
+      <div className="mx-auto max-w-3xl px-4 py-8">
+        <EmptyState icon={<UsersRound size={22} />} title="Lowongan tidak ditemukan" subtitle="Lowongan ini sudah dihapus atau ID-nya salah. Cek daftar lowongan di dashboard." actionLabel="Ke Dashboard" actionHref="/dashboard/owner" />
+      </div>
+    );
+  }
+  let allowed = jobRow.owner_id === user.id;
+  if (!allowed) {
+    const { data: ok } = await supabase.rpc("can_manage_cafe", { c: jobRow.cafe_id });
+    allowed = ok === true;
+  }
+  if (!allowed) {
     return (
       <div className="mx-auto max-w-3xl px-4 py-8">
         <EmptyState
           icon={<UsersRound size={22} />}
-          title={anyJob ? "Bukan lowonganmu" : "Lowongan tidak ditemukan"}
-          subtitle={
-            anyJob
-              ? "Lowongan ini milik akun owner lain. Login dengan akun yang membuatnya (mis. owner.senja vs owner.brewok)."
-              : "Lowongan ini sudah dihapus atau ID-nya salah. Cek daftar lowongan di dashboard."
-          }
+          title="Bukan lowonganmu"
+          subtitle="Lowongan ini milik akun owner lain. Login dengan akun yang membuatnya (mis. owner.senja vs owner.brewok)."
           actionLabel="Ke Dashboard"
           actionHref="/dashboard/owner"
         />
       </div>
     );
   }
+  const job = jobRow;
 
   // Mark pending applications as viewed (owner opened the list)
   await supabase

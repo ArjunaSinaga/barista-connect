@@ -39,7 +39,13 @@ export default async function OwnerDashboardPage({ searchParams }) {
   let loadError = false
   try {
     const supabase = await createClient()
-    const res = await supabase.from("job_posts").select("id,title,location,salary_text,employment_type,employment_types,is_active,created_at,cafe_id,cafes(name)").eq("owner_id", user.id).order("created_at", { ascending: false })
+    // Kafe dalam kuasaku: milik sendiri + scope org (manager). Semua list ikut ini.
+    const { data: scopeIds } = await supabase.rpc("my_scope_cafes");
+    const scope = (scopeIds ?? []).filter(Boolean);
+    const scopeCsv = scope.join(",");
+    const res = scope.length
+      ? await supabase.from("job_posts").select("id,title,location,salary_text,employment_type,employment_types,is_active,created_at,cafe_id,cafes(name)").or(`owner_id.eq.${user.id},cafe_id.in.(${scopeCsv})`).order("created_at", { ascending: false })
+      : await supabase.from("job_posts").select("id,title,location,salary_text,employment_type,employment_types,is_active,created_at,cafe_id,cafes(name)").eq("owner_id", user.id).order("created_at", { ascending: false })
     jobs = res.data ?? []
     const jobIds = jobs.map(j=>j.id)
     if (jobIds.length) {
@@ -48,12 +54,16 @@ export default async function OwnerDashboardPage({ searchParams }) {
     }
     const [o, c, grRaw, cw, bRaw, sv, tmRaw] = await Promise.all([
       supabase.from("owners").select("business_name,avatar_url,whatsapp,location").eq("id", user.id).maybeSingle(),
-      supabase.from("cafes").select("id,name,address,location,photo_urls,is_active,invite_code").eq("owner_id", user.id).order("created_at", { ascending: true }),
+      scope.length
+        ? supabase.from("cafes").select("id,name,address,location,photo_urls,is_active,invite_code,owner_id,org_id").or(`owner_id.eq.${user.id},id.in.(${scopeCsv})`).order("created_at", { ascending: true })
+        : supabase.from("cafes").select("id,name,address,location,photo_urls,is_active,invite_code,owner_id,org_id").eq("owner_id", user.id).order("created_at", { ascending: true }),
       supabase.from("ratings").select("id,stars,comment,created_at,barista_id").eq("owner_id", user.id).order("created_at", { ascending: false }).limit(30),
       supabase.from("conversations").select("id").eq("owner_id", user.id).gte("created_at", new Date(Date.now() - 7 * 864e5).toISOString()),
       supabase.from("baristas_public").select("*").eq("is_open_to_work", true).limit(30),
       supabase.from("saved_baristas").select("barista_id").eq("owner_id", user.id),
-      supabase.from("team_members").select("id, status, job_title, job_post_id, application_id, hired_at, barista_id, cafe_id, cafes(id, name)").eq("owner_id", user.id).in("status", ["active", "terminated"]).order("hired_at", { ascending: false }),
+      scope.length
+        ? supabase.from("team_members").select("id, status, job_title, job_post_id, application_id, hired_at, barista_id, cafe_id, cafes(id, name)").or(`owner_id.eq.${user.id},cafe_id.in.(${scopeCsv})`).in("status", ["active", "terminated"]).order("hired_at", { ascending: false })
+        : supabase.from("team_members").select("id, status, job_title, job_post_id, application_id, hired_at, barista_id, cafe_id, cafes(id, name)").eq("owner_id", user.id).in("status", ["active", "terminated"]).order("hired_at", { ascending: false }),
     ]);
     const { attachBaristaNames, attachRatings } = await import("@/lib/publicProfiles");
     const grWithNames = await attachBaristaNames(grRaw.data ?? [], supabase);
@@ -166,6 +176,7 @@ export default async function OwnerDashboardPage({ searchParams }) {
               reviews: { reviews: givenRatings },
               cafes: { cafes, countByCafe },
               orgs,
+              canAddCafe: cafes.some((c) => c.owner_id === user.id) || orgs.some((o) => o.isOwner),
               teamCountByCafe: countTeamByCafe(teamMembers),
               team: { cafes, members: teamMembers, ratingMap: teamRatingMap },
               settings: { initial: ownerRow, publicHref: `/owner/${user.id}` },

@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Camera, LoaderCircle, Save, Trash2, X } from "lucide-react";
 import Button from "@/components/ui/Button";
@@ -28,6 +28,28 @@ export default function CafeForm({ initial = null }) {
   const [photos, setPhotos] = useState(initial?.photo_urls ?? []);
   const [uploading, setUploading] = useState(false);
   const [busy, setBusy] = useState(false);
+  // PT yang bisa ditempati kafe ini (milik sendiri / founder). Manager scope tak bisa bikin kafe.
+  const [orgs, setOrgs] = useState([]);
+  const [orgId, setOrgId] = useState(initial?.org_id ?? "");
+  useEffect(() => {
+    (async () => {
+      try {
+        const supabase = createClient();
+        const { data: { user } } = await supabase.auth.getUser();
+        if (!user) return;
+        const { data } = await supabase.from("organizations").select("id,name,owner_id").eq("owner_id", user.id);
+        const mine = data ?? [];
+        if (mine.length) {
+          const { data: mem } = await supabase.from("org_members").select("org_id,scope_cafe_ids").eq("user_id", user.id);
+          const founderOf = new Set((mem ?? []).filter((m) => m.scope_cafe_ids === null).map((m) => m.org_id));
+          const { data: more } = founderOf.size
+            ? await supabase.from("organizations").select("id,name,owner_id").in("id", [...founderOf])
+            : { data: [] };
+          setOrgs([...mine, ...(more ?? []).filter((o) => o.owner_id !== user.id)]);
+        }
+      } catch { /* diam: kafe solo tetap bisa */ }
+    })();
+  }, []);
 
   const set = (k, v) => setForm((f) => ({ ...f, [k]: v }));
 
@@ -102,7 +124,12 @@ export default function CafeForm({ initial = null }) {
         if (error) throw error;
         toast("Cafe diperbarui ✓");
       } else {
-        const { error } = await supabase.from("cafes").insert({ ...payload, owner_id: user.id });
+        const org = orgs.find((o) => o.id === orgId) ?? null;
+        const { error } = await supabase.from("cafes").insert({
+          ...payload,
+          owner_id: org ? org.owner_id : user.id,
+          org_id: org ? org.id : null,
+        });
         if (error) throw error;
         toast("Cafe didaftarkan! 🎉");
       }
@@ -177,6 +204,17 @@ export default function CafeForm({ initial = null }) {
           value={form.address}
           onChange={(e) => set("address", e.target.value)}
         />
+        {!initial?.id && orgs.length > 0 && (
+          <div>
+            <label htmlFor="cafe-org" className="text-sm font-bold text-espresso">Masuk PT (opsional)</label>
+            <select id="cafe-org" value={orgId} onChange={(e) => setOrgId(e.target.value)} className="mt-1 w-full rounded-xl border border-latte bg-white px-4 py-2.5 text-sm text-[#1c1412] outline-none focus:border-caramel">
+              <option value="">Bisnis pribadi (tanpa PT)</option>
+              {orgs.map((o) => (
+                <option key={o.id} value={o.id}>{o.name}</option>
+              ))}
+            </select>
+          </div>
+        )}
 
         <div>
           <p className="text-sm font-bold text-espresso">

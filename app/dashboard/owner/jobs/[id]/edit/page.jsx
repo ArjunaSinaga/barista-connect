@@ -16,10 +16,15 @@ export default async function EditJobPage({ params }) {
     .from("job_posts")
     .select("*")
     .eq("id", id)
-    .eq("owner_id", user.id)
     .maybeSingle();
+  // Pemilik atau manager dalam scope kafe-nya
+  let allowed = job && job.owner_id === user.id;
+  if (job && !allowed) {
+    const { data: ok } = await supabase.rpc("can_manage_cafe", { c: job.cafe_id });
+    allowed = ok === true;
+  }
 
-  if (!job) {
+  if (!job || !allowed) {
     return (
       <div className="mx-auto max-w-3xl px-4 py-8">
         <EmptyState
