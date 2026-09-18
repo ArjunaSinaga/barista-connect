@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Plus, Store } from "lucide-react";
 import { EmptyState } from "@/components/ui/EmptyState";
+import CafeInvite from "@/components/owner/dashboard/CafeInvite";
 
 // Kolom tengah mode cafes: daftar cafe owner.
 export default function CafesView({ cafes, countByCafe, teamCountByCafe = {}, onBack }) {
@@ -63,6 +64,7 @@ export default function CafesView({ cafes, countByCafe, teamCountByCafe = {}, on
                       Lihat tim
                     </Link>
                   </p>
+                  <CafeInvite cafeId={c.id} initialCode={c.invite_code} />
                 </div>
                 {!c.is_active && (
                   <span className="shrink-0 rounded-full bg-[#efe9d9] px-2 py-1 text-[11px] font-bold text-[#857768]">Nonaktif</span>

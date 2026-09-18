@@ -7,6 +7,7 @@ import Badge from "@/components/ui/Badge";
 import { EmptyState } from "@/components/ui/EmptyState";
 import BaristaShell from "@/components/barista/BaristaShell";
 import ApplicationsList from "@/components/barista/ApplicationsList";
+import JoinTeam from "@/components/barista/JoinTeam";
 import JobListRow from "@/components/jobs/JobListRow";
 
 export const metadata = { title: "Dashboard Barista" };
@@ -157,6 +158,8 @@ export default async function BaristaDashboardPage({ searchParams }) {
           <p className="mt-1 flex items-center gap-1 text-xs text-latte"><FlagOff size={12} />bisa dinilai</p>
         </div>
       </div>
+
+      <JoinTeam />
 
       <div className="overflow-hidden rounded-2xl border border-latte bg-white">
         <div className="flex items-center justify-between border-b border-latte px-5 py-4">
