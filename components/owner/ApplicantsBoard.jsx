@@ -274,7 +274,7 @@ export default function ApplicantsBoard({
                   )}
                   <div className="mt-2 flex flex-wrap items-center gap-2">
                     {app.cv_url && (
-                      <a href={app.cv_url} target="_blank" rel="noopener" className="inline-flex items-center gap-1 rounded-full bg-[#3d2c1e] px-3 py-1 text-xs font-bold text-white hover:bg-[#2e2015]">
+                      <a href={app.cv_signed ?? app.cv_url} target="_blank" rel="noopener" className="inline-flex items-center gap-1 rounded-full bg-[#3d2c1e] px-3 py-1 text-xs font-bold text-white hover:bg-[#2e2015]">
                         <FileText size={12}/> Lihat CV PDF
                       </a>
                     )}

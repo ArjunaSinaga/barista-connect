@@ -54,7 +54,7 @@ export default async function ApplicantsPage({ params }) {
     .eq("job_post_id", job.id)
     .eq("status", "pending");
 
-  const { data: apps } = await supabase
+  const { data: rawApps } = await supabase
     .from("applications")
     .select(
        `id, status, message, cover_letter, cv_url, employment_types, created_at,
@@ -64,6 +64,15 @@ export default async function ApplicantsPage({ params }) {
     )
     .eq("job_post_id", job.id)
     .order("created_at", { ascending: false });
+  // CV privat: signed URL 1 jam per baris (bucket cvs privat, policy cvs_owner_read yg jaga).
+  const apps = await Promise.all(
+    (rawApps ?? []).map(async (a) => {
+      if (!a.cv_url || !a.cv_url.includes("/cvs/")) return a;
+      const path = a.cv_url.split("/cvs/")[1].split("?")[0];
+      const { data } = await supabase.storage.from("cvs").createSignedUrl(path, 3600);
+      return data?.signedUrl ? { ...a, cv_signed: data.signedUrl } : a;
+    })
+  );
 
   return (
     <div>
