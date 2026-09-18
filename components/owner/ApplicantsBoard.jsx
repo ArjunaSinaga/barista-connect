@@ -27,6 +27,44 @@ import RatingForm from "@/components/ratings/RatingForm";
 
 const ORDER = { accepted: 0, pending: 1, viewed: 2, rejected: 3, terminated: 4 };
 
+// ponytail: skor kelengkapan dari data yang sudah ada — tanpa query baru
+function completeness(app) {
+  const b = app.barista_profiles ?? {};
+  let s = 0;
+  if (app.cv_url) s += 30;
+  if ((app.cover_letter ?? "").trim().length >= 50) s += 20;
+  else if ((app.cover_letter ?? "").trim().length >= 20) s += 10;
+  if (b.profile_picture_url) s += 20;
+  if ((b.skills ?? []).length >= 3) s += 15;
+  else if ((b.skills ?? []).length > 0) s += 8;
+  if ((b.experience_months ?? (b.years_of_experience ?? 0) * 12) > 0) s += 15;
+  return Math.min(100, s);
+}
+
+function exportCsv(apps, title) {
+  const rows = [["Nama", "Lokasi", "Pengalaman", "Skill", "Status", "Tanggal", "CV"]];
+  for (const a of apps) {
+    const b = a.barista_profiles ?? {};
+    rows.push([
+      b.full_name ?? "",
+      b.location_place ?? "",
+      `${Math.floor((b.experience_months ?? 0) / 12)} thn ${(b.experience_months ?? 0) % 12} bln`,
+      (b.skills ?? []).join("; "),
+      STATUS_META[a.status]?.label ?? a.status,
+      new Date(a.created_at).toLocaleDateString("id-ID"),
+      a.cv_url ?? "",
+    ]);
+  }
+  const csv = rows.map((r) => r.map((c) => `"${String(c).replace(/"/g, '""')}"`).join(",")).join("\n");
+  const blob = new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const el = document.createElement("a");
+  el.href = url;
+  el.download = `pelamar-${(title ?? "loker").replace(/[^a-z0-9]+/gi, "-")}.csv`;
+  el.click();
+  URL.revokeObjectURL(url);
+}
+
 export default function ApplicantsBoard({
   jobId,
   ownerId,
@@ -121,9 +159,20 @@ export default function ApplicantsBoard({
       >
         <ArrowLeft size={16} /> Lowongan saya
       </Link>
-      <h1 className="mt-3 text-2xl font-extrabold text-espresso">
-        Pelamar ({apps.length})
-      </h1>
+      <div className="mt-4 flex flex-wrap items-center gap-2">
+        <h1 className="text-2xl font-extrabold text-espresso">
+          Pelamar ({apps.length})
+        </h1>
+        {apps.length > 0 && (
+          <button
+            type="button"
+            onClick={() => exportCsv(filtered, "loker")}
+            className="ml-auto inline-flex items-center gap-1.5 rounded-full border border-latte bg-white px-4 py-2 text-xs font-bold text-espresso hover:border-caramel"
+          >
+            ⬇ Unduh CSV
+          </button>
+        )}
+      </div>
 
       <div className="no-scrollbar mt-4 flex gap-2 overflow-x-auto">
         {["all", "pending", "viewed", "accepted", "rejected","terminated"].map((k) => {
@@ -185,6 +234,12 @@ export default function ApplicantsBoard({
                       </p>
                     </div>
                     <Badge classes={meta.classes}>{meta.label}</Badge>
+                  </div>
+                  <div className="mt-2 flex items-center gap-2" title={`Kelengkapan pelamar ${completeness(app)}%`}>
+                    <div className="h-1.5 w-24 overflow-hidden rounded-full bg-latte">
+                      <div className="h-full rounded-full bg-matcha" style={{ width: `${completeness(app)}%` }} />
+                    </div>
+                    <span className="text-[10px] font-bold text-espresso-soft">Profil {completeness(app)}%</span>
                   </div>
 
                   {b?.skills?.length > 0 && (
