@@ -15,7 +15,7 @@ const NUDGE_KEY = "hide-profile-nudge";
 
 // Sidebar dashboard owner ala mockup: kartu profil cafe + nav + upsell Pro.
 // Semua angka dari props (data real), bukan hardcode.
-export default function SidebarOwner({ cafe, ownerName, completeness, completenessItems = [], counts, view, onNavigate }) {
+export default function SidebarOwner({ cafe, ownerName, completeness, completenessItems = [], counts, view, onNavigate, canSettings }) {
   const pathname = usePathname();
   const photo = cafe?.photo_urls?.[0] ?? null;
   const name = cafe?.name ?? ownerName ?? "Cafe Anda";
@@ -26,10 +26,11 @@ export default function SidebarOwner({ cafe, ownerName, completeness, completene
   // (klik X → hilang → refresh 1 tetap hilang → refresh 2 muncul lagi).
   useEffect(() => {
     if (completeness >= 100 || typeof window === "undefined") return;
+    if (canSettings === false) return; // manager murni: tak ada profil bisnis sendiri
     if (!snoozeCheck(NUDGE_KEY)) return;
     const t = setTimeout(() => setModalOpen(true), 800);
     return () => clearTimeout(t);
-  }, [completeness]);
+  }, [completeness, canSettings]);
 
   const closeModal = () => {
     setModalOpen(false);
@@ -132,10 +133,12 @@ export default function SidebarOwner({ cafe, ownerName, completeness, completene
           <span className="flex-1 text-left">PT / Organisasi</span>
           {countBadge(counts.orgs)}
         </button>
+        {canSettings !== false && (
         <button type="button" onClick={() => onNavigate?.("settings")} className={cls(isMain && view === "settings")}>
           <Settings size={17} className="shrink-0" />
           <span className="flex-1 text-left">Pengaturan</span>
         </button>
+        )}
         <Link
           href="/training"
           className="flex items-center gap-3 rounded-xl px-3 py-2 text-sm font-bold text-[#6f6252] hover:bg-[#faf7ef] hover:text-[#3d2c1e]"

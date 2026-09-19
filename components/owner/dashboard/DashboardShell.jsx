@@ -40,7 +40,17 @@ export default function DashboardShell({ initialView = "talenta", initialCafeId 
           ) : view === "cafes" ? (
             <CafesView {...middle.cafes} teamCountByCafe={middle.teamCountByCafe ?? {}} canAdd={middle.canAddCafe !== false} onBack={() => setView("talenta")} />
           ) : view === "settings" ? (
-            <SettingsView {...middle.settings} onBack={() => setView("talenta")} />
+            middle.canSettings === false ? (
+              <EmptyState
+                icon={<ChevronRight size={20} />}
+                title="Khusus pemilik cafe"
+                subtitle="Akun managermu tak punya cafe sendiri — minta owner atur profil bisnis."
+                actionLabel="Kembali ke dashboard"
+                actionHref="/dashboard/owner"
+              />
+            ) : (
+              <SettingsView {...middle.settings} onBack={() => setView("talenta")} />
+            )
           ) : view === "team" ? (
             <TeamView {...middle.team} initialCafeId={initialCafeId} onBack={() => setView("talenta")} />
           ) : view === "org" ? (

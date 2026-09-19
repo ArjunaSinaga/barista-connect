@@ -158,6 +158,7 @@ export default async function OwnerDashboardPage({ searchParams }) {
               ownerName: ownerRow?.business_name,
               completeness,
               completenessItems,
+              canSettings: cafes.some((c) => c.owner_id === user.id),
               counts: { activeJobs, applicants: totalApplicants, reviewsGiven: givenCount, cafes: cafes.length, saved: savedList.length, team: teamMembers.length, orgs: orgs.length },
             }}
             middle={{
@@ -180,6 +181,7 @@ export default async function OwnerDashboardPage({ searchParams }) {
               teamCountByCafe: countTeamByCafe(teamMembers),
               team: { cafes, members: teamMembers, ratingMap: teamRatingMap },
               settings: { initial: ownerRow, publicHref: `/owner/${user.id}` },
+              canSettings: cafes.some((c) => c.owner_id === user.id),
             }}
             right={{ recs: ranked.slice(3, 6), certified: ranked.filter(b => (b.certificates?.length ?? 0) > 0).slice(0, 3) }}
           />

@@ -15,6 +15,7 @@ export default function OrgView({ orgs = [], cafes = [], onBack }) {
   const [name, setName] = useState("");
   const [claim, setClaim] = useState("");
   const [transfer, setTransfer] = useState({});
+  const [joinCode, setJoinCode] = useState("");
 
   async function call(fn, args, ok) {
     setBusy(true);
@@ -52,6 +53,13 @@ export default function OrgView({ orgs = [], cafes = [], onBack }) {
       </div>
 
       <div className="grid gap-3 sm:grid-cols-2">
+        <form onSubmit={(e) => { e.preventDefault(); call("join_org_manager", { p_code: joinCode }, "Gabung PT berhasil").then((d) => { if (d) setJoinCode(""); }); }} className="rounded-2xl border border-[#e8e0cf] bg-[#ffffff] p-4">
+          <h3 className="flex items-center gap-2 text-sm font-extrabold text-[#2b2118]"><UserPlus size={15} /> Gabung jadi manager (punya kode)</h3>
+          <div className="mt-3 flex gap-2">
+            <input value={joinCode} onChange={(e) => setJoinCode(e.target.value.toUpperCase())} placeholder="XXXX-XXXX" maxLength={9} className="min-w-0 flex-1 rounded-full border border-[#e0d5bd] bg-[#faf7ef] px-4 py-2 font-mono text-sm font-bold tracking-wider uppercase focus:border-[#3d2c1e] focus:outline-none" />
+            <button disabled={busy || !joinCode.trim()} className="shrink-0 rounded-full bg-[#1f6b4a] px-4 py-2 text-xs font-bold text-white hover:bg-[#17573c] disabled:opacity-50">Gabung</button>
+          </div>
+        </form>
         <form onSubmit={(e) => { e.preventDefault(); call("create_org", { p_name: name, p_iam_owner: true }, "PT dibuat — kamu pemiliknya").then(() => setName("")); }} className="rounded-2xl border border-[#e8e0cf] bg-[#ffffff] p-4">
           <h3 className="flex items-center gap-2 text-sm font-extrabold text-[#2b2118]"><Building2 size={15} /> Buat PT baru</h3>
           <div className="mt-3 flex gap-2">
