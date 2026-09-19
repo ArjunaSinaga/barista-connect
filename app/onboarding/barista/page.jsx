@@ -230,7 +230,7 @@ export default function BaristaOnboardingPage() {
   }
 
   const canSubmit = (() => {
-  if (form.full_name.trim().length < 2 || Number(form.age) < 17 || !form.location_place.trim()) return false;
+  if (form.full_name.trim().length < 2 || Number(form.age) < 15 || !form.location_place.trim()) return false;
   if (!photo.url) return false;
   if (form.skills.length === 0) return false;
   if (form.open_to_types.length === 0) return false;
