@@ -65,8 +65,9 @@ export default function Navbar({ user, role }) {
               {n.label}
             </Link>
           ))}
+          {!user && (
           <Link
-            href={user ? home : "/signup?role=owner"}
+            href="/signup?role=owner"
             className={`hidden shrink-0 rounded-lg px-2.5 py-2 text-sm font-semibold whitespace-nowrap sm:px-3 lg:block ${
               forOwnersActive
                 ? "text-[#2f2721] underline decoration-[#3d2c1e] decoration-2 underline-offset-8"
@@ -75,6 +76,7 @@ export default function Navbar({ user, role }) {
           >
             Untuk Owner
           </Link>
+          )}
         </nav>
 
         {user ? (
@@ -126,12 +128,14 @@ export default function Navbar({ user, role }) {
                 </div>
               )}
             </div>
+            {role === "owner" && (
             <Link
               href={postJobHref}
               className="hidden shrink-0 rounded-full bg-[#3d2c1e] px-4 py-2 text-sm font-bold whitespace-nowrap text-white hover:bg-[#2e2015] sm:block"
             >
               Pasang Loker
             </Link>
+            )}
           </>
         ) : (
           <>
