@@ -77,6 +77,8 @@ function SignupForm() {
         options: {
           // Email konfirmasi selalu mendarat di website live, bukan localhost
           emailRedirectTo: `${SITE_URL}/auth/confirm?next=/auth/verified&role=${role}`,
+          // ponytail: nama/HP titip di metadata biar jalur verifikasi email tak kehilangan prefill
+          data: { role, name: name.trim(), phone: phone.trim() },
         },
       });
       if (error) throw error;
