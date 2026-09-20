@@ -69,7 +69,18 @@ function LoginForm() {
         .eq("id", data.user.id)
         .single();
       // Peran dibaca dari database — user tak perlu menebak.
-      const role = profile?.role ?? "barista";
+      // ponytail: profiles bisa kosong (konfirm via SQL/admin atau insert confirm gagal diam)
+      // -> pulihkan dari metadata signup, catat biar tak nebak lagi.
+      let role = profile?.role;
+      if (!role) {
+        const meta = data.user.user_metadata || {};
+        role = meta.role === "owner" ? "owner" : "barista";
+        try {
+          await supabase.from("profiles").insert({ id: data.user.id, role, email: data.user.email });
+        } catch {
+          // diam: onboarding tetap jalan, peran sudah benar
+        }
+      }
 
       const table = role === "owner" ? "owners" : "barista_profiles";
       const { data: detail } = await supabase
