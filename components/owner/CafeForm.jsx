@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Camera, LoaderCircle, Save, Trash2, X } from "lucide-react";
 import Button from "@/components/ui/Button";
@@ -225,7 +226,7 @@ export default function CafeForm({ initial = null }) {
             <div className="mt-2 grid grid-cols-3 gap-2">
               {photos.map((url) => (
                 <div key={url} className="relative overflow-hidden rounded-xl border border-latte">
-                  <img src={url} alt="Foto cafe" className="h-24 w-full object-cover" />
+                  <Image src={url} alt="Foto cafe" width={300} height={96} className="h-24 w-full object-cover" />
                   <button
                     type="button"
                     onClick={() => setPhotos((p) => p.filter((x) => x !== url))}

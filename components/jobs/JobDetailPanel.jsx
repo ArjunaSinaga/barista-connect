@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { MapPin, Star, X } from "lucide-react";
 import VerifiedBadge from "@/components/ui/VerifiedBadge";
@@ -23,11 +24,12 @@ export default function JobDetailPanel({ job, cafeName, cafeHref, types, avg, co
       {photos.length > 0 && (
         <div className={`grid gap-0.5 ${photos.length > 1 ? "grid-cols-3" : "grid-cols-1"}`}>
           {photos.map((src, i) => (
-            <img
+            <Image
               key={`${src}-${i}`}
               src={src}
               alt={i === 0 ? cafeName : `Foto ${cafeName} ${i + 1}`}
-              loading="lazy"
+              width={400}
+              height={144}
               className={photos.length > 1 && i === 0 ? "col-span-2 h-36 w-full object-cover" : "h-36 w-full object-cover"}
             />
           ))}

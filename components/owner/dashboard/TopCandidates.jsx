@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { Star, MapPin, Briefcase, ChevronRight, ChevronLeft } from "lucide-react";
 import Avatar from "@/components/ui/Avatar";
@@ -30,7 +31,7 @@ export function CandidateCard({ barista, rank, compact = false, strip = false, s
       <div className="flex h-full min-w-0 items-center gap-3 rounded-xl border border-[#e8e0cf] bg-[#ffffff] p-2.5 shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
         <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-lg bg-[#efe9d9]">
           {photo ? (
-            <img src={photo} alt={barista.full_name} loading="lazy" className="h-full w-full object-cover" />
+            <Image src={photo} alt={barista.full_name} fill sizes="64px" className="object-cover" />
           ) : (
             <div className="flex h-full w-full items-center justify-center">
               <Avatar name={barista.full_name} size="sm" />
@@ -95,9 +96,9 @@ export function CandidateCard({ barista, rank, compact = false, strip = false, s
 
   return (
     <div className="flex h-full min-w-0 flex-col overflow-hidden rounded-2xl border border-[#e8e0cf] bg-[#ffffff] shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
-      <div className="relative">
+<div className={`relative ${coverCls}`}>
         {photo ? (
-          <img src={photo} alt={barista.full_name} loading="lazy" className={`${coverCls} w-full object-cover`} />
+          <Image src={photo} alt={barista.full_name} fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover" />
         ) : (
           <div className={`flex ${coverCls} w-full items-center justify-center bg-[#efe9d9]`}>
             <Avatar name={barista.full_name} size="lg" />

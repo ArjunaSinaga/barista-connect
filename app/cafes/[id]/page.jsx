@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { MapPin, Store, Briefcase } from "lucide-react";
 import { createClient, getSessionSafe } from "@/lib/supabase/server";
@@ -53,7 +54,7 @@ export default async function CafePublicPage({ params }) {
         {(cafe.photo_urls ?? []).length > 0 && (
           <div className="grid grid-cols-2 gap-1 p-1">
             {cafe.photo_urls.slice(0, 4).map((url) => (
-              <img key={url} src={url} alt={cafe.name} className="h-40 w-full object-cover rounded-xl" />
+              <Image key={url} src={url} alt={cafe.name} width={800} height={160} className="h-40 w-full object-cover rounded-xl" />
             ))}
           </div>
         )}

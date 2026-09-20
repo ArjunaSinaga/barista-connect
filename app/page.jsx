@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Search, ChevronRight, Coffee, Store } from "lucide-react";
 import { createClient, isSupabaseConfigured, getSessionSafe } from "@/lib/supabase/server";
 import LatestJobs from "@/components/landing/LatestJobs";
@@ -92,7 +93,7 @@ function HeroPhotoBlock({ photo, flush }) {
       : "relative h-48 overflow-hidden rounded-xl shadow-[0_1px_3px_rgba(43,33,24,0.08)] sm:h-56 lg:h-full lg:min-h-[228px]"}>
       {photo ? (
         <>
-          <img src={photo.url} alt={photo.cafe ? `Photo of ${photo.cafe}` : "Cafe photo"} loading="lazy" className="absolute inset-0 h-full w-full object-cover" />
+          <Image src={photo.url} alt={photo.cafe ? `Photo of ${photo.cafe}` : "Cafe photo"} fill sizes="(max-width: 1024px) 100vw, 50vw" className="object-cover" />
           <span className="font-chalk absolute top-4 left-4 -rotate-6 text-xl leading-5 text-white drop-shadow-[0_2px_6px_rgba(0,0,0,0.6)]">
             Good People<br />Better Coffee
           </span>

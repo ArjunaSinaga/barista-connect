@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Plus, Store } from "lucide-react";
 import { EmptyState } from "@/components/ui/EmptyState";
 import CafeInvite from "@/components/owner/dashboard/CafeInvite";
@@ -43,7 +44,7 @@ export default function CafesView({ cafes, countByCafe, teamCountByCafe = {}, ca
             <li key={c.id}>
               <div className="flex items-center gap-4 rounded-2xl border border-[#e8e0cf] bg-[#ffffff] p-4 shadow-[0_1px_3px_rgba(43,33,24,0.08)] hover:border-[#3d2c1e]">
                 {c.photo_urls?.[0] ? (
-                  <img src={c.photo_urls[0]} alt={c.name} loading="lazy" className="h-14 w-14 shrink-0 rounded-xl object-cover" />
+                  <Image src={c.photo_urls[0]} alt={c.name} width={56} height={56} className="h-14 w-14 shrink-0 rounded-xl object-cover" />
                 ) : (
                   <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-[#efe9d9] text-[#9a6a2f]">
                     <Store size={22} />

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { MapPin, Bookmark, ChevronRight, Banknote, Briefcase } from "lucide-react";
 import ApplyButton from "@/components/jobs/ApplyButton";
 import VerifiedBadge from "@/components/ui/VerifiedBadge";
@@ -21,7 +22,7 @@ export function CafeLogo({ job }) {
   const photo = job.cafes?.photo_urls?.[0];
   const name = job.cafes?.name ?? job.owners?.business_name ?? "C";
   if (photo) {
-    return <img src={photo} alt={name} loading="lazy" className="h-12 w-12 shrink-0 rounded-full object-cover" />;
+    return <Image src={photo} alt={name} width={48} height={48} className="h-12 w-12 shrink-0 rounded-full object-cover" />;
   }
   return (
     <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#3d2c1e] text-lg font-bold text-white">

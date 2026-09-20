@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import {
   ArrowLeft,
@@ -151,7 +152,7 @@ export default async function JobDetailPage({ params }) {
               Tentang Cafe
             </h2>
             {job.cafes?.photo_urls?.[0] && (
-              <img src={job.cafes.photo_urls[0]} alt={job.cafes.name} className="mt-3 h-40 w-full rounded-xl object-cover" />
+              <Image src={job.cafes.photo_urls[0]} alt={job.cafes.name} width={800} height={160} className="mt-3 h-40 w-full rounded-xl object-cover" />
             )}
             <p className="mt-3 flex items-center gap-2 font-bold text-espresso">
               <Store size={16} className="text-caramel" />

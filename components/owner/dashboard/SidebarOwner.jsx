@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
@@ -53,7 +54,7 @@ export default function SidebarOwner({ cafe, ownerName, completeness, completene
       <div className="shrink-0 rounded-2xl border border-[#e8e0cf] bg-[#ffffff] p-4 text-center shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
         <div className="relative mx-auto h-20 w-20">
           {photo ? (
-            <img src={photo} alt={name} className="h-20 w-20 rounded-full border-4 border-[#efe9d9] object-cover" />
+            <Image src={photo} alt={name} width={80} height={80} className="h-20 w-20 rounded-full border-4 border-[#efe9d9] object-cover" />
           ) : (
             <Avatar name={name} size="lg" />
           )}
