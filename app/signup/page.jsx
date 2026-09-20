@@ -120,7 +120,9 @@ function SignupForm() {
           ? "Email sudah terdaftar, coba masuk"
           : err?.code === "email_provider_disabled"
             ? "Pendaftaran sedang dimatikan sementara, coba lagi nanti"
-            : err?.message || "Gagal mendaftar";
+            : err?.code === "over_email_send_rate_limit"
+              ? "Terlalu sering daftar, coba lagi sekitar 1 jam"
+              : err?.message || "Gagal mendaftar";
       toast(msg, "error");
     } finally {
       setBusy(false);
