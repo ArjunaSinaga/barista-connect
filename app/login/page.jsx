@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { Eye, EyeOff } from "lucide-react";
@@ -19,6 +19,12 @@ function LoginForm() {
   const [showPw, setShowPw] = useState(false);
   const [errors, setErrors] = useState({});
   const [busy, setBusy] = useState(false);
+
+  // ponytail: link konfirmasi basi/diklik-2x mendarat di sini — sambut, jangan lempar reset password
+  useEffect(() => {
+    if (params.get("verified") === "1") toast("Email sudah terverifikasi, silakan masuk", "success");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   async function handleSubmit(e) {
     e.preventDefault();

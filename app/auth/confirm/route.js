@@ -15,18 +15,20 @@ export async function GET(request) {
   // Hanya izinkan redirect internal biar tak bisa dibajak ke situs lain
   const next = rawNext.startsWith("/") && !rawNext.startsWith("//") ? rawNext : "/update-password";
   const redirect = (path) => NextResponse.redirect(new URL(path, url.origin));
+  // ponytail: link konfirmasi daftar yg basi/diklik-2x -> login (bukan reset password yg nggak nyambung)
+  const staleSignup = rawNext === "/auth/verified";
+  const staleRedirect = (msg) =>
+    redirect(staleSignup ? `/login?verified=1` : `/forgot-password?error=${encodeURIComponent(msg)}`);
 
   if (!code) {
-    return redirect(`/forgot-password?error=${encodeURIComponent("Tautan tidak lengkap. Minta tautan baru di bawah.")}`);
+    return staleRedirect("Tautan tidak lengkap. Minta tautan baru di bawah.");
   }
 
   const supabase = await createClient();
   const { data, error } = await supabase.auth.exchangeCodeForSession(code);
 
   if (error) {
-    return redirect(
-      `/forgot-password?error=${encodeURIComponent("Tautan sudah kedaluwarsa atau sudah dipakai. Minta tautan baru di bawah.")}`
-    );
+    return staleRedirect("Tautan sudah kedaluwarsa atau sudah dipakai. Minta tautan baru di bawah.");
   }
 
   // Catat peran sejak verifikasi biar login tak salah peran (signup tanpa
