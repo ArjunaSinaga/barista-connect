@@ -46,17 +46,15 @@ export async function GET(request) {
         role,
         email: data.user.email,
       });
-      // ponytail: prefill nama/HP dari metadata signup; abaikan gagal (onboarding yang lengkapi)
+      // ponytail: prefill nama/HP dari metadata signup; abaikan gagal (onboarding yang lengkapi).
+      // owners.location NOT NULL -> sertakan "" (onboarding owner upsert menimpanya).
+      // barista dilewati: barista_profiles.age NOT NULL dan tak ada nilai valid sebelum onboarding.
       try {
         const meta = data.user.user_metadata || {};
         const displayName = (meta.name || "").trim();
         const phone = (meta.phone || "").trim() || null;
-        if (displayName) {
-          if (role === "owner") {
-            await supabase.from("owners").insert({ id: data.user.id, business_name: displayName, whatsapp: phone });
-          } else {
-            await supabase.from("barista_profiles").insert({ id: data.user.id, full_name: displayName, whatsapp: phone });
-          }
+        if (displayName && role === "owner") {
+          await supabase.from("owners").insert({ id: data.user.id, business_name: displayName, location: "", whatsapp: phone });
         }
       } catch {
         // diam
