@@ -8,6 +8,7 @@ import ReviewsCard from "@/components/landing/ReviewsCard";
 import { EcosystemCard, AcademyCard, SmarterOpsCard } from "@/components/landing/SidebarKerja";
 import { avgStars } from "@/lib/ratings";
 import { attachOwners, attachBaristaNames, attachRatings } from "@/lib/publicProfiles";
+import { STR } from "@/lib/strings";
 
 async function getLatestJobs() {
   if (!isSupabaseConfigured()) return [];
@@ -93,21 +94,21 @@ function HeroPhotoBlock({ photo, flush }) {
       : "relative h-48 overflow-hidden rounded-xl shadow-[0_1px_3px_rgba(43,33,24,0.08)] sm:h-56 lg:h-full lg:min-h-[228px]"}>
       {photo ? (
         <>
-          <Image src={photo.url} alt={photo.cafe ? `Photo of ${photo.cafe}` : "Cafe photo"} fill sizes="(max-width: 1024px) 100vw, 50vw" className="object-cover" />
+          <Image src={photo.url} alt={STR.hero.photoAlt(photo.cafe)} fill sizes="(max-width: 1024px) 100vw, 50vw" className="object-cover" />
           <span className="font-chalk absolute top-4 left-4 -rotate-6 text-xl leading-5 text-white drop-shadow-[0_2px_6px_rgba(0,0,0,0.6)]">
-            Good People<br />Better Coffee
+            {STR.hero.overlayTop[0]}<br />{STR.hero.overlayTop[1]}
           </span>
           <span className="absolute right-3 bottom-3 rounded-full bg-paper/95 px-4 py-2 text-right shadow">
-            <span className="font-chalk block text-sm leading-4 text-espresso">Same Passion<br />More Opportunities</span>
+            <span className="font-chalk block text-sm leading-4 text-espresso">{STR.hero.overlayBadge[0]}<br />{STR.hero.overlayBadge[1]}</span>
             {photo.cafe && <span className="mt-0.5 block text-[10px] font-bold tracking-wide text-espresso-soft">— {photo.cafe} —</span>}
           </span>
           <span className="absolute bottom-1 left-0 right-0 hidden text-center text-[8px] font-bold tracking-[0.22em] text-white/90 lg:block">
-            JOBS&nbsp;&nbsp;•&nbsp;&nbsp;PEOPLE&nbsp;&nbsp;•&nbsp;&nbsp;TRAINING&nbsp;&nbsp;•&nbsp;&nbsp;STRONGER CAFES
+            {STR.hero.strip}
           </span>
         </>
       ) : (
         <div className="absolute inset-0 flex items-center justify-center bg-[#ece2cd] px-6 text-center">
-          <p className="text-sm leading-6 text-espresso-soft">Real cafe photos appear here.<br />Not AI images.</p>
+          <p className="text-sm leading-6 text-espresso-soft">{STR.hero.fallback[0]}<br />{STR.hero.fallback[1]}</p>
         </div>
       )}
     </div>
