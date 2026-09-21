@@ -1,0 +1,125 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e3]:
+      - generic [ref=e4]:
+        - link "Beranda" [ref=e5] [cursor=pointer]:
+          - /url: /
+        - link "BaristaConnect" [ref=e8] [cursor=pointer]:
+          - /url: /dashboard/barista
+      - navigation "Utama" [ref=e9]:
+        - link "Loker" [ref=e10] [cursor=pointer]:
+          - /url: /jobs
+        - link "Talenta" [ref=e11] [cursor=pointer]:
+          - /url: /find-baristas
+        - link "Ulasan" [ref=e12] [cursor=pointer]:
+          - /url: /reviews
+        - link "Pelatihan" [ref=e13] [cursor=pointer]:
+          - /url: /training
+        - link "Untuk Owner" [ref=e14] [cursor=pointer]:
+          - /url: /dashboard/barista
+      - link "Pesan" [ref=e71] [cursor=pointer]:
+        - /url: /messages
+      - button "barista.demo Barista" [ref=e75]:
+        - generic [aria-hidden] [ref=e76]: B
+        - generic [ref=e77]:
+          - generic [ref=e78]: barista.demo
+          - generic [ref=e79]: Barista
+      - link "Pasang Loker" [ref=e82] [cursor=pointer]:
+        - /url: /signup?role=owner
+  - main [ref=e18]:
+    - generic [ref=e86]:
+      - complementary [ref=e88]:
+        - generic [ref=e89]:
+          - generic [ref=e90]: DB
+          - paragraph [ref=e93]: Demo Barista
+          - paragraph [ref=e94]: 1 thn 6 bln pengalaman • Yogyakarta
+          - generic [ref=e95]:
+            - generic [ref=e97]: Siap Kerja
+            - switch [checked] [ref=e99]
+          - link "Edit Profil" [ref=e101] [cursor=pointer]:
+            - /url: /dashboard/barista/profile
+        - navigation "Dashboard barista" [ref=e102]:
+          - button "Dasbor" [ref=e103]
+          - button "Lamaran Saya 1" [ref=e110]:
+            - generic [ref=e114]: Lamaran Saya
+            - generic [ref=e115]: "1"
+          - button "Loker Tersimpan 0" [ref=e116]:
+            - generic [ref=e119]: Loker Tersimpan
+            - generic [ref=e120]: "0"
+          - link "Pesan" [ref=e121] [cursor=pointer]:
+            - /url: /messages
+          - link "Pelatihan" [ref=e126] [cursor=pointer]:
+            - /url: /training
+          - link "Profil" [ref=e131] [cursor=pointer]:
+            - /url: /dashboard/barista/profile
+          - button "Pengaturan" [ref=e136]
+        - generic [ref=e141]:
+          - paragraph [ref=e142]: Profil 100%
+          - paragraph [ref=e147]: Foto + CV + 3 skill + pengalaman = owner 3x lebih mungkin chat kamu.
+          - link "Cek Profil →" [ref=e148] [cursor=pointer]:
+            - /url: /dashboard/barista/profile
+      - generic [ref=e151]:
+        - generic [ref=e152]:
+          - paragraph [ref=e153]: Dasbor Barista
+          - heading "Halo, Demo! 👋" [level=1] [ref=e154]
+          - paragraph [ref=e155]: Pantau lamaran, lanjutkan yang diterima, dan nilai cafe tempatmu selesai bekerja.
+        - generic [ref=e156]:
+          - generic [ref=e157]:
+            - paragraph [ref=e158]: Total Lamaran
+            - paragraph [ref=e159]: "1"
+            - paragraph [ref=e160]: terkirim
+          - generic [ref=e164]:
+            - paragraph [ref=e165]: Menunggu
+            - paragraph [ref=e166]: "0"
+            - paragraph [ref=e167]: terkirim + dilihat
+          - generic [ref=e168]:
+            - paragraph [ref=e169]: Diterima
+            - paragraph [ref=e170]: "1"
+            - paragraph [ref=e171]: sedang bekerja
+          - generic [ref=e175]:
+            - paragraph [ref=e176]: Selesai
+            - paragraph [ref=e177]: "0"
+            - paragraph [ref=e178]: bisa dinilai
+        - generic [ref=e183]:
+          - heading "Sudah kerja di kafe? Gabung timnya" [level=2] [ref=e184]
+          - paragraph [ref=e190]: Minta kode tim ke owner / manager, masukkan di bawah.
+          - generic [ref=e191]:
+            - textbox "XXXX-XXXX" [ref=e192]
+            - button "Gabung" [disabled] [ref=e193]
+        - generic [ref=e194]:
+          - generic [ref=e195]:
+            - heading "Lamaran Terbaru" [level=2] [ref=e196]
+            - link "Lihat semua" [ref=e200] [cursor=pointer]:
+              - /url: /dashboard/barista?tab=lamaran
+          - list [ref=e201]:
+            - listitem [ref=e202]:
+              - generic [ref=e203]:
+                - paragraph [ref=e204]: Barista Full-Time (Tes)
+                - paragraph [ref=e205]: asdfasdf • 31m lalu
+              - generic [ref=e206]: Diterima
+        - generic [ref=e207]:
+          - generic [ref=e208]:
+            - heading "Cari lowongan di job board" [level=2] [ref=e209]
+            - paragraph [ref=e210]: Jelajahi lowongan aktif, simpan favoritmu, dan lamar langsung.
+          - link "Buka Loker" [ref=e211] [cursor=pointer]:
+            - /url: /jobs
+      - generic [ref=e214]:
+        - generic [ref=e215]:
+          - generic [ref=e216]:
+            - generic [ref=e217]:
+              - heading "Loker Untukmu" [level=3] [ref=e218]
+              - paragraph [ref=e219]: Lowongan aktif terbaru.
+            - link "Lihat semua" [ref=e220] [cursor=pointer]:
+              - /url: /jobs
+          - link "Barista Full-Time (Tes) Yogyakarta" [ref=e224] [cursor=pointer]:
+            - /url: /jobs/52217174-1514-4a68-8c1b-8fdf9c941f96
+            - generic [ref=e225]:
+              - generic [ref=e226]: Barista Full-Time (Tes)
+              - generic [ref=e227]: Yogyakarta
+        - generic [ref=e233]:
+          - heading "Reputasiku" [level=3] [ref=e234]
+          - paragraph [ref=e235]: Belum ada ulasan — selesaikan pekerjaan pertamamu.
+          - link "Lihat ulasan →" [ref=e236] [cursor=pointer]:
+            - /url: /reviews
+  - button "Open Next.js Dev Tools" [ref=e66] [cursor=pointer]
+  - alert [ref=e60]: Halo, Demo! 👋

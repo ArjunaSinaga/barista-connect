@@ -91,6 +91,10 @@ export default function OwnerOnboardingPage() {
         { onConflict: "id" }
       );
       if (error) throw error;
+      // Fase 3B: siapkan wadah pribadi otomatis (gagal diam-diam: kafe solo tetap bisa)
+      try {
+        await supabase.rpc("ensure_personal_org", { p_name: businessName.trim() });
+      } catch { /* abaikan */ }
       toast("Profil tersimpan — daftarkan cafe pertamamu");
       router.push("/dashboard/owner/cafes/new");
       router.refresh();

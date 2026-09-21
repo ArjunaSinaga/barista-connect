@@ -1,0 +1,85 @@
+- generic [active] [ref=f5e1]:
+  - banner [ref=f5e2]:
+    - generic [ref=f5e3]:
+      - generic [ref=f5e4]:
+        - link "Beranda" [ref=f5e5] [cursor=pointer]:
+          - /url: /
+        - link "BaristaConnect" [ref=f5e8] [cursor=pointer]:
+          - /url: /dashboard/owner
+      - navigation "Utama" [ref=f5e9]:
+        - link "Loker" [ref=f5e10] [cursor=pointer]:
+          - /url: /jobs
+        - link "Talenta" [ref=f5e11] [cursor=pointer]:
+          - /url: /find-baristas
+        - link "Ulasan" [ref=f5e12] [cursor=pointer]:
+          - /url: /reviews
+        - link "Pelatihan" [ref=f5e13] [cursor=pointer]:
+          - /url: /training
+      - link "Pesan" [ref=f5e14] [cursor=pointer]:
+        - /url: /messages
+      - button "owner.senja Pemilik Kafe" [ref=f5e18]:
+        - generic [aria-hidden] [ref=f5e19]: O
+        - generic [ref=f5e20]:
+          - generic [ref=f5e21]: owner.senja
+          - generic [ref=f5e22]: Pemilik Kafe
+      - link "Pasang Loker" [ref=f5e25] [cursor=pointer]:
+        - /url: /dashboard/owner/jobs/new
+  - main [ref=f5e26]:
+    - generic [ref=f5e28]:
+      - generic [ref=f5e29]:
+        - paragraph [ref=f5e30]: "Lowongan: [TES] Barista Uji Banner"
+        - generic [ref=f5e31]:
+          - link "Edit Lowongan" [ref=f5e32] [cursor=pointer]:
+            - /url: /dashboard/owner/jobs/38f97bc3-6344-4d7d-b4f1-286e76375bf7/edit
+          - button "Hapus Lowongan" [ref=f5e33]
+      - generic [ref=f5e37]:
+        - link "Lowongan saya" [ref=f5e38] [cursor=pointer]:
+          - /url: /dashboard/owner
+        - generic [ref=f5e41]:
+          - heading "Pelamar (1)" [level=1] [ref=f5e42]
+          - button "⬇ Unduh CSV" [ref=f5e43]
+        - generic [ref=f5e44]:
+          - button "Semua (1)" [ref=f5e45]
+          - button "Terkirim (0)" [ref=f5e46]
+          - button "Dilihat (1)" [ref=f5e47]
+          - button "Diterima (0)" [ref=f5e48]
+          - button "Ditolak (0)" [ref=f5e49]
+        - generic [ref=f5e51]:
+          - generic [ref=f5e52]:
+            - img "Bambang" [ref=f5e54]
+            - generic [ref=f5e55]:
+              - generic [ref=f5e56]:
+                - generic [ref=f5e57]:
+                  - link "Bambang" [ref=f5e58] [cursor=pointer]:
+                    - /url: /barista/bbbbbbbb-0000-4000-8000-000000000002
+                  - paragraph [ref=f5e59]:
+                    - text: 17 th • Baru mulai pengalaman •
+                    - generic [ref=f5e60]: Bekasi
+                - generic [ref=f5e64]: Dilihat
+              - generic "Kelengkapan pelamar 35%" [ref=f5e65]: Profil 35%
+              - generic [ref=f5e69]:
+                - generic [ref=f5e70]: Latte Art
+                - generic [ref=f5e71]: Espresso Bar
+                - generic [ref=f5e72]: Cupping
+              - paragraph [ref=f5e73]: “lamaran tes banner viewedBlocked”
+              - paragraph [ref=f5e74]: Melamar 2m lalu
+          - generic [ref=f5e75]:
+            - generic [ref=f5e77]:
+              - paragraph [ref=f5e78]: Kasih rating
+              - generic [ref=f5e79]:
+                - generic [ref=f5e80]:
+                  - button "1 bintang" [ref=f5e81]
+                  - button "2 bintang" [ref=f5e84]
+                  - button "3 bintang" [ref=f5e87]
+                  - button "4 bintang" [ref=f5e90]
+                  - button "5 bintang" [ref=f5e93]
+                - textbox "Komentar (opsional, mis. rajin, latte art rapi...)" [ref=f5e96]
+                - generic [ref=f5e97]:
+                  - generic [ref=f5e98]: 0/500 · bisa diubah seminggu sekali
+                  - button "Simpan rating" [ref=f5e99] [cursor=pointer]
+            - button "Terima" [ref=f5e100] [cursor=pointer]
+            - button "Tolak" [ref=f5e103] [cursor=pointer]
+            - button "Chat" [ref=f5e107] [cursor=pointer]
+            - link "Lihat profil lengkap →" [ref=f5e110] [cursor=pointer]:
+              - /url: /barista/bbbbbbbb-0000-4000-8000-000000000002
+  - alert [ref=f5e111]

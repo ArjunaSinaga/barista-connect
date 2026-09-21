@@ -1,0 +1,1 @@
+[     473ms] [ERROR] WebSocket connection to 'wss://stadium-measurements-weapon-adaptation.trycloudflare.com/_next/hmr?id=XbfqfwoD-S_FW2Hc7h_PZ' failed: Error during WebSocket handshake: Unexpected response code: 502 @ https://stadium-measurements-weapon-adaptation.trycloudflare.com/_next/static/chunks/node_modules_next_dist_client_0_90u2t._.js:16348

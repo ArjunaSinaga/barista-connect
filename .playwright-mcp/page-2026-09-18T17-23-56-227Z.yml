@@ -1,0 +1,47 @@
+- generic [active] [ref=f5e1]:
+  - banner [ref=f5e2]:
+    - generic [ref=f5e3]:
+      - generic [ref=f5e4]:
+        - link "Beranda" [ref=f5e5] [cursor=pointer]:
+          - /url: /
+        - link "BaristaConnect" [ref=f5e8] [cursor=pointer]:
+          - /url: /dashboard/owner
+      - navigation "Utama" [ref=f5e9]:
+        - link "Loker" [ref=f5e10] [cursor=pointer]:
+          - /url: /jobs
+        - link "Talenta" [ref=f5e11] [cursor=pointer]:
+          - /url: /find-baristas
+        - link "Ulasan" [ref=f5e12] [cursor=pointer]:
+          - /url: /reviews
+        - link "Pelatihan" [ref=f5e13] [cursor=pointer]:
+          - /url: /training
+        - link "Untuk Owner" [ref=f5e14] [cursor=pointer]:
+          - /url: /dashboard/owner
+      - link "Pesan" [ref=f5e15] [cursor=pointer]:
+        - /url: /messages
+      - button "owner.senja Pemilik Kafe" [ref=f5e19]:
+        - generic [aria-hidden] [ref=f5e20]: O
+        - generic [ref=f5e21]:
+          - generic [ref=f5e22]: owner.senja
+          - generic [ref=f5e23]: Pemilik Kafe
+      - link "Pasang Loker" [ref=f5e26] [cursor=pointer]:
+        - /url: /dashboard/owner/jobs/new
+  - main [ref=f5e27]:
+    - generic [ref=f5e127]:
+      - generic [ref=f5e128]:
+        - link "Kembali" [ref=f5e129] [cursor=pointer]:
+          - /url: /messages
+        - generic [ref=f5e132]: DB
+        - paragraph [ref=f5e135]: Demo Barista
+        - generic "Realtime" [ref=f5e136]
+        - button "Hapus percakapan" [ref=f5e137]
+      - paragraph [ref=f5e143]:
+        - text: Belum ada pesan. Sapa Demo Barista —
+        - button "atau minta AI buat draf pembuka ✨" [ref=f5e144]
+      - generic [ref=f5e145]:
+        - button "👋 Sapa duluan" [ref=f5e146]
+        - button "Sarankan balasan" [ref=f5e147]
+        - generic [ref=f5e151]:
+          - textbox "Tulis pesan... (Enter kirim, Shift+Enter baris baru)" [ref=f5e152]
+          - button "Kirim" [disabled] [ref=f5e153]
+  - alert [ref=f5e116]

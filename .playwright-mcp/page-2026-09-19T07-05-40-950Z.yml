@@ -1,0 +1,74 @@
+- generic [active] [ref=f15e1]:
+  - banner [ref=f15e2]:
+    - generic [ref=f15e3]:
+      - generic [ref=f15e4]:
+        - link "Beranda" [ref=f15e5] [cursor=pointer]:
+          - /url: /
+        - link "BaristaConnect" [ref=f15e8] [cursor=pointer]:
+          - /url: /dashboard/owner
+      - navigation "Utama" [ref=f15e9]:
+        - link "Loker" [ref=f15e10] [cursor=pointer]:
+          - /url: /jobs
+        - link "Talenta" [ref=f15e11] [cursor=pointer]:
+          - /url: /find-baristas
+        - link "Ulasan" [ref=f15e12] [cursor=pointer]:
+          - /url: /reviews
+        - link "Pelatihan" [ref=f15e13] [cursor=pointer]:
+          - /url: /training
+        - link "Untuk Owner" [ref=f15e14] [cursor=pointer]:
+          - /url: /dashboard/owner
+      - link "Pesan" [ref=f15e15] [cursor=pointer]:
+        - /url: /messages
+      - button "owner1 Pemilik Kafe" [ref=f15e19]:
+        - generic [aria-hidden] [ref=f15e20]: O
+        - generic [ref=f15e21]:
+          - generic [ref=f15e22]: owner1
+          - generic [ref=f15e23]: Pemilik Kafe
+      - link "Pasang Loker" [ref=f15e26] [cursor=pointer]:
+        - /url: /dashboard/owner/jobs/new
+  - main [ref=f15e27]:
+    - generic [ref=f15e28]:
+      - heading "Cari Barista" [level=1] [ref=f15e29]
+      - paragraph [ref=f15e30]: Memuat...
+      - generic [ref=f15e31]:
+        - generic [ref=f15e32]:
+          - generic [ref=f15e36]: Cari nama, skill, atau lokasi
+          - textbox "Cari nama, skill, atau lokasi" [ref=f15e37]:
+            - /placeholder: Cari nama, skill, atau lokasi...
+            - text: Latte Art
+          - button "Hapus pencarian" [ref=f15e38]
+        - generic [ref=f15e42]:
+          - generic [ref=f15e43]: "Urutkan:"
+          - combobox [ref=f15e44]:
+            - option "Buka kerja dulu" [selected]
+            - option "Pengalaman tertinggi"
+      - complementary [ref=f15e46]:
+        - paragraph [ref=f15e47]:
+          - text: Filter
+          - button "reset" [ref=f15e48]
+        - generic [ref=f15e49]:
+          - generic [ref=f15e50]:
+            - paragraph [ref=f15e51]: Skill
+            - generic [ref=f15e52]:
+              - button "Latte Art" [ref=f15e53]
+              - button "Manual Brew" [ref=f15e54]
+              - button "Espresso Bar" [ref=f15e55]
+              - button "Roasting" [ref=f15e56]
+              - button "Cupping" [ref=f15e57]
+              - button "Cold Brew" [ref=f15e58]
+              - button "Tea & Non-Coffee" [ref=f15e59]
+              - button "Customer Service" [ref=f15e60]
+              - button "Cashier POS" [ref=f15e61]
+              - button "Bar Back" [ref=f15e62]
+          - generic [ref=f15e63]:
+            - paragraph [ref=f15e64]: Lokasi
+            - textbox "cth. Bandung" [ref=f15e65]
+          - generic [ref=f15e66]:
+            - paragraph [ref=f15e67]:
+              - text: "Pengalaman minimal:"
+              - generic [ref=f15e68]: 0 tahun
+            - slider [ref=f15e69]: "0"
+          - generic [ref=f15e70] [cursor=pointer]:
+            - switch "Hanya yang buka kerja" [checked] [ref=f15e71]
+            - generic [ref=f15e73]: Hanya yang buka kerja
+  - alert [ref=f15e142]

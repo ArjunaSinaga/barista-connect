@@ -1,0 +1,33 @@
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e3]:
+      - generic [ref=e4]:
+        - link "Beranda" [ref=e5] [cursor=pointer]:
+          - /url: /
+        - link "BaristaConnect" [ref=e8] [cursor=pointer]:
+          - /url: /dashboard/owner
+      - navigation "Utama" [ref=e9]:
+        - link "Loker" [ref=e10] [cursor=pointer]:
+          - /url: /jobs
+        - link "Talenta" [ref=e11] [cursor=pointer]:
+          - /url: /find-baristas
+        - link "Ulasan" [ref=e12] [cursor=pointer]:
+          - /url: /reviews
+        - link "Pelatihan" [ref=e13] [cursor=pointer]:
+          - /url: /training
+      - link "Pesan" [ref=e14] [cursor=pointer]:
+        - /url: /messages
+      - button "manager1 Pemilik Kafe" [ref=e18]:
+        - generic [aria-hidden] [ref=e19]: M
+        - generic [ref=e20]:
+          - generic [ref=e21]: manager1
+          - generic [ref=e22]: Pemilik Kafe
+      - link "Pasang Loker" [ref=e25] [cursor=pointer]:
+        - /url: /dashboard/owner/jobs/new
+  - main [ref=e26]:
+    - generic [ref=e29]:
+      - heading "Khusus barista" [level=3] [ref=e34]
+      - paragraph [ref=e35]: Halaman ini hanya untuk akun barista.
+      - link "Ke Dashboard" [ref=e36] [cursor=pointer]:
+        - /url: /dashboard/owner
+  - alert [ref=e37]

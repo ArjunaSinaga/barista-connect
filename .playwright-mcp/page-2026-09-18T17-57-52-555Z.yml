@@ -1,0 +1,71 @@
+- generic [ref=f7e1]:
+  - banner [ref=f7e2]:
+    - generic [ref=f7e3]:
+      - generic [ref=f7e4]:
+        - link "Beranda" [ref=f7e5] [cursor=pointer]:
+          - /url: /
+        - link "BaristaConnect" [ref=f7e8] [cursor=pointer]:
+          - /url: /dashboard/barista
+      - navigation "Utama" [ref=f7e9]:
+        - link "Loker" [ref=f7e10] [cursor=pointer]:
+          - /url: /jobs
+        - link "Talenta" [ref=f7e11] [cursor=pointer]:
+          - /url: /find-baristas
+        - link "Ulasan" [ref=f7e12] [cursor=pointer]:
+          - /url: /reviews
+        - link "Pelatihan" [ref=f7e13] [cursor=pointer]:
+          - /url: /training
+        - link "Untuk Owner" [ref=f7e14] [cursor=pointer]:
+          - /url: /dashboard/barista
+      - link "Pesan" [ref=f7e15] [cursor=pointer]:
+        - /url: /messages
+      - button "barista.demo Barista" [ref=f7e19]:
+        - generic [aria-hidden] [ref=f7e20]: B
+        - generic [ref=f7e21]:
+          - generic [ref=f7e22]: barista.demo
+          - generic [ref=f7e23]: Barista
+      - link "Pasang Loker" [ref=f7e26] [cursor=pointer]:
+        - /url: /signup?role=owner
+  - main [ref=f7e27]:
+    - generic [ref=f7e29]:
+      - heading "Lamaran Saya" [level=1] [ref=f7e30]
+      - paragraph [ref=f7e31]: Pantau status semua lamaran kamu di satu tempat.
+      - generic [ref=f7e32]:
+        - button "Semua (1)" [ref=f7e83]
+        - button "Terkirim (0)" [ref=f7e34]
+        - button "Dilihat (0)" [ref=f7e35]
+        - button "Diterima (0)" [ref=f7e116]
+        - button "Ditolak (0)" [ref=f7e37]
+        - button "Selesai (1)" [ref=f7e117]
+      - generic [ref=f7e85]:
+        - generic [ref=f7e86]:
+          - generic [ref=f7e87]:
+            - link "Barista Full-Time (Tes)" [ref=f7e88] [cursor=pointer]:
+              - /url: /jobs/52217174-1514-4a68-8c1b-8fdf9c941f96
+            - paragraph [ref=f7e89]: Yogyakarta
+          - generic [ref=f7e97]: Dikeluarkan
+        - list "Progres lamaran" [ref=f7e98]:
+          - listitem [ref=f7e99]:
+            - generic [ref=f7e101]: Terkirim
+          - listitem [ref=f7e102]:
+            - generic [ref=f7e104]: Dilihat
+          - listitem [ref=f7e105]:
+            - generic [ref=f7e106]: Keputusan
+        - generic [ref=f7e118]:
+          - paragraph [ref=f7e119]: Nilai cafe ini
+          - generic [ref=f7e120]:
+            - generic [ref=f7e121]:
+              - button "1 bintang" [active] [ref=f7e122]
+              - button "2 bintang" [ref=f7e125]
+              - button "3 bintang" [ref=f7e128]
+              - button "4 bintang" [ref=f7e131]
+              - button "5 bintang" [ref=f7e134]
+            - textbox "Komentar (opsional, mis. shift jelas, gaji tepat waktu...)" [ref=f7e137]
+            - generic [ref=f7e138]:
+              - generic [ref=f7e139]: 0/500 · bisa diubah seminggu sekali
+              - button "Simpan rating" [ref=f7e140] [cursor=pointer]
+        - generic [ref=f7e107]:
+          - generic [ref=f7e108]: Dilamar 41m lalu
+          - button "Hubungi via pesan →" [ref=f7e115]
+  - button "Open Next.js Dev Tools" [ref=f7e78] [cursor=pointer]
+  - alert [ref=f7e82]

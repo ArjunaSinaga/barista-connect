@@ -32,25 +32,32 @@ export default function CafeForm({ initial = null }) {
   // PT yang bisa ditempati kafe ini (milik sendiri / founder). Manager scope tak bisa bikin kafe.
   const [orgs, setOrgs] = useState([]);
   const [orgId, setOrgId] = useState(initial?.org_id ?? "");
+  const initialOrgId = initial?.org_id;
   useEffect(() => {
     (async () => {
       try {
         const supabase = createClient();
         const { data: { user } } = await supabase.auth.getUser();
         if (!user) return;
-        const { data } = await supabase.from("organizations").select("id,name,owner_id").eq("owner_id", user.id);
+        const { data } = await supabase.from("organizations").select("id,name,owner_id,kind").eq("owner_id", user.id);
         const mine = data ?? [];
         if (mine.length) {
           const { data: mem } = await supabase.from("org_members").select("org_id,scope_cafe_ids").eq("user_id", user.id);
           const founderOf = new Set((mem ?? []).filter((m) => m.scope_cafe_ids === null).map((m) => m.org_id));
           const { data: more } = founderOf.size
-            ? await supabase.from("organizations").select("id,name,owner_id").in("id", [...founderOf])
+            ? await supabase.from("organizations").select("id,name,owner_id,kind").in("id", [...founderOf])
             : { data: [] };
-          setOrgs([...mine, ...(more ?? []).filter((o) => o.owner_id !== user.id)]);
+          const all = [...mine, ...(more ?? []).filter((o) => o.owner_id !== user.id)];
+          setOrgs(all);
+          // default: wadah pribadi dulu biar kafe personal otomatis nempel org
+          if (!initialOrgId) {
+            const personal = all.find((o) => o.kind === "personal");
+            setOrgId(personal ? personal.id : all[0].id);
+          }
         }
       } catch { /* diam: kafe solo tetap bisa */ }
     })();
-  }, []);
+  }, [initialOrgId]);
 
   const set = (k, v) => setForm((f) => ({ ...f, [k]: v }));
 

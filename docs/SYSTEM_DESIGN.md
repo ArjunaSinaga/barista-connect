@@ -76,6 +76,12 @@ Latihan wajib tim: Design job feed / Design chat owner-barista / Design rating a
 - Caveat: "FREE" = software gratis, tapi butuh API key LLM+TTS sendiri (ada cost); self-host via CLI.
 - Relevansi: mesin konten lead-gen organik (nyambung IG_BACKLOG #9 faceless). BUKAN prioritas sebelum POS fase 1. Detail di IG_BACKLOG.md #11.
 
+### W4. Obscura — headless browser Rust (X @liambraus, ✅ repo real, klaim dikoreksi 2026-09-21)
+- `h4ckf0r0day/obscura`: Rust + V8, server CDP (kompatibel Puppeteer/Playwright), MCP server, mode stealth + blocklist ±3.520 tracker, 30MB/85ms sesuai README. Ada cloud (obscura.sh) + self-host Docker.
+- KOREKSI klaim X: stealth pakai fingerprint Chrome KONSISTEN, bukan random per sesi (dok arsitektur sendiri); "pengganti langsung" hanya utk ~30 method CDP umum + 9 domain — situs berat bisa beda render; lisensi belum dipastikan (cek sebelum pakai di produk).
+- Relevansi: mesin scraping lead-gen (data cafe) + MCP browser tools. Syarat adopsi: Playwright MCP existing terbukti kurang → bandingkan dulu; cek lisensi. BUKAN prioritas sebelum POS fase 1.
+- Catatan: Invidious (frontend YouTube alternatif, iv-org, AGPLv3, ~24k stars) dari thread yg sama ✅ real tapi TIDAK relevan utk produk — skip.
+
 ## Referensi penuh
 1. github.com/donnemartin/system-design-primer
 2. github.com/ByteByteGoHq/system-design-101 (visual, opsional)

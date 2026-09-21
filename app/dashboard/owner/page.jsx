@@ -81,12 +81,12 @@ export default async function OwnerDashboardPage({ searchParams }) {
     // Organisasi: milik sendiri + diikuti sebagai manager (baca via policy org_read/members_read)
     try {
       const supabase3 = await createClient();
-      const { data: owned } = await supabase3.from("organizations").select("id,name,owner_id,needs_owner,owner_code,manager_code,created_at").eq("owner_id", user.id);
+      const { data: owned } = await supabase3.from("organizations").select("id,name,owner_id,kind,needs_owner,created_at").eq("owner_id", user.id);
       const { data: mem } = await supabase3.from("org_members").select("org_id,scope_cafe_ids").eq("user_id", user.id);
       const memOrgIds = (mem ?? []).map((m) => m.org_id).filter((id) => !(owned ?? []).some((x) => x.id === id));
       let joined = [];
       if (memOrgIds.length) {
-        const { data } = await supabase3.from("organizations").select("id,name,owner_id,needs_owner,owner_code,manager_code,created_at").in("id", memOrgIds);
+        const { data } = await supabase3.from("organizations").select("id,name,owner_id,kind,needs_owner,created_at").in("id", memOrgIds);
         joined = data ?? [];
       }
       const allOrgs = [...(owned ?? []), ...joined];

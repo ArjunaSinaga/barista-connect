@@ -1,0 +1,80 @@
+- generic [active] [ref=f4e1]:
+  - banner [ref=f4e2]:
+    - generic [ref=f4e3]:
+      - generic [ref=f4e4]:
+        - link "Beranda" [ref=f4e5] [cursor=pointer]:
+          - /url: /
+        - link "BaristaConnect" [ref=f4e8] [cursor=pointer]:
+          - /url: /dashboard/owner
+      - navigation "Utama" [ref=f4e9]:
+        - link "Loker" [ref=f4e10] [cursor=pointer]:
+          - /url: /jobs
+        - link "Talenta" [ref=f4e11] [cursor=pointer]:
+          - /url: /find-baristas
+        - link "Ulasan" [ref=f4e12] [cursor=pointer]:
+          - /url: /reviews
+        - link "Pelatihan" [ref=f4e13] [cursor=pointer]:
+          - /url: /training
+        - link "Untuk Owner" [ref=f4e14] [cursor=pointer]:
+          - /url: /dashboard/owner
+      - link "Pesan" [ref=f4e15] [cursor=pointer]:
+        - /url: /messages
+      - button "owner.senja Pemilik Kafe" [ref=f4e19]:
+        - generic [aria-hidden] [ref=f4e20]: O
+        - generic [ref=f4e21]:
+          - generic [ref=f4e22]: owner.senja
+          - generic [ref=f4e23]: Pemilik Kafe
+      - link "Pasang Loker" [ref=f4e26] [cursor=pointer]:
+        - /url: /dashboard/owner/jobs/new
+  - main [ref=f4e27]:
+    - generic [ref=f4e314]:
+      - generic [ref=f4e315]:
+        - paragraph [ref=f4e316]: "Lowongan: Barista Full-Time (Tes)"
+        - generic [ref=f4e317]:
+          - link "Edit Lowongan" [ref=f4e318] [cursor=pointer]:
+            - /url: /dashboard/owner/jobs/52217174-1514-4a68-8c1b-8fdf9c941f96/edit
+          - button "Hapus Lowongan" [ref=f4e319]
+      - generic [ref=f4e323]:
+        - link "Lowongan saya" [ref=f4e324] [cursor=pointer]:
+          - /url: /dashboard/owner
+        - generic [ref=f4e327]:
+          - heading "Pelamar (1)" [level=1] [ref=f4e328]
+          - button "⬇ Unduh CSV" [ref=f4e329]
+        - generic [ref=f4e330]:
+          - button "Semua (1)" [ref=f4e331]
+          - button "Terkirim (0)" [ref=f4e332]
+          - button "Dilihat (0)" [ref=f4e333]
+          - button "Diterima (1)" [ref=f4e334]
+          - button "Ditolak (0)" [ref=f4e335]
+          - button "Dikeluarkan (0)" [ref=f4e336]
+        - generic [ref=f4e338]:
+          - generic [ref=f4e339]:
+            - generic [ref=f4e340]: DB
+            - generic [ref=f4e342]:
+              - generic [ref=f4e343]:
+                - generic [ref=f4e344]:
+                  - link "Demo Barista" [ref=f4e345] [cursor=pointer]:
+                    - /url: /barista/bbbbbbbb-0000-4000-8000-000000000003
+                  - paragraph [ref=f4e346]:
+                    - text: 22 th • 1 thn 6 bln pengalaman •
+                    - generic [ref=f4e347]: Yogyakarta
+                - generic [ref=f4e351]: Diterima
+              - generic "Kelengkapan pelamar 65%" [ref=f4e352]: Profil 65%
+              - generic [ref=f4e356]: Full-Time
+              - paragraph [ref=f4e358]: Saya barista 1,5 tahun di Yogyakarta, bisa espresso dan latte art, siap full-time dan shift pagi. Terima kasih.
+              - link "Lihat CV PDF" [ref=f4e360] [cursor=pointer]:
+                - /url: https://swvmtyzzhjncfprhglpi.supabase.co/storage/v1/object/sign/cvs/bbbbbbbb-0000-4000-8000-000000000003/1789751759098-cv-demo.pdf?token=eyJraWQiOiJmNDdjM2RiYi01Zjk0LTQzZjctYjM4ZC02ODdjYmQ1NGRmNjUiLCJhbGciOiJIUzUxMiJ9.eyJ1cmwiOiJjdnMvYmJiYmJiYmItMDAwMC00MDAwLTgwMDAtMDAwMDAwMDAwMDAzLzE3ODk3NTE3NTkwOTgtY3YtZGVtby5wZGYiLCJzY29wZSI6ImRvd25sb2FkIiwiaWF0IjoxNzg5NzU0MDI1LCJleHAiOjE3ODk3NTc2MjV9.8QcCXw2Nw7DWvYc928DsMzQhm0suxget_jxZT7OarD2QogBmGROP_02MgqVTRJEvopITwYYdClYWRVCH2gBohA
+              - paragraph [ref=f4e364]: Melamar 37m lalu
+          - generic [ref=f4e365]:
+            - generic [ref=f4e367]:
+              - paragraph [ref=f4e368]: Rating kamu
+              - generic [ref=f4e369]:
+                - generic "5 dari 5 bintang" [ref=f4e398]
+                - paragraph [ref=f4e409]: “Rajin dan ramah, latte art rapi.”
+                - paragraph [ref=f4e410]: Bisa diubah lagi setelah 26 Sep.
+            - button "Keluarkan" [ref=f4e390] [cursor=pointer]
+            - button "Chat" [ref=f4e394] [cursor=pointer]
+            - link "Lihat profil lengkap →" [ref=f4e397] [cursor=pointer]:
+              - /url: /barista/bbbbbbbb-0000-4000-8000-000000000003
+  - button "Open Next.js Dev Tools" [ref=f4e266] [cursor=pointer]
+  - alert [ref=f4e270]: Pelamar · BaristaConnect

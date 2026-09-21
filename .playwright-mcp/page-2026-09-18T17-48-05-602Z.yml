@@ -1,0 +1,166 @@
+- generic [active] [ref=f1e1]:
+  - banner [ref=f1e2]:
+    - generic [ref=f1e3]:
+      - generic [ref=f1e4]:
+        - link "Beranda" [ref=f1e5] [cursor=pointer]:
+          - /url: /
+        - link "BaristaConnect" [ref=f1e8] [cursor=pointer]:
+          - /url: /dashboard/barista
+      - navigation "Utama" [ref=f1e9]:
+        - link "Loker" [ref=f1e10] [cursor=pointer]:
+          - /url: /jobs
+        - link "Talenta" [ref=f1e11] [cursor=pointer]:
+          - /url: /find-baristas
+        - link "Ulasan" [ref=f1e12] [cursor=pointer]:
+          - /url: /reviews
+        - link "Pelatihan" [ref=f1e13] [cursor=pointer]:
+          - /url: /training
+        - link "Untuk Owner" [ref=f1e14] [cursor=pointer]:
+          - /url: /dashboard/barista
+      - link "Pesan" [ref=f1e15] [cursor=pointer]:
+        - /url: /messages
+      - button "barista.demo Barista" [ref=f1e19]:
+        - generic [aria-hidden] [ref=f1e20]: B
+        - generic [ref=f1e21]:
+          - generic [ref=f1e22]: barista.demo
+          - generic [ref=f1e23]: Barista
+      - link "Pasang Loker" [ref=f1e26] [cursor=pointer]:
+        - /url: /signup?role=owner
+  - main [ref=f1e27]:
+    - generic [ref=f1e30]:
+      - generic [ref=f1e31]:
+        - generic [ref=f1e32]:
+          - heading "Temukan karier yang diseduh dengan tujuan." [level=1] [ref=f1e33]
+          - paragraph [ref=f1e34]: Loker untuk orang yang hidup dan bernapas kopi.
+          - search [ref=f1e35]:
+            - generic [ref=f1e36]:
+              - generic [ref=f1e40]: Cari lowongan
+              - textbox "Cari lowongan" [ref=f1e41]:
+                - /placeholder: Cari judul, kafe, atau kata kunci...
+            - generic [ref=f1e42]:
+              - generic [ref=f1e43]:
+                - generic [ref=f1e47]: Lokasi
+                - combobox "Lokasi" [ref=f1e48] [cursor=pointer]:
+                  - option "Semua lokasi" [selected]
+                  - option "Jakarta Selatan"
+                  - option "Jakarta Pusat"
+                  - option "Jakarta Barat"
+                  - option "Jakarta Utara"
+                  - option "Jakarta Timur"
+                  - option "Tangerang"
+                  - option "Bekasi"
+                  - option "Depok"
+                  - option "Bogor"
+                  - option "Bandung"
+                  - option "Yogyakarta"
+                  - option "Semarang"
+                  - option "Surabaya"
+                  - option "Malang"
+                  - option "Medan"
+                  - option "Palembang"
+                  - option "Makassar"
+                  - option "Denpasar / Bali"
+              - button "Cari" [ref=f1e49]
+        - generic [ref=f1e50]:
+          - link "Semua" [ref=f1e51] [cursor=pointer]:
+            - /url: /jobs
+          - link "Barista" [ref=f1e52] [cursor=pointer]:
+            - /url: /jobs?q=Barista
+          - link "Kepala Barista" [ref=f1e53] [cursor=pointer]:
+            - /url: /jobs?q=Head
+          - link "Penuh Waktu" [ref=f1e54] [cursor=pointer]:
+            - /url: /jobs?type=full_time
+          - link "Paruh Waktu" [ref=f1e55] [cursor=pointer]:
+            - /url: /jobs?type=part_time
+          - link "Harian" [ref=f1e56] [cursor=pointer]:
+            - /url: /jobs?type=casual
+        - generic [ref=f1e57]:
+          - status [ref=f1e58]: 1 loker ditemukan
+          - generic [ref=f1e59]:
+            - generic [ref=f1e60]: "Urutkan:"
+            - combobox "Urutkan:" [ref=f1e61] [cursor=pointer]:
+              - option "Terbaru" [selected]
+              - option "Terlama"
+              - option "Nama A–Z"
+        - list [ref=f1e62]:
+          - listitem [ref=f1e63]:
+            - generic [ref=f1e64]:
+              - generic [ref=f1e65]: K
+              - generic [ref=f1e66]:
+                - link "Barista Full-Time (Tes)" [ref=f1e67] [cursor=pointer]:
+                  - /url: /jobs?job=52217174-1514-4a68-8c1b-8fdf9c941f96
+                - paragraph [ref=f1e68]: Kafe Demo Senja
+                - paragraph [ref=f1e69]:
+                  - generic [ref=f1e70]: Yogyakarta
+                  - generic [ref=f1e74]: Full-Time
+                - paragraph [ref=f1e75]: Rp3.000.000/bln
+              - generic [ref=f1e76]:
+                - generic [ref=f1e77]:
+                  - text: 8j lalu
+                  - button "Hapus dari simpanan" [pressed] [ref=f1e181]
+                - link "Lihat" [ref=f1e81] [cursor=pointer]:
+                  - /url: /jobs?job=52217174-1514-4a68-8c1b-8fdf9c941f96
+            - button "✓ Terkirim" [disabled] [ref=f1e83]
+      - generic [ref=f1e86]:
+        - generic [ref=f1e87]:
+          - generic [aria-hidden] [ref=f1e88]: K
+          - generic [ref=f1e89]:
+            - heading "Barista Full-Time (Tes)" [level=2] [ref=f1e90]
+            - paragraph [ref=f1e91]: Kafe Demo Senja
+          - link "Close detail panel" [ref=f1e92] [cursor=pointer]:
+            - /url: /jobs
+        - paragraph [ref=f1e96]:
+          - generic [ref=f1e97]: Yogyakarta
+          - generic [ref=f1e101]: Full-Time
+        - paragraph [ref=f1e102]: Rp3.000.000/bln
+        - paragraph [ref=f1e103]: 8j lalu
+        - generic [ref=f1e104]:
+          - button "Simpan lowongan" [ref=f1e105]: Simpan
+          - button "✓ Terkirim" [disabled] [ref=f1e108]
+        - tablist "Job details" [ref=f1e109]:
+          - tab "Ringkasan" [selected] [ref=f1e110]
+          - tab "Tentang" [ref=f1e111]
+          - tab "Ulasan" [ref=f1e112]
+        - generic [ref=f1e114]:
+          - heading "Deskripsi Loker" [level=3] [ref=f1e115]
+          - paragraph [ref=f1e116]: Lowongan tes — silakan lamar pakai akun demo.
+          - generic [ref=f1e117]: Full-Time
+      - generic [ref=f1e120]:
+        - generic [ref=f1e121]:
+          - generic [ref=f1e122]: DB
+          - paragraph [ref=f1e124]: Demo Barista
+          - paragraph [ref=f1e125]: Barista • Pecinta Kopi
+          - paragraph [ref=f1e126]: Yogyakarta
+          - generic [ref=f1e127]:
+            - generic [ref=f1e128]:
+              - paragraph [ref=f1e129]: 1 thn 6 bln
+              - paragraph [ref=f1e130]: Pengalaman
+            - generic [ref=f1e131]:
+              - paragraph [ref=f1e132]: "0"
+              - paragraph [ref=f1e133]: Skill
+            - generic [ref=f1e134]:
+              - paragraph [ref=f1e135]: "1"
+              - paragraph [ref=f1e136]: Dilamar
+          - link "Lihat Profil" [ref=f1e137] [cursor=pointer]:
+            - /url: /dashboard/barista/profile
+        - navigation "Loker" [ref=f1e138]:
+          - link "Loker" [ref=f1e139] [cursor=pointer]:
+            - /url: /jobs
+          - link "Loker Tersimpan 1" [ref=f1e194] [cursor=pointer]:
+            - /url: /jobs?saved=1
+            - generic [ref=f1e147]: Loker Tersimpan
+            - generic [ref=f1e148]: "1"
+          - link "Lamaran Saya 1" [ref=f1e149] [cursor=pointer]:
+            - /url: /dashboard/barista/applications
+            - generic [ref=f1e153]: Lamaran Saya
+            - generic [ref=f1e154]: "1"
+          - link "Pesan" [ref=f1e155] [cursor=pointer]:
+            - /url: /messages
+          - link "Belajar" [ref=f1e160] [cursor=pointer]:
+            - /url: /training
+        - generic [ref=f1e164]:
+          - paragraph [ref=f1e165]: Kopi enak berawal dari orang hebat.
+          - link "Asah Skillmu" [ref=f1e166] [cursor=pointer]:
+            - /url: /training
+  - button "Open Next.js Dev Tools" [ref=f1e176] [cursor=pointer]
+  - alert [ref=f1e180]

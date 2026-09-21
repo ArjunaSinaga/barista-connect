@@ -1,0 +1,591 @@
+- generic [active] [ref=f3e1]:
+  - banner [ref=f3e2]:
+    - generic [ref=f3e3]:
+      - generic [ref=f3e4]:
+        - link "Beranda" [ref=f3e5] [cursor=pointer]:
+          - /url: /
+        - link "BaristaConnect" [ref=f3e8] [cursor=pointer]:
+          - /url: /
+      - navigation "Utama" [ref=f3e9]:
+        - link "Loker" [ref=f3e10] [cursor=pointer]:
+          - /url: /jobs
+        - link "Talenta" [ref=f3e11] [cursor=pointer]:
+          - /url: /find-baristas
+        - link "Ulasan" [ref=f3e12] [cursor=pointer]:
+          - /url: /reviews
+        - link "Pelatihan" [ref=f3e13] [cursor=pointer]:
+          - /url: /training
+        - link "Untuk Owner" [ref=f3e14] [cursor=pointer]:
+          - /url: /signup?role=owner
+      - link "Pasang Loker" [ref=f3e15] [cursor=pointer]:
+        - /url: /signup?role=owner
+      - link "Masuk" [ref=f3e16] [cursor=pointer]:
+        - /url: /login
+      - link "Daftar" [ref=f3e17] [cursor=pointer]:
+        - /url: /signup
+  - main [ref=f3e18]:
+    - generic [ref=f3e21]:
+      - generic [ref=f3e22]:
+        - generic [ref=f3e23]:
+          - heading "Temukan karier yang diseduh dengan tujuan." [level=1] [ref=f3e24]
+          - paragraph [ref=f3e25]: Loker untuk orang yang hidup dan bernapas kopi.
+          - search [ref=f3e26]:
+            - generic [ref=f3e27]:
+              - generic [ref=f3e31]: Cari lowongan
+              - textbox "Cari lowongan" [ref=f3e32]:
+                - /placeholder: Cari judul, kafe, atau kata kunci...
+            - generic [ref=f3e33]:
+              - generic [ref=f3e34]:
+                - generic [ref=f3e38]: Lokasi
+                - combobox "Lokasi" [ref=f3e39] [cursor=pointer]:
+                  - option "Semua lokasi" [selected]
+                  - option "Jakarta Selatan"
+                  - option "Jakarta Pusat"
+                  - option "Jakarta Barat"
+                  - option "Jakarta Utara"
+                  - option "Jakarta Timur"
+                  - option "Tangerang"
+                  - option "Bekasi"
+                  - option "Depok"
+                  - option "Bogor"
+                  - option "Bandung"
+                  - option "Yogyakarta"
+                  - option "Semarang"
+                  - option "Surabaya"
+                  - option "Malang"
+                  - option "Medan"
+                  - option "Palembang"
+                  - option "Makassar"
+                  - option "Denpasar / Bali"
+              - button "Cari" [ref=f3e40]
+        - generic [ref=f3e41]:
+          - link "Semua" [ref=f3e42] [cursor=pointer]:
+            - /url: /jobs
+          - link "Barista" [ref=f3e43] [cursor=pointer]:
+            - /url: /jobs?q=Barista
+          - link "Kepala Barista" [ref=f3e44] [cursor=pointer]:
+            - /url: /jobs?q=Head
+          - link "Penuh Waktu" [ref=f3e45] [cursor=pointer]:
+            - /url: /jobs?type=full_time
+          - link "Paruh Waktu" [ref=f3e46] [cursor=pointer]:
+            - /url: /jobs?type=part_time
+          - link "Harian" [ref=f3e47] [cursor=pointer]:
+            - /url: /jobs?type=casual
+        - generic [ref=f3e48]:
+          - status [ref=f3e49]: 24 loker ditemukan
+          - generic [ref=f3e50]:
+            - generic [ref=f3e51]: "Urutkan:"
+            - combobox "Urutkan:" [ref=f3e52] [cursor=pointer]:
+              - option "Terbaru" [selected]
+              - option "Terlama"
+              - option "Nama A–Z"
+        - list [ref=f3e53]:
+          - listitem [ref=f3e54]:
+            - generic [ref=f3e55]:
+              - generic [ref=f3e56]: A
+              - generic [ref=f3e57]:
+                - 'link "Barista Shift Pagi #1" [ref=f3e58] [cursor=pointer]':
+                  - /url: /jobs?job=83c77693-dd9d-4fa3-8feb-9ec999ba1b45
+                - paragraph [ref=f3e59]: Aroma Matraman
+                - paragraph [ref=f3e60]:
+                  - generic [ref=f3e61]: Jakarta Pusat
+                  - generic [ref=f3e65]: Part-Time
+                - paragraph [ref=f3e66]: Rp2600000/bln
+                - generic [ref=f3e67]:
+                  - generic [ref=f3e68]: Espresso
+                  - generic [ref=f3e69]: Manual Brew
+              - generic [ref=f3e70]:
+                - generic [ref=f3e71]:
+                  - text: 4j lalu
+                  - button "Simpan lowongan" [ref=f3e72]
+                - link "Lihat" [ref=f3e75] [cursor=pointer]:
+                  - /url: /jobs?job=83c77693-dd9d-4fa3-8feb-9ec999ba1b45
+          - listitem [ref=f3e76]:
+            - generic [ref=f3e77]:
+              - generic [ref=f3e78]: B
+              - generic [ref=f3e79]:
+                - 'link "Barista Full-Time Weekend #2" [ref=f3e80] [cursor=pointer]':
+                  - /url: /jobs?job=d7dce5a7-892b-4097-ad42-2c332d12cc9e
+                - paragraph [ref=f3e81]: Biji Bogor
+                - paragraph [ref=f3e82]:
+                  - generic [ref=f3e83]: Bogor
+                  - generic [ref=f3e87]: Full-Time
+                - paragraph [ref=f3e88]: Rp2700000/bln
+                - generic [ref=f3e89]:
+                  - generic [ref=f3e90]: Espresso
+                  - generic [ref=f3e91]: Manual Brew
+              - generic [ref=f3e92]:
+                - generic [ref=f3e93]:
+                  - text: 4j lalu
+                  - button "Simpan lowongan" [ref=f3e94]
+                - link "Lihat" [ref=f3e97] [cursor=pointer]:
+                  - /url: /jobs?job=d7dce5a7-892b-4097-ad42-2c332d12cc9e
+          - listitem [ref=f3e98]:
+            - generic [ref=f3e99]:
+              - generic [ref=f3e100]: B
+              - generic [ref=f3e101]:
+                - 'link "Kepala Barista #3" [ref=f3e102] [cursor=pointer]':
+                  - /url: /jobs?job=9a7c010a-59ff-4fbe-beaf-46e272df1cb4
+                - paragraph [ref=f3e103]: Brewok Cabang 2
+                - paragraph [ref=f3e104]:
+                  - generic [ref=f3e105]: Bandung
+                  - generic [ref=f3e109]: Full-Time
+                - paragraph [ref=f3e110]: Rp2800000/bln
+                - generic [ref=f3e111]:
+                  - generic [ref=f3e112]: Espresso
+                  - generic [ref=f3e113]: Manual Brew
+              - generic [ref=f3e114]:
+                - generic [ref=f3e115]:
+                  - text: 4j lalu
+                  - button "Simpan lowongan" [ref=f3e116]
+                - link "Lihat" [ref=f3e119] [cursor=pointer]:
+                  - /url: /jobs?job=9a7c010a-59ff-4fbe-beaf-46e272df1cb4
+          - listitem [ref=f3e120]:
+            - generic [ref=f3e121]:
+              - generic [ref=f3e122]: B
+              - generic [ref=f3e123]:
+                - 'link "Barista Kasual Event #4" [ref=f3e124] [cursor=pointer]':
+                  - /url: /jobs?job=add38359-68fb-4bd4-9b8c-662a23722d6b
+                - paragraph [ref=f3e125]: Brewok Dago
+                - paragraph [ref=f3e126]:
+                  - generic [ref=f3e127]: Bandung
+                  - generic [ref=f3e131]: Casual / Harian
+                - paragraph [ref=f3e132]: Rp2900000/bln
+                - generic [ref=f3e133]:
+                  - generic [ref=f3e134]: Espresso
+                  - generic [ref=f3e135]: Manual Brew
+              - generic [ref=f3e136]:
+                - generic [ref=f3e137]:
+                  - text: 4j lalu
+                  - button "Simpan lowongan" [ref=f3e138]
+                - link "Lihat" [ref=f3e141] [cursor=pointer]:
+                  - /url: /jobs?job=add38359-68fb-4bd4-9b8c-662a23722d6b
+          - listitem [ref=f3e142]:
+            - generic [ref=f3e143]:
+              - generic [ref=f3e144]: C
+              - generic [ref=f3e145]:
+                - 'link "Brewer Manual #5" [ref=f3e146] [cursor=pointer]':
+                  - /url: /jobs?job=c46afc59-721b-4c86-b38b-14e811395544
+                - paragraph [ref=f3e147]: Cangkir Sanur
+                - paragraph [ref=f3e148]:
+                  - generic [ref=f3e149]: Denpasar
+                  - generic [ref=f3e153]: Part-Time
+                - paragraph [ref=f3e154]: Rp3000000/bln
+                - generic [ref=f3e155]:
+                  - generic [ref=f3e156]: Espresso
+                  - generic [ref=f3e157]: Manual Brew
+              - generic [ref=f3e158]:
+                - generic [ref=f3e159]:
+                  - text: 4j lalu
+                  - button "Simpan lowongan" [ref=f3e160]
+                - link "Lihat" [ref=f3e163] [cursor=pointer]:
+                  - /url: /jobs?job=c46afc59-721b-4c86-b38b-14e811395544
+          - listitem [ref=f3e164]:
+            - generic [ref=f3e165]:
+              - generic [ref=f3e166]: K
+              - generic [ref=f3e167]:
+                - 'link "Kasir Merangkap Barista #6" [ref=f3e168] [cursor=pointer]':
+                  - /url: /jobs?job=cf18470a-1fcd-4d2f-9a36-f55e737a5d30
+                - paragraph [ref=f3e169]: Kala Cabang 2
+                - paragraph [ref=f3e170]:
+                  - generic [ref=f3e171]: Yogyakarta
+                  - generic [ref=f3e175]: Casual / Harian
+                - paragraph [ref=f3e176]: Rp3100000/bln
+                - generic [ref=f3e177]:
+                  - generic [ref=f3e178]: Espresso
+                  - generic [ref=f3e179]: Manual Brew
+              - generic [ref=f3e180]:
+                - generic [ref=f3e181]:
+                  - text: 4j lalu
+                  - button "Simpan lowongan" [ref=f3e182]
+                - link "Lihat" [ref=f3e185] [cursor=pointer]:
+                  - /url: /jobs?job=cf18470a-1fcd-4d2f-9a36-f55e737a5d30
+          - listitem [ref=f3e186]:
+            - generic [ref=f3e187]:
+              - generic [ref=f3e188]: K
+              - generic [ref=f3e189]:
+                - 'link "Barista Shift Pagi #7" [ref=f3e190] [cursor=pointer]':
+                  - /url: /jobs?job=7c2fd744-d009-4e94-a0ed-b194ae93a3ee
+                - paragraph [ref=f3e191]: Kala Malioboro
+                - paragraph [ref=f3e192]:
+                  - generic [ref=f3e193]: Yogyakarta
+                  - generic [ref=f3e197]: Part-Time
+                - paragraph [ref=f3e198]: Rp3200000/bln
+                - generic [ref=f3e199]:
+                  - generic [ref=f3e200]: Espresso
+                  - generic [ref=f3e201]: Manual Brew
+              - generic [ref=f3e202]:
+                - generic [ref=f3e203]:
+                  - text: 4j lalu
+                  - button "Simpan lowongan" [ref=f3e204]
+                - link "Lihat" [ref=f3e207] [cursor=pointer]:
+                  - /url: /jobs?job=7c2fd744-d009-4e94-a0ed-b194ae93a3ee
+          - listitem [ref=f3e208]:
+            - generic [ref=f3e209]:
+              - generic [ref=f3e210]: L
+              - generic [ref=f3e211]:
+                - 'link "Barista Full-Time Weekend #8" [ref=f3e212] [cursor=pointer]':
+                  - /url: /jobs?job=22f2026b-6b45-4d9a-8aee-dd8d52d43277
+                - paragraph [ref=f3e213]: Lembah Solo
+                - paragraph [ref=f3e214]:
+                  - generic [ref=f3e215]: Solo
+                  - generic [ref=f3e219]: Full-Time
+                - paragraph [ref=f3e220]: Rp3300000/bln
+                - generic [ref=f3e221]:
+                  - generic [ref=f3e222]: Espresso
+                  - generic [ref=f3e223]: Manual Brew
+              - generic [ref=f3e224]:
+                - generic [ref=f3e225]:
+                  - text: 4j lalu
+                  - button "Simpan lowongan" [ref=f3e226]
+                - link "Lihat" [ref=f3e229] [cursor=pointer]:
+                  - /url: /jobs?job=22f2026b-6b45-4d9a-8aee-dd8d52d43277
+          - listitem [ref=f3e230]:
+            - generic [ref=f3e231]:
+              - generic [ref=f3e232]: P
+              - generic [ref=f3e233]:
+                - 'link "Kepala Barista #9" [ref=f3e234] [cursor=pointer]':
+                  - /url: /jobs?job=1759fe6c-3c8a-43c4-8856-1f78cec89b4b
+                - paragraph [ref=f3e235]: Pagi Losari
+                - paragraph [ref=f3e236]:
+                  - generic [ref=f3e237]: Makassar
+                  - generic [ref=f3e241]: Full-Time
+                - paragraph [ref=f3e242]: Rp3400000/bln
+                - generic [ref=f3e243]:
+                  - generic [ref=f3e244]: Espresso
+                  - generic [ref=f3e245]: Manual Brew
+              - generic [ref=f3e246]:
+                - generic [ref=f3e247]:
+                  - text: 4j lalu
+                  - button "Simpan lowongan" [ref=f3e248]
+                - link "Lihat" [ref=f3e251] [cursor=pointer]:
+                  - /url: /jobs?job=1759fe6c-3c8a-43c4-8856-1f78cec89b4b
+          - listitem [ref=f3e252]:
+            - generic [ref=f3e253]:
+              - generic [ref=f3e254]: P
+              - generic [ref=f3e255]:
+                - 'link "Barista Kasual Event #10" [ref=f3e256] [cursor=pointer]':
+                  - /url: /jobs?job=e271e307-4d28-4979-ab71-8c0bc1a9854a
+                - paragraph [ref=f3e257]: Puncak Bekasi
+                - paragraph [ref=f3e258]:
+                  - generic [ref=f3e259]: Bekasi
+                  - generic [ref=f3e263]: Casual / Harian
+                - paragraph [ref=f3e264]: Rp3500000/bln
+                - generic [ref=f3e265]:
+                  - generic [ref=f3e266]: Espresso
+                  - generic [ref=f3e267]: Manual Brew
+              - generic [ref=f3e268]:
+                - generic [ref=f3e269]:
+                  - text: 4j lalu
+                  - button "Simpan lowongan" [ref=f3e270]
+                - link "Lihat" [ref=f3e273] [cursor=pointer]:
+                  - /url: /jobs?job=e271e307-4d28-4979-ab71-8c0bc1a9854a
+          - listitem [ref=f3e274]:
+            - generic [ref=f3e275]:
+              - generic [ref=f3e276]: R
+              - generic [ref=f3e277]:
+                - 'link "Brewer Manual #11" [ref=f3e278] [cursor=pointer]':
+                  - /url: /jobs?job=86336fbe-36bd-49a4-adab-853f06cecfb0
+                - paragraph [ref=f3e279]: Rumah Lawang
+                - paragraph [ref=f3e280]:
+                  - generic [ref=f3e281]: Malang
+                  - generic [ref=f3e285]: Part-Time
+                - paragraph [ref=f3e286]: Rp3600000/bln
+                - generic [ref=f3e287]:
+                  - generic [ref=f3e288]: Espresso
+                  - generic [ref=f3e289]: Manual Brew
+              - generic [ref=f3e290]:
+                - generic [ref=f3e291]:
+                  - text: 4j lalu
+                  - button "Simpan lowongan" [ref=f3e292]
+                - link "Lihat" [ref=f3e295] [cursor=pointer]:
+                  - /url: /jobs?job=86336fbe-36bd-49a4-adab-853f06cecfb0
+          - listitem [ref=f3e296]:
+            - generic [ref=f3e297]:
+              - generic [ref=f3e298]: S
+              - generic [ref=f3e299]:
+                - 'link "Kasir Merangkap Barista #12" [ref=f3e300] [cursor=pointer]':
+                  - /url: /jobs?job=c750e8b9-6591-4dc4-88ff-9ffca73a1c8b
+                - paragraph [ref=f3e301]: Seduh Cabang 2
+                - paragraph [ref=f3e302]:
+                  - generic [ref=f3e303]: Surabaya
+                  - generic [ref=f3e307]: Casual / Harian
+                - paragraph [ref=f3e308]: Rp3700000/bln
+                - generic [ref=f3e309]:
+                  - generic [ref=f3e310]: Espresso
+                  - generic [ref=f3e311]: Manual Brew
+              - generic [ref=f3e312]:
+                - generic [ref=f3e313]:
+                  - text: 4j lalu
+                  - button "Simpan lowongan" [ref=f3e314]
+                - link "Lihat" [ref=f3e317] [cursor=pointer]:
+                  - /url: /jobs?job=c750e8b9-6591-4dc4-88ff-9ffca73a1c8b
+          - listitem [ref=f3e318]:
+            - generic [ref=f3e319]:
+              - generic [ref=f3e320]: S
+              - generic [ref=f3e321]:
+                - 'link "Barista Shift Pagi #13" [ref=f3e322] [cursor=pointer]':
+                  - /url: /jobs?job=134e3e39-2ebf-4634-b479-2816879b972b
+                - paragraph [ref=f3e323]: Seduh Darmo
+                - paragraph [ref=f3e324]:
+                  - generic [ref=f3e325]: Surabaya
+                  - generic [ref=f3e329]: Part-Time
+                - paragraph [ref=f3e330]: Rp3800000/bln
+                - generic [ref=f3e331]:
+                  - generic [ref=f3e332]: Espresso
+                  - generic [ref=f3e333]: Manual Brew
+              - generic [ref=f3e334]:
+                - generic [ref=f3e335]:
+                  - text: 4j lalu
+                  - button "Simpan lowongan" [ref=f3e336]
+                - link "Lihat" [ref=f3e339] [cursor=pointer]:
+                  - /url: /jobs?job=134e3e39-2ebf-4634-b479-2816879b972b
+          - listitem [ref=f3e340]:
+            - generic [ref=f3e341]:
+              - generic [ref=f3e342]: S
+              - generic [ref=f3e343]:
+                - 'link "Barista Full-Time Weekend #14" [ref=f3e344] [cursor=pointer]':
+                  - /url: /jobs?job=f67a8610-bb79-4d94-ab41-3d9d1b04d624
+                - paragraph [ref=f3e345]: Seduh Margonda
+                - paragraph [ref=f3e346]:
+                  - generic [ref=f3e347]: Depok
+                  - generic [ref=f3e351]: Full-Time
+                - paragraph [ref=f3e352]: Rp3900000/bln
+                - generic [ref=f3e353]:
+                  - generic [ref=f3e354]: Espresso
+                  - generic [ref=f3e355]: Manual Brew
+              - generic [ref=f3e356]:
+                - generic [ref=f3e357]:
+                  - text: 4j lalu
+                  - button "Simpan lowongan" [ref=f3e358]
+                - link "Lihat" [ref=f3e361] [cursor=pointer]:
+                  - /url: /jobs?job=f67a8610-bb79-4d94-ab41-3d9d1b04d624
+          - listitem [ref=f3e362]:
+            - generic [ref=f3e363]:
+              - generic [ref=f3e364]: S
+              - generic [ref=f3e365]:
+                - 'link "Kepala Barista #15" [ref=f3e366] [cursor=pointer]':
+                  - /url: /jobs?job=7644c2c1-827e-48d1-84e2-56d7a3438299
+                - paragraph [ref=f3e367]: Senja Cabang 2
+                - paragraph [ref=f3e368]:
+                  - generic [ref=f3e369]: Jakarta Selatan
+                  - generic [ref=f3e373]: Full-Time
+                - paragraph [ref=f3e374]: Rp4000000/bln
+                - generic [ref=f3e375]:
+                  - generic [ref=f3e376]: Espresso
+                  - generic [ref=f3e377]: Manual Brew
+              - generic [ref=f3e378]:
+                - generic [ref=f3e379]:
+                  - text: 4j lalu
+                  - button "Simpan lowongan" [ref=f3e380]
+                - link "Lihat" [ref=f3e383] [cursor=pointer]:
+                  - /url: /jobs?job=7644c2c1-827e-48d1-84e2-56d7a3438299
+          - listitem [ref=f3e384]:
+            - generic [ref=f3e385]:
+              - generic [ref=f3e386]: S
+              - generic [ref=f3e387]:
+                - 'link "Barista Kasual Event #16" [ref=f3e388] [cursor=pointer]':
+                  - /url: /jobs?job=cc468bfe-698f-4408-be82-a9cbaf53b7a5
+                - paragraph [ref=f3e389]: Senja Pusat
+                - paragraph [ref=f3e390]:
+                  - generic [ref=f3e391]: Jakarta Selatan
+                  - generic [ref=f3e395]: Casual / Harian
+                - paragraph [ref=f3e396]: Rp4100000/bln
+                - generic [ref=f3e397]:
+                  - generic [ref=f3e398]: Espresso
+                  - generic [ref=f3e399]: Manual Brew
+              - generic [ref=f3e400]:
+                - generic [ref=f3e401]:
+                  - text: 4j lalu
+                  - button "Simpan lowongan" [ref=f3e402]
+                - link "Lihat" [ref=f3e405] [cursor=pointer]:
+                  - /url: /jobs?job=cc468bfe-698f-4408-be82-a9cbaf53b7a5
+          - listitem [ref=f3e406]:
+            - generic [ref=f3e407]:
+              - generic [ref=f3e408]: S
+              - generic [ref=f3e409]:
+                - 'link "Brewer Manual #17" [ref=f3e410] [cursor=pointer]':
+                  - /url: /jobs?job=2bb82080-6bc1-4e8c-acee-18fe0daefa6b
+                - paragraph [ref=f3e411]: Sore Marelan
+                - paragraph [ref=f3e412]:
+                  - generic [ref=f3e413]: Medan
+                  - generic [ref=f3e417]: Part-Time
+                - paragraph [ref=f3e418]: Rp4200000/bln
+                - generic [ref=f3e419]:
+                  - generic [ref=f3e420]: Espresso
+                  - generic [ref=f3e421]: Manual Brew
+              - generic [ref=f3e422]:
+                - generic [ref=f3e423]:
+                  - text: 4j lalu
+                  - button "Simpan lowongan" [ref=f3e424]
+                - link "Lihat" [ref=f3e427] [cursor=pointer]:
+                  - /url: /jobs?job=2bb82080-6bc1-4e8c-acee-18fe0daefa6b
+          - listitem [ref=f3e428]:
+            - generic [ref=f3e429]:
+              - generic [ref=f3e430]: T
+              - generic [ref=f3e431]:
+                - 'link "Kasir Merangkap Barista #18" [ref=f3e432] [cursor=pointer]':
+                  - /url: /jobs?job=2c0a615f-faa8-43cf-9558-35549d7a2977
+                - paragraph [ref=f3e433]: Temu Cabang 2
+                - paragraph [ref=f3e434]:
+                  - generic [ref=f3e435]: Semarang
+                  - generic [ref=f3e439]: Casual / Harian
+                - paragraph [ref=f3e440]: Rp4300000/bln
+                - generic [ref=f3e441]:
+                  - generic [ref=f3e442]: Espresso
+                  - generic [ref=f3e443]: Manual Brew
+              - generic [ref=f3e444]:
+                - generic [ref=f3e445]:
+                  - text: 4j lalu
+                  - button "Simpan lowongan" [ref=f3e446]
+                - link "Lihat" [ref=f3e449] [cursor=pointer]:
+                  - /url: /jobs?job=2c0a615f-faa8-43cf-9558-35549d7a2977
+          - listitem [ref=f3e450]:
+            - generic [ref=f3e451]:
+              - generic [ref=f3e452]: T
+              - generic [ref=f3e453]:
+                - 'link "Barista Shift Pagi #19" [ref=f3e454] [cursor=pointer]':
+                  - /url: /jobs?job=0883e154-21b3-44d5-a567-39c48e8a26a3
+                - paragraph [ref=f3e455]: Temu Tembalang
+                - paragraph [ref=f3e456]:
+                  - generic [ref=f3e457]: Semarang
+                  - generic [ref=f3e461]: Part-Time
+                - paragraph [ref=f3e462]: Rp4400000/bln
+                - generic [ref=f3e463]:
+                  - generic [ref=f3e464]: Espresso
+                  - generic [ref=f3e465]: Manual Brew
+              - generic [ref=f3e466]:
+                - generic [ref=f3e467]:
+                  - text: 4j lalu
+                  - button "Simpan lowongan" [ref=f3e468]
+                - link "Lihat" [ref=f3e471] [cursor=pointer]:
+                  - /url: /jobs?job=0883e154-21b3-44d5-a567-39c48e8a26a3
+          - listitem [ref=f3e472]:
+            - generic [ref=f3e473]:
+              - generic [ref=f3e474]: T
+              - generic [ref=f3e475]:
+                - 'link "Barista Full-Time Weekend #20" [ref=f3e476] [cursor=pointer]':
+                  - /url: /jobs?job=05bfb788-0d4b-4c65-ada3-72b82d641f56
+                - paragraph [ref=f3e477]: Tepi Cikupa
+                - paragraph [ref=f3e478]:
+                  - generic [ref=f3e479]: Tangerang
+                  - generic [ref=f3e483]: Full-Time
+                - paragraph [ref=f3e484]: Rp4500000/bln
+                - generic [ref=f3e485]:
+                  - generic [ref=f3e486]: Espresso
+                  - generic [ref=f3e487]: Manual Brew
+              - generic [ref=f3e488]:
+                - generic [ref=f3e489]:
+                  - text: 4j lalu
+                  - button "Simpan lowongan" [ref=f3e490]
+                - link "Lihat" [ref=f3e493] [cursor=pointer]:
+                  - /url: /jobs?job=05bfb788-0d4b-4c65-ada3-72b82d641f56
+          - listitem [ref=f3e494]:
+            - generic [ref=f3e495]:
+              - generic [ref=f3e496]: A
+              - generic [ref=f3e497]:
+                - 'link "Kepala Barista #21" [ref=f3e498] [cursor=pointer]':
+                  - /url: /jobs?job=d1431d74-3b18-4809-82c6-2a3dc656b5f4
+                - paragraph [ref=f3e499]: Aroma Matraman
+                - paragraph [ref=f3e500]:
+                  - generic [ref=f3e501]: Jakarta Pusat
+                  - generic [ref=f3e505]: Full-Time
+                - paragraph [ref=f3e506]: Rp4600000/bln
+                - generic [ref=f3e507]:
+                  - generic [ref=f3e508]: Espresso
+                  - generic [ref=f3e509]: Manual Brew
+              - generic [ref=f3e510]:
+                - generic [ref=f3e511]:
+                  - text: 4j lalu
+                  - button "Simpan lowongan" [ref=f3e512]
+                - link "Lihat" [ref=f3e515] [cursor=pointer]:
+                  - /url: /jobs?job=d1431d74-3b18-4809-82c6-2a3dc656b5f4
+          - listitem [ref=f3e516]:
+            - generic [ref=f3e517]:
+              - generic [ref=f3e518]: B
+              - generic [ref=f3e519]:
+                - 'link "Barista Kasual Event #22" [ref=f3e520] [cursor=pointer]':
+                  - /url: /jobs?job=c7a4c2bc-b91c-45bd-adc0-49834542387b
+                - paragraph [ref=f3e521]: Biji Bogor
+                - paragraph [ref=f3e522]:
+                  - generic [ref=f3e523]: Bogor
+                  - generic [ref=f3e527]: Casual / Harian
+                - paragraph [ref=f3e528]: Rp4700000/bln
+                - generic [ref=f3e529]:
+                  - generic [ref=f3e530]: Espresso
+                  - generic [ref=f3e531]: Manual Brew
+              - generic [ref=f3e532]:
+                - generic [ref=f3e533]:
+                  - text: 4j lalu
+                  - button "Simpan lowongan" [ref=f3e534]
+                - link "Lihat" [ref=f3e537] [cursor=pointer]:
+                  - /url: /jobs?job=c7a4c2bc-b91c-45bd-adc0-49834542387b
+          - listitem [ref=f3e538]:
+            - generic [ref=f3e539]:
+              - generic [ref=f3e540]: B
+              - generic [ref=f3e541]:
+                - 'link "Brewer Manual #23" [ref=f3e542] [cursor=pointer]':
+                  - /url: /jobs?job=861c672b-67ae-4456-aaca-089a3f712764
+                - paragraph [ref=f3e543]: Brewok Cabang 2
+                - paragraph [ref=f3e544]:
+                  - generic [ref=f3e545]: Bandung
+                  - generic [ref=f3e549]: Part-Time
+                - paragraph [ref=f3e550]: Rp4800000/bln
+                - generic [ref=f3e551]:
+                  - generic [ref=f3e552]: Espresso
+                  - generic [ref=f3e553]: Manual Brew
+              - generic [ref=f3e554]:
+                - generic [ref=f3e555]:
+                  - text: 4j lalu
+                  - button "Simpan lowongan" [ref=f3e556]
+                - link "Lihat" [ref=f3e559] [cursor=pointer]:
+                  - /url: /jobs?job=861c672b-67ae-4456-aaca-089a3f712764
+          - listitem [ref=f3e560]:
+            - generic [ref=f3e561]:
+              - generic [ref=f3e562]: B
+              - generic [ref=f3e563]:
+                - 'link "Kasir Merangkap Barista #24" [ref=f3e564] [cursor=pointer]':
+                  - /url: /jobs?job=922038e1-b863-4238-aa8f-ae6b39efc768
+                - paragraph [ref=f3e565]: Brewok Dago
+                - paragraph [ref=f3e566]:
+                  - generic [ref=f3e567]: Bandung
+                  - generic [ref=f3e571]: Casual / Harian
+                - paragraph [ref=f3e572]: Rp4900000/bln
+                - generic [ref=f3e573]:
+                  - generic [ref=f3e574]: Espresso
+                  - generic [ref=f3e575]: Manual Brew
+              - generic [ref=f3e576]:
+                - generic [ref=f3e577]:
+                  - text: 4j lalu
+                  - button "Simpan lowongan" [ref=f3e578]
+                - link "Lihat" [ref=f3e581] [cursor=pointer]:
+                  - /url: /jobs?job=922038e1-b863-4238-aa8f-ae6b39efc768
+      - generic [ref=f3e584]:
+        - generic [ref=f3e585]:
+          - generic [aria-hidden] [ref=f3e586]: A
+          - generic [ref=f3e587]:
+            - 'heading "Barista Shift Pagi #1" [level=2] [ref=f3e588]'
+            - paragraph [ref=f3e589]: Aroma Matraman
+          - link "Close detail panel" [ref=f3e590] [cursor=pointer]:
+            - /url: /jobs
+        - paragraph [ref=f3e594]:
+          - generic [ref=f3e595]: Jakarta Pusat
+          - generic [ref=f3e599]: Part-Time
+        - paragraph [ref=f3e600]: Rp2600000/bln
+        - paragraph [ref=f3e601]: 4j lalu
+        - generic [ref=f3e602]:
+          - button "Simpan lowongan" [ref=f3e603]: Simpan
+          - button "Lamar" [ref=f3e606] [cursor=pointer]
+        - tablist "Job details" [ref=f3e607]:
+          - tab "Ringkasan" [selected] [ref=f3e608]
+          - tab "Tentang" [ref=f3e609]
+          - tab "Ulasan" [ref=f3e610]
+        - generic [ref=f3e612]:
+          - heading "Deskripsi Loker" [level=3] [ref=f3e613]
+          - paragraph [ref=f3e614]: "Lowongan audit #1. Tugas: espresso, manual brew, pelayanan ramah. Pengalaman minimal 1 tahun."
+          - generic [ref=f3e615]: Part-Time
+      - generic [ref=f3e618]:
+        - paragraph [ref=f3e619]: Kopi enak berawal dari orang hebat.
+        - paragraph [ref=f3e620]: Masuk untuk melamar, menyimpan loker, dan membangun reputasimu.
+        - link "Cari Peluangmu" [ref=f3e621] [cursor=pointer]:
+          - /url: /login?next=/jobs

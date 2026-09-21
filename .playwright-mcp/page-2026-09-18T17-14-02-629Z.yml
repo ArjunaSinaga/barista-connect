@@ -1,0 +1,83 @@
+- generic [ref=f2e1]:
+  - banner [ref=f2e2]:
+    - generic [ref=f2e3]:
+      - generic [ref=f2e4]:
+        - link "Beranda" [ref=f2e5] [cursor=pointer]:
+          - /url: /
+        - link "BaristaConnect" [ref=f2e8] [cursor=pointer]:
+          - /url: /dashboard/barista
+      - navigation "Utama" [ref=f2e9]:
+        - link "Loker" [ref=f2e10] [cursor=pointer]:
+          - /url: /jobs
+        - link "Talenta" [ref=f2e11] [cursor=pointer]:
+          - /url: /find-baristas
+        - link "Ulasan" [ref=f2e12] [cursor=pointer]:
+          - /url: /reviews
+        - link "Pelatihan" [ref=f2e13] [cursor=pointer]:
+          - /url: /training
+        - link "Untuk Owner" [ref=f2e14] [cursor=pointer]:
+          - /url: /dashboard/barista
+      - link "Pesan" [ref=f2e15] [cursor=pointer]:
+        - /url: /messages
+      - button "barista.demo Barista" [ref=f2e19]:
+        - generic [aria-hidden] [ref=f2e20]: B
+        - generic [ref=f2e21]:
+          - generic [ref=f2e22]: barista.demo
+          - generic [ref=f2e23]: Barista
+      - link "Pasang Loker" [ref=f2e26] [cursor=pointer]:
+        - /url: /signup?role=owner
+  - main [ref=f2e27]:
+    - generic [ref=f2e28]:
+      - link "Semua lowongan" [ref=f2e29] [cursor=pointer]:
+        - /url: /jobs
+      - generic [ref=f2e32]:
+        - generic [ref=f2e33]:
+          - generic [ref=f2e34]:
+            - generic [ref=f2e35]:
+              - heading "Barista Full-Time (Tes)" [level=1] [ref=f2e36]
+              - generic [ref=f2e37]: Full-Time
+            - generic [ref=f2e39]:
+              - generic [ref=f2e40]: Kafe Demo Senja
+              - generic [ref=f2e45]: Yogyakarta
+              - generic [ref=f2e49]: 7j lalu
+            - generic [ref=f2e54]:
+              - heading "Deskripsi" [level=2] [ref=f2e55]
+              - paragraph [ref=f2e56]: Lowongan tes — silakan lamar pakai akun demo.
+              - paragraph [ref=f2e57]: 💰 Rp3.000.000/bln
+          - generic [ref=f2e58]:
+            - heading "Tentang Cafe" [level=2] [ref=f2e59]
+            - paragraph [ref=f2e60]:
+              - link "Kafe Demo Senja" [ref=f2e65] [cursor=pointer]:
+                - /url: /cafes/01a8d855-d18b-4dbd-8cbf-58dcd3ea228d
+            - paragraph [ref=f2e66]: Jl. Demo No. 1, Yogyakarta
+        - complementary [ref=f2e70]:
+          - generic [ref=f2e71]:
+            - paragraph [ref=f2e72]: Lamar sekarang, gratis
+            - generic [ref=f2e76]:
+              - button "Lamar" [active] [ref=f2e77] [cursor=pointer]
+              - generic [ref=f2e81]:
+                - generic [ref=f2e82]:
+                  - heading "Kirim Lamaran" [level=3] [ref=f2e83]
+                  - button "Tutup" [ref=f2e84]
+                - generic [ref=f2e88]:
+                  - paragraph [ref=f2e89]: CV diambil dari profilmu — cukup pilih tipe & tulis cover letter.
+                  - generic [ref=f2e90]:
+                    - paragraph [ref=f2e91]: Tipe yang ditawarkan *
+                    - generic [ref=f2e93] [cursor=pointer]:
+                      - checkbox "Full-Time" [checked] [ref=f2e94]
+                      - text: Full-Time
+                  - generic [ref=f2e95]:
+                    - paragraph [ref=f2e96]: CV (dari profil)
+                    - generic [ref=f2e97] [cursor=pointer]:
+                      - generic [ref=f2e98]: Pilih PDF
+                      - generic [ref=f2e99]: Belum ada file
+                  - generic [ref=f2e100]:
+                    - generic [ref=f2e101]: Cover letter
+                    - textbox "Ceritakan kenapa kamu cocok, pengalaman relevan, & tipe shift yang kamu bisa..." [ref=f2e102]
+                  - paragraph [ref=f2e103]: 0/1000 (min 20)
+                  - generic [ref=f2e104]:
+                    - generic [ref=f2e105]: Pesan tambahan (opsional)
+                    - 'textbox "Contoh: Halo, saya berpengalaman 2 tahun di espresso bar dan bisa latte art..." [ref=f2e106]'
+                  - generic [ref=f2e107]: 0/300
+                  - button "Kirim Lamaran" [ref=f2e108] [cursor=pointer]
+  - alert [ref=f2e78]

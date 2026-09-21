@@ -1,0 +1,221 @@
+- generic [active] [ref=f4e1]:
+  - banner [ref=f4e2]:
+    - generic [ref=f4e3]:
+      - generic [ref=f4e4]:
+        - link "Beranda" [ref=f4e5] [cursor=pointer]:
+          - /url: /
+        - link "BaristaConnect" [ref=f4e8] [cursor=pointer]:
+          - /url: /dashboard/owner
+      - navigation "Utama" [ref=f4e9]:
+        - link "Loker" [ref=f4e10] [cursor=pointer]:
+          - /url: /jobs
+        - link "Talenta" [ref=f4e11] [cursor=pointer]:
+          - /url: /find-baristas
+        - link "Ulasan" [ref=f4e12] [cursor=pointer]:
+          - /url: /reviews
+        - link "Pelatihan" [ref=f4e13] [cursor=pointer]:
+          - /url: /training
+        - link "Untuk Owner" [ref=f4e14] [cursor=pointer]:
+          - /url: /dashboard/owner
+      - link "Pesan" [ref=f4e61] [cursor=pointer]:
+        - /url: /messages
+      - button "owner.senja Pemilik Kafe" [ref=f4e65]:
+        - generic [aria-hidden] [ref=f4e66]: O
+        - generic [ref=f4e67]:
+          - generic [ref=f4e68]: owner.senja
+          - generic [ref=f4e69]: Pemilik Kafe
+      - link "Pasang Loker" [ref=f4e72] [cursor=pointer]:
+        - /url: /dashboard/owner/jobs/new
+  - main [ref=f4e18]:
+    - generic [ref=f4e76]:
+      - complementary [ref=f4e78]:
+        - generic [ref=f4e79]:
+          - generic [ref=f4e80]:
+            - generic [ref=f4e81]: A
+            - link "Edit foto cafe" [ref=f4e83] [cursor=pointer]:
+              - /url: /dashboard/owner/cafes
+          - paragraph [ref=f4e87]: asdfads
+          - paragraph [ref=f4e88]: asdfadsf
+          - generic [ref=f4e89]:
+            - paragraph [ref=f4e90]:
+              - text: Profil Bisnis
+              - generic [ref=f4e91]: 80%
+            - paragraph [ref=f4e94]: Lengkapi profil untuk menjangkau talenta terbaik.
+            - button "Lengkapi ke 100%" [ref=f4e95]
+            - link "Edit Profil" [ref=f4e96] [cursor=pointer]:
+              - /url: /dashboard/owner/profile
+        - navigation [ref=f4e97]:
+          - button "Dashboard" [ref=f4e98]
+          - button "Loker Aktif 1" [ref=f4e105]:
+            - generic [ref=f4e109]: Loker Aktif
+            - generic [ref=f4e110]: "1"
+          - button "Pelamar 1" [ref=f4e111]:
+            - generic [ref=f4e117]: Pelamar
+            - generic [ref=f4e118]: "1"
+          - button "Tim Saya 0" [ref=f4e119]:
+            - generic [ref=f4e124]: Tim Saya
+            - generic [ref=f4e125]: "0"
+          - button "Kandidat Tersimpan 0" [ref=f4e126]:
+            - generic [ref=f4e129]: Kandidat Tersimpan
+            - generic [ref=f4e130]: "0"
+          - button "Ulasan Diberi 0" [ref=f4e131]:
+            - generic [ref=f4e134]: Ulasan Diberi
+            - generic [ref=f4e135]: "0"
+          - button "Kafe Saya 2" [ref=f4e136]:
+            - generic [ref=f4e140]: Kafe Saya
+            - generic [ref=f4e141]: "2"
+          - button "PT / Organisasi 1" [ref=f4e142]:
+            - generic [ref=f4e147]: PT / Organisasi
+            - generic [ref=f4e148]: "1"
+          - button "Pengaturan" [ref=f4e149]
+          - link "Pelatihan" [ref=f4e154] [cursor=pointer]:
+            - /url: /training
+        - generic [ref=f4e159]:
+          - paragraph [ref=f4e160]: BaristaConnect Pro
+          - paragraph [ref=f4e164]: Upgrade ke Pro untuk akses talenta prioritas, insight lebih dalam, dan fitur eksklusif.
+          - link "Upgrade Sekarang" [ref=f4e165] [cursor=pointer]:
+            - /url: /verify
+        - dialog [ref=f4e168]:
+          - button "Tutup" [ref=f4e169]
+          - generic [ref=f4e170]:
+            - generic [ref=f4e171]:
+              - generic [ref=f4e172]:
+                - heading "Lengkapi Profil Bisnis" [level=3] [ref=f4e173]
+                - paragraph [ref=f4e174]: 1 bagian lagi menuju 100%
+              - button "Tutup popup" [ref=f4e175]
+            - list [ref=f4e179]:
+              - listitem [ref=f4e180]:
+                - generic [ref=f4e181]: Nama usaha
+              - listitem [ref=f4e186]:
+                - generic [ref=f4e187]: Foto profil owner
+              - listitem [ref=f4e192]:
+                - generic [ref=f4e193]: Daftarkan 1 cafe
+              - listitem [ref=f4e198]:
+                - generic [ref=f4e199]: Foto cafe
+                - button "Lengkapi" [ref=f4e203]
+              - listitem [ref=f4e204]:
+                - generic [ref=f4e205]: Alamat / WA cafe
+            - button "Lengkapi Sekarang" [ref=f4e210]
+      - generic [ref=f4e211]:
+        - generic [ref=f4e212]:
+          - generic [ref=f4e213]:
+            - generic [ref=f4e214]:
+              - heading "Hire better baristas. Build a stronger cafe team." [level=1] [ref=f4e215]
+              - paragraph [ref=f4e216]: Temukan barista berbakat dengan pengalaman terverifikasi, rating dari pemilik cafe lain, dan pelatihan industri terkemuka.
+              - search "Cari barista" [ref=f4e217]:
+                - generic [ref=f4e218]:
+                  - generic [ref=f4e222]: Cari barista berdasarkan nama, keahlian, atau lokasi
+                  - textbox "Cari barista berdasarkan nama, keahlian, atau lokasi" [ref=f4e223]:
+                    - /placeholder: Cari barista berdasarkan nama, keahlian, atau lokasi...
+                - button "Cari Talenta" [ref=f4e224]
+              - generic [ref=f4e225]:
+                - generic [ref=f4e226]: "Filter Cepat:"
+                - link "Available Now" [ref=f4e227] [cursor=pointer]:
+                  - /url: /find-baristas?available=1
+                - link "Rating 4.5+" [ref=f4e229] [cursor=pointer]:
+                  - /url: /find-baristas?minRating=4.5
+                - link "Full-time" [ref=f4e232] [cursor=pointer]:
+                  - /url: /find-baristas?type=full-time
+                - link "Part-time" [ref=f4e236] [cursor=pointer]:
+                  - /url: /find-baristas?type=part-time
+                - link "Latte Art" [ref=f4e240] [cursor=pointer]:
+                  - /url: /find-baristas?q=Latte%20Art
+                - link "Manual Brew" [ref=f4e243] [cursor=pointer]:
+                  - /url: /find-baristas?q=Manual%20Brew
+                - link "asdfadsf" [ref=f4e248] [cursor=pointer]:
+                  - /url: /find-baristas?loc=asdfadsf
+            - generic [ref=f4e253]:
+              - img "Barista menuang latte art" [ref=f4e254]
+              - generic [ref=f4e256]: GreatBaristasGreaterStories
+              - generic [ref=f4e260]: Same PassionMore People
+          - generic [ref=f4e262]:
+            - button "Lihat Active Jobs" [ref=f4e263] [cursor=pointer]:
+              - paragraph [ref=f4e264]:
+                - generic [ref=f4e269]: Active Jobs
+              - paragraph [ref=f4e272]: "1"
+              - paragraph [ref=f4e273]:
+                - generic [ref=f4e274]: ↑ +1 bulan ini ·
+                - text: dari 1 total
+            - button "Lihat New Applicants" [ref=f4e275] [cursor=pointer]:
+              - paragraph [ref=f4e276]:
+                - generic [ref=f4e283]: New Applicants
+              - paragraph [ref=f4e286]: "0"
+              - paragraph [ref=f4e287]: menunggu review
+            - link "Lihat Interviews This Week" [ref=f4e288] [cursor=pointer]:
+              - /url: /messages
+              - paragraph [ref=f4e289]:
+                - generic [ref=f4e293]: Interviews This Week
+              - paragraph [ref=f4e296]: "0"
+              - paragraph [ref=f4e297]: 7 hari terakhir
+            - button "Lihat Team Rating" [ref=f4e298] [cursor=pointer]:
+              - paragraph [ref=f4e299]:
+                - generic [ref=f4e303]: Team Rating
+              - paragraph [ref=f4e306]: –
+              - paragraph [ref=f4e307]: Belum ada ulasan
+        - region "Top candidates" [ref=f4e309]:
+          - generic [ref=f4e310]:
+            - generic [ref=f4e311]:
+              - heading "Top Candidates" [level=2] [ref=f4e312]
+              - paragraph [ref=f4e313]: Barista pilihan untuk cafe Anda. Geser untuk lihat.
+            - generic [ref=f4e314]:
+              - button "Geser kandidat ke kiri" [disabled] [ref=f4e315]
+              - button "Geser kandidat ke kanan" [disabled] [ref=f4e318]
+              - link "Lihat semua" [ref=f4e321] [cursor=pointer]:
+                - /url: /find-baristas
+          - region "Daftar top candidates, geser horizontal" [ref=f4e324]:
+            - generic [ref=f4e326]:
+              - generic [ref=f4e327]:
+                - generic [ref=f4e328]: DB
+                - generic [ref=f4e331]: Available Now
+              - generic [ref=f4e332]:
+                - generic [ref=f4e333]:
+                  - paragraph [ref=f4e334]:
+                    - generic [ref=f4e335]: Demo Barista
+                  - generic [ref=f4e336]:
+                    - generic [ref=f4e337]:
+                      - text: "-"
+                      - generic [ref=f4e340]: (0)
+                    - button "Simpan Demo Barista" [ref=f4e341]
+                - paragraph [ref=f4e344]:
+                  - generic [ref=f4e345]: Yogyakarta
+                  - generic [ref=f4e349]: 1 thn 6 bln
+                - generic [ref=f4e354]:
+                  - link "Profile" [ref=f4e355] [cursor=pointer]:
+                    - /url: /barista/bbbbbbbb-0000-4000-8000-000000000003
+                  - button "Undang barista ke interview" [ref=f4e356]: Invite
+            - generic [ref=f4e361]:
+              - generic [ref=f4e362]:
+                - img "Bambang" [ref=f4e363]
+                - generic [ref=f4e364]: Available Now
+              - generic [ref=f4e365]:
+                - generic [ref=f4e366]:
+                  - paragraph [ref=f4e367]:
+                    - generic [ref=f4e368]: Bambang
+                  - generic [ref=f4e369]:
+                    - generic [ref=f4e370]:
+                      - text: "-"
+                      - generic [ref=f4e373]: (0)
+                    - button "Simpan Bambang" [ref=f4e374]
+                - paragraph [ref=f4e377]:
+                  - generic [ref=f4e378]: Bekasi
+                  - generic [ref=f4e382]: Baru mulai
+                - paragraph [ref=f4e386]: “sadfasdfdsfasdfasdfsadfsadfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdf”
+                - generic [ref=f4e387]:
+                  - generic [ref=f4e388]:
+                    - generic [ref=f4e389]: Latte Art
+                    - generic [ref=f4e390]: Espresso Bar
+                  - generic [ref=f4e391]:
+                    - link "Profile" [ref=f4e392] [cursor=pointer]:
+                      - /url: /barista/bbbbbbbb-0000-4000-8000-000000000002
+                    - button "Undang barista ke interview" [ref=f4e393]: Invite
+      - generic [ref=f4e398]:
+        - generic [ref=f4e399]:
+          - 'heading "Untuk Pemilik Kafe: Operasional Cerdas" [level=3] [ref=f4e400]'
+          - generic [ref=f4e401]: Segera Hadir
+        - paragraph [ref=f4e402]: Lihat lebih dari sekadar talenta. Bangun tim lebih baik.
+        - paragraph [ref=f4e403]: Pantau kehadiran, shift, dan skor reliabilitas. Ambil keputusan berbasis data dan jalankan kafe lebih rapi.
+        - generic [ref=f4e404]:
+          - paragraph [ref=f4e405]: Ringkasan Tim
+          - paragraph [ref=f4e406]: Pratinjau tampilan — grafik kehadiran & reliabilitas tim tampil di sini saat fitur rilis. Tanpa angka contoh.
+        - button "Ikut Daftar Tunggu" [ref=f4e407]
+  - alert [ref=f4e60]

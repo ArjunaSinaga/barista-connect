@@ -1,0 +1,148 @@
+- generic [active] [ref=f1e1]:
+  - banner [ref=f1e2]:
+    - generic [ref=f1e3]:
+      - generic [ref=f1e4]:
+        - link "Beranda" [ref=f1e5] [cursor=pointer]:
+          - /url: /
+        - link "BaristaConnect" [ref=f1e8] [cursor=pointer]:
+          - /url: /dashboard/barista
+      - navigation "Utama" [ref=f1e9]:
+        - link "Loker" [ref=f1e10] [cursor=pointer]:
+          - /url: /jobs
+        - link "Talenta" [ref=f1e11] [cursor=pointer]:
+          - /url: /find-baristas
+        - link "Ulasan" [ref=f1e12] [cursor=pointer]:
+          - /url: /reviews
+        - link "Pelatihan" [ref=f1e13] [cursor=pointer]:
+          - /url: /training
+      - link "Pesan" [ref=f1e14] [cursor=pointer]:
+        - /url: /messages
+      - button "barista2 Barista" [ref=f1e18]:
+        - generic [aria-hidden] [ref=f1e19]: B
+        - generic [ref=f1e20]:
+          - generic [ref=f1e21]: barista2
+          - generic [ref=f1e22]: Barista
+  - main [ref=f1e25]:
+    - generic [ref=f1e29]:
+      - complementary [ref=f1e31]:
+        - generic [ref=f1e32]:
+          - img "Bambang" [ref=f1e35]
+          - paragraph [ref=f1e36]: Bambang
+          - paragraph [ref=f1e37]: Baru mulai pengalaman • Bekasi
+          - generic [ref=f1e38]:
+            - generic [ref=f1e40]: Siap Kerja
+            - switch [checked] [ref=f1e42]
+          - link "Edit Profil" [ref=f1e44] [cursor=pointer]:
+            - /url: /dashboard/barista/profile
+        - navigation "Dashboard barista" [ref=f1e45]:
+          - button "Dasbor" [ref=f1e46]
+          - button "Lamaran Saya 2" [ref=f1e53]:
+            - generic [ref=f1e57]: Lamaran Saya
+            - generic [ref=f1e58]: "2"
+          - button "Loker Tersimpan 0" [ref=f1e59]:
+            - generic [ref=f1e62]: Loker Tersimpan
+            - generic [ref=f1e63]: "0"
+          - link "Pesan" [ref=f1e64] [cursor=pointer]:
+            - /url: /messages
+          - link "Pelatihan" [ref=f1e69] [cursor=pointer]:
+            - /url: /training
+          - link "Profil" [ref=f1e74] [cursor=pointer]:
+            - /url: /dashboard/barista/profile
+          - button "Pengaturan" [ref=f1e79]
+        - generic [ref=f1e84]:
+          - paragraph [ref=f1e85]: Profil 100%
+          - paragraph [ref=f1e90]: Foto + CV + 3 skill + pengalaman = owner 3x lebih mungkin chat kamu.
+          - link "Cek Profil →" [ref=f1e91] [cursor=pointer]:
+            - /url: /dashboard/barista/profile
+      - generic [ref=f1e92]:
+        - generic [ref=f1e94]:
+          - generic [ref=f1e95]:
+            - paragraph [ref=f1e96]: Dasbor Barista
+            - heading "Halo, Bambang! 👋" [level=1] [ref=f1e97]
+            - paragraph [ref=f1e98]: Pantau lamaran, lanjutkan yang diterima, dan nilai cafe tempatmu selesai bekerja.
+          - generic [ref=f1e99]:
+            - generic [ref=f1e100]:
+              - paragraph [ref=f1e101]: Total Lamaran
+              - paragraph [ref=f1e102]: "2"
+              - paragraph [ref=f1e103]: terkirim
+            - generic [ref=f1e107]:
+              - paragraph [ref=f1e108]: Menunggu
+              - paragraph [ref=f1e109]: "2"
+              - paragraph [ref=f1e110]: terkirim + dilihat
+            - generic [ref=f1e111]:
+              - paragraph [ref=f1e112]: Diterima
+              - paragraph [ref=f1e113]: "0"
+              - paragraph [ref=f1e114]: sedang bekerja
+            - generic [ref=f1e118]:
+              - paragraph [ref=f1e119]: Selesai
+              - paragraph [ref=f1e120]: "1"
+              - paragraph [ref=f1e121]: bisa dinilai
+          - generic [ref=f1e126]:
+            - heading "Sudah kerja di kafe? Gabung timnya" [level=2] [ref=f1e127]
+            - paragraph [ref=f1e133]: Minta kode tim ke owner / manager, masukkan di bawah.
+            - generic [ref=f1e134]:
+              - textbox "XXXX-XXXX" [ref=f1e135]
+              - button "Gabung" [disabled] [ref=f1e136]
+          - generic [ref=f1e137]:
+            - generic [ref=f1e138]:
+              - heading "Lamaran Terbaru" [level=2] [ref=f1e139]
+              - link "Lihat semua" [ref=f1e143] [cursor=pointer]:
+                - /url: /dashboard/barista?tab=lamaran
+            - list [ref=f1e144]:
+              - listitem [ref=f1e145]:
+                - generic [ref=f1e146]:
+                  - paragraph [ref=f1e147]: "Kepala Barista #9"
+                  - paragraph [ref=f1e148]: Titik Temu • 13j lalu
+                - generic [ref=f1e149]: Dilihat
+              - listitem [ref=f1e150]:
+                - generic [ref=f1e151]:
+                  - paragraph [ref=f1e152]: "Barista Shift Pagi #1"
+                  - paragraph [ref=f1e153]: Kopi Senja Pagi • 13j lalu
+                - generic [ref=f1e154]: Terkirim
+          - generic [ref=f1e155]:
+            - generic [ref=f1e156]:
+              - heading "Cari lowongan di job board" [level=2] [ref=f1e157]
+              - paragraph [ref=f1e158]: Jelajahi lowongan aktif, simpan favoritmu, dan lamar langsung.
+            - link "Buka Loker" [ref=f1e159] [cursor=pointer]:
+              - /url: /jobs
+        - generic [ref=f1e162]: 📨 2 lamaran menunggu kabar — cek Pesan biar tak ketinggalan.
+      - generic [ref=f1e163]:
+        - generic [ref=f1e164]:
+          - generic [ref=f1e165]:
+            - generic [ref=f1e166]:
+              - heading "Loker Untukmu" [level=3] [ref=f1e167]
+              - paragraph [ref=f1e168]: Lowongan aktif terbaru.
+            - link "Lihat semua" [ref=f1e169] [cursor=pointer]:
+              - /url: /jobs
+          - generic [ref=f1e172]:
+            - link "Barista — Kopi Uji Tebet Sleman" [ref=f1e173] [cursor=pointer]:
+              - /url: /jobs/ff46b812-5dea-45f3-8706-73ab207e48c9
+              - generic [ref=f1e174]:
+                - generic [ref=f1e175]: Barista — Kopi Uji Tebet
+                - generic [ref=f1e176]: Sleman
+            - 'link "Barista Shift Pagi #1 Jakarta Pusat" [ref=f1e182] [cursor=pointer]':
+              - /url: /jobs/83c77693-dd9d-4fa3-8feb-9ec999ba1b45
+              - generic [ref=f1e183]:
+                - generic [ref=f1e184]: "Barista Shift Pagi #1"
+                - generic [ref=f1e185]: Jakarta Pusat
+            - 'link "Barista Full-Time Weekend #2 Bogor" [ref=f1e191] [cursor=pointer]':
+              - /url: /jobs/d7dce5a7-892b-4097-ad42-2c332d12cc9e
+              - generic [ref=f1e192]:
+                - generic [ref=f1e193]: "Barista Full-Time Weekend #2"
+                - generic [ref=f1e194]: Bogor
+            - 'link "Kepala Barista #3 Bandung" [ref=f1e200] [cursor=pointer]':
+              - /url: /jobs/9a7c010a-59ff-4fbe-beaf-46e272df1cb4
+              - generic [ref=f1e201]:
+                - generic [ref=f1e202]: "Kepala Barista #3"
+                - generic [ref=f1e203]: Bandung
+            - 'link "Barista Kasual Event #4 Bandung" [ref=f1e209] [cursor=pointer]':
+              - /url: /jobs/add38359-68fb-4bd4-9b8c-662a23722d6b
+              - generic [ref=f1e210]:
+                - generic [ref=f1e211]: "Barista Kasual Event #4"
+                - generic [ref=f1e212]: Bandung
+        - generic [ref=f1e218]:
+          - heading "Reputasiku" [level=3] [ref=f1e219]
+          - paragraph [ref=f1e220]: Belum ada ulasan — selesaikan pekerjaan pertamamu.
+          - link "Lihat ulasan →" [ref=f1e221] [cursor=pointer]:
+            - /url: /reviews
+  - alert [ref=f1e222]
