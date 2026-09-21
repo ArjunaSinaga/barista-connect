@@ -22,7 +22,7 @@ export default function JoinTeam() {
       const supabase = createClient();
       const { data, error } = await supabase.rpc("join_team_by_code", { p_code: code.trim() });
       if (error) throw error;
-      toast(`Masuk tim ${data?.cafe ?? "kafe"}!`);
+      toast(`Masuk tim ${data?.kafe ?? "kafe"}!`);
       setCode("");
       router.refresh();
     } catch (err) {

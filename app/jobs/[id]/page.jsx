@@ -58,7 +58,7 @@ export default async function JobDetailPage({ params }) {
   // Inactive jobs visible only to their owner
   if (!job || (!job.is_active && job.owner_id !== user?.id)) notFound();
 
-  // Badge rating cafe: tampil segera setelah ada yang menilai
+  // Badge rating kafe: tampil segera setelah ada yang menilai
   let cafeAvg = null;
   let cafeCount = 0;
   {
@@ -154,10 +154,10 @@ export default async function JobDetailPage({ params }) {
             </div>
           </div>
 
-          {/* Tentang Cafe */}
+          {/* Tentang Kafe */}
           <div className="mt-4 rounded-2xl card-dark p-6">
             <h2 className="text-sm font-extrabold tracking-wide text-espresso uppercase">
-              Tentang Cafe
+              Tentang Kafe
             </h2>
             {job.cafes?.photo_urls?.[0] && (
               <Image src={job.cafes.photo_urls[0]} alt={job.cafes.name} width={800} height={160} className="mt-3 h-40 w-full rounded-xl object-cover" />

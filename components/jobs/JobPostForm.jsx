@@ -91,8 +91,8 @@ export default function JobPostForm({ initial = null }) {
 
   const set = (k, v) => setForm((f) => ({ ...f, [k]: v }));
 
-  const cafe = cafes.find((c) => c.id === form.cafe_id) ?? null;
-  const autoTitle = cafe ? `Barista — ${cafe.name}`.slice(0, 120) : "";
+  const kafe = cafes.find((c) => c.id === form.cafe_id) ?? null;
+  const autoTitle = kafe ? `Barista — ${kafe.name}`.slice(0, 120) : "";
   const liveSalary = composeSalary(form.salary_min, form.salary_max, form.salary_period);
 
   async function handleSubmit(e) {
@@ -108,7 +108,7 @@ export default function JobPostForm({ initial = null }) {
     const withAuto = {
       ...form,
       title: autoTitle,
-      location: cafe?.location?.trim() || form.location,
+      location: kafe?.location?.trim() || form.location,
       salary_text: composeSalary(form.salary_min, form.salary_max, form.salary_period),
     };
     delete withAuto.salary_min;
@@ -121,11 +121,11 @@ export default function JobPostForm({ initial = null }) {
       return;
     }
     if (!withAuto.location) {
-      toast("Cafe belum punya kota — lengkapi dulu di Cafe Saya", "error");
+      toast("Kafe belum punya kota — lengkapi dulu di Kafe Saya", "error");
       return;
     }
     if (!autoTitle || autoTitle.length < 5) {
-      toast("Pilih cafe dulu", "error");
+      toast("Pilih kafe dulu", "error");
       return;
     }
     if (!form.employment_types.length) {
@@ -151,7 +151,7 @@ export default function JobPostForm({ initial = null }) {
         // owner_id ikut kafe (manager pasang loker = milik owner kafe itu)
         const { error } = await supabase.from("job_posts").insert({
           ...payload,
-          owner_id: cafe?.owner_id ?? user.id,
+          owner_id: kafe?.owner_id ?? user.id,
         });
         if (error) throw error;
         toast("Lowongan tayang! 🎉");
@@ -169,16 +169,16 @@ export default function JobPostForm({ initial = null }) {
     <div className="mx-auto grid max-w-4xl gap-6 px-4 py-8 lg:grid-cols-[1fr_300px]">
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="space-y-1.5">
-          <label htmlFor="job-cafe" className="text-sm font-bold text-espresso">
-            Cafe <span className="text-red-500">*</span>
+          <label htmlFor="job-kafe" className="text-sm font-bold text-espresso">
+            Kafe <span className="text-red-500">*</span>
           </label>
           <select
-            id="job-cafe"
+            id="job-kafe"
             value={form.cafe_id}
             onChange={(e) => set("cafe_id", e.target.value)}
             className="w-full rounded-xl border border-latte card-dark px-4 py-3 text-sm text-espresso focus:border-caramel focus:outline-none"
           >
-            <option value="">— Pilih cafe —</option>
+            <option value="">— Pilih kafe —</option>
             {cafes.map((c) => (
               <option key={c.id} value={c.id}>
                 {c.name}{c.location ? ` • ${c.location}` : ""}
@@ -187,7 +187,7 @@ export default function JobPostForm({ initial = null }) {
           </select>
           {cafes.length === 0 && (
             <p className="text-xs text-espresso-soft">
-              Belum ada cafe. <a href="/dashboard/owner/cafes/new" className="font-bold text-caramel hover:underline">Daftarkan cafe dulu →</a>
+              Belum ada kafe. <a href="/dashboard/owner/cafes/new" className="font-bold text-caramel hover:underline">Daftarkan kafe dulu →</a>
             </p>
           )}
         </div>
@@ -297,7 +297,7 @@ export default function JobPostForm({ initial = null }) {
         </p>
         <div className="rounded-2xl card-dark p-5 shadow-sm">
           <p className="font-bold leading-snug text-espresso">
-            {autoTitle || "Pilih cafe + tipe pekerjaan..."}
+            {autoTitle || "Pilih kafe + tipe pekerjaan..."}
           </p>
           {form.employment_types.length > 0 && (
             <div className="mt-2 flex flex-wrap gap-1.5">
@@ -315,7 +315,7 @@ export default function JobPostForm({ initial = null }) {
             </p>
           )}
           <p className="mt-3 text-xs font-semibold text-espresso-soft">
-            📍 {cafe ? `${cafe.name}${cafe.location ? ` • ${cafe.location}` : ""}` : "Pilih cafe dulu"}
+            📍 {kafe ? `${kafe.name}${kafe.location ? ` • ${kafe.location}` : ""}` : "Pilih kafe dulu"}
           </p>
         </div>
       </aside>

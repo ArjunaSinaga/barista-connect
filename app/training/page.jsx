@@ -39,7 +39,7 @@ const SEED_COURSES = [
     reviews: "74 ulasan",
     meta: "4 jam • All Levels • Online",
     price: "Rp 650.000 / orang",
-    desc: "Komunikasi, pelayanan, dan cafe experience yang membuat pelanggan kembali.",
+    desc: "Komunikasi, pelayanan, dan kafe experience yang membuat pelanggan kembali.",
     tags: ["Service", "Online"],
   },
 ];

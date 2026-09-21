@@ -48,7 +48,7 @@ export default function OwnerProfileView({
 
       <section className="mt-4 rounded-2xl card-dark p-6 text-center">
         <h2 className="text-xs font-extrabold tracking-wide text-espresso uppercase">Cabang ({cafes?.length ?? 0})</h2>
-        {(cafes ?? []).length === 0 && <p className="mt-2 text-sm text-espresso-soft">Belum ada cafe terdaftar.</p>}
+        {(cafes ?? []).length === 0 && <p className="mt-2 text-sm text-espresso-soft">Belum ada kafe terdaftar.</p>}
         <div className="mt-3 grid gap-2 sm:grid-cols-2">
           {(cafes ?? []).map((c) => (
             <Link key={c.id} href={`/cafes/${c.id}`} className="flex items-center gap-3 rounded-xl bg-cream px-3 py-2.5 hover:bg-cream-dark">
@@ -74,7 +74,7 @@ export default function OwnerProfileView({
           </div>
         )}
         {isBarista && !myTeam && !isSelf && (
-          <p className="mt-2 text-sm text-espresso-soft">Kamu bisa menilai cafe ini setelah selesai bekerja di sini.</p>
+          <p className="mt-2 text-sm text-espresso-soft">Kamu bisa menilai kafe ini setelah selesai bekerja di sini.</p>
         )}
         {cafeRatings.length > 0 ? (
           <ul className="mt-3 space-y-2">

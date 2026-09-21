@@ -8,7 +8,7 @@ import { createClient } from "@/lib/supabase/client";
 import { canEdit, nextEditableAt } from "@/lib/ratings";
 import { Stars } from "@/components/ratings/RatingForm";
 
-// Form rating barista -> cafe. Hanya aktif untuk tim berstatus terminated.
+// Form rating barista -> kafe. Hanya aktif untuk tim berstatus terminated.
 export default function CafeRatingForm({
   teamMemberId,
   ownerId,
@@ -43,7 +43,7 @@ export default function CafeRatingForm({
       toast("Komentar maksimal 500 karakter", "error");
       return;
     }
-    if (saved && !window.confirm(`Ganti rating cafe jadi ${stars} bintang? Baru bisa diubah lagi minggu depan.`)) {
+    if (saved && !window.confirm(`Ganti rating kafe jadi ${stars} bintang? Baru bisa diubah lagi minggu depan.`)) {
       return;
     }
     setBusy(true);
@@ -55,7 +55,7 @@ export default function CafeRatingForm({
           .update({ stars, comment })
           .eq("id", saved.id);
         if (error) throw error;
-        toast("Rating cafe diperbarui ✓ (bisa diubah lagi minggu depan)");
+        toast("Rating kafe diperbarui ✓ (bisa diubah lagi minggu depan)");
       } else {
         const { data, error } = await supabase
           .from("cafe_ratings")
@@ -72,7 +72,7 @@ export default function CafeRatingForm({
           .single();
         if (error) throw error;
         setSaved(data);
-        toast("Rating cafe tersimpan ✓ (tampil publik setelah owner menilai balik)");
+        toast("Rating kafe tersimpan ✓ (tampil publik setelah owner menilai balik)");
       }
       if (saved) {
         setSaved({ ...saved, stars, comment, updated_at: new Date().toISOString() });
@@ -87,7 +87,7 @@ export default function CafeRatingForm({
   return (
     <div className="mt-3 rounded-xl bg-cream/60 border border-latte p-3">
       <p className="text-xs font-black text-espresso uppercase tracking-widest">
-        {saved ? "Rating kamu untuk cafe" : "Nilai cafe ini"}
+        {saved ? "Rating kamu untuk kafe" : "Nilai kafe ini"}
       </p>
       {saved && !editable ? (
         <div className="mt-2">

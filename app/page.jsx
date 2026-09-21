@@ -94,13 +94,13 @@ function HeroPhotoBlock({ photo, flush }) {
       : "relative h-48 overflow-hidden rounded-xl shadow-[0_1px_3px_rgba(43,33,24,0.08)] sm:h-56 lg:h-full lg:min-h-[228px]"}>
       {photo ? (
         <>
-          <Image src={photo.url} alt={STR.hero.photoAlt(photo.cafe)} fill sizes="(max-width: 1024px) 100vw, 50vw" className="object-cover" />
+          <Image src={photo.url} alt={STR.hero.photoAlt(photo.kafe)} fill sizes="(max-width: 1024px) 100vw, 50vw" className="object-cover" />
           <span className="font-chalk absolute top-4 left-4 -rotate-6 text-xl leading-5 text-white drop-shadow-[0_2px_6px_rgba(0,0,0,0.6)]">
             {STR.hero.overlayTop[0]}<br />{STR.hero.overlayTop[1]}
           </span>
           <span className="absolute right-3 bottom-3 rounded-full bg-paper/95 px-4 py-2 text-right shadow">
             <span className="font-chalk block text-sm leading-4 text-espresso">{STR.hero.overlayBadge[0]}<br />{STR.hero.overlayBadge[1]}</span>
-            {photo.cafe && <span className="mt-0.5 block text-[10px] font-bold tracking-wide text-espresso-soft">— {photo.cafe} —</span>}
+            {photo.kafe && <span className="mt-0.5 block text-[10px] font-bold tracking-wide text-espresso-soft">— {photo.kafe} —</span>}
           </span>
           <span className="absolute bottom-1 left-0 right-0 hidden text-center text-[8px] font-bold tracking-[0.22em] text-white/90 lg:block">
             {STR.hero.strip}
@@ -159,7 +159,7 @@ export default async function LandingPage() {
     const photos = [];
     for (const j of jobs) {
       for (const url of j.cafes?.photo_urls ?? []) {
-        if (url && !photos.some((p) => p.url === url)) photos.push({ url, cafe: j.cafes?.name ?? null });
+        if (url && !photos.some((p) => p.url === url)) photos.push({ url, kafe: j.cafes?.name ?? null });
       }
     }
     return photos;
@@ -214,7 +214,7 @@ export default async function LandingPage() {
                 </span>
                 <ChevronRight size={16} className="shrink-0 text-[#b6a98f] group-hover:text-espresso" />
               </Link>
-              <Link href="/find-baristas" className="group flex items-center gap-3 rounded-2xl border border-[#e8e0cf] bg-white px-4 py-2 shadow-[0_1px_3px_rgba(43,33,24,0.08)] hover:border-coffee">
+              <Link href="/signup?role=owner" className="group flex items-center gap-3 rounded-2xl border border-[#e8e0cf] bg-white px-4 py-2 shadow-[0_1px_3px_rgba(43,33,24,0.08)] hover:border-coffee">
                 <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#efe8d8]"><Store size={17} className="text-espresso" /></span>
                 <span className="min-w-0 flex-1">
                   <span className="block text-[13px] font-bold">Untuk Pemilik Kafe</span>

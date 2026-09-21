@@ -18,7 +18,7 @@ export default async function CafesPage() {
     .eq("owner_id", user.id)
     .order("created_at", { ascending: false });
 
-  // Hitung lowongan aktif per cafe
+  // Hitung lowongan aktif per kafe
   let countByCafe = {};
   if (cafes?.length) {
     const { data: jobs } = await supabase
@@ -35,23 +35,23 @@ export default async function CafesPage() {
         <div>
           <p className="text-xs font-bold tracking-widest text-caramel uppercase">Owner</p>
           <h1 className="mt-1 text-2xl font-extrabold text-espresso">
-            Cafe Saya ({cafes?.length ?? 0})
+            Kafe Saya ({cafes?.length ?? 0})
           </h1>
           <p className="mt-1 text-sm text-espresso-soft">
-            Daftarkan semua cabangmu. Lowongan dipasang per cafe.
+            Daftarkan semua cabangmu. Lowongan dipasang per kafe.
           </p>
         </div>
         <Link href="/dashboard/owner/cafes/new" className="inline-flex items-center gap-2 rounded-full bg-coffee px-5 py-3 text-sm font-bold text-white hover:bg-[#2e2015] transition">
-          <Plus size={16} /> Tambah Cafe
+          <Plus size={16} /> Tambah Kafe
         </Link>
       </div>
 
       {(!cafes || !cafes.length) && (
         <EmptyState
           icon={<Store size={22} />}
-          title="Belum ada cafe"
-          subtitle="Daftarkan cafe pertamamu dulu sebelum pasang lowongan."
-          actionLabel="Daftarkan Cafe"
+          title="Belum ada kafe"
+          subtitle="Daftarkan kafe pertamamu dulu sebelum pasang lowongan."
+          actionLabel="Daftarkan Kafe"
           actionHref="/dashboard/owner/cafes/new"
         />
       )}

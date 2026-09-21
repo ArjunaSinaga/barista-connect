@@ -127,7 +127,7 @@ export default async function ReviewsPage({ searchParams }) {
                       <Stars value={r.stars ?? 0} />
                       {r.comment && <p className="mt-1.5 text-sm leading-6 text-espresso">&ldquo;{maskKasar(r.comment)}&rdquo;</p>}
                       <p className="mt-1 text-xs text-espresso-soft">
-                        dinilai oleh {r.owner?.business_name ?? "Cafe"} • {relativeTime(r.created_at)}
+                        dinilai oleh {r.owner?.business_name ?? "Kafe"} • {relativeTime(r.created_at)}
                       </p>
                     </li>
                   ))}

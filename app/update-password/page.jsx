@@ -54,7 +54,7 @@ export default function UpdatePasswordPage() {
           .from("profiles")
           .select("role")
           .eq("id", user.id)
-          .single();
+          .maybeSingle();
         const role = profile?.role ?? "barista";
         const table = role === "owner" ? "owners" : "barista_profiles";
         const { data: detail } = await supabase

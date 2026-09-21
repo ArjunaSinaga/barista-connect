@@ -43,8 +43,8 @@ export default function DashboardShell({ initialView = "talenta", initialCafeId 
             middle.canSettings === false ? (
               <EmptyState
                 icon={<ChevronRight size={20} />}
-                title="Khusus pemilik cafe"
-                subtitle="Akun managermu tak punya cafe sendiri — minta owner atur profil bisnis."
+                title="Khusus pemilik kafe"
+                subtitle="Akun managermu tak punya kafe sendiri — minta owner atur profil bisnis."
                 actionLabel="Kembali ke dashboard"
                 actionHref="/dashboard/owner"
               />
@@ -95,7 +95,7 @@ export default function DashboardShell({ initialView = "talenta", initialCafeId 
           <div className="flex items-start justify-between gap-2">
             <div>
               <h3 className="text-sm font-extrabold text-espresso">Recommended Today</h3>
-              <p className="mt-0.5 text-[11px] text-espresso-soft">Talenta pilihan berdasarkan kebutuhan cafe Anda.</p>
+              <p className="mt-0.5 text-[11px] text-espresso-soft">Talenta pilihan berdasarkan kebutuhan kafe Anda.</p>
             </div>
             <Link href="/find-baristas" className="inline-flex shrink-0 items-center gap-0.5 text-xs font-bold text-link hover:underline">
               Lihat semua <ChevronRight size={13} />
@@ -104,7 +104,7 @@ export default function DashboardShell({ initialView = "talenta", initialCafeId 
           <div className="mt-2 divide-y divide-[#efe9d9]">
             {right.recs.length ? right.recs.map((b) => (
               <TalentRow key={b.id} barista={b} tag={b.is_open_to_work
-                ? { label: "Available Now", cls: "bg-[#e3f0e8] text-matcha" }
+                ? { label: "Siap Kerja", cls: "bg-[#e3f0e8] text-matcha" }
                 : { label: "Top Match", cls: "bg-[#f5ecd4] text-[#8a6d1f]" }} />
             )) : (
               <p className="py-4 text-center text-xs text-espresso-soft">Belum ada talenta lain saat ini.</p>

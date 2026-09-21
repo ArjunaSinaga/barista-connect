@@ -95,7 +95,7 @@ export default function OwnerOnboardingPage() {
       try {
         await supabase.rpc("ensure_personal_org", { p_name: businessName.trim() });
       } catch { /* abaikan */ }
-      toast("Profil tersimpan — daftarkan cafe pertamamu");
+      toast("Profil tersimpan — daftarkan kafe pertamamu");
       router.push("/dashboard/owner/cafes/new");
       router.refresh();
     } catch (err) {
@@ -111,7 +111,7 @@ export default function OwnerOnboardingPage() {
       <div className="mb-6 text-center">
         <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-caramel text-white"><Store size={26} /></span>
         <h1 className="mt-4 text-xl font-extrabold text-espresso">Profil usahamu</h1>
-        <p className="mt-1 text-sm text-espresso-soft">Sekali isi. Alamat & kontak diatur per cafe nanti.</p>
+        <p className="mt-1 text-sm text-espresso-soft">Sekali isi. Alamat & kontak diatur per kafe nanti.</p>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-4 rounded-2xl card-dark p-6">
@@ -136,7 +136,7 @@ export default function OwnerOnboardingPage() {
         />
         )}
         <Button type="submit" full size="lg" disabled={busy || uploading}>
-          {busy ? "Menyimpan..." : "Lanjut Daftarkan Cafe"}
+          {busy ? "Menyimpan..." : "Lanjut Daftarkan Kafe"}
         </Button>
       </form>
     </div>

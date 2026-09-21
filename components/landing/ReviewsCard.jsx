@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Star, Store, ChevronRight } from "lucide-react";
 import { relativeTime } from "@/lib/time";
 
-// Blok mandiri: review terbaru dari cafe owners (data asli tabel ratings).
+// Blok mandiri: review terbaru dari kafe owners (data asli tabel ratings).
 export default function ReviewsCard({ reviews }) {
   if (!reviews?.length) return null;
   return (

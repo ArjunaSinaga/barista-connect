@@ -31,7 +31,7 @@ export default async function TeamPage({ searchParams }) {
     .eq("is_active", true)
     .order("created_at", { ascending: true });
   const cafeIds = new Set((cafes ?? []).map((c) => c.id));
-  const activeCafe = params?.cafe && cafeIds.has(params.cafe) ? params.cafe : null;
+  const activeCafe = params?.kafe && cafeIds.has(params.kafe) ? params.kafe : null;
 
   const { data: members } = await supabase
     .from("team_members")
@@ -54,7 +54,7 @@ export default async function TeamPage({ searchParams }) {
     (ratings ?? []).forEach((r) => { ratingMap[r.team_member_id] = r; });
   }
 
-  // Filter cafe: hanya pekerja yang diterima di cafe tersebut (sudah daftar + diterima)
+  // Filter kafe: hanya pekerja yang diterima di kafe tersebut (sudah daftar + diterima)
   const inCafe = (members ?? []).filter((m) => !activeCafe || m.cafe_id === activeCafe);
   const countByCafe = countTeamByCafe(members);
 
@@ -68,7 +68,7 @@ export default async function TeamPage({ searchParams }) {
         Tim Saya ({grouped.length})
       </h1>
       <p className="mt-1 text-sm text-espresso-soft">
-        Satu baris per orang. Klik cafe untuk melihat siapa saja yang bekerja di sana.
+        Satu baris per orang. Klik kafe untuk melihat siapa saja yang bekerja di sana.
       </p>
 
       {(cafes ?? []).length > 0 && (
@@ -82,7 +82,7 @@ export default async function TeamPage({ searchParams }) {
           {(cafes ?? []).map((c) => (
             <Link
               key={c.id}
-              href={`/dashboard/owner/team?cafe=${c.id}`}
+              href={`/dashboard/owner/team?kafe=${c.id}`}
               className={`rounded-full px-4 py-2 text-xs font-bold border transition ${activeCafe === c.id ? "bg-caramel text-white border-caramel" : "card-dark border-[#e0d5bd] text-espresso-soft hover:border-caramel"}`}
             >
               {c.name} ({countByCafe[c.id] ?? 0})

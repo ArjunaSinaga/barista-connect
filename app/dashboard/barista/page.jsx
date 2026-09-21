@@ -115,7 +115,7 @@ export default async function BaristaDashboardPage({ searchParams }) {
         <p className="text-xs font-bold tracking-widest text-caramel uppercase">Dasbor Barista</p>
         <h1 className="mt-1 text-2xl leading-none font-black text-espresso">Halo, {bp?.full_name?.split(" ")[0] ?? "Barista"}! 👋</h1>
         <p className="mt-2 max-w-xl text-sm text-espresso-soft">
-          Pantau lamaran, lanjutkan yang diterima, dan nilai cafe tempatmu selesai bekerja.
+          Pantau lamaran, lanjutkan yang diterima, dan nilai kafe tempatmu selesai bekerja.
         </p>
       </div>
 

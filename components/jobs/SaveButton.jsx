@@ -21,7 +21,7 @@ export default function SaveButton({ jobId, initialSaved = false, variant = "ico
       router.push(`/login?next=${encodeURIComponent(`/jobs?job=${jobId}`)}`);
       return;
     }
-    const { data: profile } = await supabase.from("profiles").select("role").eq("id", user.id).single();
+    const { data: profile } = await supabase.from("profiles").select("role").eq("id", user.id).maybeSingle();
     if (profile?.role !== "barista") {
       toast("Hanya akun barista yang bisa menyimpan", "error");
       return;

@@ -15,16 +15,16 @@ export default async function CafePublicPage({ params }) {
   const { id } = await params;
   const supabase = await createClient();
 
-  const { data: cafe } = await supabase
+  const { data: kafe } = await supabase
     .from("cafes")
     .select("*, owners ( id, business_name, avatar_url )")
     .eq("id", id)
     .maybeSingle();
-  if (!cafe) notFound();
+  if (!kafe) notFound();
 
   await getSessionSafe();
 
-  // Rating level cafe: tampil segera setelah ada yang menilai
+  // Rating level kafe: tampil segera setelah ada yang menilai
   const { data: teams } = await supabase
     .from("team_members")
     .select("id")
@@ -51,21 +51,21 @@ export default async function CafePublicPage({ params }) {
   return (
     <div className="mx-auto max-w-3xl px-4 py-8">
       <div className="overflow-hidden rounded-2xl card-dark shadow-sm">
-        {(cafe.photo_urls ?? []).length > 0 && (
+        {(kafe.photo_urls ?? []).length > 0 && (
           <div className="grid grid-cols-2 gap-1 p-1">
-            {cafe.photo_urls.slice(0, 4).map((url) => (
-              <Image key={url} src={url} alt={cafe.name} width={800} height={160} className="h-40 w-full object-cover rounded-xl" />
+            {kafe.photo_urls.slice(0, 4).map((url) => (
+              <Image key={url} src={url} alt={kafe.name} width={800} height={160} className="h-40 w-full object-cover rounded-xl" />
             ))}
           </div>
         )}
         <div className="px-6 pb-6 pt-4">
           <p className="text-xs font-bold tracking-widest text-caramel uppercase">
-            {cafe.owners?.business_name}
+            {kafe.owners?.business_name}
           </p>
-          <h1 className="mt-1 text-2xl font-extrabold text-espresso">{cafe.name}</h1>
+          <h1 className="mt-1 text-2xl font-extrabold text-espresso">{kafe.name}</h1>
           <p className="mt-1 flex items-center gap-1 text-sm font-semibold text-espresso-soft">
             <MapPin size={13} className="text-caramel" />
-            {cafe.address || cafe.location || "-"}
+            {kafe.address || kafe.location || "-"}
           </p>
           {avg && (
             <p className="mt-1.5 flex items-center gap-2">
@@ -75,7 +75,7 @@ export default async function CafePublicPage({ params }) {
             </p>
           )}
           <p className="mt-2 text-sm">
-            <Link href={`/owner/${cafe.owner_id}`} className="font-bold text-caramel hover:underline">
+            <Link href={`/owner/${kafe.owner_id}`} className="font-bold text-caramel hover:underline">
               Lihat pemilik & semua cabangnya →
             </Link>
           </p>
@@ -87,7 +87,7 @@ export default async function CafePublicPage({ params }) {
           <Briefcase size={14} /> Lowongan aktif ({jobs?.length ?? 0})
         </h2>
         {(jobs ?? []).length === 0 && (
-          <p className="mt-2 text-sm text-espresso-soft">Belum ada lowongan aktif di cafe ini.</p>
+          <p className="mt-2 text-sm text-espresso-soft">Belum ada lowongan aktif di kafe ini.</p>
         )}
         <ul className="mt-3 space-y-2">
           {(jobs ?? []).map((j) => (

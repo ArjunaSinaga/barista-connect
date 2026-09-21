@@ -64,7 +64,7 @@ export default function ApplicationsList() {
 
       if (!cancelled) setApps(data ?? []);
 
-      // Baris tim + rating cafe milik sendiri
+      // Baris tim + rating kafe milik sendiri
       const { data: teams } = await supabase
         .from("team_members")
         .select("id, application_id, owner_id, status")
@@ -114,14 +114,14 @@ export default function ApplicationsList() {
   }
 
   async function handleResign(appId) {
-    if (!confirm("Tandai selesai bekerja di sini? Kamu bisa memberi rating ke cafe setelah ini.")) return;
+    if (!confirm("Tandai selesai bekerja di sini? Kamu bisa memberi rating ke kafe setelah ini.")) return;
     setBusyId(appId);
     try {
       const supabase = createClient();
       const { error } = await supabase.rpc("resign_application", { p_application: appId });
       if (error) throw error;
       setApps((list) => list.map((a) => (a.id === appId ? { ...a, status: "terminated" } : a)));
-      toast("Ditandai selesai. Kasih rating ke cafe-nya! ✓");
+      toast("Ditandai selesai. Kasih rating ke kafe-nya! ✓");
       router.refresh();
     } catch {
       toast("Gagal menandai selesai", "error");

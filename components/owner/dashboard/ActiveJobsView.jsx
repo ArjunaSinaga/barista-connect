@@ -13,8 +13,8 @@ export default function ActiveJobsView({ jobs, appCountByJob, totalJobs, activeJ
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
           <p className="text-[11px] font-bold tracking-[0.18em] text-espresso-soft uppercase">Kelola Lowongan</p>
-          <h2 className="font-display mt-0.5 text-2xl font-semibold tracking-tight">Active Jobs</h2>
-          <p className="mt-0.5 max-w-xl text-xs leading-5 text-espresso-soft">Pasang, edit, dan tutup lowongan cafe Anda.</p>
+          <h2 className="font-display mt-0.5 text-2xl font-semibold tracking-tight">Loker Aktif</h2>
+          <p className="mt-0.5 max-w-xl text-xs leading-5 text-espresso-soft">Pasang, edit, dan tutup lowongan kafe Anda.</p>
         </div>
         <div className="flex flex-wrap items-center gap-2">
           <button

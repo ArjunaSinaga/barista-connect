@@ -28,7 +28,7 @@ export default function ApplyButton({ jobId, applied=false, size="md", full=fals
     const supabase = createClient();
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) { router.push(`/login?next=/jobs/${jobId}`); return; }
-    const { data: profile } = await supabase.from("profiles").select("role").eq("id", user.id).single();
+    const { data: profile } = await supabase.from("profiles").select("role").eq("id", user.id).maybeSingle();
     if (profile?.role !== "barista") { toast("Hanya akun barista yang bisa melamar","error"); return; }
     const { data: bp } = await supabase.from("barista_profiles").select("cv_url").eq("id", user.id).maybeSingle();
     // ponytail: tanpa baris profil, insert pasti ditolak RLS — arahkan onboarding dulu, bukan sheet buntu
@@ -89,6 +89,7 @@ export default function ApplyButton({ jobId, applied=false, size="md", full=fals
       setDone(true);
       setOpen(false);
       setCover(""); setMessage(""); setCv(null); setTypes([]);
+      router.refresh();
     } catch (err) {
       toast(friendlyUpload(err), "error");
     } finally { setBusy(false); }

@@ -26,7 +26,7 @@ function pillHref(base, patch) {
 const ROLE_PILLS = [
   { label: "Semua", patch: { q: "", type: "" }, active: (f) => !f.q && !f.type },
   { label: "Barista", patch: { q: "Barista" }, active: (f) => f.q === "Barista" },
-  { label: "Kepala Barista", patch: { q: "Head" }, active: (f) => f.q === "Head" },
+  { label: "Kepala Barista", patch: { q: "Kepala" }, active: (f) => f.q === "Kepala" },
   { label: "Penuh Waktu", patch: { type: "full_time" }, active: (f) => f.type === "full_time" },
   { label: "Paruh Waktu", patch: { type: "part_time" }, active: (f) => f.type === "part_time" },
   { label: "Harian", patch: { type: "casual" }, active: (f) => f.type === "casual" },
@@ -72,7 +72,7 @@ export default async function JobsPage({ searchParams }) {
 
   const selectedId = jobParam || "__first__";
 
-  // Detail selected: rating cafe + ulasan + status lamaran/simpanan.
+  // Detail selected: rating kafe + ulasan + status lamaran/simpanan.
   let cafeAvg = null;
   let cafeCount = 0;
   let cafeReviews = [];
@@ -148,7 +148,7 @@ export default async function JobsPage({ searchParams }) {
           <div className="order-1 min-w-0 space-y-3 lg:order-2 lg:h-full lg:min-h-0 lg:overflow-y-auto lg:pr-1 lg:pb-1 no-scrollbar">
             <div className="relative overflow-hidden rounded-2xl bg-[#2b1c11] px-5 py-5 text-white sm:px-6">
               <h1 className="font-display max-w-xl text-balance text-xl leading-tight font-semibold tracking-tight sm:text-2xl">
-                Temukan karier yang diseduh dengan tujuan.
+                Temukan loker kafe yang cocok untukmu.
               </h1>
               <p className="mt-1 max-w-xl text-xs leading-5 text-white/70">
                 Loker untuk orang yang hidup dan bernapas kopi.

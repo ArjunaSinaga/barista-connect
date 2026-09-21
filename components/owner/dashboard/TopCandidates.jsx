@@ -13,7 +13,7 @@ import { formatExpShort } from "@/lib/exp";
 
 // Kartu kandidat ala mockup: foto + badge + nama + rating + quote + skill + 2 CTA.
 export function badgeFor(b, rank) {
-  if (b.is_open_to_work) return { label: "Available Now", cls: "bg-[#e3f0e8] text-matcha" };
+  if (b.is_open_to_work) return { label: "Siap Kerja", cls: "bg-[#e3f0e8] text-matcha" };
   if ((b.certificates?.length ?? 0) > 0) return { label: "Certified", cls: "bg-[#e3f0e8] text-matcha" };
   if (rank === 0) return { label: "Top 1%", cls: "bg-[#f5ecd4] text-[#8a6d1f]" };
   return { label: "Top Match", cls: "bg-[#f5ecd4] text-[#8a6d1f]" };
@@ -199,7 +199,7 @@ export function TopCandidatesStrip({ baristas, savedIds = [], ownerId = null }) 
       <div className="flex items-end justify-between gap-2">
         <div>
           <h2 className="text-sm font-extrabold tracking-tight text-espresso">Top Candidates</h2>
-          <p className="text-[11px] text-espresso-soft">Barista pilihan untuk cafe Anda. Geser untuk lihat.</p>
+          <p className="text-[11px] text-espresso-soft">Barista pilihan untuk kafe Anda. Geser untuk lihat.</p>
         </div>
         <div className="flex shrink-0 items-center gap-1.5">
           <button type="button" onClick={() => nudge(-1)} disabled={!canLeft} aria-label="Geser kandidat ke kiri" className={arrow(canLeft)}>
@@ -240,7 +240,7 @@ export function TopCandidatesGrid({ baristas, savedIds = [], ownerId = null }) {
       <div className="flex items-end justify-between gap-2">
         <div>
           <h2 className="text-sm font-extrabold tracking-tight text-espresso">Top Candidates</h2>
-          <p className="text-[11px] text-espresso-soft">Barista pilihan untuk cafe Anda.</p>
+          <p className="text-[11px] text-espresso-soft">Barista pilihan untuk kafe Anda.</p>
         </div>
         <Link href="/find-baristas" className="inline-flex shrink-0 items-center gap-0.5 text-xs font-bold text-link hover:underline">
           Lihat semua talenta <ChevronRight size={13} aria-hidden="true" />

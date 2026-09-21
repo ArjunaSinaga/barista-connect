@@ -11,31 +11,31 @@ export default async function EditCafePage({ params }) {
   if (!user || !isSupabaseConfigured()) return null;
   const supabase = await createClient();
 
-  const { data: cafe } = await supabase
+  const { data: kafe } = await supabase
     .from("cafes")
     .select("*")
     .eq("id", id)
     .maybeSingle();
   // Pemilik atau manager dalam scope (via RPC, bukan owner_id mentah)
-  let allowed = cafe && cafe.owner_id === user.id;
-  if (cafe && !allowed) {
+  let allowed = kafe && kafe.owner_id === user.id;
+  if (kafe && !allowed) {
     const { data: ok } = await supabase.rpc("can_manage_cafe", { c: id });
     allowed = ok === true;
   }
 
-  if (!cafe || !allowed) {
+  if (!kafe || !allowed) {
     return (
       <div className="mx-auto max-w-3xl px-4 py-8">
         <EmptyState
           icon={<Store size={22} />}
-          title="Cafe tidak tersedia"
+          title="Kafe tidak tersedia"
           subtitle="Sudah dihapus atau milik akun lain."
-          actionLabel="Ke Cafe Saya"
+          actionLabel="Ke Kafe Saya"
           actionHref="/dashboard/owner/cafes"
         />
       </div>
     );
   }
 
-  return <CafeForm initial={cafe} />;
+  return <CafeForm initial={kafe} />;
 }

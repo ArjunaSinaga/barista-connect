@@ -3,7 +3,6 @@
 import { Suspense, useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { Eye, EyeOff } from "lucide-react";
 import Button from "@/components/ui/Button";
 import { Input } from "@/components/ui/Field";
 import { useToast } from "@/components/ui/toast";
@@ -16,7 +15,6 @@ function LoginForm() {
   const toast = useToast();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [showPw, setShowPw] = useState(false);
   const [errors, setErrors] = useState({});
   const [busy, setBusy] = useState(false);
 
@@ -53,8 +51,11 @@ function LoginForm() {
         const msg = error.message ?? "";
         if (msg.includes("Failed to fetch") || msg.includes("fetch")) {
           toast("Gagal terhubung ke Supabase. Cek env di Vercel dan Site URL di Supabase Auth → URL Configuration.", "error");
+        } else if (msg === "Invalid login credentials") {
+          // ponytail: toast cepat hilang — tulis juga inline biar nempel di field
+          setErrors({ password: "Email atau password salah" });
         } else {
-          toast(msg === "Invalid login credentials" ? "Email atau password salah" : msg, "error");
+          toast(msg, "error");
         }
         return;
       }
@@ -67,7 +68,7 @@ function LoginForm() {
         .from("profiles")
         .select("role")
         .eq("id", data.user.id)
-        .single();
+        .maybeSingle();
       // Peran dibaca dari database — user tak perlu menebak.
       // ponytail: profiles bisa kosong (konfirm via SQL/admin atau insert confirm gagal diam)
       // -> pulihkan dari metadata signup, catat biar tak nebak lagi.
@@ -125,28 +126,17 @@ function LoginForm() {
           error={errors.email}
           autoComplete="email"
         />
-        <div className="relative">
-          <Input
-            name="password"
-            type={showPw ? "text" : "password"}
-            label="Password"
-            placeholder="••••••••"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            error={errors.password}
-            autoComplete="current-password"
-            className="pr-11"
-          />
-          <button
-            type="button"
-            onClick={() => setShowPw((v) => !v)}
-            aria-label={showPw ? "Sembunyikan password" : "Tampilkan password"}
-            title={showPw ? "Sembunyikan password" : "Tampilkan password"}
-            className="absolute top-9 right-3 text-espresso-soft hover:text-espresso"
-          >
-            {showPw ? <EyeOff size={17} /> : <Eye size={17} />}
-          </button>
-        </div>
+        {/* Input sudah punya tombol intip password bawaan */}
+        <Input
+          name="password"
+          type="password"
+          label="Password"
+          placeholder="••••••••"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          error={errors.password}
+          autoComplete="current-password"
+        />
         <div className="text-right">
           <Link
             href="/forgot-password"

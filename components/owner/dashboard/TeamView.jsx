@@ -29,7 +29,7 @@ export default function TeamView({ cafes = [], members = [], ratingMap = {}, ini
         <div>
           <p className="text-[11px] font-bold tracking-[0.18em] text-espresso-soft uppercase">Owner</p>
           <h2 className="font-display mt-0.5 text-2xl font-semibold tracking-tight">Tim Saya ({grouped.length})</h2>
-          <p className="mt-0.5 max-w-xl text-xs leading-5 text-espresso-soft">Satu baris per orang. Klik cafe untuk melihat siapa saja yang bekerja di sana.</p>
+          <p className="mt-0.5 max-w-xl text-xs leading-5 text-espresso-soft">Satu baris per orang. Klik kafe untuk melihat siapa saja yang bekerja di sana.</p>
         </div>
         <div className="flex flex-wrap items-center gap-2">
           <button type="button" onClick={onBack} className="inline-flex items-center gap-2 rounded-full border border-[#e0d5bd] bg-white px-4 py-2 text-xs font-bold text-espresso hover:border-coffee">
@@ -68,7 +68,7 @@ export default function TeamView({ cafes = [], members = [], ratingMap = {}, ini
           <EmptyState
             icon={<UsersRound size={22} />}
             title="Belum ada pekerja"
-            subtitle={activeCafe ? "Belum ada pekerja di cafe ini." : "Belum ada pelamar yang diterima."}
+            subtitle={activeCafe ? "Belum ada pekerja di kafe ini." : "Belum ada pelamar yang diterima."}
             actionLabel="Lihat Lowongan"
             actionHref="/dashboard/owner"
           />

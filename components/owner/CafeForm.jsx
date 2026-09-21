@@ -84,7 +84,7 @@ export default function CafeForm({ initial = null }) {
           toast(`${file.name}: terlalu besar (maks 2MB)`, "error");
           continue;
         }
-        const path = `${user.id}/cafe-${Date.now()}-${Math.floor(Math.random() * 1e6)}.jpg`;
+        const path = `${user.id}/kafe-${Date.now()}-${Math.floor(Math.random() * 1e6)}.jpg`;
         const { error } = await supabase.storage.from("cafes").upload(path, blob, {
           contentType: "image/jpeg",
         });
@@ -106,12 +106,12 @@ export default function CafeForm({ initial = null }) {
   async function handleSave(e) {
     e.preventDefault();
     if (form.name.trim().length < 2) {
-      toast("Nama cafe minimal 2 karakter", "error");
+      toast("Nama kafe minimal 2 karakter", "error");
       focusFirstError({ name: 1 });
       return;
     }
     if (!photos.length) {
-      toast("Wajib minimal 1 foto cafe", "error");
+      toast("Wajib minimal 1 foto kafe", "error");
       return;
     }
     setBusy(true);
@@ -130,7 +130,7 @@ export default function CafeForm({ initial = null }) {
       if (initial?.id) {
         const { error } = await supabase.from("cafes").update(payload).eq("id", initial.id);
         if (error) throw error;
-        toast("Cafe diperbarui ✓");
+        toast("Kafe diperbarui ✓");
       } else {
         const org = orgs.find((o) => o.id === orgId) ?? null;
         const { error } = await supabase.from("cafes").insert({
@@ -139,12 +139,12 @@ export default function CafeForm({ initial = null }) {
           org_id: org ? org.id : null,
         });
         if (error) throw error;
-        toast("Cafe didaftarkan! 🎉");
+        toast("Kafe didaftarkan! 🎉");
       }
       router.push("/dashboard/owner/cafes");
       router.refresh();
     } catch {
-      toast("Gagal menyimpan cafe", "error");
+      toast("Gagal menyimpan kafe", "error");
     } finally {
       setBusy(false);
     }
@@ -152,32 +152,32 @@ export default function CafeForm({ initial = null }) {
 
   async function handleDelete() {
     if (!initial?.id) return;
-    if (!confirm(`Hapus cafe "${initial.name}"? SEMUA lowongan di cafe ini ikut terhapus permanen.`)) return;
+    if (!confirm(`Hapus kafe "${initial.name}"? SEMUA lowongan di kafe ini ikut terhapus permanen.`)) return;
     try {
       const supabase = createClient();
       const { error } = await supabase.from("cafes").delete().eq("id", initial.id);
       if (error) throw error;
-      toast("Cafe dihapus");
+      toast("Kafe dihapus");
       router.push("/dashboard/owner/cafes");
       router.refresh();
     } catch {
-      toast("Gagal menghapus cafe", "error");
+      toast("Gagal menghapus kafe", "error");
     }
   }
 
   return (
     <div className="mx-auto max-w-2xl px-4 py-8">
       <h1 className="text-2xl font-extrabold text-espresso">
-        {initial ? "Edit Cafe" : "Daftarkan Cafe"}
+        {initial ? "Edit Kafe" : "Daftarkan Kafe"}
       </h1>
       <p className="mt-1 mb-6 text-sm text-espresso-soft">
-        Satu akun bisa punya banyak cafe. Lowongan dipasang per cafe.
+        Satu akun bisa punya banyak kafe. Lowongan dipasang per kafe.
       </p>
 
       <form onSubmit={handleSave} className="space-y-4 rounded-2xl card-dark p-6">
         <Input
           name="name"
-          label="Nama cafe"
+          label="Nama kafe"
           placeholder="cth. Kopi Senja Tebet"
           value={form.name}
           onChange={(e) => set("name", e.target.value)}
@@ -186,20 +186,20 @@ export default function CafeForm({ initial = null }) {
           <Input
             name="location"
             label="Kota"
-            list="cafe-city-list"
+            list="kafe-city-list"
             placeholder="cth. Jakarta Selatan"
             value={form.location}
             onChange={(e) => set("location", e.target.value)}
           />
           <Input
             name="whatsapp"
-            label="WhatsApp cafe (opsional)"
+            label="WhatsApp kafe (opsional)"
             placeholder="cth. 0812..."
             value={form.whatsapp}
             onChange={(e) => set("whatsapp", e.target.value)}
           />
         </div>
-        <datalist id="cafe-city-list">
+        <datalist id="kafe-city-list">
           {CITIES.map((c) => (
             <option key={c} value={c} />
           ))}
@@ -214,8 +214,8 @@ export default function CafeForm({ initial = null }) {
         />
         {!initial?.id && orgs.length > 0 && (
           <div>
-            <label htmlFor="cafe-org" className="text-sm font-bold text-espresso">Masuk PT (opsional)</label>
-            <select id="cafe-org" value={orgId} onChange={(e) => setOrgId(e.target.value)} className="mt-1 w-full rounded-xl border border-latte bg-white px-4 py-2.5 text-sm text-[#1c1412] outline-none focus:border-caramel">
+            <label htmlFor="kafe-org" className="text-sm font-bold text-espresso">Masuk PT (opsional)</label>
+            <select id="kafe-org" value={orgId} onChange={(e) => setOrgId(e.target.value)} className="mt-1 w-full rounded-xl border border-latte bg-white px-4 py-2.5 text-sm text-[#1c1412] outline-none focus:border-caramel">
               <option value="">Bisnis pribadi (tanpa PT)</option>
               {orgs.map((o) => (
                 <option key={o.id} value={o.id}>{o.name}</option>
@@ -226,14 +226,14 @@ export default function CafeForm({ initial = null }) {
 
         <div>
           <p className="text-sm font-bold text-espresso">
-            Foto cafe <span className="text-red-500">*</span>
+            Foto kafe <span className="text-red-500">*</span>
             <span className="ml-2 text-xs font-semibold text-espresso-soft">min 1, maks {MAX_PHOTOS}</span>
           </p>
           {photos.length > 0 && (
             <div className="mt-2 grid grid-cols-3 gap-2">
               {photos.map((url) => (
                 <div key={url} className="relative overflow-hidden rounded-xl border border-latte">
-                  <Image src={url} alt="Foto cafe" width={300} height={96} className="h-24 w-full object-cover" />
+                  <Image src={url} alt="Foto kafe" width={300} height={96} className="h-24 w-full object-cover" />
                   <button
                     type="button"
                     onClick={() => setPhotos((p) => p.filter((x) => x !== url))}
@@ -246,7 +246,7 @@ export default function CafeForm({ initial = null }) {
               ))}
             </div>
           )}
-          <input ref={fileRef} type="file" accept="image/jpeg,image/png,image/webp" multiple className="hidden" onChange={handleFiles} aria-label="Tambah foto cafe" />
+          <input ref={fileRef} type="file" accept="image/jpeg,image/png,image/webp" multiple className="hidden" onChange={handleFiles} aria-label="Tambah foto kafe" />
           <Button
             type="button"
             variant="secondary"
@@ -261,11 +261,11 @@ export default function CafeForm({ initial = null }) {
         </div>
 
         <Button type="submit" full size="lg" disabled={busy || uploading}>
-          <Save size={16} /> {busy ? "Menyimpan..." : initial ? "Simpan Perubahan" : "Daftarkan Cafe"}
+          <Save size={16} /> {busy ? "Menyimpan..." : initial ? "Simpan Perubahan" : "Daftarkan Kafe"}
         </Button>
         {initial?.id && (
           <Button type="button" variant="danger" full onClick={handleDelete}>
-            <Trash2 size={16} /> Hapus Cafe (+ semua lowongannya)
+            <Trash2 size={16} /> Hapus Kafe (+ semua lowongannya)
           </Button>
         )}
       </form>

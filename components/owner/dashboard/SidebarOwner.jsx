@@ -14,13 +14,13 @@ import { snoozeCheck, snoozeHide } from "@/components/ui/useSnooze";
 
 const NUDGE_KEY = "hide-profile-nudge";
 
-// Sidebar dashboard owner ala mockup: kartu profil cafe + nav + upsell Pro.
+// Sidebar dashboard owner ala mockup: kartu profil kafe + nav + upsell Pro.
 // Semua angka dari props (data real), bukan hardcode.
-export default function SidebarOwner({ cafe, ownerName, completeness, completenessItems = [], counts, view, onNavigate, canSettings }) {
+export default function SidebarOwner({ kafe, ownerName, completeness, completenessItems = [], counts, view, onNavigate, canSettings }) {
   const pathname = usePathname();
-  const photo = cafe?.photo_urls?.[0] ?? null;
-  const name = cafe?.name ?? ownerName ?? "Cafe Anda";
-  const loc = cafe?.address ?? cafe?.location ?? "Lengkapi alamat cafe";
+  const photo = kafe?.photo_urls?.[0] ?? null;
+  const name = kafe?.name ?? ownerName ?? "Kafe Anda";
+  const loc = kafe?.address ?? kafe?.location ?? "Lengkapi alamat kafe";
   const [modalOpen, setModalOpen] = useState(false);
 
   // Auto-popup sekali, lalu snooze 2x tampil-buka bila di-X
@@ -60,7 +60,7 @@ export default function SidebarOwner({ cafe, ownerName, completeness, completene
           )}
           <Link
             href="/dashboard/owner/cafes"
-            aria-label="Edit foto cafe"
+            aria-label="Edit foto kafe"
             className="absolute right-0 bottom-0 flex h-7 w-7 items-center justify-center rounded-full border border-[#e0d5bd] bg-white text-espresso-soft hover:text-espresso"
           >
             <Camera size={13} />

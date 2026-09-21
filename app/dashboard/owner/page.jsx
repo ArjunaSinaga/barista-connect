@@ -153,9 +153,9 @@ export default async function OwnerDashboardPage({ searchParams }) {
         <Suspense fallback={null}>
           <DashboardShell
             initialView={params?.tab}
-            initialCafeId={typeof params?.cafe === "string" ? params.cafe : null}
+            initialCafeId={typeof params?.kafe === "string" ? params.kafe : null}
             sidebar={{
-              cafe: firstCafe,
+              kafe: firstCafe,
               ownerName: ownerRow?.business_name,
               completeness,
               completenessItems,

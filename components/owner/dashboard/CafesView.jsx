@@ -4,15 +4,15 @@ import { Plus, Store } from "lucide-react";
 import { EmptyState } from "@/components/ui/EmptyState";
 import CafeInvite from "@/components/owner/dashboard/CafeInvite";
 
-// Kolom tengah mode cafes: daftar cafe owner.
+// Kolom tengah mode cafes: daftar kafe owner.
 export default function CafesView({ cafes, countByCafe, teamCountByCafe = {}, canAdd = true, onBack }) {
   return (
     <>
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
           <p className="text-[11px] font-bold tracking-[0.18em] text-espresso-soft uppercase">Owner</p>
-          <h2 className="font-display mt-0.5 text-2xl font-semibold tracking-tight">Cafe Saya ({cafes?.length ?? 0})</h2>
-          <p className="mt-0.5 max-w-xl text-xs leading-5 text-espresso-soft">Daftarkan semua cabangmu. Lowongan dipasang per cafe.</p>
+          <h2 className="font-display mt-0.5 text-2xl font-semibold tracking-tight">Kafe Saya ({cafes?.length ?? 0})</h2>
+          <p className="mt-0.5 max-w-xl text-xs leading-5 text-espresso-soft">Daftarkan semua cabangmu. Lowongan dipasang per kafe.</p>
         </div>
         <div className="flex flex-wrap items-center gap-2">
           <button
@@ -24,7 +24,7 @@ export default function CafesView({ cafes, countByCafe, teamCountByCafe = {}, ca
           </button>
           {canAdd && (
           <Link href="/dashboard/owner/cafes/new" className="inline-flex items-center gap-2 rounded-full bg-coffee px-4 py-2 text-xs font-bold text-white hover:bg-[#2e2015]">
-            <Plus size={14} /> Tambah Cafe
+            <Plus size={14} /> Tambah Kafe
           </Link>
           )}
         </div>
@@ -33,9 +33,9 @@ export default function CafesView({ cafes, countByCafe, teamCountByCafe = {}, ca
       {!cafes?.length ? (
         <EmptyState
           icon={<Store size={22} />}
-          title="Belum ada cafe"
-          subtitle="Daftarkan cafe pertamamu dulu sebelum pasang lowongan."
-          actionLabel="Daftarkan Cafe"
+          title="Belum ada kafe"
+          subtitle="Daftarkan kafe pertamamu dulu sebelum pasang lowongan."
+          actionLabel="Daftarkan Kafe"
           actionHref="/dashboard/owner/cafes/new"
         />
       ) : (
@@ -63,7 +63,7 @@ export default function CafesView({ cafes, countByCafe, teamCountByCafe = {}, ca
                   </p>
                   <p className="truncate text-[11px] text-espresso-soft">
                     {teamCountByCafe[c.id] ?? 0} anggota tim ·{" "}
-                    <Link href={`/dashboard/owner?tab=team&cafe=${c.id}`} className="font-bold text-link hover:underline">
+                    <Link href={`/dashboard/owner?tab=team&kafe=${c.id}`} className="font-bold text-link hover:underline">
                       Lihat tim
                     </Link>
                   </p>
