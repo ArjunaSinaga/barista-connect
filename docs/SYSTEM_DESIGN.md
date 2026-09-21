@@ -55,6 +55,27 @@ Latihan wajib tim: Design job feed / Design chat owner-barista / Design rating a
 4. P1: Queue lamaran→notifikasi (n8n webhook dari Postgres)
 5. P2: Agentic patterns (auto-match barista-cafe) — repo #10, hanya setelah 1-4
 
+## 5. Watchlist (pantau, jangan adopsi sekarang — update 2026-09-21)
+
+> Aturan: masuk watchlist = tercatat + alasan + syarat adopsi. Dieksekusi hanya saat backlog P0/P1 di §4 kelar.
+
+### W1. Jev — TypeSafe AI System One model (X @akshay_pachaar, ✅ VALID 2026-09-21)
+- Apa: model keputusan non-generatif. Input state + pertanyaan bertipe (`Choice`/`Score`/`Noul`), output jawaban + probabilitas terkalibrasi. Tak bisa nulis/koding.
+- Fakta: rilis 15 Sep 2026, early access (waitlist), `jev-1.13.0`, $0.042/1M token input + output gratis, latensi 70–500ms, konteks 64K, closed weights, text-only. Integrasi real: LangChain `langchain-typesafe` + Vercel AI Gateway (`typesafe-ai/jev`).
+- Caveat: klaim "200x/400x" = benchmark vendor (ceiling, bukan janji); "can't hallucinate" cuma soal schema-safe, tetap bisa salah pilih opsi valid.
+- Calon pakai di kita (P1): gate AI suggest — skor kecocokan barista↔loker, risk check sebelum aksi sensitif, routing model murah vs mahal. Syarat adopsi: akses early access dibuka + Langfuse/eval P1 sudah jalan (butuh data kalibrasi sendiri).
+- Sumber: typesafe.ai/blog/introducing-system-one-models-and-jev, langchain.com/blog/building-a-harness-with-jev
+
+### W2. Picks dari AI Stack Map @triptitips (✅ VALID, detail di IG_BACKLOG.md #10)
+- P1 (eval+guardrail): Langfuse atau LangSmith + Ragas (eval set AI suggest §D), Presidio/Lakera/NeMo Guardrails (PII WA jangan masuk prompt).
+- P2 (auto-match): pgvector di Postgres existing (tanpa vector DB eksternal) + Redis (memory/cache) + n8n queue.
+- Syarat adopsi: pilih SATU per kategori saat eksekusi P1/P2, jangan pasang semua.
+
+### W3. KrillinAI — video repurposing (X @He1s_Sammy, ✅ VALID 2026-09-21)
+- `krillinai/KrillinAI` (Go, GPL-3.0, ~11K stars): download → transcribe → translate → TTS dubbing → render vertikal/horizontal → cover. 100+ bahasa, YouTube/TikTok/Bilibili/Douyin.
+- Caveat: "FREE" = software gratis, tapi butuh API key LLM+TTS sendiri (ada cost); self-host via CLI.
+- Relevansi: mesin konten lead-gen organik (nyambung IG_BACKLOG #9 faceless). BUKAN prioritas sebelum POS fase 1. Detail di IG_BACKLOG.md #11.
+
 ## Referensi penuh
 1. github.com/donnemartin/system-design-primer
 2. github.com/ByteByteGoHq/system-design-101 (visual, opsional)
