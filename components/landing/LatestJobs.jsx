@@ -25,7 +25,7 @@ export function CafeLogo({ job }) {
     return <Image src={photo} alt={name} width={48} height={48} className="h-12 w-12 shrink-0 rounded-full object-cover" />;
   }
   return (
-    <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#3d2c1e] text-lg font-bold text-white">
+    <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-coffee text-lg font-bold text-white">
       {name.charAt(0).toUpperCase()}
     </span>
   );
@@ -34,21 +34,21 @@ export function CafeLogo({ job }) {
 // Blok mandiri: daftar lowongan terbaru dalam kartu rounded seperti blok lain.
 export default function LatestJobs({ jobs }) {
   return (
-    <div className="rounded-2xl border border-[#e8e0cf] bg-[#ffffff] p-5 shadow-[0_1px_3px_rgba(43,33,24,0.08)] lg:min-h-full">
+    <div className="rounded-2xl border border-[#e8e0cf] bg-white p-5 shadow-[0_1px_3px_rgba(43,33,24,0.08)] lg:min-h-full">
       <div className="flex items-start justify-between gap-2">
         <div>
-          <h2 className="text-base font-extrabold tracking-tight text-[#2b2118]">Loker Barista Terbaru <span className="ml-1 rounded-full bg-[#efe9d9] px-2 py-0.5 text-[11px] font-bold text-[#6f6252]">{jobs.length}</span></h2>
-          <p className="mt-0.5 text-[11px] text-[#857768]">Kafe hebat. Peluang nyata. Temukan peran kopimu berikutnya.</p>
+          <h2 className="text-base font-extrabold tracking-tight text-espresso">Loker Barista Terbaru <span className="ml-1 rounded-full bg-[#efe9d9] px-2 py-0.5 text-[11px] font-bold text-espresso-soft">{jobs.length}</span></h2>
+          <p className="mt-0.5 text-[11px] text-espresso-soft">Kafe hebat. Peluang nyata. Temukan peran kopimu berikutnya.</p>
         </div>
-        <Link href="/jobs" className="inline-flex shrink-0 items-center gap-0.5 text-xs font-bold text-[#2b6cb0] hover:underline">
+        <Link href="/jobs" className="inline-flex shrink-0 items-center gap-0.5 text-xs font-bold text-link hover:underline">
           Lihat semua loker <ChevronRight size={13} />
         </Link>
       </div>
       {jobs.length === 0 ? (
         <div className="mt-3 rounded-xl border-2 border-dashed border-[#e0d5bd] p-6 text-center">
-          <p className="text-sm font-bold text-[#2b2118]">Belum ada loker — jadilah kafe pertama.</p>
-          <p className="mt-1 text-xs text-[#857768]">Gratis, 2 menit, langsung tampil di sini.</p>
-          <Link href="/signup?role=owner" className="mt-3 inline-flex min-h-[32px] items-center rounded-full bg-[#3d2c1e] px-4 text-xs font-bold text-white hover:bg-[#2e2015]">
+          <p className="text-sm font-bold text-espresso">Belum ada loker — jadilah kafe pertama.</p>
+          <p className="mt-1 text-xs text-espresso-soft">Gratis, 2 menit, langsung tampil di sini.</p>
+          <Link href="/signup?role=owner" className="mt-3 inline-flex min-h-[32px] items-center rounded-full bg-coffee px-4 text-xs font-bold text-white hover:bg-[#2e2015]">
             Pasang loker gratis
           </Link>
         </div>
@@ -61,14 +61,14 @@ export default function LatestJobs({ jobs }) {
               <li key={job.id} className="flex gap-3 py-3.5">
                 <CafeLogo job={job} />
                 <div className="min-w-0 flex-1">
-                  <Link href={`/jobs/${job.id}`} className="block truncate text-sm font-bold text-[#2b2118] hover:text-[#1f6b4a]">
+                  <Link href={`/jobs/${job.id}`} className="block truncate text-sm font-bold text-espresso hover:text-matcha">
                     {job.title}
                   </Link>
-                  <p className="flex items-center gap-1 truncate text-xs text-[#857768]">
+                  <p className="flex items-center gap-1 truncate text-xs text-espresso-soft">
                     {job.cafes?.name ?? job.owners?.business_name}
                     {job.owners?.is_verified && <VerifiedBadge size={12} />}
                   </p>
-                  <p className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-0.5 text-[11px] text-[#857768]">
+                  <p className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-0.5 text-[11px] text-espresso-soft">
                     <span className="inline-flex items-center gap-1"><MapPin size={11} />{job.location}</span>
                     {job.salary_text && <span className="inline-flex items-center gap-1"><Banknote size={11} />{job.salary_text}</span>}
                     {types.map((t) => (
@@ -78,7 +78,7 @@ export default function LatestJobs({ jobs }) {
                   {tags.length > 0 && (
                     <div className="mt-1.5 flex flex-wrap gap-1.5">
                       {tags.map((t) => (
-                        <span key={t} className="rounded-full bg-[#efe9d9] px-2.5 py-0.5 text-[11px] font-semibold text-[#6f6252]">{t}</span>
+                        <span key={t} className="rounded-full bg-[#efe9d9] px-2.5 py-0.5 text-[11px] font-semibold text-espresso-soft">{t}</span>
                       ))}
                     </div>
                   )}
@@ -86,7 +86,7 @@ export default function LatestJobs({ jobs }) {
                 <div className="flex shrink-0 flex-col items-end justify-start gap-1.5">
                   <span className="flex items-center gap-2 text-[11px] text-[#b6a98f]">
                     {relativeTime(job.created_at)}
-                    <button type="button" disabled title="Saved jobs coming soon" aria-label="Save job (coming soon)" className="text-[#2b2118]">
+                    <button type="button" disabled title="Saved jobs coming soon" aria-label="Save job (coming soon)" className="text-espresso">
                       <Bookmark size={15} />
                     </button>
                   </span>

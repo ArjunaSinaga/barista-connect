@@ -9,14 +9,14 @@ export default function PelamarView({ jobs, appCountByJob, statusByJob, totals, 
     <>
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
-          <p className="text-[11px] font-bold tracking-[0.18em] text-[#857768] uppercase">Pelamar</p>
+          <p className="text-[11px] font-bold tracking-[0.18em] text-espresso-soft uppercase">Pelamar</p>
           <h2 className="font-display mt-0.5 text-2xl font-semibold tracking-tight">Pelamar Masuk</h2>
-          <p className="mt-0.5 max-w-xl text-xs leading-5 text-[#6f6252]">Klik Kelola untuk review dan terima barista per lowongan.</p>
+          <p className="mt-0.5 max-w-xl text-xs leading-5 text-espresso-soft">Klik Kelola untuk review dan terima barista per lowongan.</p>
         </div>
         <button
           type="button"
           onClick={onBack}
-          className="inline-flex items-center gap-2 rounded-full border border-[#e0d5bd] bg-[#ffffff] px-4 py-2 text-xs font-bold text-[#3d2c1e] hover:border-[#3d2c1e]"
+          className="inline-flex items-center gap-2 rounded-full border border-[#e0d5bd] bg-white px-4 py-2 text-xs font-bold text-espresso hover:border-coffee"
         >
           <Store size={14} /> Dashboard
         </button>
@@ -25,8 +25,8 @@ export default function PelamarView({ jobs, appCountByJob, statusByJob, totals, 
       <div className="grid grid-cols-2 gap-3 xl:grid-cols-4">
         <StatCard icon={Users} label="Total" value={totals.total} circled={false} />
         <StatCard icon={Clock3} label="Menunggu" value={totals.pending} valueClass="text-[#9a6a2f]" circled={false} />
-        <StatCard icon={CheckCircle2} label="Diterima" value={totals.accepted} valueClass="text-[#1f6b4a]" circled={false} />
-        <StatCard icon={XCircle} label="Ditolak" value={totals.rejected} valueClass="text-[#6f6252]" circled={false} />
+        <StatCard icon={CheckCircle2} label="Diterima" value={totals.accepted} valueClass="text-matcha" circled={false} />
+        <StatCard icon={XCircle} label="Ditolak" value={totals.rejected} valueClass="text-espresso-soft" circled={false} />
       </div>
 
       {!jobs?.length ? (
@@ -44,22 +44,22 @@ export default function PelamarView({ jobs, appCountByJob, statusByJob, totals, 
           {jobs.map((job) => {
             const sb = statusByJob[job.id] ?? { pending: 0 };
             return (
-              <li key={job.id} className="flex items-center gap-3 rounded-2xl border border-[#e8e0cf] bg-[#ffffff] p-4">
+              <li key={job.id} className="flex items-center gap-3 rounded-2xl border border-[#e8e0cf] bg-white p-4">
                 <div className="min-w-0 flex-1">
-                  <p className="flex items-center gap-2 truncate text-sm font-bold text-[#2b2118]">
+                  <p className="flex items-center gap-2 truncate text-sm font-bold text-espresso">
                     {job.title}
                     {!job.is_active && (
-                      <span className="shrink-0 rounded-full bg-[#efe9d9] px-2 py-0.5 text-[10px] font-bold text-[#857768]">Nonaktif</span>
+                      <span className="shrink-0 rounded-full bg-[#efe9d9] px-2 py-0.5 text-[10px] font-bold text-espresso-soft">Nonaktif</span>
                     )}
                   </p>
-                  <p className="mt-0.5 text-[11px] text-[#857768]">
-                    {job.cafes?.name ?? "-"} • <b className="text-[#3d2c1e]">{appCountByJob[job.id] || 0} pelamar</b>
+                  <p className="mt-0.5 text-[11px] text-espresso-soft">
+                    {job.cafes?.name ?? "-"} • <b className="text-espresso">{appCountByJob[job.id] || 0} pelamar</b>
                     {sb.pending > 0 && <span className="font-bold text-[#9a6a2f]"> • {sb.pending} menunggu</span>}
                   </p>
                 </div>
                 <Link
                   href={`/dashboard/owner/jobs/${job.id}/applicants`}
-                  className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-[#3d2c1e] px-4 py-2 text-xs font-bold text-white hover:bg-[#2e2015]"
+                  className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-coffee px-4 py-2 text-xs font-bold text-white hover:bg-[#2e2015]"
                 >
                   <Eye size={13} /> Kelola
                 </Link>

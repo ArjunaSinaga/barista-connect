@@ -18,8 +18,8 @@ export default function JobListRow({ job, active, applied, saved, showApply }) {
   const cafeName = job.cafes?.name ?? job.owners?.business_name ?? "-";
   return (
     <li
-      className={`rounded-2xl border bg-[#ffffff] p-4 transition-colors ${
-        active ? "border-[#3d2c1e] shadow-[0_2px_12px_rgba(43,33,24,0.12)]" : "border-[#e8e0cf] hover:border-[#c9b992]"
+      className={`rounded-2xl border bg-white p-4 transition-colors ${
+        active ? "border-coffee shadow-[0_2px_12px_rgba(43,33,24,0.12)]" : "border-[#e8e0cf] hover:border-[#c9b992]"
       }`}
     >
       <div className="flex gap-3">
@@ -28,30 +28,30 @@ export default function JobListRow({ job, active, applied, saved, showApply }) {
           <Link
             href={`/jobs?job=${job.id}`}
             scroll={false}
-            className="block truncate text-sm font-extrabold text-[#2b2118] hover:text-[#1f6b4a]"
+            className="block truncate text-sm font-extrabold text-espresso hover:text-matcha"
           >
             {job.title}
           </Link>
-          <p className="flex items-center gap-1 truncate text-xs text-[#857768]">
+          <p className="flex items-center gap-1 truncate text-xs text-espresso-soft">
             {cafeName}
             {job.owners?.is_verified && <VerifiedBadge size={12} />}
           </p>
-          <p className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-0.5 text-[11px] text-[#857768]">
+          <p className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-0.5 text-[11px] text-espresso-soft">
             <span className="inline-flex items-center gap-1"><MapPin size={11} aria-hidden="true" />{job.location}</span>
             {types.map((t) => (
               <span key={t}>{EMPLOYMENT_LABELS[t] ?? t}</span>
             ))}
           </p>
           {job.salary_text && (
-            <p className="mt-0.5 text-[11px] font-bold text-[#2b2118]">{job.salary_text}</p>
+            <p className="mt-0.5 text-[11px] font-bold text-espresso">{job.salary_text}</p>
           )}
           {tags.length > 0 && (
             <div className="mt-1.5 flex flex-wrap gap-1">
               {tags.map((t) => (
-                <span key={t} className="rounded-full bg-[#efe9d9] px-2 py-0.5 text-[10px] font-semibold text-[#6f6252]">{t}</span>
+                <span key={t} className="rounded-full bg-[#efe9d9] px-2 py-0.5 text-[10px] font-semibold text-espresso-soft">{t}</span>
               ))}
               {tags.length >= 4 && (
-                <span className="rounded-full bg-[#efe9d9] px-2 py-0.5 text-[10px] font-semibold text-[#6f6252]">+{tags.length - 3}</span>
+                <span className="rounded-full bg-[#efe9d9] px-2 py-0.5 text-[10px] font-semibold text-espresso-soft">+{tags.length - 3}</span>
               )}
             </div>
           )}
@@ -64,7 +64,7 @@ export default function JobListRow({ job, active, applied, saved, showApply }) {
           <Link
             href={`/jobs?job=${job.id}`}
             scroll={false}
-            className="inline-flex min-h-[32px] items-center rounded-full bg-[#3d2c1e] px-4 text-[11px] font-bold text-white hover:bg-[#2e2015]"
+            className="inline-flex min-h-[32px] items-center rounded-full bg-coffee px-4 text-[11px] font-bold text-white hover:bg-[#2e2015]"
           >
             Lihat
           </Link>

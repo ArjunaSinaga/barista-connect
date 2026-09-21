@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import { UsersRound } from "lucide-react";
 import { createClient, getSessionSafe, isSupabaseConfigured } from "@/lib/supabase/server";
 import { EmptyState } from "@/components/ui/EmptyState";
@@ -17,9 +18,9 @@ const TEAM_META = {
 };
 
 export default async function TeamPage({ searchParams }) {
-  if (!isSupabaseConfigured()) return null;
+  if (!isSupabaseConfigured()) redirect("/login");
   const { user } = await getSessionSafe();
-  if (!user) return null;
+  if (!user) redirect("/login");
   const params = await searchParams;
   const supabase = await createClient();
 

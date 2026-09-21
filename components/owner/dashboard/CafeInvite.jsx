@@ -38,12 +38,12 @@ export default function CafeInvite({ cafeId, initialCode }) {
   }
 
   return (
-    <p className="mt-1 flex flex-wrap items-center gap-2 text-[11px] text-[#857768]">
-      <span>Kode tim: <span className="rounded bg-[#efe9d9] px-1.5 py-0.5 font-mono font-bold text-[#3d2c1e]">{code}</span></span>
-      <button type="button" onClick={copy} className="inline-flex items-center gap-1 font-bold text-[#2b6cb0] hover:underline">
+    <p className="mt-1 flex flex-wrap items-center gap-2 text-[11px] text-espresso-soft">
+      <span>Kode tim: <span className="rounded bg-[#efe9d9] px-1.5 py-0.5 font-mono font-bold text-espresso">{code}</span></span>
+      <button type="button" onClick={copy} className="inline-flex items-center gap-1 font-bold text-link hover:underline">
         <Copy size={11} /> Salin
       </button>
-      <button type="button" onClick={regen} disabled={busy} className="inline-flex items-center gap-1 font-bold text-[#2b6cb0] hover:underline disabled:opacity-50">
+      <button type="button" onClick={regen} disabled={busy} className="inline-flex items-center gap-1 font-bold text-link hover:underline disabled:opacity-50">
         <RefreshCw size={11} /> {busy ? "..." : "Acak"}
       </button>
     </p>

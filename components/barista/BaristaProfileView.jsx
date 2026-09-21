@@ -19,7 +19,7 @@ export default function BaristaProfileView({
             Ini tampilan publik profilmu — begini kafe lain melihatmu.
           </p>
           {editHref && (
-            <Link href={editHref} className="rounded-xl bg-[#3d2c1e] px-4 py-2 text-sm font-bold text-white hover:bg-[#2e2015]">
+            <Link href={editHref} className="rounded-xl bg-coffee px-4 py-2 text-sm font-bold text-white hover:bg-[#2e2015]">
               Edit Profil
             </Link>
           )}
@@ -42,7 +42,7 @@ export default function BaristaProfileView({
           <div className="mt-4 flex justify-center">
             {isOwner && viewerId && <StartChatButton ownerId={viewerId} baristaId={b.id} />}
             {isSelf && !editHref && (
-              <Link href="/dashboard/barista/profile?edit=1" className="rounded-xl bg-[#3d2c1e] px-4 py-2.5 text-sm font-bold text-white hover:bg-[#2e2015]">
+              <Link href="/dashboard/barista/profile?edit=1" className="rounded-xl bg-coffee px-4 py-2.5 text-sm font-bold text-white hover:bg-[#2e2015]">
                 Edit profil
               </Link>
             )}

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import { Briefcase, FileText, CheckCheck, FlagOff, MessagesSquare, ArrowRight } from "lucide-react";
 import { createClient, getSessionSafe, isSupabaseConfigured } from "@/lib/supabase/server";
 import { STATUS_META } from "@/lib/constants";
@@ -24,13 +25,7 @@ export default async function BaristaDashboardPage({ searchParams }) {
     );
   }
   const { user, profile } = await getSessionSafe();
-  if (!user) {
-    return (
-      <div className="p-8 text-center">
-        Silakan login di <a href="/login" className="text-caramel underline">/login</a>.
-      </div>
-    );
-  }
+  if (!user) redirect("/login");
   if (profile?.role !== "barista") {
     return (
       <div className="mx-auto max-w-3xl px-4 py-8">
@@ -62,7 +57,6 @@ export default async function BaristaDashboardPage({ searchParams }) {
   const total = list.length;
   const waiting = count("pending") + count("viewed");
   const accepted = count("accepted");
-  const done = count("terminated");
   const recent = list.slice(0, 3);
   const appliedIds = new Set(list.map((a) => a.job_post_id));
 
@@ -87,11 +81,13 @@ export default async function BaristaDashboardPage({ searchParams }) {
     .order("created_at", { ascending: false })
     .limit(5);
 
-  // Rating yang kuterima (via tim)
+  // Rating yang kuterima (via tim) + hitung selesai dari team_members (applications tak punya status terminated)
+  let done = 0;
   let ratingAvg = null;
   let ratingCount = 0;
   try {
-    const { data: teams } = await supabase.from("team_members").select("id").eq("barista_id", user.id);
+    const { data: teams } = await supabase.from("team_members").select("id, status").eq("barista_id", user.id);
+    done = (teams ?? []).filter((t) => t.status === "terminated").length;
     const tids = (teams ?? []).map((t) => t.id);
     if (tids.length) {
       const { data: rs } = await supabase.from("ratings").select("stars").in("team_member_id", tids);
@@ -159,7 +155,7 @@ export default async function BaristaDashboardPage({ searchParams }) {
           <p className="mt-1 text-3xl font-black text-espresso">{accepted}</p>
           <p className="mt-1 flex items-center gap-1 text-xs text-espresso-soft"><CheckCheck size={12} />sedang bekerja</p>
         </div>
-        <div className="rounded-2xl border border-[#3d2c1e] bg-[#3d2c1e] p-4 text-white">
+        <div className="rounded-2xl border border-coffee bg-coffee p-4 text-white">
           <p className="text-xs font-bold tracking-widest text-latte uppercase">Selesai</p>
           <p className="mt-1 text-3xl font-black">{done}</p>
           <p className="mt-1 flex items-center gap-1 text-xs text-latte"><FlagOff size={12} />bisa dinilai</p>
@@ -176,7 +172,7 @@ export default async function BaristaDashboardPage({ searchParams }) {
         {recent.length === 0 ? (
           <div className="px-5 py-6">
             <p className="text-sm text-espresso-soft">Belum ada lamaran. Cari lowongan di bawah dan kirim lamaran pertamamu.</p>
-            <Link href="/jobs" className="mt-3 inline-flex min-h-[40px] items-center rounded-full bg-[#3d2c1e] px-5 text-[13px] font-bold text-white hover:bg-[#2e2015]">
+            <Link href="/jobs" className="mt-3 inline-flex min-h-[40px] items-center rounded-full bg-coffee px-5 text-[13px] font-bold text-white hover:bg-[#2e2015]">
               Cari lowongan
             </Link>
           </div>
@@ -190,7 +186,7 @@ export default async function BaristaDashboardPage({ searchParams }) {
                     <p className="truncate text-sm font-bold text-espresso">{a.job_posts?.title ?? "Lowongan dihapus"}</p>
                     <p className="truncate text-xs text-espresso-soft">{ownerMap.get(a.id) ?? "-"} • {relativeTime(a.created_at)}</p>
                   </div>
-                  <Badge classes={meta.classes}>{a.status === "terminated" ? "Selesai" : meta.label}</Badge>
+                  <Badge classes={meta.classes}>{meta.label}</Badge>
                 </li>
               );
             })}
@@ -198,12 +194,12 @@ export default async function BaristaDashboardPage({ searchParams }) {
         )}
       </div>
 
-      <div className="flex items-center gap-4 rounded-2xl border border-[#e8e0cf] bg-[#ffffff] p-5 shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
+      <div className="flex items-center gap-4 rounded-2xl border border-[#e8e0cf] bg-white p-5 shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
         <div className="min-w-0 flex-1">
-          <h2 className="text-sm font-extrabold text-[#2b2118]">Cari lowongan di job board</h2>
-          <p className="mt-0.5 text-xs text-[#857768]">Jelajahi lowongan aktif, simpan favoritmu, dan lamar langsung.</p>
+          <h2 className="text-sm font-extrabold text-espresso">Cari lowongan di job board</h2>
+          <p className="mt-0.5 text-xs text-espresso-soft">Jelajahi lowongan aktif, simpan favoritmu, dan lamar langsung.</p>
         </div>
-        <Link href="/jobs" className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-[#3d2c1e] px-5 py-2.5 text-sm font-bold text-white hover:bg-[#2e2015]">
+        <Link href="/jobs" className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-coffee px-5 py-2.5 text-sm font-bold text-white hover:bg-[#2e2015]">
           Buka Loker <ArrowRight size={15} />
         </Link>
       </div>
@@ -229,8 +225,8 @@ export default async function BaristaDashboardPage({ searchParams }) {
   );
 
   const pengaturan = (
-    <div className="rounded-2xl border border-[#e8e0cf] bg-[#ffffff] p-5 shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
-      <h2 className="text-sm font-extrabold text-[#2b2118]">Kelengkapan Profil ({profileDone}/4)</h2>
+    <div className="rounded-2xl border border-[#e8e0cf] bg-white p-5 shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
+      <h2 className="text-sm font-extrabold text-espresso">Kelengkapan Profil ({profileDone}/4)</h2>
       <ul className="mt-3 space-y-2">
         {profileItems.map(([ok, label, href]) => (
           <li key={label}>
@@ -243,14 +239,14 @@ export default async function BaristaDashboardPage({ searchParams }) {
           </li>
         ))}
       </ul>
-      <Link href="/dashboard/barista/profile" className="mt-4 inline-flex min-h-[40px] items-center rounded-full bg-[#3d2c1e] px-5 text-[13px] font-bold text-white hover:bg-[#2e2015]">
+      <Link href="/dashboard/barista/profile" className="mt-4 inline-flex min-h-[40px] items-center rounded-full bg-coffee px-5 text-[13px] font-bold text-white hover:bg-[#2e2015]">
         Edit Profil
       </Link>
     </div>
   );
 
   return (
-    <div className="min-h-screen bg-[#f5f1e8] text-[#2b2118] lg:flex lg:h-[calc(100dvh-3.5rem)] lg:min-h-0 lg:flex-col lg:overflow-hidden">
+    <div className="min-h-screen bg-paper text-espresso lg:flex lg:h-[calc(100dvh-3.5rem)] lg:min-h-0 lg:flex-col lg:overflow-hidden">
       <div className="mx-auto w-full max-w-[1400px] px-4 py-4 sm:px-6 lg:min-h-0 lg:flex-1">
         <BaristaShell
           initialView={tab}

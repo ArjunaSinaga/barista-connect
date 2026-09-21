@@ -27,15 +27,15 @@ export default function TeamView({ cafes = [], members = [], ratingMap = {}, ini
     <>
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
-          <p className="text-[11px] font-bold tracking-[0.18em] text-[#857768] uppercase">Owner</p>
+          <p className="text-[11px] font-bold tracking-[0.18em] text-espresso-soft uppercase">Owner</p>
           <h2 className="font-display mt-0.5 text-2xl font-semibold tracking-tight">Tim Saya ({grouped.length})</h2>
-          <p className="mt-0.5 max-w-xl text-xs leading-5 text-[#6f6252]">Satu baris per orang. Klik cafe untuk melihat siapa saja yang bekerja di sana.</p>
+          <p className="mt-0.5 max-w-xl text-xs leading-5 text-espresso-soft">Satu baris per orang. Klik cafe untuk melihat siapa saja yang bekerja di sana.</p>
         </div>
         <div className="flex flex-wrap items-center gap-2">
-          <button type="button" onClick={onBack} className="inline-flex items-center gap-2 rounded-full border border-[#e0d5bd] bg-[#ffffff] px-4 py-2 text-xs font-bold text-[#3d2c1e] hover:border-[#3d2c1e]">
+          <button type="button" onClick={onBack} className="inline-flex items-center gap-2 rounded-full border border-[#e0d5bd] bg-white px-4 py-2 text-xs font-bold text-espresso hover:border-coffee">
             <UsersRound size={14} /> Dashboard
           </button>
-          <Link href="/dashboard/owner/team" className="inline-flex items-center gap-2 rounded-full bg-[#3d2c1e] px-4 py-2 text-xs font-bold text-white hover:bg-[#2e2015]">
+          <Link href="/dashboard/owner/team" className="inline-flex items-center gap-2 rounded-full bg-coffee px-4 py-2 text-xs font-bold text-white hover:bg-[#2e2015]">
             Halaman Tim
           </Link>
         </div>
@@ -46,7 +46,7 @@ export default function TeamView({ cafes = [], members = [], ratingMap = {}, ini
           <button
             type="button"
             onClick={() => setActiveCafe(null)}
-            className={`rounded-full px-4 py-2 text-xs font-bold border transition ${!activeCafe ? "bg-[#3d2c1e] text-white border-[#3d2c1e]" : "border-[#e0d5bd] bg-[#ffffff] text-[#6f6252] hover:border-[#3d2c1e]"}`}
+            className={`rounded-full px-4 py-2 text-xs font-bold border transition ${!activeCafe ? "bg-coffee text-white border-coffee" : "border-[#e0d5bd] bg-white text-espresso-soft hover:border-coffee"}`}
           >
             Semua ({(members ?? []).length})
           </button>
@@ -55,7 +55,7 @@ export default function TeamView({ cafes = [], members = [], ratingMap = {}, ini
               key={c.id}
               type="button"
               onClick={() => setActiveCafe(c.id)}
-              className={`rounded-full px-4 py-2 text-xs font-bold border transition ${activeCafe === c.id ? "bg-[#3d2c1e] text-white border-[#3d2c1e]" : "border-[#e0d5bd] bg-[#ffffff] text-[#6f6252] hover:border-[#3d2c1e]"}`}
+              className={`rounded-full px-4 py-2 text-xs font-bold border transition ${activeCafe === c.id ? "bg-coffee text-white border-coffee" : "border-[#e0d5bd] bg-white text-espresso-soft hover:border-coffee"}`}
             >
               {c.name} ({countByCafe[c.id] ?? 0})
             </button>
@@ -77,19 +77,19 @@ export default function TeamView({ cafes = [], members = [], ratingMap = {}, ini
           const b = g.profile;
           const meta = g.isActive ? TEAM_META.active : TEAM_META.terminated;
           return (
-            <div key={g.baristaId} className="rounded-2xl border border-[#e8e0cf] bg-[#ffffff] p-4 shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
+            <div key={g.baristaId} className="rounded-2xl border border-[#e8e0cf] bg-white p-4 shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
               <div className="flex items-center gap-4">
                 <Avatar src={b?.profile_picture_url} name={b?.full_name} size="md" />
                 <div className="min-w-0 flex-1">
                   <div className="flex items-center gap-2 flex-wrap">
-                    <span className="truncate text-sm font-extrabold text-[#2b2118]">{b?.full_name ?? "Barista"}</span>
+                    <span className="truncate text-sm font-extrabold text-espresso">{b?.full_name ?? "Barista"}</span>
                     <Badge classes={meta.classes}>{meta.label}</Badge>
                   </div>
-                  <p className="mt-0.5 truncate text-xs text-[#857768]">
+                  <p className="mt-0.5 truncate text-xs text-espresso-soft">
                     {b?.location_place ?? "-"} • {formatExpShort(b?.experience_months, b?.years_of_experience)} pengalaman • {g.jobs.length} lowongan
                   </p>
                 </div>
-                <Link href={`/barista/${b?.id}`} className="shrink-0 text-xs font-bold text-[#6f6252] hover:text-[#3d2c1e]">
+                <Link href={`/barista/${b?.id}`} className="shrink-0 text-xs font-bold text-espresso-soft hover:text-espresso">
                   Profil →
                 </Link>
                 <TeamRemoveButton memberIds={g.memberIds} name={b?.full_name ?? "Barista"} />
@@ -100,8 +100,8 @@ export default function TeamView({ cafes = [], members = [], ratingMap = {}, ini
                   const jm = TEAM_META[m.status] ?? TEAM_META.active;
                   return (
                     <li key={m.id} className="flex items-center justify-between gap-2 text-xs">
-                      <span className="min-w-0 truncate text-[#857768]">
-                        <span className="font-bold text-[#2b2118]">{m.job_title || "Lowongan"}</span>
+                      <span className="min-w-0 truncate text-espresso-soft">
+                        <span className="font-bold text-espresso">{m.job_title || "Lowongan"}</span>
                         {m.cafes?.name && <> · {m.cafes.name}</>}
                         {" "}· <Badge classes={jm.classes}>{jm.label}</Badge>
                       </span>
@@ -110,11 +110,11 @@ export default function TeamView({ cafes = [], members = [], ratingMap = {}, ini
                           <Stars value={r.stars} size={12} />
                         </span>
                       ) : m.application_id && m.job_post_id ? (
-                        <Link href={`/dashboard/owner/jobs/${m.job_post_id}/applicants`} className="shrink-0 font-bold text-[#2b6cb0] hover:underline">
+                        <Link href={`/dashboard/owner/jobs/${m.job_post_id}/applicants`} className="shrink-0 font-bold text-link hover:underline">
                           Kasih rating →
                         </Link>
                       ) : (
-                        <Link href={`/barista/${b?.id}`} className="shrink-0 font-bold text-[#2b6cb0] hover:underline">
+                        <Link href={`/barista/${b?.id}`} className="shrink-0 font-bold text-link hover:underline">
                           Nilai di profil →
                         </Link>
                       )}

@@ -21,7 +21,7 @@ export default function BottomCtaStrip({ hideForUser = false }) {
           type="button"
           onClick={dismiss}
           aria-label="Sembunyikan banner"
-          className="absolute top-2.5 right-2.5 inline-flex h-7 w-7 items-center justify-center rounded-full border border-[#f5f1e8]/30 bg-[#f5f1e8]/15 text-[#f5f1e8] hover:bg-[#f5f1e8]/25"
+          className="absolute top-2.5 right-2.5 inline-flex h-7 w-7 items-center justify-center rounded-full border border-[#f5f1e8]/30 bg-paper/15 text-[#f5f1e8] hover:bg-paper/25"
         >
           <X size={15} strokeWidth={2.5} />
         </button>
@@ -30,7 +30,7 @@ export default function BottomCtaStrip({ hideForUser = false }) {
           <p className="truncate text-[11px] text-[#f5f1e8]/60">Gabung ribuan barista dan pemilik kafe membangun komunitas kopi.</p>
         </div>
         <div className="flex shrink-0 items-center gap-2 pr-6">
-          <Link href="/signup?role=barista" className="inline-flex min-h-[36px] items-center rounded-full bg-[#f5f1e8] px-5 text-xs font-bold text-[#2b1c11] hover:bg-white">
+          <Link href="/signup?role=barista" className="inline-flex min-h-[36px] items-center rounded-full bg-paper px-5 text-xs font-bold text-[#2b1c11] hover:bg-white">
             Saya Barista
           </Link>
           <Link href="/signup?role=owner" className="inline-flex min-h-[36px] items-center rounded-full border border-[#f5f1e8]/40 px-5 text-xs font-bold text-[#f5f1e8] hover:border-[#f5f1e8]">

@@ -37,20 +37,20 @@ function CheckEmailInner() {
   }
 
   return (
-    <div className="auth-light min-h-[calc(100dvh-3.5rem)] text-[#2b2118]">
+    <div className="auth-light min-h-[calc(100dvh-3.5rem)] text-espresso">
       <div className="mx-auto max-w-md px-4 py-12">
-        <div className="rounded-2xl border border-[#e8e0cf] bg-[#ffffff] p-6 text-center shadow-[0_2px_12px_rgba(43,33,24,0.10)] sm:p-8">
-          <MailCheck size={40} className="mx-auto text-[#1f6b4a]" />
+        <div className="rounded-2xl border border-[#e8e0cf] bg-white p-6 text-center shadow-[0_2px_12px_rgba(43,33,24,0.10)] sm:p-8">
+          <MailCheck size={40} className="mx-auto text-matcha" />
           <h1 className="mt-4 text-2xl font-extrabold tracking-tight">Silakan cek email kamu</h1>
-          <p className="mt-2 text-sm leading-6 text-[#857768]">
-            Kami mengirim link verifikasi ke <span className="font-bold text-[#2b2118]">{email || "emailmu"}</span>.
+          <p className="mt-2 text-sm leading-6 text-espresso-soft">
+            Kami mengirim link verifikasi ke <span className="font-bold text-espresso">{email || "emailmu"}</span>.
             Klik link itu, lalu masuk seperti biasa. Cek folder spam bila tidak ada.
           </p>
           <div className="mt-6 space-y-3">
             <Button full variant="coffee" disabled={busy || !email} onClick={resend}>
               {busy ? "Mengirim..." : "Kirim ulang email"}
             </Button>
-            <Link href="/login" className="block text-sm font-bold text-[#1f6b4a] hover:underline">
+            <Link href="/login" className="block text-sm font-bold text-matcha hover:underline">
               Sudah verifikasi? Masuk
             </Link>
           </div>

@@ -45,11 +45,11 @@ export default function SidebarBarista({ barista, counts, view, onNavigate }) {
 
   const cls = (active) =>
     `flex w-full items-center gap-3 rounded-xl px-3 py-2 text-sm font-bold ${
-      active ? "bg-[#efe9d9] text-[#3d2c1e]" : "text-[#6f6252] hover:bg-[#faf7ef] hover:text-[#3d2c1e]"
+      active ? "bg-[#efe9d9] text-espresso" : "text-espresso-soft hover:bg-[#faf7ef] hover:text-espresso"
     }`;
   const countBadge = (n) =>
     n !== null && n !== undefined ? (
-      <span className="rounded-full bg-[#efe9d9] px-2 py-0.5 text-[11px] font-bold text-[#6f6252]">{n}</span>
+      <span className="rounded-full bg-[#efe9d9] px-2 py-0.5 text-[11px] font-bold text-espresso-soft">{n}</span>
     ) : null;
 
   const item = (key, Icon, label, count) => (
@@ -62,40 +62,40 @@ export default function SidebarBarista({ barista, counts, view, onNavigate }) {
 
   return (
     <aside className="flex min-w-0 flex-col gap-3 lg:h-full">
-      <div className="shrink-0 rounded-2xl border border-[#e8e0cf] bg-[#ffffff] p-4 text-center shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
+      <div className="shrink-0 rounded-2xl border border-[#e8e0cf] bg-white p-4 text-center shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
         <div className="mx-auto w-fit">
           <Avatar src={barista?.profile_picture_url} name={barista?.full_name} size="lg" />
         </div>
-        <p className="mt-2 truncate text-base font-extrabold tracking-tight text-[#2b2118]">{barista?.full_name ?? "Barista"}</p>
-        <p className="mt-0.5 text-xs text-[#857768]">
+        <p className="mt-2 truncate text-base font-extrabold tracking-tight text-espresso">{barista?.full_name ?? "Barista"}</p>
+        <p className="mt-0.5 text-xs text-espresso-soft">
           {formatExpShort(barista?.experience_months, barista?.years_of_experience)} pengalaman • {barista?.location_place ?? "-"}
         </p>
         <div className="mt-3 flex items-center justify-center gap-2 rounded-xl bg-[#faf7ef] px-3 py-2">
           <span className={`h-2 w-2 rounded-full ${open ? "bg-[#1f6b4a]" : "bg-gray-400"}`} aria-hidden="true" />
-          <span className="text-xs font-bold text-[#2b2118]">{open ? "Siap Kerja" : "Sibuk"}</span>
+          <span className="text-xs font-bold text-espresso">{open ? "Siap Kerja" : "Sibuk"}</span>
           <Toggle checked={open} onChange={toggleWork} />
         </div>
         <Link
           href="/dashboard/barista/profile"
-          className="mt-2 block rounded-full bg-[#efe9d9] px-4 py-2 text-center text-xs font-bold text-[#3d2c1e] hover:bg-[#e5dcc4]"
+          className="mt-2 block rounded-full bg-[#efe9d9] px-4 py-2 text-center text-xs font-bold text-espresso hover:bg-[#e5dcc4]"
         >
           Edit Profil
         </Link>
       </div>
 
-      <nav className="rounded-2xl border border-[#e8e0cf] bg-[#ffffff] p-2 shadow-[0_1px_3px_rgba(43,33,24,0.08)] lg:flex-1" aria-label="Dashboard barista">
+      <nav className="rounded-2xl border border-[#e8e0cf] bg-white p-2 shadow-[0_1px_3px_rgba(43,33,24,0.08)] lg:flex-1" aria-label="Dashboard barista">
         {item("ringkasan", LayoutDashboard, "Dasbor", null)}
         {item("lamaran", FileText, "Lamaran Saya", counts.applied)}
         {item("tersimpan", Bookmark, "Loker Tersimpan", counts.saved)}
-        <Link href="/messages" className="flex items-center gap-3 rounded-xl px-3 py-2 text-sm font-bold text-[#6f6252] hover:bg-[#faf7ef] hover:text-[#3d2c1e]">
+        <Link href="/messages" className="flex items-center gap-3 rounded-xl px-3 py-2 text-sm font-bold text-espresso-soft hover:bg-[#faf7ef] hover:text-espresso">
           <MessagesSquare size={17} className="shrink-0" />
           <span className="flex-1 text-left">Pesan</span>
         </Link>
-        <Link href="/training" className="flex items-center gap-3 rounded-xl px-3 py-2 text-sm font-bold text-[#6f6252] hover:bg-[#faf7ef] hover:text-[#3d2c1e]">
+        <Link href="/training" className="flex items-center gap-3 rounded-xl px-3 py-2 text-sm font-bold text-espresso-soft hover:bg-[#faf7ef] hover:text-espresso">
           <GraduationCap size={17} className="shrink-0" />
           <span className="flex-1 text-left">Pelatihan</span>
         </Link>
-        <Link href="/dashboard/barista/profile" className="flex items-center gap-3 rounded-xl px-3 py-2 text-sm font-bold text-[#6f6252] hover:bg-[#faf7ef] hover:text-[#3d2c1e]">
+        <Link href="/dashboard/barista/profile" className="flex items-center gap-3 rounded-xl px-3 py-2 text-sm font-bold text-espresso-soft hover:bg-[#faf7ef] hover:text-espresso">
           <UserRound size={17} className="shrink-0" />
           <span className="flex-1 text-left">Profil</span>
         </Link>
@@ -106,16 +106,16 @@ export default function SidebarBarista({ barista, counts, view, onNavigate }) {
       </nav>
 
       <div className="relative shrink-0 rounded-2xl border border-[#e8e0cf] bg-[#efe9d9] p-4 shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
-        <p className="flex items-center gap-2 text-sm font-extrabold text-[#3d2c1e]">
-          <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#3d2c1e] text-white"><Sparkles size={15} /></span>
+        <p className="flex items-center gap-2 text-sm font-extrabold text-espresso">
+          <span className="flex h-8 w-8 items-center justify-center rounded-full bg-coffee text-white"><Sparkles size={15} /></span>
           Profil 100%
         </p>
-        <p className="mt-2 text-xs leading-5 text-[#6f6252]">
+        <p className="mt-2 text-xs leading-5 text-espresso-soft">
           Foto + CV + 3 skill + pengalaman = owner 3x lebih mungkin chat kamu.
         </p>
         <Link
           href="/dashboard/barista/profile"
-          className="mt-3 inline-flex items-center rounded-full bg-[#3d2c1e] px-4 py-2 text-xs font-bold text-white hover:bg-[#2e2015]"
+          className="mt-3 inline-flex items-center rounded-full bg-coffee px-4 py-2 text-xs font-bold text-white hover:bg-[#2e2015]"
         >
           Cek Profil →
         </Link>

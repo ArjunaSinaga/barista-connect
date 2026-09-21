@@ -13,8 +13,8 @@ import { formatExpShort } from "@/lib/exp";
 
 // Kartu kandidat ala mockup: foto + badge + nama + rating + quote + skill + 2 CTA.
 export function badgeFor(b, rank) {
-  if (b.is_open_to_work) return { label: "Available Now", cls: "bg-[#e3f0e8] text-[#1f6b4a]" };
-  if ((b.certificates?.length ?? 0) > 0) return { label: "Certified", cls: "bg-[#e3f0e8] text-[#1f6b4a]" };
+  if (b.is_open_to_work) return { label: "Available Now", cls: "bg-[#e3f0e8] text-matcha" };
+  if ((b.certificates?.length ?? 0) > 0) return { label: "Certified", cls: "bg-[#e3f0e8] text-matcha" };
   if (rank === 0) return { label: "Top 1%", cls: "bg-[#f5ecd4] text-[#8a6d1f]" };
   return { label: "Top Match", cls: "bg-[#f5ecd4] text-[#8a6d1f]" };
 }
@@ -28,7 +28,7 @@ export function CandidateCard({ barista, rank, compact = false, strip = false, s
 
   if (strip) {
     return (
-      <div className="flex h-full min-w-0 items-center gap-3 rounded-xl border border-[#e8e0cf] bg-[#ffffff] p-2.5 shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
+      <div className="flex h-full min-w-0 items-center gap-3 rounded-xl border border-[#e8e0cf] bg-white p-2.5 shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
         <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-lg bg-[#efe9d9]">
           {photo ? (
             <Image src={photo} alt={barista.full_name} fill sizes="64px" className="object-cover" />
@@ -43,24 +43,24 @@ export function CandidateCard({ barista, rank, compact = false, strip = false, s
         </div>
         <div className="min-w-0 flex-1">
           <div className="flex items-center justify-between gap-1">
-            <p className="flex items-center gap-1 text-xs font-extrabold text-[#2b2118] truncate">
+            <p className="flex items-center gap-1 text-xs font-extrabold text-espresso truncate">
               <span className="truncate">{barista.full_name}</span>
               {barista.is_verified && <VerifiedBadge size={11} />}
             </p>
             <div className="flex items-center gap-1 shrink-0">
-              <span className="flex items-center gap-0.5 text-[11px] font-bold text-[#2b2118]">
+              <span className="flex items-center gap-0.5 text-[11px] font-bold text-espresso">
                 <Star size={10} className="fill-[#c98a2b] text-[#c98a2b]" />
-                {avg ?? "-"} <span className="font-semibold text-[#857768]">({count})</span>
+                {avg ?? "-"} <span className="font-semibold text-espresso-soft">({count})</span>
               </span>
               <SaveBaristaButton baristaId={barista.id} baristaName={barista.full_name} initialSaved={saved} />
             </div>
           </div>
-          <p className="mt-0.5 flex flex-wrap items-center gap-x-2 text-[10px] text-[#857768]">
+          <p className="mt-0.5 flex flex-wrap items-center gap-x-2 text-[10px] text-espresso-soft">
             <span className="inline-flex items-center gap-0.5"><MapPin size={9} />{barista.location_place ?? "-"}</span>
             <span className="inline-flex items-center gap-0.5"><Briefcase size={9} />{formatExpShort(barista.experience_months, barista.years_of_experience)}</span>
           </p>
           {quote && (
-            <p className="mt-0.5 line-clamp-1 text-[10px] leading-3 text-[#857768] italic">
+            <p className="mt-0.5 line-clamp-1 text-[10px] leading-3 text-espresso-soft italic">
               &ldquo;{quote}&rdquo;
             </p>
           )}
@@ -68,14 +68,14 @@ export function CandidateCard({ barista, rank, compact = false, strip = false, s
             {barista.skills?.length > 0 && (
               <div className="flex flex-wrap gap-1">
                 {barista.skills.slice(0, 2).map((s) => (
-                  <span key={s} className="rounded bg-[#f2ecdf] px-1.5 py-0.5 text-[9px] font-semibold text-[#6f6252]">{s}</span>
+                  <span key={s} className="rounded bg-[#f2ecdf] px-1.5 py-0.5 text-[9px] font-semibold text-espresso-soft">{s}</span>
                 ))}
               </div>
             )}
             <div className="ml-auto flex gap-1">
               <Link
                 href={`/barista/${barista.id}`}
-                className="inline-flex items-center justify-center rounded border border-[#d8cdae] px-2 py-1 text-[10px] font-bold text-[#3d2c1e] hover:border-[#3d2c1e]"
+                className="inline-flex items-center justify-center rounded border border-[#d8cdae] px-2 py-1 text-[10px] font-bold text-espresso hover:border-coffee"
               >
                 Profile
               </Link>
@@ -83,7 +83,7 @@ export function CandidateCard({ barista, rank, compact = false, strip = false, s
                 ownerId={ownerId}
                 baristaId={barista.id}
                 iconSize={9}
-                className="inline-flex items-center justify-center gap-0.5 rounded bg-[#3d2c1e] px-2 py-1 text-[10px] font-bold text-white hover:bg-[#2e2015] disabled:opacity-50"
+                className="inline-flex items-center justify-center gap-0.5 rounded bg-coffee px-2 py-1 text-[10px] font-bold text-white hover:bg-[#2e2015] disabled:opacity-50"
               />
             </div>
           </div>
@@ -95,7 +95,7 @@ export function CandidateCard({ barista, rank, compact = false, strip = false, s
   const coverCls = compact ? "aspect-[16/7]" : "aspect-[16/8]";
 
   return (
-    <div className="flex h-full min-w-0 flex-col overflow-hidden rounded-2xl border border-[#e8e0cf] bg-[#ffffff] shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
+    <div className="flex h-full min-w-0 flex-col overflow-hidden rounded-2xl border border-[#e8e0cf] bg-white shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
 <div className={`relative ${coverCls}`}>
         {photo ? (
           <Image src={photo} alt={barista.full_name} fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover" />
@@ -110,40 +110,40 @@ export function CandidateCard({ barista, rank, compact = false, strip = false, s
         <SaveBaristaButton baristaId={barista.id} baristaName={barista.full_name} initialSaved={saved} />
       </div>
       <div className={compact ? "flex flex-1 flex-col p-2.5" : "p-3"}>
-        <p className="flex items-center gap-1.5 text-sm font-extrabold text-[#2b2118]">
+        <p className="flex items-center gap-1.5 text-sm font-extrabold text-espresso">
           <span className="truncate">{barista.full_name}</span>
           {barista.is_verified && <VerifiedBadge size={13} />}
         </p>
-        <p className="text-[11px] text-[#857768]">Barista</p>
-        <p className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[11px] text-[#857768]">
+        <p className="text-[11px] text-espresso-soft">Barista</p>
+        <p className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-0.5 text-[11px] text-espresso-soft">
           <span className="inline-flex items-center gap-1"><MapPin size={10} />{barista.location_place ?? "-"}</span>
           <span className="inline-flex items-center gap-1"><Briefcase size={10} />{formatExpShort(barista.experience_months, barista.years_of_experience)}</span>
         </p>
-        <p className="mt-1 flex items-center gap-1 text-xs font-bold text-[#2b2118]">
+        <p className="mt-1 flex items-center gap-1 text-xs font-bold text-espresso">
           <Star size={11} className="fill-[#c98a2b] text-[#c98a2b]" />
-          {avg ?? "-"} <span className="font-semibold text-[#857768]">({count})</span>
+          {avg ?? "-"} <span className="font-semibold text-espresso-soft">({count})</span>
         </p>
         {quote && (
           <p className={compact
-            ? "mt-1 line-clamp-1 text-[11px] leading-4 text-[#857768] italic"
-            : "mt-1.5 line-clamp-2 text-[11px] leading-4 text-[#857768] italic"}>
+            ? "mt-1 line-clamp-1 text-[11px] leading-4 text-espresso-soft italic"
+            : "mt-1.5 line-clamp-2 text-[11px] leading-4 text-espresso-soft italic"}>
             &ldquo;{quote.slice(0, compact ? 60 : 90)}&rdquo;
           </p>
         )}
         {barista.skills?.length > 0 && (
           <div className="mt-1.5 flex flex-wrap gap-1">
             {barista.skills.slice(0, compact ? 2 : 3).map((s) => (
-              <span key={s} className="rounded-full bg-[#f2ecdf] px-2 py-0.5 text-[10px] font-semibold text-[#6f6252]">{s}</span>
+              <span key={s} className="rounded-full bg-[#f2ecdf] px-2 py-0.5 text-[10px] font-semibold text-espresso-soft">{s}</span>
             ))}
             {barista.skills.length > (compact ? 2 : 3) && (
-              <span className="rounded-full bg-[#f2ecdf] px-2 py-0.5 text-[10px] font-semibold text-[#6f6252]">+{barista.skills.length - (compact ? 2 : 3)}</span>
+              <span className="rounded-full bg-[#f2ecdf] px-2 py-0.5 text-[10px] font-semibold text-espresso-soft">+{barista.skills.length - (compact ? 2 : 3)}</span>
             )}
           </div>
         )}
         <div className="mt-1.5 flex gap-1.5">
           <Link
             href={`/barista/${barista.id}`}
-            className="inline-flex min-h-[34px] flex-1 items-center justify-center rounded-full border border-[#d8cdae] px-2 py-1.5 text-[11px] font-bold text-[#3d2c1e] hover:border-[#3d2c1e]"
+            className="inline-flex min-h-[34px] flex-1 items-center justify-center rounded-full border border-[#d8cdae] px-2 py-1.5 text-[11px] font-bold text-espresso hover:border-coffee"
           >
             View Profile
           </Link>
@@ -151,7 +151,7 @@ export function CandidateCard({ barista, rank, compact = false, strip = false, s
             ownerId={ownerId}
             baristaId={barista.id}
             iconSize={11}
-            className="inline-flex min-h-[34px] flex-1 items-center justify-center gap-1 rounded-full bg-[#3d2c1e] px-2 py-1.5 text-[11px] font-bold text-white hover:bg-[#2e2015] disabled:opacity-50"
+            className="inline-flex min-h-[34px] flex-1 items-center justify-center gap-1 rounded-full bg-coffee px-2 py-1.5 text-[11px] font-bold text-white hover:bg-[#2e2015] disabled:opacity-50"
           />
         </div>
       </div>
@@ -190,16 +190,16 @@ export function TopCandidatesStrip({ baristas, savedIds = [], ownerId = null }) 
   const arrow = (enabled) =>
     `flex h-7 w-7 items-center justify-center rounded-full border transition-colors ${
       enabled
-        ? "border-[#e0d5bd] bg-[#ffffff] text-[#3d2c1e] hover:border-[#3d2c1e]"
+        ? "border-[#e0d5bd] bg-white text-espresso hover:border-coffee"
         : "cursor-not-allowed border-[#efe9d9] bg-[#faf7ef] text-[#b6a98f]"
     }`;
 
   return (
-    <section aria-label="Top candidates" className="rounded-2xl border border-[#e8e0cf] bg-[#ffffff] p-4 shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
+    <section aria-label="Top candidates" className="rounded-2xl border border-[#e8e0cf] bg-white p-4 shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
       <div className="flex items-end justify-between gap-2">
         <div>
-          <h2 className="text-sm font-extrabold tracking-tight text-[#2b2118]">Top Candidates</h2>
-          <p className="text-[11px] text-[#857768]">Barista pilihan untuk cafe Anda. Geser untuk lihat.</p>
+          <h2 className="text-sm font-extrabold tracking-tight text-espresso">Top Candidates</h2>
+          <p className="text-[11px] text-espresso-soft">Barista pilihan untuk cafe Anda. Geser untuk lihat.</p>
         </div>
         <div className="flex shrink-0 items-center gap-1.5">
           <button type="button" onClick={() => nudge(-1)} disabled={!canLeft} aria-label="Geser kandidat ke kiri" className={arrow(canLeft)}>
@@ -208,7 +208,7 @@ export function TopCandidatesStrip({ baristas, savedIds = [], ownerId = null }) 
           <button type="button" onClick={() => nudge(1)} disabled={!canRight} aria-label="Geser kandidat ke kanan" className={arrow(canRight)}>
             <ChevronRight size={15} aria-hidden="true" />
           </button>
-          <Link href="/find-baristas" className="ml-1 inline-flex items-center gap-0.5 text-xs font-bold text-[#2b6cb0] hover:underline">
+          <Link href="/find-baristas" className="ml-1 inline-flex items-center gap-0.5 text-xs font-bold text-link hover:underline">
             Lihat semua <ChevronRight size={13} aria-hidden="true" />
           </Link>
         </div>
@@ -239,10 +239,10 @@ export function TopCandidatesGrid({ baristas, savedIds = [], ownerId = null }) {
     <section aria-label="Top candidates">
       <div className="flex items-end justify-between gap-2">
         <div>
-          <h2 className="text-sm font-extrabold tracking-tight text-[#2b2118]">Top Candidates</h2>
-          <p className="text-[11px] text-[#857768]">Barista pilihan untuk cafe Anda.</p>
+          <h2 className="text-sm font-extrabold tracking-tight text-espresso">Top Candidates</h2>
+          <p className="text-[11px] text-espresso-soft">Barista pilihan untuk cafe Anda.</p>
         </div>
-        <Link href="/find-baristas" className="inline-flex shrink-0 items-center gap-0.5 text-xs font-bold text-[#2b6cb0] hover:underline">
+        <Link href="/find-baristas" className="inline-flex shrink-0 items-center gap-0.5 text-xs font-bold text-link hover:underline">
           Lihat semua talenta <ChevronRight size={13} aria-hidden="true" />
         </Link>
       </div>
@@ -264,16 +264,16 @@ export function TalentRow({ barista, tag }) {
       <Avatar src={barista.profile_picture_url} name={barista.full_name} size="md" />
       <span className="min-w-0 flex-1">
         <span className="flex items-center gap-2">
-          <span className="truncate text-[13px] font-extrabold text-[#2b2118]">{barista.full_name}</span>
+          <span className="truncate text-[13px] font-extrabold text-espresso">{barista.full_name}</span>
           {tag && (
             <span className={`shrink-0 rounded-full px-2 py-0.5 text-[10px] font-bold ${tag.cls}`}>{tag.label}</span>
           )}
         </span>
-        <span className="mt-0.5 block text-[11px] text-[#857768]">
+        <span className="mt-0.5 block text-[11px] text-espresso-soft">
           <Star size={10} className="mr-1 inline fill-[#c98a2b] text-[#c98a2b]" />
           {avg ?? "-"} ({count}) · {formatExpShort(barista.experience_months, barista.years_of_experience)}
         </span>
-        <span className="mt-0.5 block truncate text-[11px] text-[#857768]">
+        <span className="mt-0.5 block truncate text-[11px] text-espresso-soft">
           {barista.location_place ?? ""}{barista.skills?.length ? ` · ${barista.skills.slice(0, 2).join(", ")}` : ""}
         </span>
       </span>

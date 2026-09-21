@@ -141,7 +141,7 @@ export default async function JobsPage({ searchParams }) {
   const selCafeName = selected ? (selected.cafes?.name ?? selected.owners?.business_name ?? "-") : "";
 
   return (
-    <div className="min-h-screen bg-[#f5f1e8] text-[#2b2118] lg:flex lg:h-[calc(100dvh-3.5rem)] lg:min-h-0 lg:flex-col lg:overflow-hidden">
+    <div className="min-h-screen bg-paper text-espresso lg:flex lg:h-[calc(100dvh-3.5rem)] lg:min-h-0 lg:flex-col lg:overflow-hidden">
       <div className="mx-auto w-full max-w-[1400px] px-4 py-4 sm:px-6 lg:min-h-0 lg:flex-1">
         <div className="grid items-start gap-4 lg:h-full lg:grid-cols-[240px_minmax(0,1fr)] xl:grid-cols-[250px_minmax(0,1fr)_360px]">
           {/* Tengah: hero + filter + list */}
@@ -167,8 +167,8 @@ export default async function JobsPage({ searchParams }) {
                     aria-current={activePill ? "page" : undefined}
                     className={`rounded-full border px-3 py-1 text-[11px] font-bold ${
                       activePill
-                        ? "border-[#3d2c1e] bg-[#3d2c1e] text-white"
-                        : "border-[#e0d5bd] bg-[#ffffff] text-[#6f6252] hover:border-[#3d2c1e] hover:text-[#3d2c1e]"
+                        ? "border-coffee bg-coffee text-white"
+                        : "border-[#e0d5bd] bg-white text-espresso-soft hover:border-coffee hover:text-espresso"
                     }`}
                   >
                     {p.label}
@@ -178,10 +178,10 @@ export default async function JobsPage({ searchParams }) {
             </div>
 
             <div className="flex flex-wrap items-center justify-between gap-2">
-              <p className="text-xs text-[#857768]" role="status">
+              <p className="text-xs text-espresso-soft" role="status">
                 {savedOnly ? `${jobs.length} loker tersimpan` : `${jobs.length} loker ditemukan`}
                 {(q || loc || type || savedOnly) && (
-                  <Link href="/jobs" className="ml-2 font-bold text-[#2b6cb0] hover:underline">
+                  <Link href="/jobs" className="ml-2 font-bold text-link hover:underline">
                     Hapus filter
                   </Link>
                 )}

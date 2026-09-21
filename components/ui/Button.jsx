@@ -11,7 +11,7 @@ const VARIANTS = {
   danger: "bg-red-500 text-white hover:bg-red-600",
   success: "bg-matcha text-white hover:brightness-95",
   // Solid coffee-brown (kerja.inc mockup): light-page primary CTA.
-  coffee: "bg-[#3d2c1e] text-white hover:bg-[#2e2015] shadow-sm disabled:opacity-50",
+  coffee: "bg-coffee text-white hover:bg-[#2e2015] shadow-sm disabled:opacity-50",
 };
 
 const SIZES = {
@@ -25,6 +25,7 @@ export default function Button({
   variant = "primary",
   size = "md",
   full,
+  disabled,
   className = "",
   children,
   ...props
@@ -32,14 +33,21 @@ export default function Button({
   const cls = `inline-flex items-center justify-center gap-2 rounded-full font-semibold tracking-[-0.01em] transition-all active:scale-[0.95] cursor-pointer disabled:cursor-not-allowed ${VARIANTS[variant]} ${SIZES[size]} ${full ? "w-full" : ""} ${className}`;
 
   if (href) {
+    if (disabled) {
+      return (
+        <span aria-disabled="true" className={`${cls} pointer-events-none opacity-50`}>
+          {children}
+        </span>
+      );
+    }
     return (
-      <Link href={href} className={cls}>
+      <Link href={href} className={cls} {...props}>
         {children}
       </Link>
     );
   }
   return (
-    <button className={cls} {...props}>
+    <button className={cls} disabled={disabled} {...props}>
       {children}
     </button>
   );

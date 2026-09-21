@@ -380,6 +380,7 @@ export default function BaristaOnboardingPage() {
               accept={AVATAR_MIME_TYPES.join(",")}
               className="hidden"
               onChange={handleFile}
+              aria-label="Unggah foto profil barista"
             />
 
             <Button

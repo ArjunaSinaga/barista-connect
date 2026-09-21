@@ -60,7 +60,15 @@ body::before {
 .bg-caramel-dark { background: #b56a2a !important; }
 .text-caramel { color: var(--color-caramel) !important; }
 .bg-matcha { background: var(--color-matcha) !important; color: #fdf6ec !important; }
+.text-matcha { color: var(--color-matcha) !important; }
 .bg-cream-dark { background: var(--color-cream-dark) !important; }
+/* — Kopi pekat (CTA solid) + link biru: 1 sumber, ganti hex mentah — */
+.bg-coffee { background: #3d2c1e !important; color: #fff !important; }
+a.bg-coffee:hover, button.bg-coffee:hover { background: #2e2015 !important; }
+.border-coffee { border-color: #3d2c1e !important; }
+.ring-coffee { --tw-ring-color: rgba(61, 44, 30, 0.15) !important; }
+.text-link { color: #2b6cb0 !important; }
+.bg-paper { background: #f5f1e8 !important; }
 
 /* — Papan kafe (landing): serif + kapur + kertas, dipakai hemat — */
 .font-display { font-family: var(--font-display), Georgia, "Times New Roman", serif; }

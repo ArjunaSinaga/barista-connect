@@ -26,7 +26,7 @@ export function ToastProvider({ children }) {
           <div
             key={t.id}
             className={`animate-rise pointer-events-auto flex max-w-sm items-center gap-2 rounded-xl px-4 py-3 text-sm font-semibold text-white shadow-lg ${
-              t.type === "error" ? "bg-red-500" : "bg-[#3d2c1e]"
+              t.type === "error" ? "bg-red-500" : "bg-coffee"
             }`}
           >
             {t.type === "error" ? (

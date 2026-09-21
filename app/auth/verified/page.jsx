@@ -32,17 +32,17 @@ export default function VerifiedPage() {
   }, []);
 
   return (
-    <div className="auth-light min-h-[calc(100dvh-3.5rem)] text-[#2b2118]">
+    <div className="auth-light min-h-[calc(100dvh-3.5rem)] text-espresso">
       <div className="mx-auto max-w-md px-4 py-12">
-        <div className="rounded-2xl border border-[#e8e0cf] bg-[#ffffff] p-6 text-center shadow-[0_2px_12px_rgba(43,33,24,0.10)] sm:p-8">
-          <BadgeCheck size={40} className="mx-auto text-[#1f6b4a]" />
+        <div className="rounded-2xl border border-[#e8e0cf] bg-white p-6 text-center shadow-[0_2px_12px_rgba(43,33,24,0.10)] sm:p-8">
+          <BadgeCheck size={40} className="mx-auto text-matcha" />
           <h1 className="mt-4 text-2xl font-extrabold tracking-tight">Verifikasi selesai</h1>
-          <p className="mt-2 text-sm leading-6 text-[#857768]">
+          <p className="mt-2 text-sm leading-6 text-espresso-soft">
             Email kamu sudah terverifikasi. Silakan masuk untuk melengkapi data diri.
           </p>
           <Link
             href={dest}
-            className="mt-6 inline-flex min-h-[44px] w-full items-center justify-center rounded-full bg-[#3d2c1e] px-5 text-sm font-bold text-white hover:bg-[#2e2015]"
+            className="mt-6 inline-flex min-h-[44px] w-full items-center justify-center rounded-full bg-coffee px-5 text-sm font-bold text-white hover:bg-[#2e2015]"
           >
             {label}
           </Link>

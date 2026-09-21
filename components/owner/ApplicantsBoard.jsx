@@ -69,6 +69,7 @@ export default function ApplicantsBoard({
   jobId,
   ownerId,
   initialApplicants,
+  viewedBlocked = false,
 }) {
   const router = useRouter();
   const toast = useToast();
@@ -161,9 +162,13 @@ export default function ApplicantsBoard({
       </Link>
       <div className="mt-4 flex flex-wrap items-center gap-2">
         <h1 className="text-2xl font-extrabold text-espresso">
-          Pelamar ({apps.length})
+                    Pelamar ({apps.length})
         </h1>
-        {apps.length > 0 && (
+        {viewedBlocked && (
+          <p className="w-full rounded-xl border border-amber-400/50 bg-amber-50 px-4 py-2 text-xs font-bold text-amber-700">
+            Status &quot;Dilihat&quot; otomatis gagal disimpan (izin database). Angka pending mungkin tidak akurat.
+          </p>
+        )}        {apps.length > 0 && (
           <button
             type="button"
             onClick={() => exportCsv(filtered, "loker")}
@@ -175,7 +180,7 @@ export default function ApplicantsBoard({
       </div>
 
       <div className="no-scrollbar mt-4 flex gap-2 overflow-x-auto">
-        {["all", "pending", "viewed", "accepted", "rejected","terminated"].map((k) => {
+        {["all", "pending", "viewed", "accepted", "rejected"].map((k) => {
           const count =
             k === "all"
               ? apps.length
@@ -186,7 +191,7 @@ export default function ApplicantsBoard({
               onClick={() => setTab(k)}
               className={`shrink-0 rounded-full px-4 py-2 text-xs font-bold transition-colors ${
                 tab === k
-                  ? "bg-[#3d2c1e] text-white"
+                  ? "bg-coffee text-white"
                   : "border border-latte card-dark text-espresso-soft hover:text-caramel"
               }`}
             >
@@ -274,7 +279,7 @@ export default function ApplicantsBoard({
                   )}
                   <div className="mt-2 flex flex-wrap items-center gap-2">
                     {app.cv_url && (
-                      <a href={app.cv_signed ?? app.cv_url} target="_blank" rel="noopener" className="inline-flex items-center gap-1 rounded-full bg-[#3d2c1e] px-3 py-1 text-xs font-bold text-white hover:bg-[#2e2015]">
+                      <a href={app.cv_signed ?? app.cv_url} target="_blank" rel="noopener" className="inline-flex items-center gap-1 rounded-full bg-coffee px-3 py-1 text-xs font-bold text-white hover:bg-[#2e2015]">
                         <FileText size={12}/> Lihat CV PDF
                       </a>
                     )}
@@ -283,7 +288,7 @@ export default function ApplicantsBoard({
                         <Phone size={12}/> WA {b.whatsapp}
                       </a>
                     ) : b?.whatsapp ? (
-                      <span className="inline-flex items-center gap-1 rounded-full bg-[#efe9d9] px-3 py-1 text-xs font-bold text-[#857768]">
+                      <span className="inline-flex items-center gap-1 rounded-full bg-[#efe9d9] px-3 py-1 text-xs font-bold text-espresso-soft">
                         <Phone size={12}/> WA tersedia setelah diterima
                       </span>
                     ) : null}

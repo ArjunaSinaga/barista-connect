@@ -56,7 +56,7 @@ export default async function InboxPage({ searchParams }) {
         <div className="no-scrollbar mb-4 flex gap-2 overflow-x-auto">
           <Link
             href="/messages"
-            className={`shrink-0 rounded-full px-3 py-1.5 text-[11px] font-bold ${!jobFilter ? "bg-[#3d2c1e] text-white" : "border border-latte bg-white text-espresso-soft"}`}
+            className={`shrink-0 rounded-full px-3 py-1.5 text-[11px] font-bold ${!jobFilter ? "bg-coffee text-white" : "border border-latte bg-white text-espresso-soft"}`}
           >
             Semua
           </Link>
@@ -64,7 +64,7 @@ export default async function InboxPage({ searchParams }) {
             <Link
               key={id}
               href={`/messages?job=${id}`}
-              className={`max-w-44 shrink-0 truncate rounded-full px-3 py-1.5 text-[11px] font-bold ${jobFilter === id ? "bg-[#3d2c1e] text-white" : "border border-latte bg-white text-espresso-soft"}`}
+              className={`max-w-44 shrink-0 truncate rounded-full px-3 py-1.5 text-[11px] font-bold ${jobFilter === id ? "bg-coffee text-white" : "border border-latte bg-white text-espresso-soft"}`}
             >
               {title}
             </Link>

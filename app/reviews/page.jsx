@@ -69,9 +69,9 @@ export default async function ReviewsPage({ searchParams }) {
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-8">
-      <p className="text-[11px] font-bold tracking-[0.18em] text-[#857768] uppercase">Ulasan komunitas</p>
-      <h1 className="font-display mt-1 text-2xl font-semibold tracking-tight text-[#2b2118]">Ulasan</h1>
-      <p className="mt-1 text-sm text-[#6f6252]">Top barista berdasarkan penilaian real pemilik kafe. Klik untuk lihat ulasannya.</p>
+      <p className="text-[11px] font-bold tracking-[0.18em] text-espresso-soft uppercase">Ulasan komunitas</p>
+      <h1 className="font-display mt-1 text-2xl font-semibold tracking-tight text-espresso">Ulasan</h1>
+      <p className="mt-1 text-sm text-espresso-soft">Top barista berdasarkan penilaian real pemilik kafe. Klik untuk lihat ulasannya.</p>
 
       <form action="/reviews" method="GET" className="mt-4 flex flex-wrap items-center gap-2">
         <input type="hidden" name="sort" value={sort} />
@@ -80,17 +80,17 @@ export default async function ReviewsPage({ searchParams }) {
           id="rev-min"
           name="minRating"
           defaultValue={minRating ? String(minRating) : ""}
-          className="rounded-full border border-[#e0d5bd] bg-[#ffffff] px-3 py-1.5 text-xs font-bold text-[#2b2118] outline-none"
+          className="rounded-full border border-[#e0d5bd] bg-white px-3 py-1.5 text-xs font-bold text-espresso outline-none"
         >
           <option value="">Semua rating</option>
           {[5, 4, 3].map((n) => (
             <option key={n} value={n}>{n}+ bintang</option>
           ))}
         </select>
-        <button type="submit" className="rounded-full bg-[#3d2c1e] px-4 py-1.5 text-xs font-bold text-white">Filter</button>
+        <button type="submit" className="rounded-full bg-coffee px-4 py-1.5 text-xs font-bold text-white">Filter</button>
         <div className="flex overflow-hidden rounded-full border border-[#e0d5bd] text-xs font-bold">
-          <Link href={`/reviews${minRating ? `?minRating=${minRating}` : ""}`} className={`px-3 py-1.5 ${sort === "newest" ? "bg-[#3d2c1e] text-white" : "bg-[#ffffff] text-[#6f6252]"}`}>Terbaru</Link>
-          <Link href={`/reviews?sort=rating${minRating ? `&minRating=${minRating}` : ""}`} className={`px-3 py-1.5 ${sort === "rating" ? "bg-[#3d2c1e] text-white" : "bg-[#ffffff] text-[#6f6252]"}`}>Rating tertinggi</Link>
+          <Link href={`/reviews${minRating ? `?minRating=${minRating}` : ""}`} className={`px-3 py-1.5 ${sort === "newest" ? "bg-coffee text-white" : "bg-white text-espresso-soft"}`}>Terbaru</Link>
+          <Link href={`/reviews?sort=rating${minRating ? `&minRating=${minRating}` : ""}`} className={`px-3 py-1.5 ${sort === "rating" ? "bg-coffee text-white" : "bg-white text-espresso-soft"}`}>Rating tertinggi</Link>
         </div>
       </form>
 
@@ -105,28 +105,28 @@ export default async function ReviewsPage({ searchParams }) {
       ) : (
         <ul className="mt-4 space-y-3">
           {groups.map((g) => (
-            <li key={g.name} className="overflow-hidden rounded-2xl border border-[#e8e0cf] bg-[#ffffff]">
+            <li key={g.name} className="overflow-hidden rounded-2xl border border-[#e8e0cf] bg-white">
               <details className="group">
                 <summary className="flex cursor-pointer list-none items-center gap-3 p-4 [&::-webkit-details-marker]:hidden">
-                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#efe8d8] text-sm font-extrabold text-[#3d2c1e]" aria-hidden="true">
+                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#efe8d8] text-sm font-extrabold text-espresso" aria-hidden="true">
                     {g.name.charAt(0).toUpperCase()}
                   </span>
                   <span className="min-w-0 flex-1">
-                    <span className="block truncate text-sm font-bold text-[#2b2118]">{g.name}</span>
+                    <span className="block truncate text-sm font-bold text-espresso">{g.name}</span>
                     <span className="mt-0.5 flex items-center gap-1.5">
                       <Stars value={Math.round(g.avg)} />
-                      <span className="text-xs font-bold text-[#2b2118]">{g.avg.toFixed(1)}/5</span>
-                      <span className="text-xs text-[#857768]">• {g.items.length} ulasan</span>
+                      <span className="text-xs font-bold text-espresso">{g.avg.toFixed(1)}/5</span>
+                      <span className="text-xs text-espresso-soft">• {g.items.length} ulasan</span>
                     </span>
                   </span>
-                  <span className="shrink-0 text-xs font-bold text-[#2b6cb0] group-open:hidden">Lihat ulasan</span>
+                  <span className="shrink-0 text-xs font-bold text-link group-open:hidden">Lihat ulasan</span>
                 </summary>
                 <ul className="space-y-2 border-t border-[#e8e0cf] bg-[#faf7ef] p-4">
                   {g.items.map((r, i) => (
-                    <li key={`${r.created_at}-${i}`} className="rounded-xl bg-[#ffffff] p-3">
+                    <li key={`${r.created_at}-${i}`} className="rounded-xl bg-white p-3">
                       <Stars value={r.stars ?? 0} />
-                      {r.comment && <p className="mt-1.5 text-sm leading-6 text-[#2b2118]">&ldquo;{maskKasar(r.comment)}&rdquo;</p>}
-                      <p className="mt-1 text-xs text-[#857768]">
+                      {r.comment && <p className="mt-1.5 text-sm leading-6 text-espresso">&ldquo;{maskKasar(r.comment)}&rdquo;</p>}
+                      <p className="mt-1 text-xs text-espresso-soft">
                         dinilai oleh {r.owner?.business_name ?? "Cafe"} • {relativeTime(r.created_at)}
                       </p>
                     </li>
@@ -138,8 +138,8 @@ export default async function ReviewsPage({ searchParams }) {
         </ul>
       )}
 
-      <p className="mt-6 text-center text-xs text-[#857768]">
-        Ingin dinilai juga? <Link href="/jobs" className="font-bold text-[#2b6cb0] hover:underline">Lamar lowongan</Link> dan selesaikan pekerjaanmu.
+      <p className="mt-6 text-center text-xs text-espresso-soft">
+        Ingin dinilai juga? <Link href="/jobs" className="font-bold text-link hover:underline">Lamar lowongan</Link> dan selesaikan pekerjaanmu.
       </p>
     </div>
   );

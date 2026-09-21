@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import { createClient, getSessionSafe, isSupabaseConfigured } from "@/lib/supabase/server";
 import ApplicantsBoard from "@/components/owner/ApplicantsBoard";
 import JobDeleteButton from "@/components/jobs/JobDeleteButton";
@@ -11,7 +12,7 @@ export const metadata = { title: "Pelamar" };
 export default async function ApplicantsPage({ params }) {
   const { id } = await params;
   const { user } = await getSessionSafe();
-  if (!user || !isSupabaseConfigured()) return null;
+  if (!isSupabaseConfigured() || !user) redirect("/login");
   const supabase = await createClient();
 
   // Job must belong to this owner (atau manager dalam scope kafe-nya)
@@ -48,11 +49,12 @@ export default async function ApplicantsPage({ params }) {
   const job = jobRow;
 
   // Mark pending applications as viewed (owner opened the list)
-  await supabase
+  const { error: viewedError } = await supabase
     .from("applications")
     .update({ status: "viewed" })
     .eq("job_post_id", job.id)
     .eq("status", "pending");
+  const viewedBlocked = Boolean(viewedError);
 
   const { data: rawApps } = await supabase
     .from("applications")
@@ -96,6 +98,7 @@ export default async function ApplicantsPage({ params }) {
         jobId={job.id}
         ownerId={user.id}
         initialApplicants={apps ?? []}
+        viewedBlocked={viewedBlocked}
       />
     </div>
   );

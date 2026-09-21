@@ -14,13 +14,13 @@ export default function SortSelect({ value }) {
   }
 
   return (
-    <span className="flex items-center gap-1.5 text-xs text-[#857768]">
+    <span className="flex items-center gap-1.5 text-xs text-espresso-soft">
       <label htmlFor="jobs-sort">Urutkan:</label>
       <select
         id="jobs-sort"
         value={value}
         onChange={(e) => change(e.target.value)}
-        className="cursor-pointer rounded-full border border-[#e0d5bd] bg-[#ffffff] px-2.5 py-1 text-[11px] font-bold text-[#2b2118] outline-none"
+        className="cursor-pointer rounded-full border border-[#e0d5bd] bg-white px-2.5 py-1 text-[11px] font-bold text-espresso outline-none"
       >
         <option value="newest">Terbaru</option>
         <option value="oldest">Terlama</option>

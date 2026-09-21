@@ -33,23 +33,23 @@ export default function JoinTeam() {
   }
 
   return (
-    <div className="rounded-2xl border border-[#e8e0cf] bg-[#ffffff] p-5 shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
-      <h2 className="flex items-center gap-2 text-sm font-extrabold text-[#2b2118]">
-        <Users size={15} className="text-[#1f6b4a]" /> Sudah kerja di kafe? Gabung timnya
+    <div className="rounded-2xl border border-[#e8e0cf] bg-white p-5 shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
+      <h2 className="flex items-center gap-2 text-sm font-extrabold text-espresso">
+        <Users size={15} className="text-matcha" /> Sudah kerja di kafe? Gabung timnya
       </h2>
-      <p className="mt-0.5 text-xs text-[#857768]">Minta kode tim ke owner / manager, masukkan di bawah.</p>
+      <p className="mt-0.5 text-xs text-espresso-soft">Minta kode tim ke owner / manager, masukkan di bawah.</p>
       <form onSubmit={submit} className="mt-3 flex gap-2">
         <input
           value={code}
           onChange={(e) => setCode(e.target.value.toUpperCase())}
           placeholder="XXXX-XXXX"
           maxLength={9}
-          className="min-w-0 flex-1 rounded-full border border-[#e0d5bd] bg-[#faf7ef] px-4 py-2 font-mono text-sm font-bold tracking-wider text-[#2b2118] uppercase placeholder:text-[#b6a98f] focus:border-[#3d2c1e] focus:outline-none"
+          className="min-w-0 flex-1 rounded-full border border-[#e0d5bd] bg-[#faf7ef] px-4 py-2 font-mono text-sm font-bold tracking-wider text-espresso uppercase placeholder:text-[#b6a98f] focus:border-coffee focus:outline-none"
         />
         <button
           type="submit"
           disabled={busy || !code.trim()}
-          className="inline-flex shrink-0 items-center rounded-full bg-[#3d2c1e] px-5 py-2 text-sm font-bold text-white hover:bg-[#2e2015] disabled:opacity-50"
+          className="inline-flex shrink-0 items-center rounded-full bg-coffee px-5 py-2 text-sm font-bold text-white hover:bg-[#2e2015] disabled:opacity-50"
         >
           {busy ? "..." : "Gabung"}
         </button>

@@ -37,13 +37,13 @@ export default function BaristaShell({ initialView = "ringkasan", sidebar, middl
       </div>
 
       <div className="min-w-0 space-y-4 lg:col-span-2 lg:h-full lg:min-h-0 lg:overflow-y-auto lg:pb-1 xl:col-span-1 no-scrollbar">
-        <div className="rounded-2xl border border-[#e8e0cf] bg-[#ffffff] p-4 shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
+        <div className="rounded-2xl border border-[#e8e0cf] bg-white p-4 shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
           <div className="flex items-start justify-between gap-2">
             <div>
-              <h3 className="text-sm font-extrabold text-[#2b2118]">Loker Untukmu</h3>
-              <p className="mt-0.5 text-[11px] text-[#857768]">Lowongan aktif terbaru.</p>
+              <h3 className="text-sm font-extrabold text-espresso">Loker Untukmu</h3>
+              <p className="mt-0.5 text-[11px] text-espresso-soft">Lowongan aktif terbaru.</p>
             </div>
-            <Link href="/jobs" className="inline-flex shrink-0 items-center gap-0.5 text-xs font-bold text-[#2b6cb0] hover:underline">
+            <Link href="/jobs" className="inline-flex shrink-0 items-center gap-0.5 text-xs font-bold text-link hover:underline">
               Lihat semua <ChevronRight size={13} />
             </Link>
           </div>
@@ -52,8 +52,8 @@ export default function BaristaShell({ initialView = "ringkasan", sidebar, middl
               right.latestJobs.map((j) => (
                 <Link key={j.id} href={`/jobs/${j.id}`} className="flex items-center gap-3 rounded-xl px-2 py-2 hover:bg-[#faf7ef]">
                   <span className="min-w-0 flex-1">
-                    <span className="block truncate text-[13px] font-extrabold text-[#2b2118]">{j.title}</span>
-                    <span className="mt-0.5 flex items-center gap-1 text-[11px] text-[#857768]">
+                    <span className="block truncate text-[13px] font-extrabold text-espresso">{j.title}</span>
+                    <span className="mt-0.5 flex items-center gap-1 text-[11px] text-espresso-soft">
                       <MapPin size={10} /> {j.location ?? "-"}
                     </span>
                   </span>
@@ -61,19 +61,19 @@ export default function BaristaShell({ initialView = "ringkasan", sidebar, middl
                 </Link>
               ))
             ) : (
-              <p className="py-4 text-center text-xs text-[#857768]">Belum ada loker aktif.</p>
+              <p className="py-4 text-center text-xs text-espresso-soft">Belum ada loker aktif.</p>
             )}
           </div>
         </div>
 
-        <div className="rounded-2xl border border-[#e8e0cf] bg-[#ffffff] p-4 shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
-          <h3 className="text-sm font-extrabold text-[#2b2118]">Reputasiku</h3>
-          <p className="mt-1 text-xs leading-5 text-[#857768]">
+        <div className="rounded-2xl border border-[#e8e0cf] bg-white p-4 shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
+          <h3 className="text-sm font-extrabold text-espresso">Reputasiku</h3>
+          <p className="mt-1 text-xs leading-5 text-espresso-soft">
             {right.ratingCount > 0
               ? `⭐ ${right.ratingAvg} dari ${right.ratingCount} ulasan kafe. Pertahankan!`
               : "Belum ada ulasan — selesaikan pekerjaan pertamamu."}
           </p>
-          <Link href="/reviews" className="mt-2 inline-block text-xs font-bold text-[#2b6cb0] hover:underline">
+          <Link href="/reviews" className="mt-2 inline-block text-xs font-bold text-link hover:underline">
             Lihat ulasan →
           </Link>
         </div>

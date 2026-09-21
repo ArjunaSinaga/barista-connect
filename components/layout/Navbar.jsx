@@ -39,7 +39,7 @@ export default function Navbar({ user, role }) {
   const forOwnersActive = pathname?.startsWith("/dashboard/owner") || pathname === "/signup";
 
   return (
-    <header className="sticky top-0 z-40 border-b border-[#e0d5bd] bg-[#f5f1e8]/90 backdrop-blur">
+    <header className="sticky top-0 z-40 border-b border-[#e0d5bd] bg-paper/90 backdrop-blur">
       <div className="mx-auto flex h-14 max-w-[1400px] items-center gap-2 px-4 sm:px-6">
         <span className="flex shrink-0 items-center gap-2 font-extrabold tracking-tight">
           <Link href="/" aria-label="Beranda" title="Beranda" className="flex h-8 w-8 items-center justify-center rounded-xl bg-caramel text-white hover:bg-caramel-dark">
@@ -97,7 +97,7 @@ export default function Navbar({ user, role }) {
                 aria-haspopup="menu"
                 className="flex items-center gap-1.5 rounded-full py-1 pr-1 pl-1 hover:bg-[#2f2721]/10"
               >
-                <span aria-hidden="true" className="flex h-8 w-8 items-center justify-center rounded-full bg-[#3d2c1e] text-xs font-extrabold text-white">
+                <span aria-hidden="true" className="flex h-8 w-8 items-center justify-center rounded-full bg-coffee text-xs font-extrabold text-white">
                   {initial}
                 </span>
                 {roleLabel && (
@@ -109,11 +109,11 @@ export default function Navbar({ user, role }) {
                 <ChevronDown size={14} className="text-[#2f2721]/60" aria-hidden="true" />
               </button>
               {menuOpen && (
-                <div role="menu" className="absolute right-0 mt-1 w-44 overflow-hidden rounded-xl border border-[#e0d5bd] bg-[#ffffff] py-1 shadow-lg">
-                  <Link href={home} role="menuitem" onClick={() => setMenuOpen(false)} className="block px-4 py-2 text-sm font-semibold text-[#2f2721] hover:bg-[#f5f1e8]">
+                <div role="menu" className="absolute right-0 mt-1 w-44 overflow-hidden rounded-xl border border-[#e0d5bd] bg-white py-1 shadow-lg">
+                  <Link href={home} role="menuitem" onClick={() => setMenuOpen(false)} className="block px-4 py-2 text-sm font-semibold text-[#2f2721] hover:bg-paper">
                     Dashboard
                   </Link>
-                  <Link href={profileHref} role="menuitem" onClick={() => setMenuOpen(false)} className="block px-4 py-2 text-sm font-semibold text-[#2f2721] hover:bg-[#f5f1e8]">
+                  <Link href={profileHref} role="menuitem" onClick={() => setMenuOpen(false)} className="block px-4 py-2 text-sm font-semibold text-[#2f2721] hover:bg-paper">
                     Profil
                   </Link>
                   <button
@@ -121,7 +121,7 @@ export default function Navbar({ user, role }) {
                     role="menuitem"
                     onClick={handleLogout}
                     disabled={busy}
-                    className="flex w-full items-center gap-2 px-4 py-2 text-left text-sm font-semibold text-red-700 hover:bg-[#f5f1e8] disabled:opacity-50"
+                    className="flex w-full items-center gap-2 px-4 py-2 text-left text-sm font-semibold text-red-700 hover:bg-paper disabled:opacity-50"
                   >
                     <LogOut size={15} /> Keluar
                   </button>
@@ -131,7 +131,7 @@ export default function Navbar({ user, role }) {
             {role === "owner" && (
             <Link
               href={postJobHref}
-              className="hidden shrink-0 rounded-full bg-[#3d2c1e] px-4 py-2 text-sm font-bold whitespace-nowrap text-white hover:bg-[#2e2015] sm:block"
+              className="hidden shrink-0 rounded-full bg-coffee px-4 py-2 text-sm font-bold whitespace-nowrap text-white hover:bg-[#2e2015] sm:block"
             >
               Pasang Loker
             </Link>
@@ -141,7 +141,7 @@ export default function Navbar({ user, role }) {
           <>
             <Link
               href="/signup?role=owner"
-              className="ml-auto hidden shrink-0 rounded-full bg-[#3d2c1e] px-4 py-2 text-sm font-bold whitespace-nowrap text-white hover:bg-[#2e2015] md:block"
+              className="ml-auto hidden shrink-0 rounded-full bg-coffee px-4 py-2 text-sm font-bold whitespace-nowrap text-white hover:bg-[#2e2015] md:block"
             >
               Pasang Loker
             </Link>

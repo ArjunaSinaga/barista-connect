@@ -12,13 +12,13 @@ export default function StatCard({
   dark = false,
   chevron = false,
   circled = true,
-  valueClass = "text-[#2b2118]",
+  valueClass = "text-espresso",
   onSelect = null,
   href = null,
 }) {
   if (dark) {
     return (
-      <div className="rounded-2xl bg-[#3d2c1e] p-3 text-white">
+      <div className="rounded-2xl bg-coffee p-3 text-white">
         <p className="text-[11px] font-bold tracking-widest text-[#f5f1e8]/70 uppercase">{label}</p>
         <p className="mt-1 text-xl font-black tabular-nums">{value}</p>
         {sub && <p className="mt-0.5 text-[11px] text-[#f5f1e8]/70">{sub}</p>}
@@ -30,12 +30,12 @@ export default function StatCard({
       <p
         className={
           circled
-            ? "flex items-center gap-2 text-xs font-bold text-[#6f6252]"
-            : "flex items-center gap-1.5 text-[11px] font-bold tracking-widest text-[#857768] uppercase"
+            ? "flex items-center gap-2 text-xs font-bold text-espresso-soft"
+            : "flex items-center gap-1.5 text-[11px] font-bold tracking-widest text-espresso-soft uppercase"
         }
       >
         {Icon && circled && (
-          <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#efe9d9] text-[#3d2c1e]">
+          <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[#efe9d9] text-espresso">
             <Icon size={12} aria-hidden="true" />
           </span>
         )}
@@ -45,7 +45,7 @@ export default function StatCard({
       </p>
       <p className={`mt-1 text-xl font-black tracking-tight tabular-nums ${valueClass}`}>{value}</p>
       {(sub || delta) && (
-        <p className="mt-0.5 text-[11px] font-semibold text-[#1f6b4a]">
+        <p className="mt-0.5 text-[11px] font-semibold text-matcha">
           {delta ? <span className="mr-1">↑ {delta} ·</span> : null}
           {sub}
         </p>
@@ -58,7 +58,7 @@ export default function StatCard({
         type="button"
         onClick={onSelect}
         aria-label={`Lihat ${label}`}
-        className="block w-full cursor-pointer rounded-2xl border border-[#e8e0cf] bg-[#ffffff] p-3 text-left shadow-[0_1px_3px_rgba(43,33,24,0.08)] hover:border-[#3d2c1e]"
+        className="block w-full cursor-pointer rounded-2xl border border-[#e8e0cf] bg-white p-3 text-left shadow-[0_1px_3px_rgba(43,33,24,0.08)] hover:border-coffee"
       >
         {inner}
       </button>
@@ -69,14 +69,14 @@ export default function StatCard({
       <Link
         href={href}
         aria-label={`Lihat ${label}`}
-        className="block rounded-2xl border border-[#e8e0cf] bg-[#ffffff] p-3 shadow-[0_1px_3px_rgba(43,33,24,0.08)] hover:border-[#3d2c1e]"
+        className="block rounded-2xl border border-[#e8e0cf] bg-white p-3 shadow-[0_1px_3px_rgba(43,33,24,0.08)] hover:border-coffee"
       >
         {inner}
       </Link>
     );
   }
   return (
-    <div className="rounded-2xl border border-[#e8e0cf] bg-[#ffffff] p-3 shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
+    <div className="rounded-2xl border border-[#e8e0cf] bg-white p-3 shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
       {inner}
     </div>
   );

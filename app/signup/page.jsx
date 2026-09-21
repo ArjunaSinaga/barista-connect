@@ -102,11 +102,11 @@ function SignupForm() {
       if (profileError) throw profileError;
 
       // Prefill nama/HP ke tabel detail biar tak hilang sebelum onboarding (abaikan gagal — onboarding yang lengkapi).
+      // owners.location NOT NULL → sertakan "" (onboarding owner upsert menimpanya).
+      // barista dilewati: barista_profiles.age NOT NULL dan tak ada nilai valid sebelum onboarding.
       try {
         if (role === "owner") {
-          await supabase.from("owners").insert({ id: data.user.id, business_name: name, whatsapp: phone || null });
-        } else {
-          await supabase.from("barista_profiles").insert({ id: data.user.id, full_name: name, whatsapp: phone || null });
+          await supabase.from("owners").insert({ id: data.user.id, business_name: name, location: "", whatsapp: phone || null });
         }
       } catch {
         // diam: onboarding tetap jalan
@@ -130,13 +130,13 @@ function SignupForm() {
   }
 
   return (
-    <div className="auth-light min-h-[calc(100dvh-3.5rem)] text-[#2b2118]">
+    <div className="auth-light min-h-[calc(100dvh-3.5rem)] text-espresso">
     <div className="mx-auto max-w-md px-4 py-12">
-      <div className="rounded-2xl border border-[#e8e0cf] bg-[#ffffff] p-6 shadow-[0_2px_12px_rgba(43,33,24,0.10)] sm:p-8">
-      <h1 className="text-center text-2xl font-extrabold tracking-tight text-[#2b2118]">
+      <div className="rounded-2xl border border-[#e8e0cf] bg-white p-6 shadow-[0_2px_12px_rgba(43,33,24,0.10)] sm:p-8">
+      <h1 className="text-center text-2xl font-extrabold tracking-tight text-espresso">
         Buat akun gratis
       </h1>
-      <p className="mt-1 text-center text-sm text-[#857768]">
+      <p className="mt-1 text-center text-sm text-espresso-soft">
         Gratis, tanpa biaya — profil sekali jadi
       </p>
 
@@ -147,23 +147,23 @@ function SignupForm() {
             key={value}
             type="button"
             onClick={() => setRole(value)}
-            className={`flex flex-col items-start rounded-2xl border-2 bg-[#ffffff] p-4 text-left transition-all ${
+            className={`flex flex-col items-start rounded-2xl border-2 bg-white p-4 text-left transition-all ${
               role === value
-                ? "border-[#3d2c1e] ring-2 ring-[#3d2c1e]/15"
-                : "border-[#e8e0cf] hover:border-[#3d2c1e]"
+                ? "border-coffee ring-2 ring-coffee"
+                : "border-[#e8e0cf] hover:border-coffee"
             }`}
           >
             <span
               className={`mb-2 flex h-9 w-9 items-center justify-center rounded-xl ${
                 role === value
-                  ? "bg-[#3d2c1e] text-white"
-                  : "bg-[#efe8d8] text-[#3d2c1e]"
+                  ? "bg-coffee text-white"
+                  : "bg-[#efe8d8] text-espresso"
               }`}
             >
               <Icon size={18} />
             </span>
-            <span className="text-sm font-bold text-[#2b2118]">{label}</span>
-            <span className="mt-0.5 text-[11px] leading-snug text-[#857768]">
+            <span className="text-sm font-bold text-espresso">{label}</span>
+            <span className="mt-0.5 text-[11px] leading-snug text-espresso-soft">
               {desc}
             </span>
           </button>
@@ -226,9 +226,9 @@ function SignupForm() {
         </Button>
       </form>
 
-      <p className="mt-6 text-center text-sm text-[#857768]">
+      <p className="mt-6 text-center text-sm text-espresso-soft">
         Sudah punya akun?{" "}
-        <Link href="/login" className="font-bold text-[#1f6b4a] hover:underline">
+        <Link href="/login" className="font-bold text-matcha hover:underline">
           Masuk
         </Link>
       </p>

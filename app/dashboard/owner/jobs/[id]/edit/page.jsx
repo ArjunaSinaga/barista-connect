@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import { createClient, getSessionSafe, isSupabaseConfigured } from "@/lib/supabase/server";
 import JobPostForm from "@/components/jobs/JobPostForm";
 import { EmptyState } from "@/components/ui/EmptyState";
@@ -9,7 +10,7 @@ export const metadata = { title: "Edit Lowongan" };
 export default async function EditJobPage({ params }) {
   const { id } = await params;
   const { user } = await getSessionSafe();
-  if (!user || !isSupabaseConfigured()) return null;
+  if (!isSupabaseConfigured() || !user) redirect("/login");
   const supabase = await createClient();
 
   const { data: job } = await supabase

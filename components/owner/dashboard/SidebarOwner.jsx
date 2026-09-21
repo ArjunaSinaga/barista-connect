@@ -40,18 +40,18 @@ export default function SidebarOwner({ cafe, ownerName, completeness, completene
 
   const cls = (active) =>
     `flex w-full items-center gap-3 rounded-xl px-3 py-2 text-sm font-bold ${
-      active ? "bg-[#efe9d9] text-[#3d2c1e]" : "text-[#6f6252] hover:bg-[#faf7ef] hover:text-[#3d2c1e]"
+      active ? "bg-[#efe9d9] text-espresso" : "text-espresso-soft hover:bg-[#faf7ef] hover:text-espresso"
     }`;
   const countBadge = (n) =>
     n !== null && n !== undefined ? (
-      <span className="rounded-full bg-[#efe9d9] px-2 py-0.5 text-[11px] font-bold text-[#6f6252]">{n}</span>
+      <span className="rounded-full bg-[#efe9d9] px-2 py-0.5 text-[11px] font-bold text-espresso-soft">{n}</span>
     ) : null;
 
   const isMain = !pathname?.startsWith("/dashboard/owner/cafes") && !pathname?.startsWith("/dashboard/owner/profile");
 
   return (
     <aside className="flex min-w-0 flex-col gap-3 lg:h-full">
-      <div className="shrink-0 rounded-2xl border border-[#e8e0cf] bg-[#ffffff] p-4 text-center shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
+      <div className="shrink-0 rounded-2xl border border-[#e8e0cf] bg-white p-4 text-center shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
         <div className="relative mx-auto h-20 w-20">
           {photo ? (
             <Image src={photo} alt={name} width={80} height={80} className="h-20 w-20 rounded-full border-4 border-[#efe9d9] object-cover" />
@@ -61,40 +61,40 @@ export default function SidebarOwner({ cafe, ownerName, completeness, completene
           <Link
             href="/dashboard/owner/cafes"
             aria-label="Edit foto cafe"
-            className="absolute right-0 bottom-0 flex h-7 w-7 items-center justify-center rounded-full border border-[#e0d5bd] bg-[#ffffff] text-[#6f6252] hover:text-[#3d2c1e]"
+            className="absolute right-0 bottom-0 flex h-7 w-7 items-center justify-center rounded-full border border-[#e0d5bd] bg-white text-espresso-soft hover:text-espresso"
           >
             <Camera size={13} />
           </Link>
         </div>
-        <p className="mt-2 text-base font-extrabold tracking-tight text-[#2b2118]">{name}</p>
-        <p className="mt-0.5 text-xs text-[#857768]">{loc}</p>
+        <p className="mt-2 text-base font-extrabold tracking-tight text-espresso">{name}</p>
+        <p className="mt-0.5 text-xs text-espresso-soft">{loc}</p>
         <div className="mt-4 text-left">
-          <p className="flex items-center justify-between text-xs font-bold text-[#2b2118]">
+          <p className="flex items-center justify-between text-xs font-bold text-espresso">
             Profil Bisnis <span>{completeness}%</span>
           </p>
           <div className="mt-1.5 h-2 overflow-hidden rounded-full bg-[#efe9d9]">
             <div className="h-full rounded-full bg-[#1f6b4a]" style={{ width: `${completeness}%` }} />
           </div>
-          <p className="mt-1.5 text-[11px] leading-4 text-[#857768]">Lengkapi profil untuk menjangkau talenta terbaik.</p>
+          <p className="mt-1.5 text-[11px] leading-4 text-espresso-soft">Lengkapi profil untuk menjangkau talenta terbaik.</p>
           {completeness < 100 ? (
             <button
               type="button"
               onClick={() => setModalOpen(true)}
-              className="mt-2 block w-full rounded-full bg-[#3d2c1e] px-4 py-2 text-center text-xs font-bold text-white hover:bg-[#2e2015]"
+              className="mt-2 block w-full rounded-full bg-coffee px-4 py-2 text-center text-xs font-bold text-white hover:bg-[#2e2015]"
             >
               Lengkapi ke 100%
             </button>
           ) : null}
           <Link
             href="/dashboard/owner/profile"
-            className="mt-2 block rounded-full bg-[#efe9d9] px-4 py-2 text-center text-xs font-bold text-[#3d2c1e] hover:bg-[#e5dcc4]"
+            className="mt-2 block rounded-full bg-[#efe9d9] px-4 py-2 text-center text-xs font-bold text-espresso hover:bg-[#e5dcc4]"
           >
             Edit Profil
           </Link>
         </div>
       </div>
 
-      <nav className="rounded-2xl border border-[#e8e0cf] bg-[#ffffff] p-2 shadow-[0_1px_3px_rgba(43,33,24,0.08)] lg:flex-1">
+      <nav className="rounded-2xl border border-[#e8e0cf] bg-white p-2 shadow-[0_1px_3px_rgba(43,33,24,0.08)] lg:flex-1">
         <button type="button" onClick={() => onNavigate?.("talenta")} className={cls(isMain && view === "talenta")}>
           <LayoutDashboard size={17} className="shrink-0" />
           <span className="flex-1 text-left">Dashboard</span>
@@ -142,7 +142,7 @@ export default function SidebarOwner({ cafe, ownerName, completeness, completene
         )}
         <Link
           href="/training"
-          className="flex items-center gap-3 rounded-xl px-3 py-2 text-sm font-bold text-[#6f6252] hover:bg-[#faf7ef] hover:text-[#3d2c1e]"
+          className="flex items-center gap-3 rounded-xl px-3 py-2 text-sm font-bold text-espresso-soft hover:bg-[#faf7ef] hover:text-espresso"
         >
           <GraduationCap size={17} className="shrink-0" />
           <span className="flex-1">Pelatihan</span>
@@ -150,16 +150,16 @@ export default function SidebarOwner({ cafe, ownerName, completeness, completene
       </nav>
 
       <div className="relative shrink-0 rounded-2xl border border-[#e8e0cf] bg-[#efe9d9] p-4 shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
-        <p className="flex items-center gap-2 text-sm font-extrabold text-[#3d2c1e]">
-          <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[#3d2c1e] text-white"><Crown size={15} /></span>
+        <p className="flex items-center gap-2 text-sm font-extrabold text-espresso">
+          <span className="flex h-8 w-8 items-center justify-center rounded-full bg-coffee text-white"><Crown size={15} /></span>
           BaristaConnect Pro
         </p>
-        <p className="mt-2 text-xs leading-5 text-[#6f6252]">
+        <p className="mt-2 text-xs leading-5 text-espresso-soft">
           Upgrade ke Pro untuk akses talenta prioritas, insight lebih dalam, dan fitur eksklusif.
         </p>
         <Link
           href="/verify"
-          className="mt-3 inline-flex items-center gap-1.5 rounded-full bg-[#3d2c1e] px-4 py-2 text-xs font-bold text-white hover:bg-[#2e2015]"
+          className="mt-3 inline-flex items-center gap-1.5 rounded-full bg-coffee px-4 py-2 text-xs font-bold text-white hover:bg-[#2e2015]"
         >
           Upgrade Sekarang <ArrowRight size={13} />
         </Link>

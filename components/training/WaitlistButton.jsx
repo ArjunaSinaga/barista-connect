@@ -33,7 +33,7 @@ export default function WaitlistButton({ topic = "training", label = "Ikut waitl
 
   if (done) {
     return (
-      <p className={`inline-flex min-h-[34px] items-center justify-center rounded-full bg-[#e3f0e8] px-4 text-[11px] font-bold text-[#1f6b4a] ${className}`}>
+      <p className={`inline-flex min-h-[34px] items-center justify-center rounded-full bg-[#e3f0e8] px-4 text-[11px] font-bold text-matcha ${className}`}>
         ✓ Kamu di daftar tunggu
       </p>
     );
@@ -46,8 +46,8 @@ export default function WaitlistButton({ topic = "training", label = "Ikut waitl
         onClick={() => setOpen(true)}
         className={`inline-flex min-h-[34px] flex-1 items-center justify-center rounded-full px-2 text-[11px] font-bold ${
           outline
-            ? "border border-[#d8cdae] bg-[#ffffff] text-[#3d2c1e] hover:border-[#3d2c1e]"
-            : "bg-[#3d2c1e] text-white hover:bg-[#2e2015]"
+            ? "border border-[#d8cdae] bg-white text-espresso hover:border-coffee"
+            : "bg-coffee text-white hover:bg-[#2e2015]"
         } ${className}`}
       >
         {label}
@@ -67,12 +67,12 @@ export default function WaitlistButton({ topic = "training", label = "Ikut waitl
           onChange={(e) => setEmail(e.target.value)}
           placeholder="nama@email.com"
           autoComplete="email"
-          className="h-9 min-w-0 flex-1 rounded-full border border-[#e0d5bd] bg-[#ffffff] px-3 text-xs text-[#2b2118] outline-none placeholder:text-[#b6a98f] focus:border-[#3d2c1e]"
+          className="h-9 min-w-0 flex-1 rounded-full border border-[#e0d5bd] bg-white px-3 text-xs text-espresso outline-none placeholder:text-[#b6a98f] focus:border-coffee"
         />
         <button
           type="submit"
           disabled={busy}
-          className="inline-flex h-9 shrink-0 items-center rounded-full bg-[#3d2c1e] px-4 text-[11px] font-bold text-white hover:bg-[#2e2015] disabled:opacity-50"
+          className="inline-flex h-9 shrink-0 items-center rounded-full bg-coffee px-4 text-[11px] font-bold text-white hover:bg-[#2e2015] disabled:opacity-50"
         >
           {busy ? "..." : "Kirim"}
         </button>

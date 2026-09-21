@@ -11,7 +11,7 @@ export function Input({ label, error, className = "", id, type, ...props }) {
       {label && (
         <label
           htmlFor={fieldId}
-          className="mb-1.5 block text-sm font-semibold text-[#2b2118]"
+          className="mb-1.5 block text-sm font-semibold text-espresso"
         >
           {label}
         </label>
@@ -20,7 +20,7 @@ export function Input({ label, error, className = "", id, type, ...props }) {
       <input
         id={fieldId}
         type={isPassword && show ? "text" : type}
-        className={`w-full rounded-xl border bg-[#ffffff] px-4 py-2.5 text-sm text-[#2b2118] outline-none transition-colors placeholder:text-[#b6a98f] focus:border-[#3d2c1e] focus:ring-2 focus:ring-[#3d2c1e]/15 ${
+        className={`w-full rounded-xl border bg-white px-4 py-2.5 text-sm text-espresso outline-none transition-colors placeholder:text-[#b6a98f] focus:border-coffee focus:ring-2 focus:ring-[#3d2c1e]/15 ${
           error ? "border-red-400" : "border-white/10"
         } ${isPassword ? "pr-11" : ""} ${className}`}
         {...props}
@@ -30,7 +30,7 @@ export function Input({ label, error, className = "", id, type, ...props }) {
           type="button"
           onClick={() => setShow((s) => !s)}
           aria-label={show ? "Sembunyikan password" : "Tampilkan password"}
-          className="absolute top-1/2 right-3 -translate-y-1/2 text-[#857768] hover:text-[#3d2c1e]"
+          className="absolute top-1/2 right-3 -translate-y-1/2 text-espresso-soft hover:text-espresso"
         >
           {show ? <EyeOff size={17} /> : <Eye size={17} />}
         </button>
@@ -47,14 +47,14 @@ export function Textarea({ label, error, className = "", rows = 4, ...props }) {
       {label && (
         <label
           htmlFor={props.name}
-          className="mb-1.5 block text-sm font-semibold text-[#2b2118]"
+          className="mb-1.5 block text-sm font-semibold text-espresso"
         >
           {label}
         </label>
       )}
       <textarea
         rows={rows}
-        className={`w-full rounded-xl border bg-[#ffffff] px-4 py-2.5 text-sm text-[#2b2118] outline-none transition-colors placeholder:text-[#b6a98f] focus:border-[#3d2c1e] focus:ring-2 focus:ring-[#3d2c1e]/15 ${
+        className={`w-full rounded-xl border bg-white px-4 py-2.5 text-sm text-espresso outline-none transition-colors placeholder:text-[#b6a98f] focus:border-coffee focus:ring-2 focus:ring-[#3d2c1e]/15 ${
           error ? "border-red-400" : "border-white/10"
         } ${className}`}
         {...props}
@@ -70,13 +70,13 @@ export function Select({ label, error, options = [], placeholder, ...props }) {
       {label && (
         <label
           htmlFor={props.name}
-          className="mb-1.5 block text-sm font-semibold text-[#2b2118]"
+          className="mb-1.5 block text-sm font-semibold text-espresso"
         >
           {label}
         </label>
       )}
       <select
-        className={`w-full rounded-xl border bg-[#ffffff] px-4 py-2.5 text-sm text-[#2b2118] outline-none transition-colors focus:border-[#3d2c1e] focus:ring-2 focus:ring-[#3d2c1e]/15 ${
+        className={`w-full rounded-xl border bg-white px-4 py-2.5 text-sm text-espresso outline-none transition-colors focus:border-coffee focus:ring-2 focus:ring-[#3d2c1e]/15 ${
           error ? "border-red-400" : "border-white/10"
         }`}
         {...props}

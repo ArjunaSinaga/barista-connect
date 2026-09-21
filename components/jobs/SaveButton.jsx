@@ -63,8 +63,8 @@ export default function SaveButton({ jobId, initialSaved = false, variant = "ico
         aria-label={saved ? "Hapus dari simpanan" : "Simpan lowongan"}
         className={`inline-flex min-h-[38px] shrink-0 items-center gap-1.5 rounded-full border px-4 text-sm font-bold transition-colors disabled:opacity-50 ${
           saved
-            ? "border-[#3d2c1e] bg-[#efe9d9] text-[#3d2c1e]"
-            : "border-[#e0d5bd] text-[#3d2c1e] hover:border-[#3d2c1e]"
+            ? "border-coffee bg-[#efe9d9] text-espresso"
+            : "border-[#e0d5bd] text-espresso hover:border-coffee"
         }`}
       >
         <Bookmark size={15} className={saved ? "fill-[#3d2c1e]" : ""} aria-hidden="true" />
@@ -81,7 +81,7 @@ export default function SaveButton({ jobId, initialSaved = false, variant = "ico
       aria-pressed={saved}
       aria-label={saved ? "Hapus dari simpanan" : "Simpan lowongan"}
       title={saved ? "Tersimpan — klik untuk hapus" : "Simpan lowongan"}
-      className="text-[#2b2118] hover:text-caramel disabled:opacity-50"
+      className="text-espresso hover:text-caramel disabled:opacity-50"
     >
       <Bookmark size={15} className={saved ? "fill-[#c98a2b] text-[#c98a2b]" : ""} aria-hidden="true" />
     </button>

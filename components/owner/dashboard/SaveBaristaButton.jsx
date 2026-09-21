@@ -56,7 +56,7 @@ export default function SaveBaristaButton({ baristaId, baristaName, initialSaved
       aria-pressed={saved}
       aria-label={saved ? `Hapus ${baristaName} dari simpanan` : `Simpan ${baristaName}`}
       title={saved ? "Tersimpan — klik untuk hapus" : "Simpan kandidat"}
-      className="absolute top-2 right-2 flex h-7 w-7 items-center justify-center rounded-full bg-[#ffffff]/90 text-[#6f6252] transition-colors hover:text-[#3d2c1e] disabled:opacity-50"
+      className="absolute top-2 right-2 flex h-7 w-7 items-center justify-center rounded-full bg-white/90 text-espresso-soft transition-colors hover:text-espresso disabled:opacity-50"
     >
       <Heart size={14} aria-hidden="true" className={saved ? "fill-[#c0392b] text-[#c0392b]" : ""} />
     </button>

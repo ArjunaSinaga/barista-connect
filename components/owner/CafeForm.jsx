@@ -239,7 +239,7 @@ export default function CafeForm({ initial = null }) {
               ))}
             </div>
           )}
-          <input ref={fileRef} type="file" accept="image/jpeg,image/png,image/webp" multiple className="hidden" onChange={handleFiles} />
+          <input ref={fileRef} type="file" accept="image/jpeg,image/png,image/webp" multiple className="hidden" onChange={handleFiles} aria-label="Tambah foto cafe" />
           <Button
             type="button"
             variant="secondary"

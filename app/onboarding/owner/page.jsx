@@ -115,7 +115,7 @@ export default function OwnerOnboardingPage() {
           <p className="mb-2 text-sm font-bold text-espresso">Foto profil — WAJIB</p>
           <div className="flex items-center gap-3">
             <Avatar src={avatarUrl} name={businessName || "Owner"} size="lg" />
-            <input ref={fileRef} type="file" accept="image/jpeg,image/png,image/webp" className="hidden" onChange={handleAvatar} />
+            <input ref={fileRef} type="file" accept="image/jpeg,image/png,image/webp" className="hidden" onChange={handleAvatar} aria-label="Unggah foto profil usaha" />
             <Button type="button" variant="secondary" size="sm" disabled={uploading} onClick={() => fileRef.current?.click()}>
               {uploading ? <LoaderCircle size={14} className="animate-spin" /> : <Camera size={14} />}
               {uploading ? " Mengunggah..." : avatarUrl ? " Ganti foto" : " Unggah foto"}

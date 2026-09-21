@@ -104,13 +104,13 @@ function LoginForm() {
   }
 
   return (
-    <div className="auth-light min-h-[calc(100dvh-3.5rem)] text-[#2b2118]">
+    <div className="auth-light min-h-[calc(100dvh-3.5rem)] text-espresso">
     <div className="mx-auto max-w-md px-4 py-12">
-      <div className="rounded-2xl border border-[#e8e0cf] bg-[#ffffff] p-6 shadow-[0_2px_12px_rgba(43,33,24,0.10)] sm:p-8">
-      <h1 className="text-center text-2xl font-extrabold tracking-tight text-[#2b2118]">
+      <div className="rounded-2xl border border-[#e8e0cf] bg-white p-6 shadow-[0_2px_12px_rgba(43,33,24,0.10)] sm:p-8">
+      <h1 className="text-center text-2xl font-extrabold tracking-tight text-espresso">
         Masuk ke akun kamu
       </h1>
-      <p className="mt-1 text-center text-sm text-[#857768]">
+      <p className="mt-1 text-center text-sm text-espresso-soft">
         Senang bertemu lagi ☕
       </p>
 
@@ -142,7 +142,7 @@ function LoginForm() {
             onClick={() => setShowPw((v) => !v)}
             aria-label={showPw ? "Sembunyikan password" : "Tampilkan password"}
             title={showPw ? "Sembunyikan password" : "Tampilkan password"}
-            className="absolute top-9 right-3 text-[#857768] hover:text-[#3d2c1e]"
+            className="absolute top-9 right-3 text-espresso-soft hover:text-espresso"
           >
             {showPw ? <EyeOff size={17} /> : <Eye size={17} />}
           </button>
@@ -150,7 +150,7 @@ function LoginForm() {
         <div className="text-right">
           <Link
             href="/forgot-password"
-            className="text-xs font-bold text-[#1f6b4a] hover:underline"
+            className="text-xs font-bold text-matcha hover:underline"
           >
             Lupa password?
           </Link>
@@ -160,9 +160,9 @@ function LoginForm() {
         </Button>
       </form>
 
-      <p className="mt-6 text-center text-sm text-[#857768]">
+      <p className="mt-6 text-center text-sm text-espresso-soft">
         Belum punya akun?{" "}
-        <Link href="/signup" className="font-bold text-[#1f6b4a] hover:underline">
+        <Link href="/signup" className="font-bold text-matcha hover:underline">
           Daftar gratis
         </Link>
       </p>

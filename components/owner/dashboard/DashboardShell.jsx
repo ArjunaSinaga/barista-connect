@@ -81,52 +81,52 @@ export default function DashboardShell({ initialView = "talenta", initialCafeId 
       <div className="min-w-0 space-y-4 lg:col-span-2 lg:h-full lg:min-h-0 lg:overflow-y-auto lg:pb-1 xl:col-span-1 no-scrollbar">
         {right.recs.length === 0 && right.certified.length === 0 ? (
           (middle.talenta.top3?.length ?? 0) === 0 ? (
-          <div className="rounded-2xl border border-[#e8e0cf] bg-[#ffffff] p-4 text-center shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
-            <h3 className="text-sm font-extrabold text-[#2b2118]">Belum ada talenta</h3>
-            <p className="mt-0.5 text-[11px] text-[#857768]">Barista baru yang daftar akan muncul di sini.</p>
-            <Link href="/find-baristas" className="mt-3 inline-flex min-h-[32px] items-center rounded-full bg-[#3d2c1e] px-4 text-xs font-bold text-white hover:bg-[#2e2015]">
+          <div className="rounded-2xl border border-[#e8e0cf] bg-white p-4 text-center shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
+            <h3 className="text-sm font-extrabold text-espresso">Belum ada talenta</h3>
+            <p className="mt-0.5 text-[11px] text-espresso-soft">Barista baru yang daftar akan muncul di sini.</p>
+            <Link href="/find-baristas" className="mt-3 inline-flex min-h-[32px] items-center rounded-full bg-coffee px-4 text-xs font-bold text-white hover:bg-[#2e2015]">
               Cari talenta
             </Link>
           </div>
           ) : null
         ) : (
           <>
-        <div className="rounded-2xl border border-[#e8e0cf] bg-[#ffffff] p-4 shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
+        <div className="rounded-2xl border border-[#e8e0cf] bg-white p-4 shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
           <div className="flex items-start justify-between gap-2">
             <div>
-              <h3 className="text-sm font-extrabold text-[#2b2118]">Recommended Today</h3>
-              <p className="mt-0.5 text-[11px] text-[#857768]">Talenta pilihan berdasarkan kebutuhan cafe Anda.</p>
+              <h3 className="text-sm font-extrabold text-espresso">Recommended Today</h3>
+              <p className="mt-0.5 text-[11px] text-espresso-soft">Talenta pilihan berdasarkan kebutuhan cafe Anda.</p>
             </div>
-            <Link href="/find-baristas" className="inline-flex shrink-0 items-center gap-0.5 text-xs font-bold text-[#2b6cb0] hover:underline">
+            <Link href="/find-baristas" className="inline-flex shrink-0 items-center gap-0.5 text-xs font-bold text-link hover:underline">
               Lihat semua <ChevronRight size={13} />
             </Link>
           </div>
           <div className="mt-2 divide-y divide-[#efe9d9]">
             {right.recs.length ? right.recs.map((b) => (
               <TalentRow key={b.id} barista={b} tag={b.is_open_to_work
-                ? { label: "Available Now", cls: "bg-[#e3f0e8] text-[#1f6b4a]" }
+                ? { label: "Available Now", cls: "bg-[#e3f0e8] text-matcha" }
                 : { label: "Top Match", cls: "bg-[#f5ecd4] text-[#8a6d1f]" }} />
             )) : (
-              <p className="py-4 text-center text-xs text-[#857768]">Belum ada talenta lain saat ini.</p>
+              <p className="py-4 text-center text-xs text-espresso-soft">Belum ada talenta lain saat ini.</p>
             )}
           </div>
         </div>
 
-        <div className="rounded-2xl border border-[#e8e0cf] bg-[#ffffff] p-4 shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
+        <div className="rounded-2xl border border-[#e8e0cf] bg-white p-4 shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
           <div className="flex items-start justify-between gap-2">
             <div>
-              <h3 className="text-sm font-extrabold text-[#2b2118]">Certified Baristas</h3>
-              <p className="mt-0.5 text-[11px] text-[#857768]">Barista yang telah menyelesaikan pelatihan di BaristaConnect.</p>
+              <h3 className="text-sm font-extrabold text-espresso">Certified Baristas</h3>
+              <p className="mt-0.5 text-[11px] text-espresso-soft">Barista yang telah menyelesaikan pelatihan di BaristaConnect.</p>
             </div>
-            <Link href="/find-baristas" className="inline-flex shrink-0 items-center gap-0.5 text-xs font-bold text-[#2b6cb0] hover:underline">
+            <Link href="/find-baristas" className="inline-flex shrink-0 items-center gap-0.5 text-xs font-bold text-link hover:underline">
               Lihat semua <ChevronRight size={13} />
             </Link>
           </div>
           <div className="mt-2 divide-y divide-[#efe9d9]">
             {right.certified.length ? right.certified.map((b) => (
-              <TalentRow key={b.id} barista={b} tag={{ label: "Certified", cls: "bg-[#e3f0e8] text-[#1f6b4a]" }} />
+              <TalentRow key={b.id} barista={b} tag={{ label: "Certified", cls: "bg-[#e3f0e8] text-matcha" }} />
             )) : (
-              <p className="py-4 text-center text-xs text-[#857768]">Belum ada barista tersertifikasi.</p>
+              <p className="py-4 text-center text-xs text-espresso-soft">Belum ada barista tersertifikasi.</p>
             )}
           </div>
         </div>

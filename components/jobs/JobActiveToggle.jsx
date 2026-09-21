@@ -37,8 +37,8 @@ export default function JobActiveToggle({ jobId, isActive }) {
       aria-pressed={isActive}
       className={`inline-flex items-center gap-1.5 rounded-full border px-4 py-1.5 text-[11px] font-bold transition-colors disabled:opacity-50 ${
         isActive
-          ? "border-[#e0d5bd] text-[#6f6252] hover:border-[#3d2c1e] hover:text-[#3d2c1e]"
-          : "border-[#1f6b4a] bg-[#e3f0e8] text-[#1f6b4a] hover:bg-[#d2e7da]"
+          ? "border-[#e0d5bd] text-espresso-soft hover:border-coffee hover:text-espresso"
+          : "border-[#1f6b4a] bg-[#e3f0e8] text-matcha hover:bg-[#d2e7da]"
       }`}
     >
       <Power size={12} aria-hidden="true" />

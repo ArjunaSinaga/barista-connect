@@ -79,19 +79,19 @@ export default async function TrainingPage({ searchParams }) {
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-8">
-      <p className="text-[11px] font-bold tracking-[0.18em] text-[#857768] uppercase">
+      <p className="text-[11px] font-bold tracking-[0.18em] text-espresso-soft uppercase">
         Komunitas kopi yang kuat
       </p>
-      <h1 className="font-display mt-1 text-2xl font-semibold tracking-tight text-[#2b2118] sm:text-3xl">
-        Bangun tim kuat <span className="text-[#1f6b4a]">lewat pelatihan.</span>
+      <h1 className="font-display mt-1 text-2xl font-semibold tracking-tight text-espresso sm:text-3xl">
+        Bangun tim kuat <span className="text-matcha">lewat pelatihan.</span>
       </h1>
-      <p className="mt-1 max-w-xl text-sm leading-6 text-[#6f6252]">
+      <p className="mt-1 max-w-xl text-sm leading-6 text-espresso-soft">
         Katalog kursus barista — dari dasar sampai mahir. Pendaftaran dibuka bertahap,
         gabung waitlist agar tidak ketinggalan batch pertama.
       </p>
 
       <form action="/training" method="GET" role="search" className="mt-4 flex items-center gap-2">
-        <div className="flex min-w-0 flex-1 items-center gap-2 rounded-full border border-[#e0d5bd] bg-[#ffffff] px-4 py-2">
+        <div className="flex min-w-0 flex-1 items-center gap-2 rounded-full border border-[#e0d5bd] bg-white px-4 py-2">
           <Search size={14} className="shrink-0 text-[#b6a98f]" aria-hidden="true" />
           <label htmlFor="training-q" className="sr-only">Cari kursus</label>
           <input
@@ -100,12 +100,12 @@ export default async function TrainingPage({ searchParams }) {
             defaultValue={params?.q ?? ""}
             placeholder="Cari kursus, skill, atau sertifikat..."
             autoComplete="off"
-            className="h-6 w-full bg-transparent text-sm text-[#2b2118] placeholder:text-[#b6a98f] focus:outline-none"
+            className="h-6 w-full bg-transparent text-sm text-espresso placeholder:text-[#b6a98f] focus:outline-none"
           />
         </div>
         <button
           type="submit"
-          className="inline-flex min-h-[36px] shrink-0 items-center rounded-full bg-[#3d2c1e] px-5 text-xs font-bold text-white hover:bg-[#2e2015]"
+          className="inline-flex min-h-[36px] shrink-0 items-center rounded-full bg-coffee px-5 text-xs font-bold text-white hover:bg-[#2e2015]"
         >
           Cari
         </button>
@@ -122,17 +122,17 @@ export default async function TrainingPage({ searchParams }) {
       ) : (
         <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {courses.map((c) => (
-            <article key={c.id} className="flex flex-col rounded-2xl border border-[#e8e0cf] bg-[#ffffff] p-4 shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
-              <p className="inline-flex w-fit items-center gap-1 rounded-full bg-[#e3f0e8] px-2.5 py-0.5 text-[10px] font-bold text-[#1f6b4a]">
+            <article key={c.id} className="flex flex-col rounded-2xl border border-[#e8e0cf] bg-white p-4 shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
+              <p className="inline-flex w-fit items-center gap-1 rounded-full bg-[#e3f0e8] px-2.5 py-0.5 text-[10px] font-bold text-matcha">
                 <BadgeCheck size={11} aria-hidden="true" /> Contoh kurikulum
               </p>
-              <h2 className="mt-2 text-base font-extrabold tracking-tight text-[#2b2118]">{c.title}</h2>
-              <p className="text-xs text-[#857768]">By {c.by}</p>
-              <p className="mt-1 flex items-center gap-1.5 text-[11px] text-[#857768]">
+              <h2 className="mt-2 text-base font-extrabold tracking-tight text-espresso">{c.title}</h2>
+              <p className="text-xs text-espresso-soft">By {c.by}</p>
+              <p className="mt-1 flex items-center gap-1.5 text-[11px] text-espresso-soft">
                 <Clock3 size={11} aria-hidden="true" /> {c.meta}
               </p>
-              <p className="mt-1.5 line-clamp-2 text-xs leading-5 text-[#6f6252]">{c.desc}</p>
-              <p className="mt-1.5 text-xs font-bold text-[#857768]">Harga & jadwal menyusul</p>
+              <p className="mt-1.5 line-clamp-2 text-xs leading-5 text-espresso-soft">{c.desc}</p>
+              <p className="mt-1.5 text-xs font-bold text-espresso-soft">Harga & jadwal menyusul</p>
               <div className="mt-auto flex gap-1.5 pt-3">
                 <WaitlistButton topic={`course-${c.id}`} label="Ikut waitlist" />
               </div>
@@ -142,25 +142,25 @@ export default async function TrainingPage({ searchParams }) {
       )}
 
       <div className="mt-6 grid gap-3 sm:grid-cols-3">
-        <div className="rounded-2xl border border-[#e8e0cf] bg-[#ffffff] p-4 text-center">
-          <p className="text-2xl font-black text-[#2b2118]">{certStats.total}</p>
-          <p className="mt-0.5 text-xs text-[#857768]">Sertifikat terdaftar</p>
+        <div className="rounded-2xl border border-[#e8e0cf] bg-white p-4 text-center">
+          <p className="text-2xl font-black text-espresso">{certStats.total}</p>
+          <p className="mt-0.5 text-xs text-espresso-soft">Sertifikat terdaftar</p>
         </div>
-        <div className="rounded-2xl border border-[#e8e0cf] bg-[#ffffff] p-4 text-center">
-          <p className="text-2xl font-black text-[#2b2118]">{certStats.members}</p>
-          <p className="mt-0.5 text-xs text-[#857768]">Member bersertifikat</p>
+        <div className="rounded-2xl border border-[#e8e0cf] bg-white p-4 text-center">
+          <p className="text-2xl font-black text-espresso">{certStats.members}</p>
+          <p className="mt-0.5 text-xs text-espresso-soft">Member bersertifikat</p>
         </div>
-        <div className="rounded-2xl border border-[#e8e0cf] bg-[#ffffff] p-4 text-center">
-          <p className="flex items-center justify-center gap-1.5 text-base font-extrabold text-[#2b2118]">
+        <div className="rounded-2xl border border-[#e8e0cf] bg-white p-4 text-center">
+          <p className="flex items-center justify-center gap-1.5 text-base font-extrabold text-espresso">
             <Award size={16} className="text-[#9a6a2f]" aria-hidden="true" />
             {certStats.top ? `${certStats.top.label} (${certStats.top.n})` : "—"}
           </p>
-          <p className="mt-0.5 text-xs text-[#857768]">Paling banyak diambil</p>
+          <p className="mt-0.5 text-xs text-espresso-soft">Paling banyak diambil</p>
         </div>
       </div>
       {!certStats.total && (
-        <p className="mt-3 text-center text-xs text-[#857768]">
-          Belum ada sertifikat. <Link href="/dashboard/barista/profile" className="font-bold text-[#1f6b4a] hover:underline">Lengkapi profilmu</Link> untuk tampil di sini.
+        <p className="mt-3 text-center text-xs text-espresso-soft">
+          Belum ada sertifikat. <Link href="/dashboard/barista/profile" className="font-bold text-matcha hover:underline">Lengkapi profilmu</Link> untuk tampil di sini.
         </p>
       )}
 
@@ -170,17 +170,17 @@ export default async function TrainingPage({ searchParams }) {
           { icon: Star, title: "Kualitas Layanan Naik", desc: "Pelanggan lebih puas, lebih sering kembali." },
           { icon: HeartHandshake, title: "Retensi Tim Kuat", desc: "Tim merasa dihargai dan lebih loyal." },
         ].map((b) => (
-          <div key={b.title} className="rounded-2xl border border-[#e8e0cf] bg-[#ffffff] p-4 text-center">
-            <span className="mx-auto flex h-9 w-9 items-center justify-center rounded-full bg-[#efe9d9] text-[#3d2c1e]">
+          <div key={b.title} className="rounded-2xl border border-[#e8e0cf] bg-white p-4 text-center">
+            <span className="mx-auto flex h-9 w-9 items-center justify-center rounded-full bg-[#efe9d9] text-espresso">
               <b.icon size={16} aria-hidden="true" />
             </span>
-            <p className="mt-2 text-sm font-extrabold text-[#2b2118]">{b.title}</p>
-            <p className="mt-0.5 text-xs leading-5 text-[#857768]">{b.desc}</p>
+            <p className="mt-2 text-sm font-extrabold text-espresso">{b.title}</p>
+            <p className="mt-0.5 text-xs leading-5 text-espresso-soft">{b.desc}</p>
           </div>
         ))}
       </div>
 
-      <p className="mt-4 flex items-center gap-1.5 text-center text-[11px] text-[#857768]">
+      <p className="mt-4 flex items-center gap-1.5 text-center text-[11px] text-espresso-soft">
         <Signal size={11} aria-hidden="true" />
         Katalog contoh — jadwal resmi dan pendaftaran online menyusul. Progress tim & sertifikasi masuk fase berikutnya.
       </p>

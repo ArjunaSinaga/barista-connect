@@ -1,4 +1,5 @@
 ﻿import { Suspense } from "react"
+import { redirect } from "next/navigation"
 import { createClient, getSessionSafe, isSupabaseConfigured } from "@/lib/supabase/server"
 import { avgStars } from "@/lib/ratings"
 import { getBusinessCompleteness } from "@/lib/profile-completeness"
@@ -21,8 +22,8 @@ export default async function OwnerDashboardPage({ searchParams }) {
     return <div className="p-8 text-center text-sm text-espresso-soft">Supabase belum dikonfigurasi.</div>
   }
   const { user, profile } = await getSessionSafe()
-  if (!user) return <div className="p-8 text-center">Silakan login di <a href="/login" className="text-caramel underline">/login</a>.</div>
-  if (!profile) return <div className="p-8 text-center">Akun belum lengkap, <a href="/onboarding/owner" className="text-caramel underline">lengkapi profil owner</a>.</div>
+  if (!user) redirect("/login");
+  if (!profile) redirect("/onboarding/owner");
   const params = await searchParams;
 
   let jobs = []
@@ -142,7 +143,7 @@ export default async function OwnerDashboardPage({ searchParams }) {
   });
 
   return (
-    <div className="min-h-screen bg-[#f5f1e8] text-[#2b2118] lg:flex lg:h-[calc(100dvh-3.5rem)] lg:min-h-0 lg:flex-col lg:overflow-hidden">
+    <div className="min-h-screen bg-paper text-espresso lg:flex lg:h-[calc(100dvh-3.5rem)] lg:min-h-0 lg:flex-col lg:overflow-hidden">
       <div className="mx-auto w-full max-w-[1400px] px-4 py-4 sm:px-6 lg:min-h-0 lg:flex-1">
         {loadError && (
           <p className="mb-3 rounded-xl border border-red-300 bg-red-50 px-4 py-3 text-xs font-bold text-red-600">
