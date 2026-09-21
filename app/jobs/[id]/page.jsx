@@ -76,6 +76,7 @@ export default async function JobDetailPage({ params }) {
 
   let applied = false;
   let applicationId = null;
+  let profileIncomplete = false;
   if (profile?.role === "barista") {
     const { data: app } = await supabase
       .from("applications")
@@ -85,6 +86,13 @@ export default async function JobDetailPage({ params }) {
       .maybeSingle();
     applied = Boolean(app);
     applicationId = app?.id;
+    // Cek kelengkapan profil di awal biar tidak ditolak pemilik kafe
+    const { data: bp } = await supabase
+      .from("barista_profiles")
+      .select("full_name, profile_picture_url")
+      .eq("id", user.id)
+      .maybeSingle();
+    profileIncomplete = !bp?.full_name || !bp?.profile_picture_url;
   }
 
   return (
@@ -179,6 +187,15 @@ export default async function JobDetailPage({ params }) {
             </p>
             {profile?.role === "barista" ? (
               <div className="mt-4">
+                {profileIncomplete && !applied && (
+                  <p className="mb-3 rounded-xl bg-caramel/10 px-4 py-2.5 text-xs font-bold text-caramel">
+                    Profilmu belum lengkap — pemilik kafe lebih melirik profil
+                    berfoto.{" "}
+                    <Link href="/dashboard/barista/profile" className="underline">
+                      Lengkapi dulu →
+                    </Link>
+                  </p>
+                )}
                 <ApplyButton jobId={job.id} applied={applied} jobTypes={job.employment_types?.length ? job.employment_types : (job.employment_type ? [job.employment_type] : [])} full size="lg" />
                 {applied && (
                   <Link

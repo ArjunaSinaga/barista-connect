@@ -27,13 +27,31 @@ const chalk = Kalam({
   weight: ["400", "700"],
 });
 
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://barista-connect.vercel.app";
+
 export const metadata = {
+  metadataBase: new URL(SITE_URL),
   title: {
     default: "BaristaConnect — Lowongan kerja barista & casual worker",
     template: "%s · BaristaConnect",
   },
   description:
     "Platform pencarian kerja untuk barista dan tempat coffee shop mencari barista. Gratis, cepat, tanpa ribet.",
+  openGraph: {
+    title: "BaristaConnect — Lowongan kerja barista & casual worker",
+    description:
+      "Cari loker barista, lamar gratis, chat langsung dengan pemilik kafe.",
+    url: SITE_URL,
+    siteName: "BaristaConnect",
+    locale: "id_ID",
+    type: "website",
+  },
+  twitter: {
+    card: "summary",
+    title: "BaristaConnect — Lowongan kerja barista",
+    description:
+      "Cari loker barista, lamar gratis, chat langsung dengan pemilik kafe.",
+  },
 };
 
 export default async function RootLayout({ children }) {
