@@ -1,2 +1,0 @@
-[    5547ms] [ERROR] Loading the image 'https://picsum.photos/seed/audit1/200' violates the following Content Security Policy directive: "img-src 'self' data: blob: https://*.supabase.co https://randomuser.me". The action has been blocked. @ https://barista-connect.vercel.app/jobs:0
-[    5547ms] [ERROR] Loading the image 'https://picsum.photos/seed/audit1/200' violates the following Content Security Policy directive: "img-src 'self' data: blob: https://*.supabase.co https://randomuser.me". The action has been blocked. @ https://barista-connect.vercel.app/jobs:0

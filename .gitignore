@@ -49,3 +49,9 @@ proxy.js
 .vercel
 
 memory/
+
+# local-only: logs & working notes
+.playwright-mcp/
+dev.log
+findings.md
+progress.md
