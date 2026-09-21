@@ -21,6 +21,7 @@ description: Master indeks semua router + skill inti. Panggil saat mulai kerja (
 
 ## Skill inti (langsung, tanpa lewat router)
 
+- `baristaconnect` — "pakai baristaconnect": 1 pintu BaristaConnect, system design + semua skill relevan terpanggil sekaligus
 - `garap-ui-fullstack` — "pakai skill garap-ui-fullstack": image-to-code, frontend UX/UI, Vercel, Supabase (1 pintu frontend)
 - `supabase` — auth, DB, edge function, realtime, storage, debug error Supabase
 - `frontend-design` — desain interface production-ready + dark mode
