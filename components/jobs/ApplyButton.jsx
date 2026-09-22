@@ -52,7 +52,7 @@ export default function ApplyButton({ jobId, applied=false, size="md", full=fals
       else if (cv.size>5*1024*1024) e.cv="CV maksimal 5MB";
     } else if (!profileCv) e.cv="CV belum ada di profil — upload PDF dulu";
     if (!cover.trim() || cover.trim().length<20) e.cover="Cover letter minimal 20 karakter";
-    if (Object.keys(e).length) { setErrors(e); focusFirstError(e); return; }
+    if (Object.keys(e).length) { setErrors(e); focusFirstError(e); toast(Object.values(e)[0], "error"); return; }
     setErrors({});
     setBusy(true);
     try {
