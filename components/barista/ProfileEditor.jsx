@@ -9,7 +9,7 @@ import Toggle from "@/components/ui/Toggle";
 import { Input, Textarea } from "@/components/ui/Field";
 import { useToast } from "@/components/ui/toast";
 import { createClient } from "@/lib/supabase/client";
-import { SKILL_PRESETS, AVATAR_MIME_TYPES, AVATAR_MAX_BYTES } from "@/lib/constants";
+import { SKILL_PRESETS, skillLabel, AVATAR_MIME_TYPES, AVATAR_MAX_BYTES } from "@/lib/constants";
 import { compressImage, formatBytes } from "@/lib/image";
 import { profileUpdateSchema } from "@/lib/validation";
 import { focusFirstError } from "@/lib/focusFirstError";
@@ -245,7 +245,7 @@ export default function ProfileEditor({ initial }) {
               }
               className="inline-flex items-center gap-1 rounded-full bg-caramel/10 px-3 py-1.5 text-xs font-bold text-caramel hover:bg-red-100 hover:text-red-600"
             >
-              {s} <Trash2 size={11} />
+              {skillLabel(s)} <Trash2 size={11} />
             </button>
           ))}
         </div>
@@ -270,7 +270,7 @@ export default function ProfileEditor({ initial }) {
                 onClick={() => addSkill(preset)}
                 className="rounded-full border border-dashed border-latte px-3 py-1.5 text-xs font-semibold text-espresso-soft hover:border-caramel hover:text-caramel"
               >
-                + {preset}
+                + {skillLabel(preset)}
               </button>
             ))}
           </div>

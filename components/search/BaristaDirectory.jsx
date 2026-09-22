@@ -9,7 +9,7 @@ import Button from "@/components/ui/Button";
 import Sheet from "@/components/ui/Sheet";
 import Toggle from "@/components/ui/Toggle";
 import { CardSkeleton } from "@/components/ui/Skeleton";
-import { SKILL_PRESETS } from "@/lib/constants";
+import { SKILL_PRESETS, skillLabel } from "@/lib/constants";
 import { createClient } from "@/lib/supabase/client";
 
 export default function BaristaDirectory({ ownerId }) {
@@ -141,7 +141,7 @@ export default function BaristaDirectory({ ownerId }) {
                   : "border border-latte card-dark text-espresso-soft hover:border-caramel hover:text-caramel"
               }`}
             >
-              {s}
+              {skillLabel(s)}
             </button>
           ))}
         </div>

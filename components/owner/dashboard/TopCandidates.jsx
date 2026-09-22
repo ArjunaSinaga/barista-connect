@@ -10,6 +10,7 @@ import SaveBaristaButton from "@/components/owner/dashboard/SaveBaristaButton";
 import InviteButton from "@/components/owner/dashboard/InviteButton";
 import { avgStars } from "@/lib/ratings";
 import { formatExpShort } from "@/lib/exp";
+import { skillLabel } from "@/lib/constants";
 
 // Kartu kandidat ala mockup: foto + badge + nama + rating + quote + skill + 2 CTA.
 export function badgeFor(b, rank) {
@@ -68,7 +69,7 @@ export function CandidateCard({ barista, rank, compact = false, strip = false, s
             {barista.skills?.length > 0 && (
               <div className="flex flex-wrap gap-1">
                 {barista.skills.slice(0, 2).map((s) => (
-                  <span key={s} className="rounded bg-[#f2ecdf] px-1.5 py-0.5 text-[9px] font-semibold text-espresso-soft">{s}</span>
+                  <span key={s} className="rounded bg-[#f2ecdf] px-1.5 py-0.5 text-[9px] font-semibold text-espresso-soft">{skillLabel(s)}</span>
                 ))}
               </div>
             )}
@@ -133,7 +134,7 @@ export function CandidateCard({ barista, rank, compact = false, strip = false, s
         {barista.skills?.length > 0 && (
           <div className="mt-1.5 flex flex-wrap gap-1">
             {barista.skills.slice(0, compact ? 2 : 3).map((s) => (
-              <span key={s} className="rounded-full bg-[#f2ecdf] px-2 py-0.5 text-[10px] font-semibold text-espresso-soft">{s}</span>
+              <span key={s} className="rounded-full bg-[#f2ecdf] px-2 py-0.5 text-[10px] font-semibold text-espresso-soft">{skillLabel(s)}</span>
             ))}
             {barista.skills.length > (compact ? 2 : 3) && (
               <span className="rounded-full bg-[#f2ecdf] px-2 py-0.5 text-[10px] font-semibold text-espresso-soft">+{barista.skills.length - (compact ? 2 : 3)}</span>
@@ -274,7 +275,7 @@ export function TalentRow({ barista, tag }) {
           {avg ?? "-"} ({count}) · {formatExpShort(barista.experience_months, barista.years_of_experience)}
         </span>
         <span className="mt-0.5 block truncate text-[11px] text-espresso-soft">
-          {barista.location_place ?? ""}{barista.skills?.length ? ` · ${barista.skills.slice(0, 2).join(", ")}` : ""}
+          {barista.location_place ?? ""}{barista.skills?.length ? ` · ${barista.skills.slice(0, 2).map(skillLabel).join(", ")}` : ""}
         </span>
       </span>
       <ChevronRight size={15} className="shrink-0 text-[#b6a98f]" />

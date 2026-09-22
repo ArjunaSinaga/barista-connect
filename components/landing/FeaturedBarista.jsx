@@ -4,7 +4,7 @@ import Avatar from "@/components/ui/Avatar";
 import VerifiedBadge from "@/components/ui/VerifiedBadge";
 import Button from "@/components/ui/Button";
 import { avgStars } from "@/lib/ratings";
-import { EMPLOYMENT_LABELS } from "@/lib/constants";
+import { EMPLOYMENT_LABELS, skillLabel } from "@/lib/constants";
 import { formatExp } from "@/lib/exp";
 
 // Featured barista card — light kerja.inc style. All numbers computed from real data.
@@ -54,7 +54,7 @@ export default function FeaturedBarista({ barista, isAnon }) {
       {barista.skills?.length > 0 && (
         <div className="mt-3 flex flex-wrap gap-1.5">
           {barista.skills.slice(0, 5).map((s) => (
-            <span key={s} className="rounded-full bg-[#f2ecdf] px-2.5 py-1 text-[11px] font-semibold text-espresso-soft">{s}</span>
+            <span key={s} className="rounded-full bg-[#f2ecdf] px-2.5 py-1 text-[11px] font-semibold text-espresso-soft">{skillLabel(s)}</span>
           ))}
         </div>
       )}

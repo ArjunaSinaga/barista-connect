@@ -8,8 +8,8 @@ export const QUICK_FILTERS = [
   { label: "Rating 4.5+", href: "/find-baristas?minRating=4.5", icon: Star },
   { label: "Penuh Waktu", href: "/find-baristas?type=full-time", icon: Briefcase },
   { label: "Paruh Waktu", href: "/find-baristas?type=part-time", icon: Clock },
-  { label: "Latte Art", href: "/find-baristas?q=Latte%20Art", icon: Coffee },
-  { label: "Manual Brew", href: "/find-baristas?q=Manual%20Brew", icon: CupSoda },
+  { label: "Seni Latte", href: "/find-baristas?q=Latte%20Art", icon: Coffee },
+  { label: "Seduh Manual", href: "/find-baristas?q=Manual%20Brew", icon: CupSoda },
 ];
 
 export default function HeroTalenta({ photo, cafeName, cafeLocation }) {

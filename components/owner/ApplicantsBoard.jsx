@@ -13,7 +13,7 @@ import {
   UsersRound,
   X,
 } from "lucide-react";
-import { EMPLOYMENT_LABELS } from "@/lib/constants";
+import { EMPLOYMENT_LABELS, skillLabel } from "@/lib/constants";
 import Avatar from "@/components/ui/Avatar";
 import Badge from "@/components/ui/Badge";
 import Button from "@/components/ui/Button";
@@ -254,7 +254,7 @@ export default function ApplicantsBoard({
                           key={s}
                           className="rounded-full bg-cream-dark px-2.5 py-0.5 text-[11px] font-bold text-espresso-soft"
                         >
-                          {s}
+                          {skillLabel(s)}
                         </span>
                       ))}
                     </div>

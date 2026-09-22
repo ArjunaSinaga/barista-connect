@@ -5,6 +5,7 @@ import VerifiedBadge from "@/components/ui/VerifiedBadge";
 import StartChatButton from "@/components/chat/StartChatButton";
 import RatingForm, { Stars } from "@/components/ratings/RatingForm";
 import { formatExp } from "@/lib/exp";
+import { skillLabel } from "@/lib/constants";
 
 export default function BaristaProfileView({
   b, workHistory = [], ratings = [], avg = null,
@@ -112,7 +113,7 @@ export default function BaristaProfileView({
           <h2 className="text-xs font-extrabold tracking-wide text-espresso uppercase">Keahlian</h2>
           <div className="mt-3 flex flex-wrap justify-center gap-2">
             {b.skills.map((s) => (
-              <span key={s} className="rounded-full bg-caramel/10 px-3 py-1.5 text-xs font-bold text-caramel">{s}</span>
+              <span key={s} className="rounded-full bg-caramel/10 px-3 py-1.5 text-xs font-bold text-caramel">{skillLabel(s)}</span>
             ))}
           </div>
         </section>

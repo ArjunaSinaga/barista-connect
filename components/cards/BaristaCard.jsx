@@ -3,6 +3,7 @@ import { MapPin } from "lucide-react";
 import Avatar from "@/components/ui/Avatar";
 import Badge from "@/components/ui/Badge";
 import { formatExpShort } from "@/lib/exp";
+import { skillLabel } from "@/lib/constants";
 
 export function OpenToWorkDot({ open }) {
   return (
@@ -57,7 +58,7 @@ export default function BaristaCard({ barista, actions = null }) {
               key={s}
               className="rounded-full bg-caramel/10 px-2.5 py-1 text-[11px] font-bold text-caramel"
             >
-              {s}
+              {skillLabel(s)}
             </span>
           ))}
           {barista.skills.length > 3 && (
