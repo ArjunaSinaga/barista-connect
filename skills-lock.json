@@ -31,6 +31,42 @@
       "skillPath": "marketing-and-seo/analytics-reporting/SKILL.md",
       "computedHash": "ecf417be38e2f0f28f11fda6431b95c3d502380e4cb9bcf11681e7fa80a75377"
     },
+    "antislop": {
+      "source": "miqdadbadjuber/anti-slop",
+      "sourceType": "github",
+      "skillPath": "skills/antislop/SKILL.md",
+      "computedHash": "48e798770febffe5200cadf8b831582af282f7fd40219319e446df61082e482c"
+    },
+    "antislop-code": {
+      "source": "miqdadbadjuber/anti-slop",
+      "sourceType": "github",
+      "skillPath": "skills/antislop-code/SKILL.md",
+      "computedHash": "459c556cee628a295f1e4ab0f575a6ca9f63032bb87e52e8dfd7a50cbc9c88c9"
+    },
+    "antislop-copywriting": {
+      "source": "miqdadbadjuber/anti-slop",
+      "sourceType": "github",
+      "skillPath": "skills/antislop-copywriting/SKILL.md",
+      "computedHash": "cdee48612a644126d839586a518b5e53327c45499928335e2d02f9587b128773"
+    },
+    "antislop-human": {
+      "source": "miqdadbadjuber/anti-slop",
+      "sourceType": "github",
+      "skillPath": "skills/antislop-human/SKILL.md",
+      "computedHash": "eb3e38ac048f0ef5dfe1349be58769786a75e9d0b4ec24a714fe53598c4061d5"
+    },
+    "antislop-layoutmobile": {
+      "source": "miqdadbadjuber/anti-slop",
+      "sourceType": "github",
+      "skillPath": "skills/antislop-layoutmobile/SKILL.md",
+      "computedHash": "1def32958e5be3356d1dd27428d04df0bd69bb9df8df9117c11abacc464b4ef6"
+    },
+    "antislop-ui": {
+      "source": "miqdadbadjuber/anti-slop",
+      "sourceType": "github",
+      "skillPath": "skills/antislop-ui/SKILL.md",
+      "computedHash": "12c2cd7d1d5fbae9210410eb16230332747e9414fc06129200ac13ee174909b6"
+    },
     "api-design": {
       "source": "seb1n/awesome-ai-agent-skills",
       "sourceType": "github",
@@ -43,6 +79,24 @@
       "skillPath": "api-and-integration/api-integration/SKILL.md",
       "computedHash": "1add026658c93ede506489dd5d161575b60eee52d7580b0b637d192ffec11865"
     },
+    "apk-redteam-pipeline": {
+      "source": "elementalsouls/claude-bughunter",
+      "sourceType": "github",
+      "skillPath": "skills/apk-redteam-pipeline/SKILL.md",
+      "computedHash": "b9a44949c3e885af29558e1449045a83d41abf6dc36e7c29c96ecd2513ade646"
+    },
+    "bb-local-toolkit": {
+      "source": "elementalsouls/claude-bughunter",
+      "sourceType": "github",
+      "skillPath": "skills/bb-local-toolkit/SKILL.md",
+      "computedHash": "f6cfd9b6eb764de370a78d242e9e4d5023c38aec853fc658b609cf9b2d9aaeff"
+    },
+    "bb-methodology": {
+      "source": "elementalsouls/claude-bughunter",
+      "sourceType": "github",
+      "skillPath": "skills/bb-methodology/SKILL.md",
+      "computedHash": "987f83b6dc1a4b5656fbf223ac0ea29e8018f930c1826f19d2c6afdf20e0d6ba"
+    },
     "blog-post-writing": {
       "source": "seb1n/awesome-ai-agent-skills",
       "sourceType": "github",
@@ -54,6 +108,18 @@
       "sourceType": "github",
       "skillPath": "finance-and-accounting/budget-planning/SKILL.md",
       "computedHash": "ab474be0bd54bb6267f0983be8c7928202cd9ecf51efdeb8190d660ac25a45b0"
+    },
+    "bug-bounty": {
+      "source": "elementalsouls/claude-bughunter",
+      "sourceType": "github",
+      "skillPath": "skills/bug-bounty/SKILL.md",
+      "computedHash": "4270dc8fee30c5a20c093c092436d94e25205d943c0d370208aa954cde4c6ebf"
+    },
+    "bugcrowd-reporting": {
+      "source": "elementalsouls/claude-bughunter",
+      "sourceType": "github",
+      "skillPath": "skills/bugcrowd-reporting/SKILL.md",
+      "computedHash": "1e7453bf793dabcbc55f90fdad6fedc66cac71d3cc6fa5894c034934c6420d98"
     },
     "chatbot-conversation-design": {
       "source": "seb1n/awesome-ai-agent-skills",
@@ -72,6 +138,12 @@
       "sourceType": "github",
       "skillPath": "devops-and-infrastructure/ci-cd/SKILL.md",
       "computedHash": "f7f902b15eb19a1d04d842ca5417546a1faac416ad3c222378c2be1dd36777a8"
+    },
+    "cloud-iam-deep": {
+      "source": "elementalsouls/claude-bughunter",
+      "sourceType": "github",
+      "skillPath": "skills/cloud-iam-deep/SKILL.md",
+      "computedHash": "68db5a0a57a2acbed1f76bea42320b4b3f2c25704364c36b6df02ecff397812f"
     },
     "cloud-monitoring": {
       "source": "seb1n/awesome-ai-agent-skills",
@@ -247,11 +319,23 @@
       "skillPath": "communication/email-drafting/SKILL.md",
       "computedHash": "a2490d24c1f40b80121312ee72df12fd69b54001ea9be6285f3af5f6ac64bef3"
     },
+    "enterprise-vpn-attack": {
+      "source": "elementalsouls/claude-bughunter",
+      "sourceType": "github",
+      "skillPath": "skills/enterprise-vpn-attack/SKILL.md",
+      "computedHash": "fbac4c7c31e78c476cea07d84c25cff1f3757ce15106a25c2d79c5f0790d013f"
+    },
     "eu-ai-act-readiness": {
       "source": "seb1n/awesome-ai-agent-skills",
       "sourceType": "github",
       "skillPath": "legal-and-compliance/eu-ai-act-readiness/SKILL.md",
       "computedHash": "0297febc932a96b3796cce11205c116d437e120b7b5c510ebfeae36a1095257b"
+    },
+    "evidence-hygiene": {
+      "source": "elementalsouls/claude-bughunter",
+      "sourceType": "github",
+      "skillPath": "skills/evidence-hygiene/SKILL.md",
+      "computedHash": "14f0b9594f8013696583f3382783c220f2e41dd9836bd931b952c9ed17f8ad6e"
     },
     "expense-categorization": {
       "source": "seb1n/awesome-ai-agent-skills",
@@ -307,6 +391,354 @@
       "skillPath": "agent-engineering/human-in-the-loop/SKILL.md",
       "computedHash": "0d2d22f8342053bc5e3548b3cfd4ef2544dd4e0504078178d1012875dc648635"
     },
+    "hunt-api-misconfig": {
+      "source": "elementalsouls/claude-bughunter",
+      "sourceType": "github",
+      "skillPath": "skills/hunt-api-misconfig/SKILL.md",
+      "computedHash": "9a2d8c422ad9a4f2f7bb86f0da7e588bba6fd9650ffa9f95c7dc8b545b408022"
+    },
+    "hunt-aspnet": {
+      "source": "elementalsouls/claude-bughunter",
+      "sourceType": "github",
+      "skillPath": "skills/hunt-aspnet/SKILL.md",
+      "computedHash": "98295d4d11ade46e22d5bbc718883cd27d25a097b6256b619fc71c4b63b36863"
+    },
+    "hunt-ato": {
+      "source": "elementalsouls/claude-bughunter",
+      "sourceType": "github",
+      "skillPath": "skills/hunt-ato/SKILL.md",
+      "computedHash": "bc9255216e88869c9c53f1a51644c1236737d1db6cdbe653b445508db9c523c8"
+    },
+    "hunt-auth-bypass": {
+      "source": "elementalsouls/claude-bughunter",
+      "sourceType": "github",
+      "skillPath": "skills/hunt-auth-bypass/SKILL.md",
+      "computedHash": "1feaff0f582e0f66cba1f8bdaa863ebe3cdf3fce2d980611aae7b458d615fc77"
+    },
+    "hunt-brute-force": {
+      "source": "elementalsouls/claude-bughunter",
+      "sourceType": "github",
+      "skillPath": "skills/hunt-brute-force/SKILL.md",
+      "computedHash": "50682c29991e8008793c809131156448ec266c527812c9b91c09da82e1c03193"
+    },
+    "hunt-business-logic": {
+      "source": "elementalsouls/claude-bughunter",
+      "sourceType": "github",
+      "skillPath": "skills/hunt-business-logic/SKILL.md",
+      "computedHash": "2d0d5f328912c4e23f62bfcb246d88d662ca95710c655c8116169ec81b883b4e"
+    },
+    "hunt-cache-poison": {
+      "source": "elementalsouls/claude-bughunter",
+      "sourceType": "github",
+      "skillPath": "skills/hunt-cache-poison/SKILL.md",
+      "computedHash": "7ce48749fbda43f5b9f0c932fc04e09e82057b92fa1c8f7dcee38ae62736995b"
+    },
+    "hunt-captcha-bypass": {
+      "source": "elementalsouls/claude-bughunter",
+      "sourceType": "github",
+      "skillPath": "skills/hunt-captcha-bypass/SKILL.md",
+      "computedHash": "cc7502ece224d6193239012afe5662b09b834f3e9269d692e9292538b0ab64ec"
+    },
+    "hunt-cicd": {
+      "source": "elementalsouls/claude-bughunter",
+      "sourceType": "github",
+      "skillPath": "skills/hunt-cicd/SKILL.md",
+      "computedHash": "0cdede3fcf4a88549791bb8246ceed347ba97f34cf51682e7928d1cef2f52bd0"
+    },
+    "hunt-clickjacking": {
+      "source": "elementalsouls/claude-bughunter",
+      "sourceType": "github",
+      "skillPath": "skills/hunt-clickjacking/SKILL.md",
+      "computedHash": "cad5ddc0a38aef487c94ff6f92c7d2a9766627c4dd9a93aa88245f929f600858"
+    },
+    "hunt-cloud-misconfig": {
+      "source": "elementalsouls/claude-bughunter",
+      "sourceType": "github",
+      "skillPath": "skills/hunt-cloud-misconfig/SKILL.md",
+      "computedHash": "58c92888fd1125ee409a916d92419ad429254a0f0541571b19ba756f1e379ccb"
+    },
+    "hunt-cors": {
+      "source": "elementalsouls/claude-bughunter",
+      "sourceType": "github",
+      "skillPath": "skills/hunt-cors/SKILL.md",
+      "computedHash": "bc08825fb617daa0c6f232dd7bf7b20ba106a8ceb0d935eee3dc7f069cee4bbb"
+    },
+    "hunt-csrf": {
+      "source": "elementalsouls/claude-bughunter",
+      "sourceType": "github",
+      "skillPath": "skills/hunt-csrf/SKILL.md",
+      "computedHash": "a8dc082f6120bdfd2dbb9d6d486e0017b96715d50a3a5a56d493634ac8026d9d"
+    },
+    "hunt-deserialization": {
+      "source": "elementalsouls/claude-bughunter",
+      "sourceType": "github",
+      "skillPath": "skills/hunt-deserialization/SKILL.md",
+      "computedHash": "c9f649972571a348a1a2b44ad40ba691ce1ce4b14aaf451efea608b5f4422cc9"
+    },
+    "hunt-dispatch": {
+      "source": "elementalsouls/claude-bughunter",
+      "sourceType": "github",
+      "skillPath": "skills/hunt-dispatch/SKILL.md",
+      "computedHash": "12ef9af4c97e50f13e4219a2023fb5eda56c25ebe8cbe1b17b9ca8fcbac0bc51"
+    },
+    "hunt-dom": {
+      "source": "elementalsouls/claude-bughunter",
+      "sourceType": "github",
+      "skillPath": "skills/hunt-dom/SKILL.md",
+      "computedHash": "f25887c5fa05fd780ac76551e6b9aac005f3b28b8ccd89f6a97d31db82584c7d"
+    },
+    "hunt-exceptional-conditions": {
+      "source": "elementalsouls/claude-bughunter",
+      "sourceType": "github",
+      "skillPath": "skills/hunt-exceptional-conditions/SKILL.md",
+      "computedHash": "797d10268e1023fc9a40aa85e160269056487d5d67cdf002c94c2b08c88ca37e"
+    },
+    "hunt-file-upload": {
+      "source": "elementalsouls/claude-bughunter",
+      "sourceType": "github",
+      "skillPath": "skills/hunt-file-upload/SKILL.md",
+      "computedHash": "9f33e0a84b79b7fbe70b712a2bd014792707df83177388f64f5d5ca490c3ff30"
+    },
+    "hunt-fintech-graphql": {
+      "source": "elementalsouls/claude-bughunter",
+      "sourceType": "github",
+      "skillPath": "skills/hunt-fintech-graphql/SKILL.md",
+      "computedHash": "dff86a2d36592507e84be088bd948b8dab4aa7a005da4c9d3f780e659ebee856"
+    },
+    "hunt-forgot-password": {
+      "source": "elementalsouls/claude-bughunter",
+      "sourceType": "github",
+      "skillPath": "skills/hunt-forgot-password/SKILL.md",
+      "computedHash": "a4f212c714849d675d103fa92d14885338d65f816c8e3d416eb46d8c97d6f2ae"
+    },
+    "hunt-graphql": {
+      "source": "elementalsouls/claude-bughunter",
+      "sourceType": "github",
+      "skillPath": "skills/hunt-graphql/SKILL.md",
+      "computedHash": "dd51bbf7d10be9054997414b02915b6348c113ec95695b0f0439d94a92023630"
+    },
+    "hunt-grpc": {
+      "source": "elementalsouls/claude-bughunter",
+      "sourceType": "github",
+      "skillPath": "skills/hunt-grpc/SKILL.md",
+      "computedHash": "88cde4f42d814c167031c8add04df623901fc375342e6c4d457bbbbb927eb510"
+    },
+    "hunt-host-header": {
+      "source": "elementalsouls/claude-bughunter",
+      "sourceType": "github",
+      "skillPath": "skills/hunt-host-header/SKILL.md",
+      "computedHash": "5a3317053a668105935dd634d5fd24a7b8f42fb556d7bdfd7ab95d18f49e0d4d"
+    },
+    "hunt-html-injection": {
+      "source": "elementalsouls/claude-bughunter",
+      "sourceType": "github",
+      "skillPath": "skills/hunt-html-injection/SKILL.md",
+      "computedHash": "69674781d11ec6dc3af6b94264126219135222d035ee85d0ca5de1db1b233a7c"
+    },
+    "hunt-http-smuggling": {
+      "source": "elementalsouls/claude-bughunter",
+      "sourceType": "github",
+      "skillPath": "skills/hunt-http-smuggling/SKILL.md",
+      "computedHash": "f9f43e3c1af8a8c61ba1ff674672563588c7a07dfe4d274f3892ed4d809bae6b"
+    },
+    "hunt-idor": {
+      "source": "elementalsouls/claude-bughunter",
+      "sourceType": "github",
+      "skillPath": "skills/hunt-idor/SKILL.md",
+      "computedHash": "5984db524a4dcc05153bd0ec3f2e04b701a518aff001bb1b8d97265d14bac1c1"
+    },
+    "hunt-jwt-crypto": {
+      "source": "elementalsouls/claude-bughunter",
+      "sourceType": "github",
+      "skillPath": "skills/hunt-jwt-crypto/SKILL.md",
+      "computedHash": "215c69e83d04afe329a40fba68086cc1ba8fdda52b05d589d826809798f4f51a"
+    },
+    "hunt-k8s": {
+      "source": "elementalsouls/claude-bughunter",
+      "sourceType": "github",
+      "skillPath": "skills/hunt-k8s/SKILL.md",
+      "computedHash": "e0c7514e8fa8c5e425bdf29fdbda6ce1c51f90abc2206ca6f826117bb858d5e0"
+    },
+    "hunt-laravel": {
+      "source": "elementalsouls/claude-bughunter",
+      "sourceType": "github",
+      "skillPath": "skills/hunt-laravel/SKILL.md",
+      "computedHash": "7972cd1058c14ec33103c4fb146681a08c58a4ca5248a0c27542faabd565a9ad"
+    },
+    "hunt-ldap": {
+      "source": "elementalsouls/claude-bughunter",
+      "sourceType": "github",
+      "skillPath": "skills/hunt-ldap/SKILL.md",
+      "computedHash": "89572d3143aae4c9473330e8166114ee383c9430e4e3327ccecdb41b9e7d8761"
+    },
+    "hunt-lfi": {
+      "source": "elementalsouls/claude-bughunter",
+      "sourceType": "github",
+      "skillPath": "skills/hunt-lfi/SKILL.md",
+      "computedHash": "600c1ce97f4855bf98c90ff537ee9f3ab34665ee286beb14c8bca39e6856126a"
+    },
+    "hunt-llm-ai": {
+      "source": "elementalsouls/claude-bughunter",
+      "sourceType": "github",
+      "skillPath": "skills/hunt-llm-ai/SKILL.md",
+      "computedHash": "7e4b3f2cb56e9c2bf6a87fc96acd1f637d284ba6cfdc5f0dcc5d79b5a1c914eb"
+    },
+    "hunt-mfa-bypass": {
+      "source": "elementalsouls/claude-bughunter",
+      "sourceType": "github",
+      "skillPath": "skills/hunt-mfa-bypass/SKILL.md",
+      "computedHash": "23a9809a208700d4a6576d20fabc4fe6f0bb5c9810c2e9d2900287b690bf0ebb"
+    },
+    "hunt-misc": {
+      "source": "elementalsouls/claude-bughunter",
+      "sourceType": "github",
+      "skillPath": "skills/hunt-misc/SKILL.md",
+      "computedHash": "cb92fbd29608da3fb47022ef0b2d4b416f71096c34b99e5bfd76be3c03cb3b2a"
+    },
+    "hunt-nextjs": {
+      "source": "elementalsouls/claude-bughunter",
+      "sourceType": "github",
+      "skillPath": "skills/hunt-nextjs/SKILL.md",
+      "computedHash": "f7580af6ff76d5dd9e1a0fb221f3dba44e4a0c1415bcc12dd9e6e40dcb4dff6f"
+    },
+    "hunt-nodejs": {
+      "source": "elementalsouls/claude-bughunter",
+      "sourceType": "github",
+      "skillPath": "skills/hunt-nodejs/SKILL.md",
+      "computedHash": "0aa665e9c33de727bb8c1aad3afcf08ad7f957050d0504ccd2d7dd8fd148b01f"
+    },
+    "hunt-nosqli": {
+      "source": "elementalsouls/claude-bughunter",
+      "sourceType": "github",
+      "skillPath": "skills/hunt-nosqli/SKILL.md",
+      "computedHash": "65d3af9972b223b4b7f71a005bc7badd827daf941a80c838b1150bd381adea71"
+    },
+    "hunt-ntlm-info": {
+      "source": "elementalsouls/claude-bughunter",
+      "sourceType": "github",
+      "skillPath": "skills/hunt-ntlm-info/SKILL.md",
+      "computedHash": "7789481a4881e6d7c448413e31efbc1e05773a26fbefb735faf0909e0434113a"
+    },
+    "hunt-oauth": {
+      "source": "elementalsouls/claude-bughunter",
+      "sourceType": "github",
+      "skillPath": "skills/hunt-oauth/SKILL.md",
+      "computedHash": "e0786a39ba5385110af1cc35d96c07c4d1384545a2ebc4e9d25a341fb46da99d"
+    },
+    "hunt-open-redirect": {
+      "source": "elementalsouls/claude-bughunter",
+      "sourceType": "github",
+      "skillPath": "skills/hunt-open-redirect/SKILL.md",
+      "computedHash": "e7edfe25786333e49e127ca74aff084ead1b7f5f1512d1afa5631ac19902ce67"
+    },
+    "hunt-race-condition": {
+      "source": "elementalsouls/claude-bughunter",
+      "sourceType": "github",
+      "skillPath": "skills/hunt-race-condition/SKILL.md",
+      "computedHash": "a24a7fb182ce665bb25d845651a02b9665cb936eceb90bcac8fd8cef141498df"
+    },
+    "hunt-rag-vector": {
+      "source": "elementalsouls/claude-bughunter",
+      "sourceType": "github",
+      "skillPath": "skills/hunt-rag-vector/SKILL.md",
+      "computedHash": "c0084b20c390f9add8c481928da642d55547c4403d213db2a9547b9b2f562759"
+    },
+    "hunt-rce": {
+      "source": "elementalsouls/claude-bughunter",
+      "sourceType": "github",
+      "skillPath": "skills/hunt-rce/SKILL.md",
+      "computedHash": "d164f8d0a99785117346aa283b8221e0790657d157aef8500eb999c8bd533fda"
+    },
+    "hunt-saml": {
+      "source": "elementalsouls/claude-bughunter",
+      "sourceType": "github",
+      "skillPath": "skills/hunt-saml/SKILL.md",
+      "computedHash": "701c5d07c45342a2d53a25adce18629d6276c743951f303cf1b5fa0c0cabc21c"
+    },
+    "hunt-session": {
+      "source": "elementalsouls/claude-bughunter",
+      "sourceType": "github",
+      "skillPath": "skills/hunt-session/SKILL.md",
+      "computedHash": "04e6d4e6474d5575b35dff60b652c794b34f930de1fe0db94ce174e35431ad64"
+    },
+    "hunt-shadow-api": {
+      "source": "elementalsouls/claude-bughunter",
+      "sourceType": "github",
+      "skillPath": "skills/hunt-shadow-api/SKILL.md",
+      "computedHash": "581b5da16e62f6333c1c33493f7397a5645acc33ce539f10b79620e571d3831f"
+    },
+    "hunt-sharepoint": {
+      "source": "elementalsouls/claude-bughunter",
+      "sourceType": "github",
+      "skillPath": "skills/hunt-sharepoint/SKILL.md",
+      "computedHash": "d233510e9d7dafe10805bdc2d2ea2ec2ebbad4f405af65a53cee2d18cad721f4"
+    },
+    "hunt-source-leak": {
+      "source": "elementalsouls/claude-bughunter",
+      "sourceType": "github",
+      "skillPath": "skills/hunt-source-leak/SKILL.md",
+      "computedHash": "f8046c5084b4021dbf42823d6215d4d1f37166f1b98ea85e478f4aca3a822772"
+    },
+    "hunt-spa-api": {
+      "source": "elementalsouls/claude-bughunter",
+      "sourceType": "github",
+      "skillPath": "skills/hunt-spa-api/SKILL.md",
+      "computedHash": "7147adce43f121c3df8595f05e89dcb8f4be5a6e7d2ee80852dda4bc9f4e57a8"
+    },
+    "hunt-springboot": {
+      "source": "elementalsouls/claude-bughunter",
+      "sourceType": "github",
+      "skillPath": "skills/hunt-springboot/SKILL.md",
+      "computedHash": "f7ad963fc695f467589b408d6d4e89e9c14ef8e98873096e5f98c8328b05bcea"
+    },
+    "hunt-sqli": {
+      "source": "elementalsouls/claude-bughunter",
+      "sourceType": "github",
+      "skillPath": "skills/hunt-sqli/SKILL.md",
+      "computedHash": "da9752ff764f12b9369bbf528dc2c712b64b1f977757d2d169545a5df69d4b8d"
+    },
+    "hunt-ssrf": {
+      "source": "elementalsouls/claude-bughunter",
+      "sourceType": "github",
+      "skillPath": "skills/hunt-ssrf/SKILL.md",
+      "computedHash": "cdbdfa1de64f99c45318d90c748c143feb00f57363fc9823e9c4bc3311e8c4cd"
+    },
+    "hunt-ssti": {
+      "source": "elementalsouls/claude-bughunter",
+      "sourceType": "github",
+      "skillPath": "skills/hunt-ssti/SKILL.md",
+      "computedHash": "10dbffbc008960fe4375d9e7c07e624199396d1eff249fc8535a836112e34cec"
+    },
+    "hunt-subdomain": {
+      "source": "elementalsouls/claude-bughunter",
+      "sourceType": "github",
+      "skillPath": "skills/hunt-subdomain/SKILL.md",
+      "computedHash": "55f928fe2178334424c15d8d7d132846f4c57cb92ed88576ae6e71cd23c97f9b"
+    },
+    "hunt-tls-network": {
+      "source": "elementalsouls/claude-bughunter",
+      "sourceType": "github",
+      "skillPath": "skills/hunt-tls-network/SKILL.md",
+      "computedHash": "3b937709029a0fb51edd3e232a1ae7ea027c778a83401d220ecadbd9b771f284"
+    },
+    "hunt-websocket": {
+      "source": "elementalsouls/claude-bughunter",
+      "sourceType": "github",
+      "skillPath": "skills/hunt-websocket/SKILL.md",
+      "computedHash": "1c209137a64e3333a0a708f3490c41e7a2ca9165d3ff05667417f8c4fc783f74"
+    },
+    "hunt-xss": {
+      "source": "elementalsouls/claude-bughunter",
+      "sourceType": "github",
+      "skillPath": "skills/hunt-xss/SKILL.md",
+      "computedHash": "95867485e0cc635cbed7ed5c2bce1df183b4f5e3db1b68a326c828f70f18d4b2"
+    },
+    "hunt-xxe": {
+      "source": "elementalsouls/claude-bughunter",
+      "sourceType": "github",
+      "skillPath": "skills/hunt-xxe/SKILL.md",
+      "computedHash": "c3d4e87fa0fa09bef6be0a19a34c1505fb747262dff50e25c7eae87c6bf2a099"
+    },
     "hyperparameter-tuning": {
       "source": "seb1n/awesome-ai-agent-skills",
       "sourceType": "github",
@@ -324,6 +756,12 @@
       "sourceType": "github",
       "skillPath": "finance-and-accounting/invoice-processing/SKILL.md",
       "computedHash": "3f87e6b47d3294942134fd6d323a6cf251e9c24d25fb5d29716fc6d0544588f4"
+    },
+    "ios-redteam-pipeline": {
+      "source": "elementalsouls/claude-bughunter",
+      "sourceType": "github",
+      "skillPath": "skills/ios-redteam-pipeline/SKILL.md",
+      "computedHash": "def6ffdcfc17bb9a12c7496738b48eb33c0affcc7297a4949f6663cab65c645b"
     },
     "keyword-research": {
       "source": "seb1n/awesome-ai-agent-skills",
@@ -373,6 +811,12 @@
       "skillPath": "design-and-ui-ux/logo-design/SKILL.md",
       "computedHash": "b76ebd684dd1d18a1c3048e1a7b085ea7f1abcf4f14921473460f972b817dbe1"
     },
+    "m365-entra-attack": {
+      "source": "elementalsouls/claude-bughunter",
+      "sourceType": "github",
+      "skillPath": "skills/m365-entra-attack/SKILL.md",
+      "computedHash": "0372494782ef581ac1d2acd57dd1cb1ddfff5a55a0b513810779d50aa7b8f879"
+    },
     "mcp-server-building": {
       "source": "seb1n/awesome-ai-agent-skills",
       "sourceType": "github",
@@ -390,6 +834,18 @@
       "sourceType": "github",
       "skillPath": "communication/meeting-transcription/SKILL.md",
       "computedHash": "0a20e03742022562ba657d723eb140239e3d8294c054d44dda68cb778d5094a9"
+    },
+    "meme-coin-audit": {
+      "source": "elementalsouls/claude-bughunter",
+      "sourceType": "github",
+      "skillPath": "skills/meme-coin-audit/SKILL.md",
+      "computedHash": "c83ea47111bf15ebd64a422555efa52a808729bfa2d7f25b80230105c800e3ec"
+    },
+    "mid-engagement-ir-detection": {
+      "source": "elementalsouls/claude-bughunter",
+      "sourceType": "github",
+      "skillPath": "skills/mid-engagement-ir-detection/SKILL.md",
+      "computedHash": "e4adee7c44d3957752a3f05332ef69bd548d77cfac19f99d60f431d6c6e2b3f3"
     },
     "ml-pipeline-creation": {
       "source": "seb1n/awesome-ai-agent-skills",
@@ -427,11 +883,329 @@
       "skillPath": "api-and-integration/oauth-2-0-setup/SKILL.md",
       "computedHash": "9f4e2ec2545d32c899f0f0d1145157e81798f1325d0f0ec7fcd8768a051fcccf"
     },
+    "offensive-active-directory": {
+      "source": "SnailSploit/claude-red",
+      "sourceType": "github",
+      "skillPath": "skills/active-directory/offensive-active-directory/SKILL.md",
+      "computedHash": "195b53b7abb153ebe670a9e88859cf8faec809c2554f17e5577fdb153b342d5e"
+    },
+    "offensive-advanced-redteam": {
+      "source": "SnailSploit/claude-red",
+      "sourceType": "github",
+      "skillPath": "skills/infrastructure/offensive-advanced-redteam/SKILL.md",
+      "computedHash": "3241b27ee051279582f580fa040d5bb60461558540bbdacc29072d934909f9c7"
+    },
+    "offensive-anti-forensics": {
+      "source": "SnailSploit/claude-red",
+      "sourceType": "github",
+      "skillPath": "skills/forensics/offensive-anti-forensics/SKILL.md",
+      "computedHash": "e18751cc85cb3ee62fd83e2f385826a91424a1d86119d7b281c030323b35acdb"
+    },
+    "offensive-api-abuse": {
+      "source": "SnailSploit/claude-red",
+      "sourceType": "github",
+      "skillPath": "skills/api/offensive-api-abuse/SKILL.md",
+      "computedHash": "af2f0a3a9527c3dddcc5505f62cd36be3a6e6bd6cbd5ebef52b29f325fb78ca3"
+    },
+    "offensive-api-security": {
+      "source": "SnailSploit/claude-red",
+      "sourceType": "github",
+      "skillPath": "skills/api/offensive-api-security/SKILL.md",
+      "computedHash": "6465056caec9b8ece387a8cc748470d1a8ff31297e165939f8cfadf07affa4bc"
+    },
+    "offensive-bluetooth-ble": {
+      "source": "SnailSploit/claude-red",
+      "sourceType": "github",
+      "skillPath": "skills/wireless/offensive-bluetooth-ble/SKILL.md",
+      "computedHash": "e169abf7999667900b2f07e9703aba74150a0ea0715b2293f09346085fd30211"
+    },
+    "offensive-bluetooth-classic": {
+      "source": "SnailSploit/claude-red",
+      "sourceType": "github",
+      "skillPath": "skills/wireless/offensive-bluetooth-classic/SKILL.md",
+      "computedHash": "dcb8da59ec16104a26fa6fb58bd3c68ded749ecfdc278478de56f02ba1b0a423"
+    },
+    "offensive-business-logic": {
+      "source": "SnailSploit/claude-red",
+      "sourceType": "github",
+      "skillPath": "skills/web/offensive-business-logic/SKILL.md",
+      "computedHash": "924f12df3975da9b636b00936422c959d6b234e0be4fc361ca623bb1c45ede9d"
+    },
+    "offensive-c2-frameworks": {
+      "source": "SnailSploit/claude-red",
+      "sourceType": "github",
+      "skillPath": "skills/forensics/offensive-c2-frameworks/SKILL.md",
+      "computedHash": "41b511b9ae3dbeba42dec92842e0a6b13f836285752a2f6d1c5d62909adcc5b0"
+    },
+    "offensive-cicd-pipeline": {
+      "source": "SnailSploit/claude-red",
+      "sourceType": "github",
+      "skillPath": "skills/cicd/offensive-cicd-pipeline/SKILL.md",
+      "computedHash": "77ea39746d375dc0beee58ebfd09a0bc8bf759352381cffc7a92b34eba04ec5e"
+    },
+    "offensive-cicd-secrets": {
+      "source": "SnailSploit/claude-red",
+      "sourceType": "github",
+      "skillPath": "skills/cicd/offensive-cicd-secrets/SKILL.md",
+      "computedHash": "a55abece52677a8e41896c1a25926c6899f8fba71ee459573c4afc247e607818"
+    },
+    "offensive-cloud": {
+      "source": "SnailSploit/claude-red",
+      "sourceType": "github",
+      "skillPath": "skills/cloud/offensive-cloud/SKILL.md",
+      "computedHash": "fb836b21970c0c3d39e3ce07c65b9b2f734df0e0ddacf964fbac6ebdd103ee8f"
+    },
+    "offensive-container-escape": {
+      "source": "SnailSploit/claude-red",
+      "sourceType": "github",
+      "skillPath": "skills/container/offensive-container-escape/SKILL.md",
+      "computedHash": "5b836dd65a2f86945cc63ae5b3edfbf9f400f9d0fb2d051dac54989d858bd6a3"
+    },
+    "offensive-crypto-attacks": {
+      "source": "SnailSploit/claude-red",
+      "sourceType": "github",
+      "skillPath": "skills/crypto/offensive-crypto-attacks/SKILL.md",
+      "computedHash": "5e17774138b68f7cc0a00a1cb495838d2ae3d1589fc938ade7e77f8b69855446"
+    },
+    "offensive-data-exfiltration": {
+      "source": "SnailSploit/claude-red",
+      "sourceType": "github",
+      "skillPath": "skills/post-exploitation/offensive-data-exfiltration/SKILL.md",
+      "computedHash": "13b4c074dd9c6fda120fcd244cbcf4a85d0dff1c06c9c7cf45f5237e1d9ab6ce"
+    },
+    "offensive-deauth-disassoc": {
+      "source": "SnailSploit/claude-red",
+      "sourceType": "github",
+      "skillPath": "skills/wireless/offensive-deauth-disassoc/SKILL.md",
+      "computedHash": "04e3ff7ea05a55c77c05c44ddca72edc7b56945bbee64d2b2d367598b894eabc"
+    },
+    "offensive-dependency-confusion": {
+      "source": "SnailSploit/claude-red",
+      "sourceType": "github",
+      "skillPath": "skills/supply-chain/offensive-dependency-confusion/SKILL.md",
+      "computedHash": "2b309c0dd1d88baf7a95e88527d01cb31cad253769cbee9006da5a3e99e3a888"
+    },
+    "offensive-deserialization": {
+      "source": "SnailSploit/claude-red",
+      "sourceType": "github",
+      "skillPath": "skills/web/offensive-deserialization/SKILL.md",
+      "computedHash": "f65bc5474db4708d1d02a0e83676fb9460c0cbb37e16e0c10cac1469aaa8e100"
+    },
+    "offensive-evil-twin": {
+      "source": "SnailSploit/claude-red",
+      "sourceType": "github",
+      "skillPath": "skills/wireless/offensive-evil-twin/SKILL.md",
+      "computedHash": "0cf38b9761bf6d7fe0db18d21de6ca4f068e4113b99ecd3b2b579476cafce890"
+    },
+    "offensive-fuzzing": {
+      "source": "SnailSploit/claude-red",
+      "sourceType": "github",
+      "skillPath": "skills/fuzzing/offensive-fuzzing/SKILL.md",
+      "computedHash": "5f0d3b6c7e75505ff185a7af445f07c86514e1c4639e8dcfa6c7791d86893d6b"
+    },
+    "offensive-graphql": {
+      "source": "SnailSploit/claude-red",
+      "sourceType": "github",
+      "skillPath": "skills/web/offensive-graphql/SKILL.md",
+      "computedHash": "47a53ce06f733a605ec54abbd418259e1e2f325aea974c8a981cfdfc5b2dd560"
+    },
+    "offensive-iot": {
+      "source": "SnailSploit/claude-red",
+      "sourceType": "github",
+      "skillPath": "skills/iot/offensive-iot/SKILL.md",
+      "computedHash": "21f7cd3c2d577a364309d7ce964d147dff500b2e7b507d5c70aab141b9e2fea6"
+    },
+    "offensive-jwt": {
+      "source": "SnailSploit/claude-red",
+      "sourceType": "github",
+      "skillPath": "skills/auth/offensive-jwt/SKILL.md",
+      "computedHash": "0d46480601ef651e387f02cbe976d04a67dfede403c4c015bde892d598a5b344"
+    },
+    "offensive-k8s-attacks": {
+      "source": "SnailSploit/claude-red",
+      "sourceType": "github",
+      "skillPath": "skills/container/offensive-k8s-attacks/SKILL.md",
+      "computedHash": "c6e64221041c7f74c4480890fd551fbae97fe7bf17582698aa302e33704f087f"
+    },
+    "offensive-krack-fragattacks": {
+      "source": "SnailSploit/claude-red",
+      "sourceType": "github",
+      "skillPath": "skills/wireless/offensive-krack-fragattacks/SKILL.md",
+      "computedHash": "c57ae86439b0f90d7a77014c424fd38158f7bd0d13707f2dca3d1e7738f3eb4f"
+    },
+    "offensive-lateral-movement": {
+      "source": "SnailSploit/claude-red",
+      "sourceType": "github",
+      "skillPath": "skills/post-exploitation/offensive-lateral-movement/SKILL.md",
+      "computedHash": "da04b9de06a14dbde3c6cdc21b8c6b89d15338da20fefe21c350ed30c0e5756f"
+    },
+    "offensive-linux-privesc": {
+      "source": "SnailSploit/claude-red",
+      "sourceType": "github",
+      "skillPath": "skills/privesc/offensive-linux-privesc/SKILL.md",
+      "computedHash": "752d5a78c48e6292028e04992196c2b8e87f3c4588700784c013ff9ca8b883db"
+    },
+    "offensive-lorawan-sub-ghz": {
+      "source": "SnailSploit/claude-red",
+      "sourceType": "github",
+      "skillPath": "skills/wireless/offensive-lorawan-sub-ghz/SKILL.md",
+      "computedHash": "86db1dd082ea0519088a838afc3f50815224fc7cce98f79adad8cc6a5dd9bfad"
+    },
+    "offensive-mobile": {
+      "source": "SnailSploit/claude-red",
+      "sourceType": "github",
+      "skillPath": "skills/mobile/offensive-mobile/SKILL.md",
+      "computedHash": "af917ea4d1d95c066c2dfb2669598d16d806509766153a4764114bc64aa8a529"
+    },
+    "offensive-netexec": {
+      "source": "SnailSploit/claude-red",
+      "sourceType": "github",
+      "skillPath": "skills/active-directory/offensive-netexec/SKILL.md",
+      "computedHash": "8d6c073e87c6791358aca7025824546d26b5aad15d3f9418adc3d3b68b213e3d"
+    },
+    "offensive-network-attacks": {
+      "source": "SnailSploit/claude-red",
+      "sourceType": "github",
+      "skillPath": "skills/network/offensive-network-attacks/SKILL.md",
+      "computedHash": "7b47b76e4c483fbbe71173744aa6d103b9878a4327a544dc052c92045232a000"
+    },
+    "offensive-osint": {
+      "source": "elementalsouls/claude-bughunter",
+      "sourceType": "github",
+      "skillPath": "skills/offensive-osint/SKILL.md",
+      "computedHash": "740b4d1b90e84fcf6ab71df7df6d656bf109690663c59e88437b3ea7fb6d2f27"
+    },
+    "offensive-persistence": {
+      "source": "SnailSploit/claude-red",
+      "sourceType": "github",
+      "skillPath": "skills/post-exploitation/offensive-persistence/SKILL.md",
+      "computedHash": "d0aa2b86b2dc4ec7aa040823f0d5dc4ee75c67ba668b479de6504fe126dd8273"
+    },
+    "offensive-phishing": {
+      "source": "SnailSploit/claude-red",
+      "sourceType": "github",
+      "skillPath": "skills/social-engineering/offensive-phishing/SKILL.md",
+      "computedHash": "22caf3af2e63ff46ab73b558f6cd494fd72c6efeb7871a0cc041b8e65618aff4"
+    },
+    "offensive-reporting": {
+      "source": "SnailSploit/claude-red",
+      "sourceType": "github",
+      "skillPath": "skills/utility/offensive-reporting/SKILL.md",
+      "computedHash": "bf62e9a179a05bb4d14daca7757bc52614636870e713049f55d5df916b3e77a7"
+    },
+    "offensive-shellcode": {
+      "source": "SnailSploit/claude-red",
+      "sourceType": "github",
+      "skillPath": "skills/infrastructure/offensive-shellcode/SKILL.md",
+      "computedHash": "0d9e708a7eeb45a56d9c5d525df5d3972cf0959a2d24d855fb78d227fb92ee5b"
+    },
+    "offensive-social-engineering": {
+      "source": "SnailSploit/claude-red",
+      "sourceType": "github",
+      "skillPath": "skills/social-engineering/offensive-social-engineering/SKILL.md",
+      "computedHash": "9fe0bcd36ddd8b25ba64d76f8b17e4f2ee05353398c2ae88a969f4309c06305b"
+    },
+    "offensive-sqli": {
+      "source": "SnailSploit/claude-red",
+      "sourceType": "github",
+      "skillPath": "skills/web/offensive-sqli/SKILL.md",
+      "computedHash": "c900762dc3437c2126d5c6d7075a591ab8f6c0f2423ccb7c436b9e96226156eb"
+    },
+    "offensive-ssti": {
+      "source": "SnailSploit/claude-red",
+      "sourceType": "github",
+      "skillPath": "skills/web/offensive-ssti/SKILL.md",
+      "computedHash": "649d6d546b26a54f3a42d89c44381fc0bea1cad6ee8c0a7b9388fb057d438ce6"
+    },
+    "offensive-supply-chain": {
+      "source": "SnailSploit/claude-red",
+      "sourceType": "github",
+      "skillPath": "skills/supply-chain/offensive-supply-chain/SKILL.md",
+      "computedHash": "ef6164d581acd0c0eabf0a418f92aed162b29735793df238cdfd552e59d28d1f"
+    },
+    "offensive-tls-attacks": {
+      "source": "SnailSploit/claude-red",
+      "sourceType": "github",
+      "skillPath": "skills/crypto/offensive-tls-attacks/SKILL.md",
+      "computedHash": "9350e8d04b2e1063136e65c2d327e6785c2d8fbf4297c264253582603e3c7e12"
+    },
+    "offensive-toctou": {
+      "source": "SnailSploit/claude-red",
+      "sourceType": "github",
+      "skillPath": "skills/exploit-dev/offensive-toctou/SKILL.md",
+      "computedHash": "4d80f3fb79509804c0c5883d8445ae8305f06e5c9600a3f949ada01abef7365d"
+    },
+    "offensive-wifi": {
+      "source": "SnailSploit/claude-red",
+      "sourceType": "github",
+      "skillPath": "skills/wireless/offensive-wifi/SKILL.md",
+      "computedHash": "7c5b969f85349834ff19e5340e3b170353d81cc27d8ec4bf7ceb50bbd9bb6b13"
+    },
+    "offensive-wifi-recon": {
+      "source": "SnailSploit/claude-red",
+      "sourceType": "github",
+      "skillPath": "skills/wireless/offensive-wifi-recon/SKILL.md",
+      "computedHash": "3e3af3388784db570ce8aed088347cdc925c3d51d8cde63bd8aa2983eca11b96"
+    },
+    "offensive-windows-privesc": {
+      "source": "SnailSploit/claude-red",
+      "sourceType": "github",
+      "skillPath": "skills/privesc/offensive-windows-privesc/SKILL.md",
+      "computedHash": "0ae55bc5571de155db3d8fb878c60a2a166880c7735ad4e225f0ab17359909d9"
+    },
+    "offensive-wpa-enterprise": {
+      "source": "SnailSploit/claude-red",
+      "sourceType": "github",
+      "skillPath": "skills/wireless/offensive-wpa-enterprise/SKILL.md",
+      "computedHash": "02fbf0023b168a2e7b475dc262c1583c3ed9de72b073c8445b38a806611e8e39"
+    },
+    "offensive-wpa2-psk": {
+      "source": "SnailSploit/claude-red",
+      "sourceType": "github",
+      "skillPath": "skills/wireless/offensive-wpa2-psk/SKILL.md",
+      "computedHash": "45782b3f7128f005bb32497ecb465b87f98327dd7dd9974a425a5163fe522083"
+    },
+    "offensive-wpa3-sae": {
+      "source": "SnailSploit/claude-red",
+      "sourceType": "github",
+      "skillPath": "skills/wireless/offensive-wpa3-sae/SKILL.md",
+      "computedHash": "2ab38b31831b9d96b0d9784abdc7ce5514bb516d1442f1970cdaee5ea5537b4f"
+    },
+    "offensive-wps": {
+      "source": "SnailSploit/claude-red",
+      "sourceType": "github",
+      "skillPath": "skills/wireless/offensive-wps/SKILL.md",
+      "computedHash": "e08d998d18c32df8509eba8fb8d4fe903706e5f29bc6c8445ec8aed24c1cc8a0"
+    },
+    "offensive-z-wave": {
+      "source": "SnailSploit/claude-red",
+      "sourceType": "github",
+      "skillPath": "skills/wireless/offensive-z-wave/SKILL.md",
+      "computedHash": "88848a9b817f33c68710fe2ec8419481a9114ca914a59cbefc2ab46f7254bfe5"
+    },
+    "offensive-zigbee-thread-matter": {
+      "source": "SnailSploit/claude-red",
+      "sourceType": "github",
+      "skillPath": "skills/wireless/offensive-zigbee-thread-matter/SKILL.md",
+      "computedHash": "672c9fbbf5572f36ebacf7666aece0b4eed150952c534ad9149cd4f0a837c2e6"
+    },
+    "okta-attack": {
+      "source": "elementalsouls/claude-bughunter",
+      "sourceType": "github",
+      "skillPath": "skills/okta-attack/SKILL.md",
+      "computedHash": "b2032c49366a3fbc1f32cfee5d6dac40dde2cd67458fdfb9268ebd9492935a56"
+    },
     "onboarding-playbook-creation": {
       "source": "seb1n/awesome-ai-agent-skills",
       "sourceType": "github",
       "skillPath": "customer-success/onboarding-playbook-creation/SKILL.md",
       "computedHash": "fb591c9f09a5235ef67dac12839c5055c21b25550531a69e82c9886ec6b4d3d1"
+    },
+    "osint-methodology": {
+      "source": "elementalsouls/claude-bughunter",
+      "sourceType": "github",
+      "skillPath": "skills/osint-methodology/SKILL.md",
+      "computedHash": "ae772f23167bc0246ee4b48e8706a0e55d6294399003f9ad196406379cc3af80"
     },
     "pdf-processing": {
       "source": "seb1n/awesome-ai-agent-skills",
@@ -481,6 +1255,24 @@
       "skillPath": "database/query-optimization/SKILL.md",
       "computedHash": "fa09cfbe556612e437900c6c17b0f0eb058183688ee808a23951cf22bde71db2"
     },
+    "recon-scope-triage": {
+      "source": "elementalsouls/claude-bughunter",
+      "sourceType": "github",
+      "skillPath": "skills/recon-scope-triage/SKILL.md",
+      "computedHash": "30dc2b74fa81bc7312748b745b37a02542e9e4433e89a928d7daf4afd4198106"
+    },
+    "redteam-mindset": {
+      "source": "elementalsouls/claude-bughunter",
+      "sourceType": "github",
+      "skillPath": "skills/redteam-mindset/SKILL.md",
+      "computedHash": "39d8c2f2375645f976fc761b184973306b9d5ffc0eec5036bdb63b94d81205de"
+    },
+    "redteam-report-template": {
+      "source": "elementalsouls/claude-bughunter",
+      "sourceType": "github",
+      "skillPath": "skills/redteam-report-template/SKILL.md",
+      "computedHash": "988f37f2646a1b9ef76895f03fdf704aab27d8645b6f3bf579b5b20e84736182"
+    },
     "refactoring": {
       "source": "seb1n/awesome-ai-agent-skills",
       "sourceType": "github",
@@ -493,11 +1285,23 @@
       "skillPath": "communication/report-generation/SKILL.md",
       "computedHash": "d09f3ca2112ea85ba652d186f783c0d9bf1c04729459e4e5c4c6f4a94588bb63"
     },
+    "report-writing": {
+      "source": "elementalsouls/claude-bughunter",
+      "sourceType": "github",
+      "skillPath": "skills/report-writing/SKILL.md",
+      "computedHash": "75dc220e86f0ec2fc1d3f6234791dbce3b3a75c15788df108f8380168edb67c1"
+    },
     "sales-email-sequences": {
       "source": "seb1n/awesome-ai-agent-skills",
       "sourceType": "github",
       "skillPath": "sales/sales-email-sequences/SKILL.md",
       "computedHash": "8bc2a120d91226788c29d9703aa14ca03b8d877feeb0ef83259e2e5ccb667865"
+    },
+    "security-arsenal": {
+      "source": "elementalsouls/claude-bughunter",
+      "sourceType": "github",
+      "skillPath": "skills/security-arsenal/SKILL.md",
+      "computedHash": "3b1811c846e907d44c56a00a450b01dc4acc078f75aca3b3bc41bb5ab270bddf"
     },
     "security-audit": {
       "source": "seb1n/awesome-ai-agent-skills",
@@ -547,6 +1351,12 @@
       "skillPath": "research-and-knowledge/summarization/SKILL.md",
       "computedHash": "2a1369f4a86b15ee1dbd322f39da8d5cf6ebdbf4151c251cd491c9cf544315f5"
     },
+    "supply-chain-attack-recon": {
+      "source": "elementalsouls/claude-bughunter",
+      "sourceType": "github",
+      "skillPath": "skills/supply-chain-attack-recon/SKILL.md",
+      "computedHash": "0e876049403afa584a2dd027d4fbeec9ec22b5a6ccd1b82d9cee43f57b1a6516"
+    },
     "task-automation": {
       "source": "seb1n/awesome-ai-agent-skills",
       "sourceType": "github",
@@ -595,6 +1405,12 @@
       "skillPath": "writing-and-content/translation/SKILL.md",
       "computedHash": "3121d4234f1c5d3ae16d9bdb036ee8cc6db42ef10eeff1abd1028f56bcf06eeb"
     },
+    "triage-validation": {
+      "source": "elementalsouls/claude-bughunter",
+      "sourceType": "github",
+      "skillPath": "skills/triage-validation/SKILL.md",
+      "computedHash": "669c72b5c11fe9f4ff9fc2a36e59e102894b6bf70a5d90805b81577433fc2e28"
+    },
     "user-flow-mapping": {
       "source": "seb1n/awesome-ai-agent-skills",
       "sourceType": "github",
@@ -606,6 +1422,24 @@
       "sourceType": "github",
       "skillPath": "code-and-development/version-control/SKILL.md",
       "computedHash": "3216a50135840284a3ccaf2c7b187df3405f4ecf6717495ac9dec0888771b043"
+    },
+    "vmware-vcenter-attack": {
+      "source": "elementalsouls/claude-bughunter",
+      "sourceType": "github",
+      "skillPath": "skills/vmware-vcenter-attack/SKILL.md",
+      "computedHash": "c5bf3a6ab8569ff10dc6de1549125288e181421582c17649c566f12ad2a47d4b"
+    },
+    "web2-recon": {
+      "source": "elementalsouls/claude-bughunter",
+      "sourceType": "github",
+      "skillPath": "skills/web2-recon/SKILL.md",
+      "computedHash": "451592ae7fa0f23d7b92a28f5e921934afdeadc6b7b1a85c20743bbfeb37b5f2"
+    },
+    "web3-audit": {
+      "source": "elementalsouls/claude-bughunter",
+      "sourceType": "github",
+      "skillPath": "skills/web3-audit/SKILL.md",
+      "computedHash": "428dfe974faad78620c4d974cf779112c65f95173c745dbe2c2bcf56f477323e"
     },
     "webhook-setup": {
       "source": "seb1n/awesome-ai-agent-skills",

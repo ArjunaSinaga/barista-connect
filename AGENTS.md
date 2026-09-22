@@ -22,6 +22,14 @@ Filter anti AI-slop, bukan style guide. Core selalu berlaku tiap kerja UI/teks/k
 - Nyatakan asumsi eksplisit sebelum coding; bila ambigu, tanya dulu — jangan pilih diam-diam.
 - Setiap baris diff harus tertelusur ke permintaan user. Jangan "perbaiki" kode/komentar/format sebelahnya; temuan tak terkait cukup disebutkan, jangan dihapus.
 - Sisa yatim (import/variabel/fungsi) yang KAMU buat → bersihkan. Kode mati lama → sebutkan saja.
+## Router keamanan (BugHunter vs Claude-Red — saya yang memilih)
+
+- Minta audit/review/cari celah di aplikasi MILIK SENDIRI → keluarga BugHunter (`hunt-*`, `bb-*`, `triage-*`, `recon-scope-triage`, `report-writing`): defensif, scope-aware, hasil berupa laporan + bukti.
+- Minta eksploitasi/red-team/coba serang/bikin payload/profiling target → keluarga Claude-Red (`offensive-*`, varian `*-red` cth. `offensive-osint-red`).
+- Satu-satunya nama kembar: `offensive-osint` (BugHunter: arsenal probe/wordlist) vs `offensive-osint-red` (Claude-Red: metodologi/profiling/tracing) — pilih sesuai kebutuhan di atas.
+- Ambigu (tidak jelas defensif vs ofensif, atau target bukan milik user) → TANYA DULU sebelum jalan. Default = defensif.
+- Aturan ini permanen sampai user mencabut ("pilih skill manual").
+
 ## Shared Memory (personal use - non-isolated)
 
 Workspace ini dipakai pribadi oleh satu user. Jangan perlakukan tiap chat/page sebagai terisolasi.
