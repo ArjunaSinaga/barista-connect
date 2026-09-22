@@ -9,6 +9,19 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 <!-- END:nextjs-agent-rules -->
 
 ## Deploy Rule
+## Anti-slop (v3.2.13, `.agents/skills/antislop*/`)
+
+Filter anti AI-slop, bukan style guide. Core selalu berlaku tiap kerja UI/teks/kode:
+- Kerja UI → load `antislop` + `antislop-ui` (+ `antislop-layoutmobile` bila responsif, `antislop-human` bila aksesibilitas).
+- Kerja teks/copy → load `antislop` + `antislop-copywriting`.
+- Rapikan komentar kode → load `antislop-code` (komentar saja, jangan sentuh kode).
+- Sebelum ship hasil UI/teks: jalankan Delivery Gate (lapor PASS/FAIL 4 blok).
+
+## Disiplin perubahan (Karpathy, yang belum tercakup skill lain)
+
+- Nyatakan asumsi eksplisit sebelum coding; bila ambigu, tanya dulu — jangan pilih diam-diam.
+- Setiap baris diff harus tertelusur ke permintaan user. Jangan "perbaiki" kode/komentar/format sebelahnya; temuan tak terkait cukup disebutkan, jangan dihapus.
+- Sisa yatim (import/variabel/fungsi) yang KAMU buat → bersihkan. Kode mati lama → sebutkan saja.
 ## Shared Memory (personal use - non-isolated)
 
 Workspace ini dipakai pribadi oleh satu user. Jangan perlakukan tiap chat/page sebagai terisolasi.
