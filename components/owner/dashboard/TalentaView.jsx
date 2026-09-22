@@ -7,8 +7,8 @@ export default function TalentaView({ heroPhoto, cafeName, cafeLocation, stats, 
   const STATS = [
     { icon: Briefcase, label: "Loker Aktif", value: String(stats.activeJobs), sub: `dari ${stats.totalJobs} total`, delta: stats.jobsThisMonth > 0 ? `+${stats.jobsThisMonth} bulan ini` : null, onSelect: go("active") },
     { icon: Users, label: "Pelamar Baru", value: String(stats.pendingApplicants), sub: "menunggu review", delta: null, onSelect: go("pelamar") },
-    { icon: CalendarDays, label: "Interviews This Week", value: String(stats.interviewsWeek), sub: "7 hari terakhir", delta: null, href: "/messages" },
-    { icon: Star, label: "Team Rating", value: stats.givenAvg ?? "–", sub: stats.givenCount ? `Dari ${stats.givenCount} ulasan` : "Belum ada ulasan", delta: null, onSelect: go("reviews") },
+    { icon: CalendarDays, label: "Wawancara Minggu Ini", value: String(stats.interviewsWeek), sub: "7 hari terakhir", delta: null, href: "/messages" },
+    { icon: Star, label: "Rating Tim", value: stats.givenAvg ?? "–", sub: stats.givenCount ? `Dari ${stats.givenCount} ulasan` : "Belum ada ulasan", delta: null, onSelect: go("reviews") },
   ];
   return (
     <>

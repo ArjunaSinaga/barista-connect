@@ -78,7 +78,7 @@ export function CandidateCard({ barista, rank, compact = false, strip = false, s
                 href={`/barista/${barista.id}`}
                 className="inline-flex items-center justify-center rounded border border-[#d8cdae] px-2 py-1 text-[10px] font-bold text-espresso hover:border-coffee"
               >
-                Profile
+                Profil
               </Link>
               <InviteButton
                 ownerId={ownerId}
@@ -146,7 +146,7 @@ export function CandidateCard({ barista, rank, compact = false, strip = false, s
             href={`/barista/${barista.id}`}
             className="inline-flex min-h-[34px] flex-1 items-center justify-center rounded-full border border-[#d8cdae] px-2 py-1.5 text-[11px] font-bold text-espresso hover:border-coffee"
           >
-            View Profile
+            Lihat Profil
           </Link>
           <InviteButton
             ownerId={ownerId}
@@ -199,7 +199,7 @@ export function TopCandidatesStrip({ baristas, savedIds = [], ownerId = null }) 
     <section aria-label="Top candidates" className="rounded-2xl border border-[#e8e0cf] bg-white p-4 shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
       <div className="flex items-end justify-between gap-2">
         <div>
-          <h2 className="text-sm font-extrabold tracking-tight text-espresso">Top Candidates</h2>
+          <h2 className="text-sm font-extrabold tracking-tight text-espresso">Kandidat Unggulan</h2>
           <p className="text-[11px] text-espresso-soft">Barista pilihan untuk kafe Anda. Geser untuk lihat.</p>
         </div>
         <div className="flex shrink-0 items-center gap-1.5">
@@ -240,7 +240,7 @@ export function TopCandidatesGrid({ baristas, savedIds = [], ownerId = null }) {
     <section aria-label="Top candidates">
       <div className="flex items-end justify-between gap-2">
         <div>
-          <h2 className="text-sm font-extrabold tracking-tight text-espresso">Top Candidates</h2>
+          <h2 className="text-sm font-extrabold tracking-tight text-espresso">Kandidat Unggulan</h2>
           <p className="text-[11px] text-espresso-soft">Barista pilihan untuk kafe Anda.</p>
         </div>
         <Link href="/find-baristas" className="inline-flex shrink-0 items-center gap-0.5 text-xs font-bold text-link hover:underline">

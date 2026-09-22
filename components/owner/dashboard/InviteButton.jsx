@@ -8,7 +8,7 @@ import { createClient } from "@/lib/supabase/client";
 
 // Invite nyata: buka/buat percakapan dengan barista lalu masuk ke thread.
 // Tanpa ownerId (seharusnya tak terjadi di dashboard) → arahkan login.
-export default function InviteButton({ ownerId, baristaId, className = "", iconSize = 10, label = "Invite" }) {
+export default function InviteButton({ ownerId, baristaId, className = "", iconSize = 10, label = "Undang" }) {
   const router = useRouter();
   const toast = useToast();
   const [busy, setBusy] = useState(false);
