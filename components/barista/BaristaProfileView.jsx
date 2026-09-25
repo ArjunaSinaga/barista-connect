@@ -4,6 +4,7 @@ import Avatar from "@/components/ui/Avatar";
 import VerifiedBadge from "@/components/ui/VerifiedBadge";
 import StartChatButton from "@/components/chat/StartChatButton";
 import RatingForm, { Stars } from "@/components/ratings/RatingForm";
+import ShieldToggle from "@/components/ratings/ShieldToggle";
 import { formatExp } from "@/lib/exp";
 import { skillLabel } from "@/lib/constants";
 
@@ -80,6 +81,9 @@ export default function BaristaProfileView({
 
       <section className="mt-4 rounded-2xl card-dark p-6 text-center">
         <h2 className="text-xs font-extrabold tracking-wide text-espresso uppercase">Rating dari kafe ({ratings?.length ?? 0})</h2>
+        {isSelf && (
+          <p className="mt-1 text-xs text-espresso-soft">Sembunyikan rating negatif dari publik — maks 30% dari total (Rating Shield).</p>
+        )}
         {isOwner && rateableTeam && (
           <div className="mt-3">
             <RatingForm teamMemberId={rateableTeam.id} ownerId={viewerId} baristaId={b.id} existing={myRating} />
@@ -96,8 +100,11 @@ export default function BaristaProfileView({
             </div>
             <ul className="mt-3 space-y-2">
               {(ratings ?? []).filter((r) => r.comment).slice(0, 5).map((r, i) => (
-                <li key={i} className="rounded-xl bg-cream px-4 py-3">
-                  <Stars value={r.stars} size={12} />
+                <li key={r.id ?? i} className="rounded-xl bg-cream px-4 py-3">
+                  <div className="flex items-center justify-between gap-2">
+                    <Stars value={r.stars} size={12} />
+                    {isSelf && <ShieldToggle kind="tentang_saya_barista" id={r.id} hidden={r.hidden} />}
+                  </div>
                   <p className="mt-1 text-sm text-espresso italic">&ldquo;{r.comment}&rdquo;</p>
                 </li>
               ))}

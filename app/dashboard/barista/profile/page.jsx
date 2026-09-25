@@ -36,7 +36,7 @@ export default async function BaristaProfilePage({ searchParams }) {
 
   const { data: ownerRatings } = await supabase
     .from("ratings")
-    .select("team_member_id, stars, comment, created_at")
+    .select("id, team_member_id, stars, comment, created_at, hidden")
     .eq("barista_id", user.id)
     .order("created_at", { ascending: false })
     .limit(20);
@@ -47,7 +47,9 @@ export default async function BaristaProfilePage({ searchParams }) {
     cafeTeamIds = new Set((pairs ?? []).map((r) => r.team_member_id));
   }
   const ratings = (ownerRatings ?? []).filter((r) => cafeTeamIds.has(r.team_member_id));
-  const avg = ratings.length ? (ratings.reduce((s, r) => s + r.stars, 0) / ratings.length).toFixed(1) : null;
+  // Rata-rata publik: yang disembunyikan (Shield) tidak ikut hitung.
+  const visible = ratings.filter((r) => !r.hidden);
+  const avg = visible.length ? (visible.reduce((s, r) => s + r.stars, 0) / visible.length).toFixed(1) : null;
 
   return (
     <BaristaProfileView

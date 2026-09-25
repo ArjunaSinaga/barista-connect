@@ -30,19 +30,24 @@ export default async function OwnerProfilePage({ searchParams }) {
   const { data: teams } = await supabase.from("team_members").select("id").eq("owner_id", user.id);
   const teamIds = (teams ?? []).map((t) => t.id);
   let cafeRatings = [];
+  let ownerPairs = [];
   if (teamIds.length) {
     const [{ data: cr }, { data: or }] = await Promise.all([
-      supabase.from("cafe_ratings").select("team_member_id, stars, comment, created_at").in("team_member_id", teamIds).order("created_at", { ascending: false }).limit(20),
+      supabase.from("cafe_ratings").select("id, team_member_id, stars, comment, created_at, hidden").in("team_member_id", teamIds).order("created_at", { ascending: false }).limit(20),
       supabase.from("ratings").select("team_member_id").in("team_member_id", teamIds),
     ]);
-    cafeRatings = visibleCafeRatings(or ?? [], cr ?? []);
+    cafeRatings = cr ?? [];
+    ownerPairs = or ?? [];
   }
+  // Tampilan sendiri: semua terlihat (termasuk yang disembunyikan + toggle).
+  // Rata-rata publik: hanya yang tampil.
+  const avg = avgStars(visibleCafeRatings(ownerPairs, cafeRatings));
   const { data: cafes } = await supabase.from("cafes").select("id, name, location, photo_urls").eq("owner_id", user.id).eq("is_active", true).order("created_at", { ascending: true }).limit(20);
 
   return (
     <OwnerProfileView
       o={row ?? { id: user.id, business_name: "Bisnismu", location: "-" }}
-      cafes={cafes ?? []} cafeRatings={cafeRatings} avg={avgStars(cafeRatings)}
+      cafes={cafes ?? []} cafeRatings={cafeRatings} avg={avg}
       isSelf viewerId={user.id} editHref="/dashboard/owner/profile?edit=1"
     />
   );

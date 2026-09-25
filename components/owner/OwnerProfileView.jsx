@@ -6,6 +6,7 @@ import VerifiedBadge from "@/components/ui/VerifiedBadge";
 import StartChatButton from "@/components/chat/StartChatButton";
 import CafeRatingForm from "@/components/ratings/CafeRatingForm";
 import { Stars } from "@/components/ratings/RatingForm";
+import ShieldToggle from "@/components/ratings/ShieldToggle";
 
 export default function OwnerProfileView({
   o, cafes = [], cafeRatings = [], avg = null,
@@ -68,6 +69,9 @@ export default function OwnerProfileView({
 
       <section className="mt-4 rounded-2xl card-dark p-6 text-center">
         <h2 className="text-xs font-extrabold tracking-wide text-espresso uppercase">Rating dari barista ({cafeRatings.length})</h2>
+        {isSelf && (
+          <p className="mt-1 text-xs text-espresso-soft">Sembunyikan ulasan negatif dari publik — maks 30% dari total (Rating Shield).</p>
+        )}
         {isBarista && myTeam && (
           <div className="mt-3">
             <CafeRatingForm teamMemberId={myTeam.id} ownerId={o.id} baristaId={viewerId} isTerminated existing={myRating} />
@@ -79,8 +83,11 @@ export default function OwnerProfileView({
         {cafeRatings.length > 0 ? (
           <ul className="mt-3 space-y-2">
             {cafeRatings.filter((r) => r.comment).slice(0, 10).map((r, i) => (
-              <li key={i} className="rounded-xl bg-cream px-4 py-3">
-                <Stars value={r.stars} size={12} />
+              <li key={r.id ?? i} className="rounded-xl bg-cream px-4 py-3">
+                <div className="flex items-center justify-between gap-2">
+                  <Stars value={r.stars} size={12} />
+                  {isSelf && <ShieldToggle kind="tentang_kafe_saya" id={r.id} hidden={r.hidden} />}
+                </div>
                 <p className="mt-1 text-sm text-espresso italic">&ldquo;{r.comment}&rdquo;</p>
               </li>
             ))}
