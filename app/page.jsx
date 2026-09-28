@@ -205,7 +205,7 @@ export default async function LandingPage() {
                 <HeroPhotoBlock photo={heroMain} flush />
               </div>
             </div>
-            <div className="mt-2 grid gap-2.5 sm:grid-cols-2">
+            <div className="mt-2 grid grid-cols-1 gap-2.5 sm:grid-cols-2">
               <Link href="/signup" className="group flex items-center gap-3 rounded-2xl border border-[#e8e0cf] bg-white px-4 py-2 shadow-[0_1px_3px_rgba(43,33,24,0.08)] hover:border-coffee">
                 <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#efe8d8]"><Coffee size={17} className="text-espresso" /></span>
                 <span className="min-w-0 flex-1">

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Star } from "lucide-react";
 import Button from "@/components/ui/Button";
 import { useToast } from "@/components/ui/toast";
@@ -49,6 +49,17 @@ export default function RatingForm({
   const [hover, setHover] = useState(0);
   const [busy, setBusy] = useState(false);
   const [saved, setSaved] = useState(existing ?? null);
+
+  // existing datang belakangan (async load di parent) → sinkronkan state
+  // saat rating existing tiba, supaya form tidak stuck mode insert.
+  useEffect(() => {
+    if (existing?.id && existing.id !== saved?.id) {
+      setSaved(existing);
+      setStars(existing.stars ?? 0);
+      setComment(existing.comment ?? "");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [existing?.id]);
 
   const editable = canEdit(saved?.updated_at);
   const nextDate = saved ? nextEditableAt(saved.updated_at) : null;
@@ -101,6 +112,32 @@ export default function RatingForm({
         setSaved({ ...saved, stars, comment, updated_at: new Date().toISOString() });
       }
     } catch (e) {
+      // Fallback: rating ternyata sudah ada (mis. belum ke-load saat form dibuka)
+      // → update baris existing sebagai gantinya, bukan error duplicate key.
+      if (!saved && e?.code === "23505" && applicationId) {
+        try {
+          const supabase2 = createClient();
+          const { data: ex } = await supabase2
+            .from("ratings")
+            .select("id, updated_at")
+            .eq("application_id", applicationId)
+            .eq("owner_id", ownerId)
+            .maybeSingle();
+          if (ex) {
+            const { error: uerr } = await supabase2
+              .from("ratings")
+              .update({ stars, comment })
+              .eq("id", ex.id);
+            if (!uerr) {
+              setSaved({ ...ex, stars, comment, updated_at: new Date().toISOString() });
+              toast("Rating diperbarui ✓ (bisa diubah lagi minggu depan)");
+              return;
+            }
+          }
+        } catch {
+          /* jatuh ke toast error di bawah */
+        }
+      }
       toast(e?.message ?? "Gagal menyimpan rating", "error");
     } finally {
       setBusy(false);
