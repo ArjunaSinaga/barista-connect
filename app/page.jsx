@@ -138,8 +138,8 @@ function CaraKerja() {
         ))}
       </ol>
       <div className="mt-4 flex gap-2">
-        <Link href="/signup?role=barista" className="inline-flex flex-1 min-h-[32px] items-center justify-center rounded-full bg-coffee px-3 text-xs font-bold text-white hover:bg-[#2e2015]">Daftar barista</Link>
-        <Link href="/signup?role=owner" className="inline-flex flex-1 min-h-[32px] items-center justify-center rounded-full border border-[#d8cdae] px-3 text-xs font-bold text-espresso hover:border-coffee">Pasang loker</Link>
+        <Link href="/signup?role=barista" className="inline-flex flex-1 min-h-[44px] items-center justify-center rounded-full bg-coffee px-3 text-xs font-bold text-white hover:bg-[#2e2015]">Daftar barista</Link>
+        <Link href="/signup?role=owner" className="inline-flex flex-1 min-h-[44px] items-center justify-center rounded-full border border-[#d8cdae] px-3 text-xs font-bold text-espresso hover:border-coffee">Pasang loker</Link>
       </div>
     </div>
   );
@@ -185,14 +185,14 @@ export default async function LandingPage() {
                   BaristaConnect menghubungkan barista dan pemilik kafe: pengalaman terverifikasi, rating, dan ulasan real. Lebih dari papan loker — ekosistem rekrutmen kopi.
                 </p>
                 <div className="mt-1.5 flex flex-wrap items-center gap-2">
-                  <Link href="/jobs" className="inline-flex min-h-[32px] items-center gap-2 rounded-full bg-coffee px-4 text-xs font-bold text-white hover:bg-[#2e2015]">
+                  <Link href="/jobs" className="inline-flex min-h-[44px] items-center gap-2 rounded-full bg-coffee px-4 text-xs font-bold text-white hover:bg-[#2e2015]">
                     <Search size={13} /> Cari Loker
                   </Link>
-                  <Link href="/find-baristas" className="inline-flex min-h-[32px] items-center gap-2 rounded-full border border-[#c9b992] bg-white px-4 text-xs font-bold text-espresso hover:border-coffee">
+                  <Link href="/find-baristas" className="inline-flex min-h-[44px] items-center gap-2 rounded-full border border-[#c9b992] bg-white px-4 text-xs font-bold text-espresso hover:border-coffee">
                     <Store size={13} /> Rekrut Barista
                   </Link>
                 </div>
-                <dl className="mt-1.5 flex items-stretch gap-4">
+                <dl className="mt-1.5 flex flex-wrap items-stretch gap-x-4 gap-y-2">
                   {stats.map(([v, l], i) => (
                     <div key={l} className={i > 0 ? "border-l border-coffee/15 pl-5" : ""}>
                       <dd className="text-lg leading-6 font-extrabold tracking-tight text-espresso">{v}</dd>

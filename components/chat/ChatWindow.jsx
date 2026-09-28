@@ -143,7 +143,7 @@ export default function ChatWindow({
   }
 
   return (
-    <div className="mx-auto flex h-[calc(100vh-3.5rem)] max-w-2xl flex-col px-4">
+    <div className="mx-auto flex h-[calc(100dvh-3.5rem)] max-w-2xl flex-col px-4">
       {/* header */}
       <div className="flex items-center gap-3 rounded-2xl card-dark px-4 py-3 border border-latte">
         <Link
@@ -239,7 +239,7 @@ export default function ChatWindow({
       {/* composer */}
       <form
         onSubmit={handleSend}
-        className="sticky bottom-16 space-y-2 rounded-2xl card-dark border border-latte p-3 shadow-lg md:bottom-2"
+        className="sticky bottom-16 space-y-2 rounded-2xl card-dark border border-latte p-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] shadow-lg md:bottom-2"
       >
         {messages.length === 0 && suggestedOpener && !input.trim() && (
           <button
@@ -288,7 +288,7 @@ export default function ChatWindow({
             type="submit"
             disabled={!input.trim() || sending}
             aria-label="Kirim"
-            className="shrink-0 self-end rounded-xl bg-caramel p-3 text-white shadow-sm transition-colors hover:bg-caramel-dark disabled:opacity-40"
+            className="shrink-0 self-end rounded-xl bg-caramel p-3 text-white shadow-sm transition-colors hover:bg-caramel-dark disabled:opacity-40 min-h-[44px] min-w-[44px] flex items-center justify-center"
           >
             <Send size={17} />
           </button>

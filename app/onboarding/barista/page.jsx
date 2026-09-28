@@ -325,7 +325,7 @@ export default function BaristaOnboardingPage() {
             error={errors.whatsapp}
           />
           )}
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
             <Input
               name="exp_years"
               type="number"

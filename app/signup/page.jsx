@@ -141,13 +141,13 @@ function SignupForm() {
       </p>
 
       {/* Role selection */}
-      <div className="mt-8 grid grid-cols-2 gap-3">
+      <div className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2">
         {ROLES.map(({ value, label, desc, icon: Icon }) => (
           <button
             key={value}
             type="button"
             onClick={() => setRole(value)}
-            className={`flex flex-col items-start rounded-2xl border-2 bg-white p-4 text-left transition-all ${
+            className={`flex min-h-[44px] flex-col items-start rounded-2xl border-2 bg-white p-4 text-left transition-all ${
               role === value
                 ? "border-coffee ring-2 ring-coffee"
                 : "border-[#e8e0cf] hover:border-coffee"

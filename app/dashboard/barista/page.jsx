@@ -139,23 +139,23 @@ export default async function BaristaDashboardPage({ searchParams }) {
         </div>
       )}
 
-      <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
-        <div className="rounded-2xl border border-caramel/40 bg-caramel/10 p-4">
+      <div className="grid grid-cols-2 gap-2 sm:gap-3 lg:grid-cols-4">
+        <div className="rounded-2xl border border-caramel/40 bg-caramel/10 p-3 sm:p-4">
           <p className="text-xs font-bold tracking-widest text-caramel uppercase">Total Lamaran</p>
           <p className="mt-1 text-3xl font-black text-espresso">{total}</p>
           <p className="mt-1 flex items-center gap-1 text-xs text-espresso-soft"><Briefcase size={12} />terkirim</p>
         </div>
-        <div className="rounded-2xl border border-amber-400/40 bg-amber-400/10 p-4">
+        <div className="rounded-2xl border border-amber-400/40 bg-amber-400/10 p-3 sm:p-4">
           <p className="text-xs font-bold tracking-widest text-amber-600 uppercase">Menunggu</p>
           <p className="mt-1 text-3xl font-black text-espresso">{waiting}</p>
           <p className="mt-1 text-xs text-espresso-soft">terkirim + dilihat</p>
         </div>
-        <div className="rounded-2xl border border-matcha/40 bg-matcha/10 p-4">
+        <div className="rounded-2xl border border-matcha/40 bg-matcha/10 p-3 sm:p-4">
           <p className="text-xs font-bold tracking-widest text-matcha uppercase">Diterima</p>
           <p className="mt-1 text-3xl font-black text-espresso">{accepted}</p>
           <p className="mt-1 flex items-center gap-1 text-xs text-espresso-soft"><CheckCheck size={12} />sedang bekerja</p>
         </div>
-        <div className="rounded-2xl border border-coffee bg-coffee p-4 text-white">
+        <div className="rounded-2xl border border-coffee bg-coffee p-3 sm:p-4 text-white">
           <p className="text-xs font-bold tracking-widest text-latte uppercase">Selesai</p>
           <p className="mt-1 text-3xl font-black">{done}</p>
           <p className="mt-1 flex items-center gap-1 text-xs text-latte"><FlagOff size={12} />bisa dinilai</p>

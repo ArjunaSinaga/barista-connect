@@ -56,7 +56,7 @@ export default function Navbar({ user, role }) {
               key={n.label}
               href={n.href}
               aria-current={isActive(n.match) ? "page" : undefined}
-              className={`shrink-0 rounded-lg px-2.5 py-2 text-sm font-semibold whitespace-nowrap sm:px-3 ${
+              className={`inline-flex min-h-[44px] shrink-0 items-center rounded-lg px-2.5 text-sm font-semibold whitespace-nowrap sm:px-3 ${
                 isActive(n.match)
                   ? "text-[#2f2721] underline decoration-[#3d2c1e] decoration-2 underline-offset-8"
                   : "text-[#2f2721]/70 hover:text-[#6f5a3e]"
@@ -68,7 +68,7 @@ export default function Navbar({ user, role }) {
           {!user && (
           <Link
             href="/signup?role=owner"
-            className={`hidden shrink-0 rounded-lg px-2.5 py-2 text-sm font-semibold whitespace-nowrap sm:px-3 lg:block ${
+            className={`hidden min-h-[44px] shrink-0 items-center rounded-lg px-2.5 text-sm font-semibold whitespace-nowrap sm:px-3 lg:inline-flex ${
               forOwnersActive
                 ? "text-[#2f2721] underline decoration-[#3d2c1e] decoration-2 underline-offset-8"
                 : "text-[#2f2721]/70 hover:text-[#6f5a3e]"
@@ -85,7 +85,7 @@ export default function Navbar({ user, role }) {
               href="/messages"
               aria-label="Pesan"
               title="Pesan"
-              className="shrink-0 rounded-full p-2 text-[#2f2721]/70 hover:bg-[#2f2721]/10 hover:text-[#6f5a3e]"
+              className="inline-flex min-h-[44px] min-w-[44px] shrink-0 items-center justify-center rounded-full text-[#2f2721]/70 hover:bg-[#2f2721]/10 hover:text-[#6f5a3e]"
             >
               <MessageSquareText size={19} />
             </Link>
@@ -95,7 +95,7 @@ export default function Navbar({ user, role }) {
                 onClick={() => setMenuOpen((o) => !o)}
                 aria-expanded={menuOpen}
                 aria-haspopup="menu"
-                className="flex items-center gap-1.5 rounded-full py-1 pr-1 pl-1 hover:bg-[#2f2721]/10"
+                className="flex min-h-[44px] items-center gap-1.5 rounded-full py-1 pr-1 pl-1 hover:bg-[#2f2721]/10"
               >
                 <span aria-hidden="true" className="flex h-8 w-8 items-center justify-center rounded-full bg-coffee text-xs font-extrabold text-white">
                   {initial}
@@ -147,13 +147,13 @@ export default function Navbar({ user, role }) {
             </Link>
             <Link
               href="/login"
-              className="shrink-0 rounded-xl px-3 py-2 text-sm font-bold whitespace-nowrap text-[#2f2721] hover:text-[#6f5a3e]"
+              className="inline-flex min-h-[44px] shrink-0 items-center rounded-xl px-3 text-sm font-bold whitespace-nowrap text-[#2f2721] hover:text-[#6f5a3e]"
             >
               Masuk
             </Link>
             <Link
               href="/signup"
-              className="shrink-0 rounded-xl bg-caramel px-4 py-2 text-sm font-bold whitespace-nowrap text-white shadow-sm hover:bg-caramel-dark"
+              className="inline-flex min-h-[44px] shrink-0 items-center rounded-xl bg-caramel px-4 text-sm font-bold whitespace-nowrap text-white shadow-sm hover:bg-caramel-dark"
             >
               Daftar
             </Link>

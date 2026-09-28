@@ -156,7 +156,7 @@ export default async function JobsPage({ searchParams }) {
               <JobsSearchForm q={q} loc={loc} type={type} />
             </div>
 
-            <div className="flex flex-wrap items-center gap-1.5">
+            <div className="no-scrollbar -mx-4 flex gap-1.5 overflow-x-auto px-4 pb-1 sm:mx-0 sm:px-0">
               {ROLE_PILLS.map((p) => {
                 const f = { q, loc, type };
                 const activePill = p.active(f);
@@ -165,7 +165,7 @@ export default async function JobsPage({ searchParams }) {
                     key={p.label}
                     href={pillHref(f, p.patch)}
                     aria-current={activePill ? "page" : undefined}
-                    className={`rounded-full border px-3 py-1 text-[11px] font-bold ${
+                    className={`shrink-0 rounded-full border px-3 py-1 text-[11px] font-bold ${
                       activePill
                         ? "border-coffee bg-coffee text-white"
                         : "border-[#e0d5bd] bg-white text-espresso-soft hover:border-coffee hover:text-espresso"

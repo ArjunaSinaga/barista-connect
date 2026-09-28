@@ -39,7 +39,7 @@ export default function JobsSearchForm({ q, loc, type }) {
         {type && <input type="hidden" name="type" value={type} />}
         <button
           type="submit"
-          className="inline-flex min-h-[36px] shrink-0 items-center rounded-full bg-[#c98a2b] px-5 text-xs font-bold text-white hover:brightness-95"
+          className="inline-flex min-h-[44px] shrink-0 items-center rounded-full bg-[#c98a2b] px-5 text-xs font-bold text-white hover:brightness-95"
         >
           Cari
         </button>

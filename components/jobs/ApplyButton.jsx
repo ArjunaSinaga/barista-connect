@@ -143,7 +143,7 @@ export default function ApplyButton({ jobId, applied=false, size="md", full=fals
           <p className="-mt-3 text-right text-[11px] text-espresso-soft">{cover.length}/1000 (min 20)</p>
           <Textarea name="application_message" label="Pesan tambahan (opsional)" value={message} maxLength={300} onChange={e=> setMessage(e.target.value)} placeholder="Contoh: Halo, saya berpengalaman 2 tahun di espresso bar dan bisa latte art..." />
           <div className="mt-1 mb-2 text-right text-[11px] text-espresso-soft">{message.length}/300</div>
-          <Button onClick={submitApplication} full disabled={busy}><Send size={16} />{busy ? "Mengirim..." : "Kirim Lamaran"}</Button>
+          <Button onClick={submitApplication} full disabled={busy} className="min-h-[44px]"><Send size={16} />{busy ? "Mengirim..." : "Kirim Lamaran"}</Button>
         </div>
       </Sheet>
     </>

@@ -64,7 +64,7 @@ export default function JobListRow({ job, active, applied, saved, showApply }) {
           <Link
             href={`/jobs?job=${job.id}`}
             scroll={false}
-            className="inline-flex min-h-[32px] items-center rounded-full bg-coffee px-4 text-[11px] font-bold text-white hover:bg-[#2e2015]"
+            className="inline-flex min-h-[44px] items-center rounded-full bg-coffee px-4 text-[11px] font-bold text-white hover:bg-[#2e2015]"
           >
             Lihat
           </Link>
