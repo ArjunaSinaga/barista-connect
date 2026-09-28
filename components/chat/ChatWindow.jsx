@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { ArrowLeft, Send, Sparkles, LoaderCircle, X } from "lucide-react";
+import { ArrowLeft, Send, X } from "lucide-react";
 import Avatar from "@/components/ui/Avatar";
 import { useToast } from "@/components/ui/toast";
 import { createClient } from "@/lib/supabase/client";
@@ -21,9 +21,6 @@ export default function ChatWindow({
   const [messages, setMessages] = useState(initialMessages);
   const [input, setInput] = useState("");
   const [sending, setSending] = useState(false);
-  const [suggesting, setSuggesting] = useState(false);
-  const [suggestFailed, setSuggestFailed] = useState(false);
-  const [aiHandedOff, setAiHandedOff] = useState(false);
   const bottomRef = useRef(null);
 
   useEffect(() => {
@@ -48,7 +45,6 @@ export default function ChatWindow({
           setMessages((cur) =>
             cur.some((x) => x.id === m.id) ? cur : [...cur, m]
           );
-          setAiHandedOff(false);
         }
       )
       .subscribe();
@@ -76,18 +72,6 @@ export default function ChatWindow({
       setMessages((cur) =>
         cur.some((x) => x.id === data.id) ? cur : [...cur, data]
       );
-
-      // Trigger AI auto-responder (fire, but keep UI responsive)
-      fetch("/api/ai/autorespond", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ conversationId }),
-      })
-        .then((r) => r.json())
-        .then((json) => {
-          if (json?.escalated) setAiHandedOff(true);
-        })
-        .catch(() => {});
     } catch {
       toast("Pesan gagal terkirim", "error");
       setInput(body);
@@ -109,37 +93,6 @@ export default function ChatWindow({
       setMessages(prev);
       toast("Gagal menghapus pesan", "error");
     }
-  }
-
-  async function handleSuggest() {
-    if (suggesting) return;
-    setSuggesting(true);
-    setSuggestFailed(false);
-    let json = null;
-    for (let attempt = 0; attempt < 2; attempt++) {
-      try {
-        const res = await fetch("/api/ai/suggest", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ conversationId }),
-        });
-        json = await res.json();
-        if (!res.ok || !json.draft) throw new Error(json.error || "no draft");
-        setInput(json.draft);
-        setSuggesting(false);
-        return;
-      } catch {
-        if (attempt === 0) continue; // coba sekali lagi otomatis
-        setSuggestFailed(true);
-        toast(
-          json?.error === "AI not configured"
-            ? "AI belum aktif — isi GEMINI_API_KEY di .env.local"
-            : "AI sedang tidak tersedia, coba lagi",
-          "error"
-        );
-      }
-    }
-    setSuggesting(false);
   }
 
   return (
@@ -173,13 +126,7 @@ export default function ChatWindow({
         {messages.length === 0 && (
           <div className="flex h-full items-center justify-center text-center">
             <p className="max-w-xs text-sm text-espresso-soft">
-              Belum ada pesan. Sapa {counterpartName} —{" "}
-              <button
-                onClick={handleSuggest}
-                className="font-bold text-caramel hover:underline"
-              >
-                atau minta AI buat draf pembuka ✨
-              </button>
+              Belum ada pesan. Sapa {counterpartName} untuk memulai.
             </p>
           </div>
         )}
@@ -213,26 +160,11 @@ export default function ChatWindow({
                   )}
                   <p className={`mt-1 text-[10px] ${mine ? "text-white/70 text-right" : "text-espresso-soft"}`}>{new Date(m.created_at).toLocaleTimeString("id-ID",{hour:"2-digit",minute:"2-digit"})}</p>
                 </div>
-                {m.is_ai && (
-                  <p
-                    className={`mt-1 flex items-center gap-1 text-[10px] font-bold ${
-                      mine ? "justify-end text-caramel/80" : "text-caramel"
-                    }`}
-                  >
-                    <Sparkles size={10} /> dijawab asisten AI — akan
-                    dikonfirmasi {mine ? "" : "oleh pihak terkait"}
-                  </p>
-                )}
               </div>
             </div>
           );
         })}
 
-        {aiHandedOff && (
-          <p className="text-center text-[11px] italic text-espresso-soft">
-            ✨ Asisten menyerahkan pertanyaan ini ke {counterpartName}.
-          </p>
-        )}
         <div ref={bottomRef} />
       </div>
 
@@ -248,25 +180,6 @@ export default function ChatWindow({
             className="inline-flex items-center gap-1 rounded-full bg-caramel/10 px-3 py-1.5 text-[11px] font-bold text-caramel hover:bg-caramel/20"
           >
             👋 Sapa duluan
-          </button>
-        )}
-        {!sending && (
-          <button
-            type="button"
-            onClick={handleSuggest}
-            disabled={suggesting}
-            className="inline-flex items-center gap-1 rounded-full border border-dashed border-caramel/40 card-dark px-3 py-1.5 text-[11px] font-bold text-caramel hover:bg-caramel/5 disabled:opacity-60"
-          >
-            {suggesting ? (
-              <>
-                <LoaderCircle size={11} className="animate-spin" />
-                Menyusun draf...
-              </>
-            ) : (
-              <>
-                <Sparkles size={11} /> {suggestFailed ? "Coba lagi" : "Sarankan balasan"}
-              </>
-            )}
           </button>
         )}
         <div className="flex gap-2">
