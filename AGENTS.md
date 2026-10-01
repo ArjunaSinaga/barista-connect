@@ -42,6 +42,13 @@ Filter anti AI-slop, bukan style guide. Core selalu berlaku tiap kerja UI/teks/k
 - Review UI → load `web-design-guidelines`; review tulisan/docs → load `writing-guidelines` (keduanya fetch remote command.md lalu review).
 - Trigger otomatis berdasarkan prompt user, tanpa diminta manual.
 
+## Alur tetap prompt-jelek → hasil (permanen)
+
+- User kasih prompt jelek (ID singkat) → agent analisa isi otak: Tebakan Mau + Asumsi + skor singkat.
+- Scan codebase (wajib) → upgrade via `enhance-prompt` 7-layer (ID + English tech terms) → present before/after singkat.
+- Eksekusi langsung upgraded prompt pakai skill auto-trigger. Max 1 pertanyaan klarifikasi bila ambigu kritis.
+- Tutup dengan CEO Gate. Belum pas → user revisi → ulangi loop (max 3 iterasi, lalu minta contoh konkret).
+
 ## Shared Memory (personal use - non-isolated)
 
 Workspace ini dipakai pribadi oleh satu user. Jangan perlakukan tiap chat/page sebagai terisolasi.
