@@ -56,3 +56,4 @@ dev.log
 findings.md
 progress.md
 *.dev-test.log
+_vendor/

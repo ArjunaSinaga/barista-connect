@@ -1321,6 +1321,12 @@
       "skillPath": "agent-security/skill-supply-chain-audit/SKILL.md",
       "computedHash": "dd9d0a9616ca6831b8ea05620527e154e2c43dc8a150e276c03e154e24984d35"
     },
+    "sns-realistic-portrait-prompt": {
+      "source": "junhao-ye/sns-realistic-portrait-prompt",
+      "sourceType": "github",
+      "skillPath": "SKILL.md",
+      "computedHash": "a6f767e26fc2c5f16705c7038525e17a36260d4a240c39fb42ecf2fc2183f746"
+    },
     "social-media-posting": {
       "source": "seb1n/awesome-ai-agent-skills",
       "sourceType": "github",

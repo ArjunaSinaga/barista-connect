@@ -8,6 +8,12 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 <!-- END:nextjs-agent-rules -->
 
+## CEO Thinking (always-on, `.agents/skills/ceo-thinking/`)
+
+- Selalu aktif tiap sesi OpenCode tanpa dipanggil manual.
+- Setiap keputusan/plan penting tutup dengan CEO Gate: Rekomendasi + Kenapa + Next action + Risiko.
+- Ambigu berdampak biaya/waktu/arsitektur → tanya dulu. Tolak over-engineering.
+
 ## Deploy Rule
 ## Anti-slop (v3.2.13, `.agents/skills/antislop*/`)
 
