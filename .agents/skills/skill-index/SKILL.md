@@ -37,6 +37,10 @@ description: Master indeks semua router + skill inti. Panggil saat mulai kerja (
 - `enhance-prompt` — perbaiki prompt mentah jadi instruksi tajam
 - `summarization` — ringkas teks level detail configurable
 - `skill-creator` — bikin/edit skill baru + benchmark performa skill
+- `react-best-practices` — 70 aturan performa React/Next.js (load otomatis kerja React)
+- `vercel-optimize` — optimasi biaya/perf Vercel metrics-first
+- `web-design-guidelines` — review UI (fetch remote command.md)
+- `writing-guidelines` — review tulisan/docs (fetch remote command.md)
 
 ## Aturan hemat (hemat-core)
 
