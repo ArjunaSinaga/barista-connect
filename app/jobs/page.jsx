@@ -12,6 +12,7 @@ import JobsSearchForm from "@/components/jobs/JobsSearchForm";
 import SortSelect from "@/components/jobs/SortSelect";
 
 export const metadata = { title: "Loker" };
+export const dynamic = "force-dynamic"; // search-params dependent, tetap dynamic; beban ditutup via limit + pg_trgm
 
 // Pills akumulatif: klik pill tak me-reset filter lain (loc/q ikut dibawa).
 function pillHref(base, patch) {
@@ -62,7 +63,7 @@ export default async function JobsPage({ searchParams }) {
       if (q) req = req.or(`title.ilike.%${q}%,description.ilike.%${q}%`);
       if (loc) req = req.ilike("location", `%${loc}%`);
       if (type && EMPLOYMENT_TYPES.some((t) => t.value === type)) req = req.overlaps("employment_types", [type]);
-      const { data } = await req;
+      const { data } = await req.limit(50);
       const { attachOwners } = await import("@/lib/publicProfiles");
       jobs = await attachOwners(data ?? [], supabase);
     } catch {

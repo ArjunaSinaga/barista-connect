@@ -10,6 +10,8 @@ import { avgStars } from "@/lib/ratings";
 import { attachOwners, attachBaristaNames, attachRatings } from "@/lib/publicProfiles";
 import { STR } from "@/lib/strings";
 
+export const revalidate = 60; // P0 ISR: feed cache 60s, ringankan DB
+
 async function getLatestJobs() {
   if (!isSupabaseConfigured()) return [];
   try {
@@ -18,7 +20,8 @@ async function getLatestJobs() {
       .from("job_posts")
       .select("*, cafes(name, photo_urls)")
       .eq("is_active", true)
-      .order("created_at", { ascending: false });
+      .order("created_at", { ascending: false })
+      .limit(20);
     return attachOwners(data ?? [], supabase);
   } catch {
     return [];
@@ -80,7 +83,8 @@ async function getRecentReviews() {
     const { data } = await supabase
       .from("ratings")
       .select("stars,comment,created_at,barista_id,owner_id")
-      .order("created_at", { ascending: false });
+      .order("created_at", { ascending: false })
+      .limit(10);
     return attachBaristaNames(data ?? [], supabase);
   } catch {
     return [];
