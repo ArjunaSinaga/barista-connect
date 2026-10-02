@@ -36,11 +36,11 @@ Filter anti AI-slop, bukan style guide. Core selalu berlaku tiap kerja UI/teks/k
 - Ambigu (tidak jelas defensif vs ofensif, atau target bukan milik user) → TANYA DULU sebelum jalan. Default = defensif.
 - Aturan ini permanen sampai user mencabut ("pilih skill manual").
 
-## Auto-trigger skills (`.opencode/skills/`)
-- Kerja React/Next.js performa → load `react-best-practices` (70 aturan perf) + `nextjs-developer`.
-- Optimasi biaya/Vercel → load `vercel-optimize` (metrics-first, investigasi hanya kandidat berbasis metrik).
-- Review UI → load `web-design-guidelines`; review tulisan/docs → load `writing-guidelines` (keduanya fetch remote command.md lalu review).
-- Trigger otomatis berdasarkan prompt user, tanpa diminta manual.
+## Pemilihan skill (berbasis hasil terbaik, bukan auto-trigger)
+
+- Tidak ada auto-trigger. Tiap prompt: analisa mau user → cari 1 skill terbaik dari yang tersedia → pakai itu.
+- 4 skill kemarin (`react-best-practices`, `vercel-optimize`, `web-design-guidelines`, `writing-guidelines`) = kandidat, bukan kewajiban. Pakai hanya bila memang terbaik untuk hasil.
+- Bila tidak ada skill yang cocok → kerja langsung tanpa skill, jangan dipaksa.
 
 ## Alur tetap prompt-jelek → hasil (permanen)
 
