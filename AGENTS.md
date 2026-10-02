@@ -54,6 +54,13 @@ Filter anti AI-slop, bukan style guide. Core selalu berlaku tiap kerja UI/teks/k
 - Aktif tiap response coding: YAGNI, stdlib/native dulu, diff terkecil, hapus > tambah.
 - Level default full; ultra hanya bila user minta eksplisit.
 
+## Hemat token (always-on: shrinkage + unused + konteks + skill-index)
+
+- Tiap coding: terapkan `shrinkage` (extend yg ada, hapus kode mati, diff kecil).
+- Cek `unused/razor` bila tambah/hapus dependensi (report-only).
+- Konteks bengkak: `context-compression` + `context-optimization` (padatkan, dedup, secukupnya).
+- Skill: via `skill-index`, lazy-load 1 terbaik per prompt (hemat-core sebagai router).
+
 ## Shared Memory (personal use - non-isolated)
 
 Workspace ini dipakai pribadi oleh satu user. Jangan perlakukan tiap chat/page sebagai terisolasi.
