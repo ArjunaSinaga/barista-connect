@@ -21,7 +21,7 @@ const nextConfig = {
           {
             key: "Content-Security-Policy",
             value:
-              "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://va.vercel-scripts.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://*.supabase.co https://randomuser.me https://picsum.photos https://fastly.picsum.photos; connect-src 'self' https://*.supabase.co https://api.pwnedpasswords.com https://api.midtrans.com https://api.sandbox.midtrans.com wss://*.supabase.co https://va.vercel-scripts.com;",
+              "default-src 'self'; script-src 'self' 'unsafe-inline' https://va.vercel-scripts.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://*.supabase.co https://randomuser.me https://picsum.photos https://fastly.picsum.photos; connect-src 'self' https://*.supabase.co https://api.pwnedpasswords.com https://api.midtrans.com https://api.sandbox.midtrans.com wss://*.supabase.co https://va.vercel-scripts.com;",
           },
         ],
       },
