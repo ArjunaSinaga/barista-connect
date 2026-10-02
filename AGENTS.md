@@ -49,6 +49,11 @@ Filter anti AI-slop, bukan style guide. Core selalu berlaku tiap kerja UI/teks/k
 - Eksekusi langsung upgraded prompt pakai skill auto-trigger. Max 1 pertanyaan klarifikasi bila ambigu kritis.
 - Tutup dengan CEO Gate. Belum pas → user revisi → ulangi loop (max 3 iterasi, lalu minta contoh konkret).
 
+## Ponytail (hemat token, always-on full)
+
+- Aktif tiap response coding: YAGNI, stdlib/native dulu, diff terkecil, hapus > tambah.
+- Level default full; ultra hanya bila user minta eksplisit.
+
 ## Shared Memory (personal use - non-isolated)
 
 Workspace ini dipakai pribadi oleh satu user. Jangan perlakukan tiap chat/page sebagai terisolasi.
