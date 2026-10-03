@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import { thumb } from "@/lib/img";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
@@ -54,7 +55,7 @@ export default function SidebarOwner({ kafe, ownerName, completeness, completene
       <div className="shrink-0 rounded-2xl border border-[#e8e0cf] bg-white p-4 text-center shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
         <div className="relative mx-auto h-20 w-20">
           {photo ? (
-            <Image src={photo} alt={name} width={80} height={80} className="h-20 w-20 rounded-full border-4 border-[#efe9d9] object-cover" />
+            <Image src={thumb(photo, { w: 160 })} alt={name} width={80} height={80} className="h-20 w-20 rounded-full border-4 border-[#efe9d9] object-cover" />
           ) : (
             <Avatar name={name} size="lg" />
           )}

@@ -15,6 +15,7 @@ import ApplyButton from "@/components/jobs/ApplyButton";
 import { EMPLOYMENT_LABELS } from "@/lib/constants";
 import { relativeTime } from "@/lib/time";
 import { avgStars } from "@/lib/ratings";
+import { thumb } from "@/lib/img";
 
 const TYPE_CLASSES = {
   full_time: "bg-caramel/10 text-caramel",
@@ -160,7 +161,7 @@ export default async function JobDetailPage({ params }) {
               Tentang Kafe
             </h2>
             {job.cafes?.photo_urls?.[0] && (
-              <Image src={job.cafes.photo_urls[0]} alt={job.cafes.name} width={800} height={160} className="mt-3 h-40 w-full rounded-xl object-cover" />
+              <Image src={thumb(job.cafes.photo_urls[0], { w: 640 })} alt={job.cafes.name} width={800} height={160} className="mt-3 h-40 w-full rounded-xl object-cover" />
             )}
             <p className="mt-3 flex items-center gap-2 font-bold text-espresso">
               <Store size={16} className="text-caramel" />

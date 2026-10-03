@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { thumb } from "@/lib/img";
 import { Search, Star, Briefcase, Clock, Coffee, CupSoda, MapPin } from "lucide-react";
 import FilterPills from "@/components/ui/FilterPills";
 
@@ -53,7 +54,7 @@ export default function HeroTalenta({ photo, cafeName, cafeLocation }) {
       </div>
       <div className="relative hidden w-56 shrink-0 self-stretch sm:block lg:w-64">
         {photo ? (
-          <Image src={photo} alt={cafeName ?? "Foto kafe"} fill sizes="256px" className="object-cover" />
+          <Image src={thumb(photo, { w: 256 })} alt={cafeName ?? "Foto kafe"} fill sizes="256px" className="object-cover" />
         ) : (
           <div className="absolute inset-0 flex items-center justify-center bg-[#e0d5bd] px-4 text-center">
             <p className="text-[11px] leading-5 text-espresso-soft">Foto kafemu tampil di sini setelah ditambahkan di Kafe Saya.</p>

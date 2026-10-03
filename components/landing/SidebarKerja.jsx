@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { ShieldCheck, Star, GraduationCap, BarChart3, ChevronRight } from "lucide-react";
 import WaitlistButton from "@/components/training/WaitlistButton";
+import { thumb } from "@/lib/img";
 
 // Tiap blok mandiri (kartu putih sendiri). Tanpa DB — statis kecuali foto.
 const ITEMS = [
@@ -71,7 +72,7 @@ export function AcademyCard({ image }) {
         </div>
         <div className="relative min-h-44 overflow-hidden rounded-xl">
           {image ? (
-            <Image src={image} alt="Barista training" fill sizes="(max-width: 768px) 50vw, 25vw" className="object-cover" />
+            <Image src={thumb(image, { w: 512 })} alt="Barista training" fill sizes="(max-width: 768px) 50vw, 25vw" className="object-cover" />
           ) : (
             <div className="absolute inset-0 flex flex-col items-center justify-center gap-1 bg-[#ece2cd] px-4 text-center">
               <GraduationCap size={26} className="text-[#9a6a2f]" />

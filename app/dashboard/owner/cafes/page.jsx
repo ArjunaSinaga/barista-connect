@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import { thumb } from "@/lib/img";
 import { Plus, Store } from "lucide-react";
 import { createClient, getSessionSafe, isSupabaseConfigured } from "@/lib/supabase/server";
 import { EmptyState } from "@/components/ui/EmptyState";
@@ -64,7 +65,7 @@ export default async function CafesPage() {
             className="flex items-center gap-4 rounded-2xl card-dark p-4 shadow-sm hover:shadow-md transition-shadow"
           >
             {c.photo_urls?.[0] ? (
-              <Image src={c.photo_urls[0]} alt={c.name} width={64} height={64} className="h-16 w-16 shrink-0 rounded-xl object-cover" />
+              <Image src={thumb(c.photo_urls[0], { w: 128 })} alt={c.name} width={64} height={64} className="h-16 w-16 shrink-0 rounded-xl object-cover" />
             ) : (
               <span className="flex h-16 w-16 shrink-0 items-center justify-center rounded-xl bg-cream-dark text-caramel">
                 <Store size={24} />

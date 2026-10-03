@@ -5,6 +5,7 @@ import { MapPin, Store, Briefcase } from "lucide-react";
 import { createClient, getSessionSafe } from "@/lib/supabase/server";
 import { Stars } from "@/components/ratings/RatingForm";
 import { avgStars, visibleCafeRatings } from "@/lib/ratings";
+import { thumb } from "@/lib/img";
 
 export async function generateMetadata({ params }) {
   const { id } = await params;
@@ -54,7 +55,7 @@ export default async function CafePublicPage({ params }) {
         {(kafe.photo_urls ?? []).length > 0 && (
           <div className="grid grid-cols-2 gap-1 p-1">
             {kafe.photo_urls.slice(0, 4).map((url) => (
-              <Image key={url} src={url} alt={kafe.name} width={800} height={160} className="h-40 w-full object-cover rounded-xl" />
+              <Image key={url} src={thumb(url, { w: 640 })} alt={kafe.name} width={800} height={160} className="h-40 w-full object-cover rounded-xl" />
             ))}
           </div>
         )}

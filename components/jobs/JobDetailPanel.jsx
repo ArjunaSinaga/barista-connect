@@ -10,6 +10,7 @@ import SaveButton from "@/components/jobs/SaveButton";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { EMPLOYMENT_LABELS } from "@/lib/constants";
 import { relativeTime } from "@/lib/time";
+import { thumb } from "@/lib/img";
 
 const TABS = ["Ringkasan", "Tentang", "Ulasan"];
 
@@ -26,7 +27,7 @@ export default function JobDetailPanel({ job, cafeName, cafeHref, types, avg, co
           {photos.map((src, i) => (
             <Image
               key={`${src}-${i}`}
-              src={src}
+              src={thumb(src, { w: 400 })}
               alt={i === 0 ? cafeName : `Foto ${cafeName} ${i + 1}`}
               width={400}
               height={144}

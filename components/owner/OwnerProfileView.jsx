@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import { thumb } from "@/lib/img";
 import { MapPin, Store } from "lucide-react";
 import Avatar from "@/components/ui/Avatar";
 import VerifiedBadge from "@/components/ui/VerifiedBadge";
@@ -54,7 +55,7 @@ export default function OwnerProfileView({
           {(cafes ?? []).map((c) => (
             <Link key={c.id} href={`/cafes/${c.id}`} className="flex items-center gap-3 rounded-xl bg-cream px-3 py-2.5 hover:bg-cream-dark">
               {c.photo_urls?.[0] ? (
-                <Image src={c.photo_urls[0]} alt={c.name} width={48} height={48} className="h-12 w-12 shrink-0 rounded-lg object-cover" />
+                <Image src={thumb(c.photo_urls[0], { w: 96 })} alt={c.name} width={48} height={48} className="h-12 w-12 shrink-0 rounded-lg object-cover" />
               ) : (
                 <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-cream-dark text-caramel"><Store size={20} /></span>
               )}

@@ -5,6 +5,7 @@ import ApplyButton from "@/components/jobs/ApplyButton";
 import VerifiedBadge from "@/components/ui/VerifiedBadge";
 import { EMPLOYMENT_LABELS } from "@/lib/constants";
 import { relativeTime } from "@/lib/time";
+import { thumb } from "@/lib/img";
 
 // Tag skill diturunkan dari teks asli lowongan (judul+deskripsi), bukan hardcode.
 // Hanya tampil bila keyword benar-benar ada di data.
@@ -22,7 +23,7 @@ export function CafeLogo({ job }) {
   const photo = job.cafes?.photo_urls?.[0];
   const name = job.cafes?.name ?? job.owners?.business_name ?? "C";
   if (photo) {
-    return <Image src={photo} alt={name} width={48} height={48} className="h-12 w-12 shrink-0 rounded-full object-cover" />;
+    return <Image src={thumb(photo, { w: 96 })} alt={name} width={48} height={48} className="h-12 w-12 shrink-0 rounded-full object-cover" />;
   }
   return (
     <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-coffee text-lg font-bold text-white">

@@ -9,6 +9,7 @@ import { EcosystemCard, AcademyCard, SmarterOpsCard } from "@/components/landing
 import { avgStars } from "@/lib/ratings";
 import { attachOwners, attachBaristaNames, attachRatings } from "@/lib/publicProfiles";
 import { STR } from "@/lib/strings";
+import { thumb } from "@/lib/img";
 
 export const revalidate = 60; // P0 ISR: feed cache 60s, ringankan DB
 
@@ -98,7 +99,7 @@ function HeroPhotoBlock({ photo, flush }) {
       : "relative h-48 overflow-hidden rounded-xl shadow-[0_1px_3px_rgba(43,33,24,0.08)] sm:h-56 lg:h-full lg:min-h-[228px]"}>
       {photo ? (
         <>
-          <Image src={photo.url} alt={STR.hero.photoAlt(photo.kafe)} fill sizes="(max-width: 1024px) 100vw, 50vw" className="object-cover" />
+          <Image src={thumb(photo.url, { w: 1024 })} alt={STR.hero.photoAlt(photo.kafe)} fill sizes="(max-width: 1024px) 100vw, 50vw" className="object-cover" />
           <span className="font-chalk absolute top-4 left-4 -rotate-6 text-xl leading-5 text-white drop-shadow-[0_2px_6px_rgba(0,0,0,0.6)]">
             {STR.hero.overlayTop[0]}<br />{STR.hero.overlayTop[1]}
           </span>
