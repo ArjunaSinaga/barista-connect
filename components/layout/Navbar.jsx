@@ -5,6 +5,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import { ChevronDown, Coffee, LogOut, MessageSquareText } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
+import NotifBell from "@/components/NotifBell";
 import { APP_NAME } from "@/lib/constants";
 
 const NAV = [
@@ -89,6 +90,7 @@ export default function Navbar({ user, role }) {
             >
               <MessageSquareText size={19} />
             </Link>
+            <NotifBell />
             <div className="relative shrink-0">
               <button
                 type="button"
