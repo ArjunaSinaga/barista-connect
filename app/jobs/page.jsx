@@ -12,7 +12,7 @@ import JobsSearchForm from "@/components/jobs/JobsSearchForm";
 import SortSelect from "@/components/jobs/SortSelect";
 
 export const metadata = { title: "Loker" };
-export const dynamic = "force-dynamic"; // search-params dependent, tetap dynamic; beban ditutup via limit + pg_trgm
+export const revalidate = 60; // tanpa filter: static 60s; ada searchParams/sesi: dynamic otomatis
 
 // Pills akumulatif: klik pill tak me-reset filter lain (loc/q ikut dibawa).
 function pillHref(base, patch) {
