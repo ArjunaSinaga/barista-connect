@@ -10,6 +10,9 @@
     "smoke": "node scripts/smoke.mjs"
   },
   "dependencies": {
+    "@capacitor/android": "^8.5.2",
+    "@capacitor/cli": "^8.5.2",
+    "@capacitor/core": "^8.5.2",
     "@composio/core": "^0.18.1",
     "@hookform/resolvers": "^5.9.1",
     "@moonshot-ai/kimi-code": "^0.39.1",
