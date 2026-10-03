@@ -90,7 +90,7 @@ git commit -m "P1 queue notif: bell + API notifications milik session"
 ### Task 3: Hook endpoint untuk n8n/WA (kode saja, nonaktif)
 
 **Files:**
-- Create: `app/api/hooks/lamaran/route.js` (POST: verifikasi `x-hook-secret` vs `NOTIF_HOOK_SECRET` env, log payload, return 200; tanpa kirim WA sungguhan)
+- Create: `app/api/hooks/lamaran/route.js` (POST: verifikasi `x-hook-secret` vs `NOTIFY_HOOK_SECRET` env, log payload, return 200; tanpa kirim WA sungguhan)
 
 **Interfaces:**
 - Consumes: event lamaran (dipanggil Database Webhook Supabase, diaktifkan manual nanti).
@@ -98,7 +98,7 @@ git commit -m "P1 queue notif: bell + API notifications milik session"
 
 - [ ] **Step 1: Tulis route hook + secret check**
 
-POST: `req.headers.get('x-hook-secret') !== process.env.NOTIF_HOOK_SECRET` → 401. Body `{type, application_id}` → `console.log` + return `{ok:true}`. Tanpa secret di kode.
+POST: `req.headers.get('x-hook-secret') !== process.env.NOTIFY_HOOK_SECRET` → 401. Body `{type, application_id}` → `console.log` + return `{ok:true}`. Tanpa secret di kode.
 
 - [ ] **Step 2: Verifikasi lint+build, commit**
 
@@ -106,4 +106,4 @@ Run: lint + build seperti Task 2. Commit: `P1 queue notif: hook endpoint lamaran
 
 - [ ] **Step 3: Catat langkah manual user (DOKUMEN SAJA, jangan eksekusi)**
 
-Di plan ini: aktifkan Database Webhooks di dashboard Supabase (event applications INSERT/UPDATE → URL `/api/hooks/lamaran` + header secret), set `NOTIF_HOOK_SECRET` di Vercel env. INI LANGKAH MANUAL — user yang pegang dashboard, AI tidak.
+Di plan ini: aktifkan Database Webhooks di dashboard Supabase (event applications INSERT/UPDATE → URL `/api/hooks/lamaran` + header secret), set `NOTIFY_HOOK_SECRET` + `SUPABASE_SERVICE_ROLE_KEY` di Vercel env. INI LANGKAH MANUAL — user yang pegang dashboard, AI tidak.
