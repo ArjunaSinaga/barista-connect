@@ -87,7 +87,7 @@ export default async function TrainingPage({ searchParams }) {
       </h1>
       <p className="mt-1 max-w-xl text-sm leading-6 text-espresso-soft">
         Katalog kursus barista — dari dasar sampai mahir. Pendaftaran dibuka bertahap,
-        gabung waitlist agar tidak ketinggalan batch pertama.
+        gabung waitlist agar tidak ketinggalan batch pertama. <Link href="/academy" className="font-bold text-matcha hover:underline">Lihat akademi</Link>
       </p>
 
       <form action="/training" method="GET" role="search" className="mt-4 flex items-center gap-2">
@@ -163,6 +163,9 @@ export default async function TrainingPage({ searchParams }) {
           Belum ada sertifikat. <Link href="/dashboard/barista/profile" className="font-bold text-matcha hover:underline">Lengkapi profilmu</Link> untuk tampil di sini.
         </p>
       )}
+      <p className="mt-2 text-center text-xs text-espresso-soft">
+        Punya sertifikat dan ingin memastikan keasliannya? <Link href="/verify-cert" className="font-bold text-matcha hover:underline">Verifikasi di sini</Link>
+      </p>
 
       <div className="mt-8 grid gap-3 sm:grid-cols-3">
         {[

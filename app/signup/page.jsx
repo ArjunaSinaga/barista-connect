@@ -3,7 +3,7 @@
 import { Suspense, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { Coffee, Store } from "lucide-react";
+import { Coffee, Store, GraduationCap } from "lucide-react";
 import Button from "@/components/ui/Button";
 import { Input } from "@/components/ui/Field";
 import { useToast } from "@/components/ui/toast";
@@ -25,6 +25,12 @@ const ROLES = [
     desc: "Buka lowongan, cari barista",
     icon: Store,
   },
+  {
+    value: "academy",
+    label: "Saya Akademi",
+    desc: "Tawarkan training, beri sertifikat",
+    icon: GraduationCap,
+  },
 ];
 
 function SignupForm() {
@@ -32,7 +38,7 @@ function SignupForm() {
   const params = useSearchParams();
   const toast = useToast();
   const roleParam = params.get("role");
-  const [role, setRole] = useState(roleParam === "owner" || roleParam === "barista" ? roleParam : "");
+  const [role, setRole] = useState(["owner", "barista", "academy"].includes(roleParam) ? roleParam : "");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -57,7 +63,7 @@ function SignupForm() {
       return;
     }
     if (!role) {
-      toast("Pilih dulu: barista atau pemilik usaha?", "error");
+      toast("Pilih dulu: barista, pemilik usaha, atau akademi?", "error");
       return;
     }
 
@@ -107,6 +113,8 @@ function SignupForm() {
       try {
         if (role === "owner") {
           await supabase.from("owners").insert({ id: data.user.id, business_name: name, location: "", whatsapp: phone || null });
+        } else if (role === "academy") {
+          await supabase.from("academy_profiles").insert({ id: data.user.id, name, description: "" });
         }
       } catch {
         // diam: onboarding tetap jalan
@@ -141,7 +149,7 @@ function SignupForm() {
       </p>
 
       {/* Role selection */}
-      <div className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2">
+      <div className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-3">
         {ROLES.map(({ value, label, desc, icon: Icon }) => (
           <button
             key={value}

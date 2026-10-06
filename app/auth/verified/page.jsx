@@ -20,8 +20,8 @@ export default function VerifiedPage() {
           .select("role")
           .eq("id", user.id)
           .maybeSingle();
-        const role = profile?.role ?? "barista";
-        const table = role === "owner" ? "owners" : "barista_profiles";
+        const role = ["owner", "barista", "academy"].includes(profile?.role) ? profile.role : "barista";
+        const table = role === "owner" ? "owners" : role === "academy" ? "academy_profiles" : "barista_profiles";
         const { data: detail } = await supabase.from(table).select("id").eq("id", user.id).maybeSingle();
         setDest(detail ? `/dashboard/${role}` : `/onboarding/${role}`);
         setLabel(detail ? "Ke dashboard" : "Lengkapi data diri");

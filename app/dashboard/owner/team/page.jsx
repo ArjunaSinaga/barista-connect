@@ -7,6 +7,7 @@ import Avatar from "@/components/ui/Avatar";
 import Badge from "@/components/ui/Badge";
 import { Stars } from "@/components/ratings/RatingForm";
 import TeamRemoveButton from "@/components/owner/TeamRemoveButton";
+import IssueCertButton from "@/components/owner/IssueCertButton";
 import { groupTeamByBarista, countTeamByCafe } from "@/lib/team";
 import { formatExpShort } from "@/lib/exp";
 
@@ -126,6 +127,7 @@ export default async function TeamPage({ searchParams }) {
                   Profil →
                 </Link>
                 <TeamRemoveButton memberIds={g.memberIds} name={b?.full_name ?? "Barista"} />
+                {g.isActive && <IssueCertButton baristaId={g.baristaId} name={b?.full_name ?? "Barista"} />}
               </div>
               <ul className="mt-3 space-y-2 border-t border-latte/60 pt-3">
                 {g.jobs.map((m) => {

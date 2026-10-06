@@ -75,7 +75,7 @@ function LoginForm() {
       let role = profile?.role;
       if (!role) {
         const meta = data.user.user_metadata || {};
-        role = meta.role === "owner" ? "owner" : "barista";
+        role = ["owner", "barista", "academy"].includes(meta.role) ? meta.role : "barista";
         try {
           await supabase.from("profiles").insert({ id: data.user.id, role, email: data.user.email });
         } catch {
@@ -83,7 +83,7 @@ function LoginForm() {
         }
       }
 
-      const table = role === "owner" ? "owners" : "barista_profiles";
+      const table = role === "owner" ? "owners" : role === "academy" ? "academy_profiles" : "barista_profiles";
       const { data: detail } = await supabase
         .from(table)
         .select("id")

@@ -2,23 +2,24 @@
 
 import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Camera, LoaderCircle, Save, Trash2 } from "lucide-react";
+import { Camera, LoaderCircle, Save, Trash2, ImagePlus, FileText, Upload } from "lucide-react";
 import Avatar from "@/components/ui/Avatar";
 import Button from "@/components/ui/Button";
 import Toggle from "@/components/ui/Toggle";
 import { Input, Textarea } from "@/components/ui/Field";
 import { useToast } from "@/components/ui/toast";
 import { createClient } from "@/lib/supabase/client";
-import { SKILL_PRESETS, skillLabel, AVATAR_MIME_TYPES, AVATAR_MAX_BYTES } from "@/lib/constants";
+import { SKILL_PRESETS, skillLabel, AVATAR_MIME_TYPES, AVATAR_MAX_BYTES, PORTFOLIO_MIME_TYPES, PORTFOLIO_MAX_BYTES, PORTFOLIO_MAX_ITEMS } from "@/lib/constants";
 import { compressImage, formatBytes } from "@/lib/image";
 import { profileUpdateSchema } from "@/lib/validation";
 import { focusFirstError } from "@/lib/focusFirstError";
 import { splitMonths, toMonths } from "@/lib/exp";
 
-export default function ProfileEditor({ initial }) {
+export default function ProfileEditor({ initial, portfolio = [] }) {
   const router = useRouter();
   const toast = useToast();
   const fileRef = useRef(null);
+  const portfolioFileRef = useRef(null);
 
   const initExp = splitMonths(initial.experience_months ?? (initial.years_of_experience ?? 0) * 12);
   const [form, setForm] = useState({
@@ -38,6 +39,11 @@ export default function ProfileEditor({ initial }) {
   const [errors, setErrors] = useState({});
   const [skillInput, setSkillInput] = useState("");
   const [certInput, setCertInput] = useState("");
+  const [items, setItems] = useState(portfolio);
+  const [uploadingPortfolio, setUploadingPortfolio] = useState(false);
+  const [cvUrl, setCvUrl] = useState(initial.cv_url ?? "");
+  const [uploadingCv, setUploadingCv] = useState(false);
+  const cvFileRef = useRef(null);
 
   const set = (k, v) => setForm((f) => ({ ...f, [k]: v }));
   const completeness = [
@@ -47,6 +53,7 @@ export default function ProfileEditor({ initial }) {
     Boolean(form.location_place),
     form.skills.length > 0,
     form.certificates.length > 0 || form.ideas_plus.length > 20,
+    Boolean(cvUrl),
   ].filter(Boolean).length;
 
   async function handleFile(e) {
@@ -60,7 +67,7 @@ export default function ProfileEditor({ initial }) {
     setUploading(true);
     const blob = await compressImage(file);
     if (blob.size > AVATAR_MAX_BYTES) {
-      toast("Gambar terlalu besar (maks 2MB)", "error");
+      toast("Gambar terlalu besar (maks 5MB)", "error");
       setUploading(false);
       return;
     }
@@ -96,6 +103,114 @@ export default function ProfileEditor({ initial }) {
     if (form.certificates.length >= 5) return toast("Maksimal 5 sertifikat", "error");
     set("certificates", [...form.certificates, v]);
     setCertInput("");
+  }
+
+  async function handlePortfolioFile(e) {
+    const file = e.target.files?.[0];
+    e.target.value = "";
+    if (!file) return;
+    if (!PORTFOLIO_MIME_TYPES.includes(file.type)) {
+      toast("Format harus JPG, PNG, atau WebP", "error");
+      return;
+    }
+    if (items.length >= PORTFOLIO_MAX_ITEMS) {
+      toast(`Maksimal ${PORTFOLIO_MAX_ITEMS} foto portofolio`, "error");
+      return;
+    }
+    setUploadingPortfolio(true);
+    try {
+      const blob = await compressImage(file);
+      if (blob.size > PORTFOLIO_MAX_BYTES) {
+        toast("Gambar terlalu besar (maks 10MB)", "error");
+        return;
+      }
+      const supabase = createClient();
+      const { data: { user } } = await supabase.auth.getUser();
+      const path = `${user.id}/portfolio-${Date.now()}.jpg`;
+      const { error: upErr } = await supabase.storage.from("portfolio").upload(path, blob, {
+        contentType: "image/jpeg",
+      });
+      if (upErr) throw upErr;
+      const { data } = supabase.storage.from("portfolio").getPublicUrl(path);
+      const { data: row, error: insErr } = await supabase
+        .from("barista_portfolio")
+        .insert({ barista_id: user.id, image_url: data.publicUrl })
+        .select()
+        .single();
+      if (insErr) throw insErr;
+      setItems((prev) => [...prev, row]);
+      toast("Foto portofolio ditambahkan ✓");
+      router.refresh();
+    } catch {
+      toast("Gagal mengunggah portofolio", "error");
+    } finally {
+      setUploadingPortfolio(false);
+    }
+  }
+
+  async function handleCaptionSave(id, caption) {
+    const v = caption.trim().slice(0, 140);
+    setItems((prev) => prev.map((it) => (it.id === id ? { ...it, caption: v } : it)));
+    try {
+      const supabase = createClient();
+      const { error } = await supabase.from("barista_portfolio").update({ caption: v }).eq("id", id);
+      if (error) throw error;
+    } catch {
+      toast("Gagal menyimpan caption", "error");
+    }
+  }
+
+  async function handlePortfolioDelete(id) {
+    const target = items.find((it) => it.id === id);
+    setItems((prev) => prev.filter((it) => it.id !== id));
+    try {
+      const supabase = createClient();
+      const { error } = await supabase.from("barista_portfolio").delete().eq("id", id);
+      if (error) throw error;
+      toast("Foto dihapus");
+      router.refresh();
+    } catch {
+      if (target) setItems((prev) => [...prev, target]);
+      toast("Gagal menghapus foto", "error");
+    }
+  }
+
+  async function handleCvFile(e) {
+    const file = e.target.files?.[0];
+    e.target.value = "";
+    if (!file) return;
+    if (file.type !== "application/pdf") {
+      toast("CV harus berformat PDF", "error");
+      return;
+    }
+    if (file.size > 5 * 1024 * 1024) {
+      toast("CV terlalu besar (maks 5MB)", "error");
+      return;
+    }
+    setUploadingCv(true);
+    try {
+      const supabase = createClient();
+      const { data: { user } } = await supabase.auth.getUser();
+      const path = `${user.id}/cv-${Date.now()}.pdf`;
+      const { error: upErr } = await supabase.storage.from("cvs").upload(path, file, {
+        contentType: "application/pdf",
+        upsert: true,
+      });
+      if (upErr) throw upErr;
+      const { data } = supabase.storage.from("cvs").getPublicUrl(path);
+      const { error: dbErr } = await supabase
+        .from("barista_profiles")
+        .update({ cv_url: data.publicUrl })
+        .eq("id", user.id);
+      if (dbErr) throw dbErr;
+      setCvUrl(data.publicUrl);
+      toast("CV diperbarui ✓");
+      router.refresh();
+    } catch {
+      toast("Gagal mengunggah CV", "error");
+    } finally {
+      setUploadingCv(false);
+    }
   }
 
   async function handleSave() {
@@ -141,14 +256,14 @@ export default function ProfileEditor({ initial }) {
       <div className="rounded-2xl card-dark p-5">
         <div className="flex items-center justify-between text-xs font-bold">
           <span className="text-espresso">Kelengkapan profil</span>
-          <span className={completeness >= 6 ? "text-matcha" : "text-caramel"}>
-            {Math.round((completeness / 6) * 100)}%
+          <span className={completeness >= 7 ? "text-matcha" : "text-caramel"}>
+            {Math.round((completeness / 7) * 100)}%
           </span>
         </div>
         <div className="mt-2 h-2 overflow-hidden rounded-full bg-latte/60">
           <div
-            className={`h-full rounded-full transition-all ${completeness >= 6 ? "bg-matcha" : "bg-caramel"}`}
-            style={{ width: `${(completeness / 6) * 100}%` }}
+            className={`h-full rounded-full transition-all ${completeness >= 7 ? "bg-matcha" : "bg-caramel"}`}
+            style={{ width: `${(completeness / 7) * 100}%` }}
           />
         </div>
       </div>
@@ -320,6 +435,101 @@ export default function ProfileEditor({ initial }) {
           />
           <Button variant="secondary" onClick={addCert}>
             Tambah
+          </Button>
+        </div>
+      </div>
+
+      {/* portfolio */}
+      <div className="rounded-2xl card-dark p-6">
+        <div className="flex items-center justify-between">
+          <p className="font-bold text-espresso">
+            Portofolio{" "}
+            <span className="font-medium text-espresso-soft">
+              ({items.length}/{PORTFOLIO_MAX_ITEMS})
+            </span>
+          </p>
+          <input
+            ref={portfolioFileRef}
+            type="file"
+            accept={PORTFOLIO_MIME_TYPES.join(",")}
+            hidden
+            onChange={handlePortfolioFile}
+          />
+          <Button
+            variant="secondary"
+            size="sm"
+            onClick={() => portfolioFileRef.current?.click()}
+            disabled={uploadingPortfolio || items.length >= PORTFOLIO_MAX_ITEMS}
+          >
+            <ImagePlus size={14} />
+            {uploadingPortfolio ? "Mengunggah..." : "Tambah foto"}
+          </Button>
+        </div>
+        <p className="mt-1 text-xs text-espresso-soft">
+          Pamerkan hasil karyamu — latte art, interior kafe, biji racikan. Tampil di profil publikmu.
+        </p>
+        {items.length > 0 && (
+          <ul className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3">
+            {items.map((it) => (
+              <li key={it.id} className="overflow-hidden rounded-xl border border-latte">
+                <div className="relative">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={it.image_url} alt={it.caption || "Portofolio"} className="aspect-square w-full object-cover" />
+                  <button
+                    type="button"
+                    onClick={() => handlePortfolioDelete(it.id)}
+                    aria-label="Hapus foto"
+                    className="absolute top-1.5 right-1.5 rounded-full bg-black/60 p-1.5 text-white hover:bg-red-600"
+                  >
+                    <Trash2 size={13} />
+                  </button>
+                </div>
+                <input
+                  defaultValue={it.caption ?? ""}
+                  maxLength={140}
+                  onBlur={(e) => {
+                    if (e.target.value !== (it.caption ?? "")) handleCaptionSave(it.id, e.target.value);
+                  }}
+                  placeholder="Tulis caption…"
+                  className="w-full bg-white px-2.5 py-2 text-xs text-[#1c1412] outline-none placeholder:text-gray-400 focus:bg-cream"
+                />
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+
+      {/* CV */}
+      <div className="rounded-2xl card-dark p-6">
+        <div className="flex items-center justify-between gap-3">
+          <div>
+            <p className="flex items-center gap-1.5 font-bold text-espresso">
+              <FileText size={15} className="text-caramel" /> CV / Resume (PDF)
+            </p>
+            <p className="mt-1 text-xs text-espresso-soft">
+              {cvUrl ? (
+                <>Sudah terunggah — <a href={cvUrl} target="_blank" rel="noopener" className="font-bold text-caramel hover:underline">lihat CV</a></>
+              ) : (
+                "Belum ada CV. Wajib PDF, maks 5MB — tampil sebagai preview di profil publikmu."
+              )}
+            </p>
+          </div>
+          <input
+            ref={cvFileRef}
+            type="file"
+            accept="application/pdf"
+            hidden
+            onChange={handleCvFile}
+          />
+          <Button
+            variant="secondary"
+            size="sm"
+            onClick={() => cvFileRef.current?.click()}
+            disabled={uploadingCv}
+            className="shrink-0"
+          >
+            <Upload size={14} />
+            {uploadingCv ? "Mengunggah..." : cvUrl ? "Ganti CV" : "Unggah CV"}
           </Button>
         </div>
       </div>

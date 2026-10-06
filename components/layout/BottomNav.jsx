@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Briefcase, FileText, UserRound, Megaphone, UsersRound, Search } from "lucide-react";
+import { Briefcase, FileText, UserRound, Megaphone, UsersRound, Search, GraduationCap, Award } from "lucide-react";
 
 const SETS = {
   barista: [
@@ -16,6 +16,12 @@ const SETS = {
     { href: "/find-baristas", label: "Cari", icon: Search },
     { href: "/messages", label: "Pesan", icon: Megaphone },
     { href: "/dashboard/owner/profile", label: "Bisnis", icon: UserRound },
+  ],
+  academy: [
+    { href: "/dashboard/academy", label: "Akademi", icon: GraduationCap },
+    { href: "/training", label: "Training", icon: Award },
+    { href: "/messages", label: "Pesan", icon: Megaphone },
+    { href: "/dashboard/academy/profile", label: "Profil", icon: UserRound },
   ],
 };
 

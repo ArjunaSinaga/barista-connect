@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { createClient, getSessionSafe, isSupabaseConfigured } from "@/lib/supabase/server";
 import ProfileEditor from "@/components/barista/ProfileEditor";
 import BaristaProfileView from "@/components/barista/BaristaProfileView";
+import ConnectionInbox from "@/components/social/ConnectionInbox";
 
 export const metadata = { title: "Profil Saya" };
 
@@ -16,12 +17,18 @@ export default async function BaristaProfilePage({ searchParams }) {
   if (!row) notFound();
 
   if (params?.edit) {
+    const { data: portfolio } = await supabase
+      .from("barista_portfolio")
+      .select("id, image_url, caption")
+      .eq("barista_id", user.id)
+      .order("sort_order")
+      .order("created_at");
     return (
       <div className="mx-auto max-w-3xl px-4 py-8">
         <Link href="/dashboard/barista/profile" className="text-sm font-bold text-caramel hover:underline">
           ← Kembali ke profil
         </Link>
-        <div className="mt-4"><ProfileEditor initial={row} /></div>
+        <div className="mt-4"><ProfileEditor initial={row} portfolio={portfolio ?? []} /></div>
       </div>
     );
   }
@@ -51,10 +58,23 @@ export default async function BaristaProfilePage({ searchParams }) {
   const visible = ratings.filter((r) => !r.hidden);
   const avg = visible.length ? (visible.reduce((s, r) => s + r.stars, 0) / visible.length).toFixed(1) : null;
 
+  const { data: portfolio } = await supabase
+    .from("barista_portfolio")
+    .select("id, image_url, caption")
+    .eq("barista_id", user.id)
+    .order("sort_order")
+    .order("created_at");
+
   return (
-    <BaristaProfileView
+    <>
+      <div className="mx-auto max-w-3xl px-4 pt-6">
+        <ConnectionInbox viewerId={user.id} />
+      </div>
+      <BaristaProfileView
       b={row} workHistory={workHistory ?? []} ratings={ratings} avg={avg}
+      portfolio={portfolio ?? []}
       isSelf viewerId={user.id} editHref="/dashboard/barista/profile?edit=1"
     />
+    </>
   );
 }

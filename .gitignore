@@ -57,3 +57,7 @@ findings.md
 progress.md
 *.dev-test.log
 _vendor/
+
+# local-only: AI skills & agents (perkakas lokal, jangan push ke GitHub)
+.agents/skills/
+.opencode/

@@ -13,6 +13,7 @@ const NAV = [
   { label: "Talenta", href: "/find-baristas", match: ["/find-baristas", "/barista"] },
   { label: "Ulasan", href: "/reviews", match: ["/reviews"] },
   { label: "Pelatihan", href: "/training", match: ["/training"] },
+  { label: "Feed", href: "/feed", match: ["/feed"] },
 ];
 
 export default function Navbar({ user, role }) {

@@ -43,7 +43,9 @@ export default async function proxy(request: NextRequest) {
     ? "owner"
     : pathname.startsWith("/dashboard/barista")
       ? "barista"
-      : null;
+      : pathname.startsWith("/dashboard/academy")
+        ? "academy"
+        : null;
 
   if (roleRoute && user) {
     const { data: profile } = await supabase

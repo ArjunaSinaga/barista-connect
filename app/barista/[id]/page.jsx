@@ -41,6 +41,13 @@ export default async function BaristaPublicPage({ params }) {
   const ratings = visibleOwnerRatings(ownerRatings);
   const avg = avgStars(ratings);
 
+  const { data: portfolio } = await supabase
+    .from("barista_portfolio")
+    .select("id, image_url, caption")
+    .eq("barista_id", id)
+    .order("sort_order")
+    .order("created_at");
+
   let rateableTeam = null;
   let myRating = null;
   if (isOwner) {
@@ -55,6 +62,7 @@ export default async function BaristaPublicPage({ params }) {
   return (
     <BaristaProfileView
       b={b} workHistory={workHistory ?? []} ratings={ratings} avg={avg}
+      portfolio={portfolio ?? []}
       isSelf={isSelf} isOwner={isOwner} viewerId={user?.id ?? null}
       rateableTeam={rateableTeam} myRating={myRating}
       editHref={isSelf ? "/dashboard/barista/profile?edit=1" : null}

@@ -1,15 +1,17 @@
 import Link from "next/link";
-import { BadgeCheck, MapPin, Sparkles, Award, BriefcaseBusiness } from "lucide-react";
+import { BadgeCheck, MapPin, Sparkles, Award, BriefcaseBusiness, FileText, ExternalLink, Download } from "lucide-react";
 import Avatar from "@/components/ui/Avatar";
 import VerifiedBadge from "@/components/ui/VerifiedBadge";
 import StartChatButton from "@/components/chat/StartChatButton";
+import EndorseSection from "@/components/social/EndorseSection";
+import ConnectButton from "@/components/social/ConnectButton";
 import RatingForm, { Stars } from "@/components/ratings/RatingForm";
 import ShieldToggle from "@/components/ratings/ShieldToggle";
 import { formatExp } from "@/lib/exp";
 import { skillLabel } from "@/lib/constants";
 
 export default function BaristaProfileView({
-  b, workHistory = [], ratings = [], avg = null,
+  b, workHistory = [], ratings = [], avg = null, portfolio = [],
   isSelf = false, isOwner = false, viewerId = null,
   rateableTeam = null, myRating = null, editHref = null,
 }) {
@@ -40,9 +42,15 @@ export default function BaristaProfileView({
             {b.is_open_to_work ? "Terbuka untuk peluang kerja" : "Sedang tidak mencari kerja"}
           </div>
         </div>
-        {(isOwner && viewerId) || (isSelf && !editHref) ? (
-          <div className="mt-4 flex justify-center">
+        {((isOwner && viewerId) || (!isSelf && viewerId) || (isSelf && !editHref) || (!isSelf && !viewerId)) ? (
+          <div className="mt-4 flex flex-wrap items-center justify-center gap-2">
             {isOwner && viewerId && <StartChatButton ownerId={viewerId} baristaId={b.id} />}
+            {!isSelf && viewerId && <ConnectButton targetId={b.id} viewerId={viewerId} />}
+            {!isSelf && !viewerId && (
+              <Link href={`/login?next=/barista/${b.id}`} className="rounded-xl bg-coffee px-4 py-2.5 text-sm font-bold text-white hover:bg-[#2e2015]">
+                Masuk untuk Menghubungi
+              </Link>
+            )}
             {isSelf && !editHref && (
               <Link href="/dashboard/barista/profile?edit=1" className="rounded-xl bg-coffee px-4 py-2.5 text-sm font-bold text-white hover:bg-[#2e2015]">
                 Edit profil
@@ -57,6 +65,62 @@ export default function BaristaProfileView({
         <StatCard icon={<BadgeCheck size={16} />} label="Skill" value={`${b.skills?.length ?? 0}`} />
         <StatCard icon={<Award size={16} />} label="Sertifikat" value={`${b.certificates?.length ?? 0}`} />
       </div>
+
+      {portfolio.length > 0 && (
+        <section className="mt-4 rounded-2xl card-dark p-6">
+          <h2 className="text-xs font-extrabold tracking-wide text-espresso uppercase">Portofolio ({portfolio.length})</h2>
+          <ul className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-3">
+            {portfolio.map((p) => (
+              <li key={p.id} className="overflow-hidden rounded-xl border border-latte">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={p.image_url} alt={p.caption || "Portofolio barista"} className="aspect-square w-full object-cover" loading="lazy" />
+                {p.caption && (
+                  <p className="truncate bg-cream px-2.5 py-1.5 text-xs font-semibold text-espresso">{p.caption}</p>
+                )}
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      {b.cv_url ? (
+        <section className="mt-4 rounded-2xl card-dark p-6">
+          <h2 className="flex items-center gap-1.5 text-xs font-extrabold tracking-wide text-espresso uppercase">
+            <FileText size={14} className="text-caramel" /> CV / Resume
+          </h2>
+          <iframe
+            src={b.cv_url}
+            title={`CV ${b.full_name}`}
+            className="mt-3 h-[480px] w-full rounded-xl border border-latte bg-white"
+            loading="lazy"
+          />
+          <div className="mt-3 flex flex-wrap justify-center gap-2">
+            <a
+              href={b.cv_url}
+              target="_blank"
+              rel="noopener"
+              className="inline-flex items-center gap-1.5 rounded-xl bg-coffee px-4 py-2 text-sm font-bold text-white hover:bg-[#2e2015]"
+            >
+              <ExternalLink size={14} /> Buka di tab baru
+            </a>
+            <a
+              href={b.cv_url}
+              download
+              className="inline-flex items-center gap-1.5 rounded-xl border border-latte px-4 py-2 text-sm font-bold text-espresso hover:border-caramel hover:text-caramel"
+            >
+              <Download size={14} /> Unduh
+            </a>
+          </div>
+        </section>
+      ) : (
+        isSelf && (
+          <section className="mt-4 rounded-2xl border border-dashed border-latte p-6 text-center">
+            <FileText size={20} className="mx-auto text-espresso-soft" />
+            <p className="mt-2 text-sm font-semibold text-espresso">Belum ada CV di profilmu</p>
+            <p className="mt-1 text-xs text-espresso-soft">Unggah CV lewat tombol Edit Profil agar kafe bisa melihatnya di sini.</p>
+          </section>
+        )
+      )}
 
       {workHistory.length > 0 && (
         <section className="mt-4 rounded-2xl card-dark p-6">
@@ -123,6 +187,9 @@ export default function BaristaProfileView({
               <span key={s} className="rounded-full bg-caramel/10 px-3 py-1.5 text-xs font-bold text-caramel">{skillLabel(s)}</span>
             ))}
           </div>
+          {!isSelf && viewerId && (
+            <EndorseSection baristaId={b.id} skills={b.skills} viewerId={viewerId} />
+          )}
         </section>
       )}
 

@@ -1,6 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   poweredByHeader: false,
+  turbopack: {
+    root: import.meta.dirname,
+  },
   images: {
     remotePatterns: [
       { protocol: "https", hostname: "**.supabase.co", pathname: "/storage/v1/object/public/**" },
@@ -10,6 +13,12 @@ const nextConfig = {
     ],
   },
   async headers() {
+    // React dev-mode butuh eval() untuk debugging; izinkan HANYA di development.
+    // Production tetap strict tanpa 'unsafe-eval'.
+    const scriptSrc =
+      process.env.NODE_ENV === "development"
+        ? "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://va.vercel-scripts.com"
+        : "script-src 'self' 'unsafe-inline' https://va.vercel-scripts.com";
     return [
       {
         source: "/:path*",
@@ -21,7 +30,9 @@ const nextConfig = {
           {
             key: "Content-Security-Policy",
             value:
-              "default-src 'self'; script-src 'self' 'unsafe-inline' https://va.vercel-scripts.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://*.supabase.co https://randomuser.me https://picsum.photos https://fastly.picsum.photos; connect-src 'self' https://*.supabase.co https://api.pwnedpasswords.com https://api.midtrans.com https://api.sandbox.midtrans.com wss://*.supabase.co https://va.vercel-scripts.com;",
+              "default-src 'self'; " +
+                scriptSrc +
+                "; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://*.supabase.co https://randomuser.me https://picsum.photos https://fastly.picsum.photos; connect-src 'self' https://*.supabase.co https://api.pwnedpasswords.com https://api.midtrans.com https://api.sandbox.midtrans.com wss://*.supabase.co https://va.vercel-scripts.com;",
           },
         ],
       },
