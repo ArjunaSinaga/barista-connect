@@ -150,8 +150,11 @@ export default async function LandingPage() {
         </div>
       </section>
 
+      {/* Lapis 2 — panel krem gelap pembungkus konten */}
+      <div className="mx-auto w-full max-w-[1400px] px-4 sm:px-6">
+        <div className="mt-6 rounded-3xl bg-[#ece2cc] px-4 pt-2 pb-10 sm:px-6">
       {/* Featured Jobs */}
-      <section className="mx-auto w-full max-w-[1400px] px-4 pt-10 sm:px-6">
+      <section className="pt-8">
         <div className="flex items-end justify-between gap-2">
           <div>
             <h2 className="text-xl font-extrabold tracking-tight">Featured Jobs</h2>
@@ -228,7 +231,7 @@ export default async function LandingPage() {
       </section>
 
       {/* How Trust Works */}
-      <section className="mx-auto w-full max-w-[1400px] px-4 pt-10 sm:px-6">
+      <section className="pt-8">
         <h2 className="text-xl font-extrabold tracking-tight">How Trust Works</h2>
         <p className="mt-0.5 text-xs text-espresso-soft">Empat mekanisme yang menjaga kualitas setiap profil dan loker.</p>
         <ol className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -247,7 +250,7 @@ export default async function LandingPage() {
       </section>
 
       {/* Featured Talent */}
-      <section className="mx-auto w-full max-w-[1400px] px-4 pt-10 sm:px-6">
+      <section className="pt-8">
         <div className="flex items-end justify-between gap-2">
           <div>
             <h2 className="text-xl font-extrabold tracking-tight">Featured Talent</h2>
@@ -304,7 +307,7 @@ export default async function LandingPage() {
       </section>
 
       {/* Academy banner */}
-      <section className="mx-auto w-full max-w-[1400px] px-4 pt-10 pb-12 sm:px-6">
+      <section className="pt-8">
         <div className="grid overflow-hidden rounded-2xl border border-[#e8e0cf] bg-white shadow-[0_2px_12px_rgba(43,33,24,0.10)] lg:grid-cols-2">
           <div className="relative h-56 lg:h-auto lg:min-h-[280px]">
             <Image
@@ -338,6 +341,8 @@ export default async function LandingPage() {
           </div>
         </div>
       </section>
+        </div>
+      </div>
     </div>
   );
 }
