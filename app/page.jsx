@@ -113,8 +113,8 @@ function HeroPhotoBlock({ photo, flush }) {
           </span>
         </>
       ) : (
-        <div className="absolute inset-0 flex items-center justify-center bg-[#ece2cd] px-6 text-center">
-          <p className="text-sm leading-6 text-espresso-soft">{STR.hero.fallback[0]}<br />{STR.hero.fallback[1]}</p>
+        <div className="absolute inset-0">
+          <Image src="/images/landing/barista-1.jpg" alt="Barista kerja.inc" fill sizes="(max-width: 1024px) 100vw, 50vw" className="object-cover" />
         </div>
       )}
     </div>

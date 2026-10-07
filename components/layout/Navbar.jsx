@@ -1,9 +1,10 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
-import { ChevronDown, Coffee, LogOut, MessageSquareText } from "lucide-react";
+import { ChevronDown, LogOut, MessageSquareText } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import NotifBell from "@/components/NotifBell";
 import HeaderSearch from "@/components/layout/HeaderSearch";
@@ -45,9 +46,9 @@ export default function Navbar({ user, role }) {
     <header className="sticky top-0 z-40 border-b border-[#e0d5bd] bg-paper/90 backdrop-blur">
       <div className="mx-auto flex h-14 max-w-[1400px] items-center gap-2 px-4 sm:px-6">
         <span className="flex shrink-0 items-center gap-2 font-extrabold tracking-tight">
-          <Link href="/" aria-label="Beranda" title="Beranda" className="flex h-8 w-8 items-center justify-center rounded-xl bg-caramel text-white hover:bg-caramel-dark">
-            <Coffee size={17} />
-          </Link>
+            <Link href="/" aria-label="Beranda" title="Beranda" className="flex h-8 w-8 items-center justify-center overflow-hidden rounded-xl bg-white ring-1 ring-[#e0d5bd]">
+              <Image src="/images/landing/logo.jpg" alt="kerja.inc" width={32} height={32} className="h-8 w-8 object-cover" />
+            </Link>
           <Link href={user ? home : "/"} title={user ? "Dashboard" : "Beranda"} className="hidden text-[#2f2721] hover:text-[#6f5a3e] min-[400px]:block">
             {APP_NAME}
           </Link>

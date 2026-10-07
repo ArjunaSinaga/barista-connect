@@ -74,10 +74,7 @@ export function AcademyCard({ image }) {
           {image ? (
             <Image src={thumb(image, { w: 512 })} alt="Barista training" fill sizes="(max-width: 768px) 50vw, 25vw" className="object-cover" />
           ) : (
-            <div className="absolute inset-0 flex flex-col items-center justify-center gap-1 bg-[#ece2cd] px-4 text-center">
-              <GraduationCap size={26} className="text-[#9a6a2f]" />
-              <p className="text-[11px] font-bold text-espresso-soft">Foto training asli menyusul</p>
-            </div>
+            <Image src="/images/landing/barista-2.jpg" alt="Latte art training" fill sizes="(max-width: 768px) 50vw, 25vw" className="object-cover" />
           )}
           <ul className="absolute top-2 left-2 space-y-1 rounded-lg bg-white/95 p-2 shadow">
             {points.map((t) => (
