@@ -23,7 +23,7 @@ export default function BaristaDirectory({ ownerId }) {
   const initAvailable = searchParams.get("available");
   const initMinRating = parseFloat(searchParams.get("minRating") ?? "") || 0;
   const initType = normType(searchParams.get("type"));
-  const initLoc = (searchParams.get("loc") ?? "").toString();
+  const initLoc = (searchParams.get("location") ?? searchParams.get("loc") ?? "").toString();
 
   const [q, setQ] = useState(initQ);
   const [skills, setSkills] = useState(() => (initQ && SKILL_PRESETS.some((s) => s.toLowerCase() === initQ.trim().toLowerCase()) ? [SKILL_PRESETS.find((s) => s.toLowerCase() === initQ.trim().toLowerCase())] : []));

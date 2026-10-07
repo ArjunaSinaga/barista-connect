@@ -18,7 +18,7 @@ export default function HeroSearch() {
     const params = new URLSearchParams();
     const needle = q.trim();
     if (needle) params.set("q", needle);
-    if (loc) params.set("loc", loc);
+    if (loc) params.set("location", loc);
     if (!params.toString()) return;
     router.push(`${mode === "talenta" ? "/find-baristas" : "/jobs"}?${params.toString()}`);
   }

@@ -1,7 +1,9 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { Heart } from "lucide-react";
+import { createClient } from "@/lib/supabase/client";
 
 function readSaved(storageKey, id) {
   try {
@@ -12,11 +14,22 @@ function readSaved(storageKey, id) {
 }
 
 export default function SaveButton({ storageKey, id, label }) {
+  const router = useRouter();
   const [saved, setSaved] = useState(() => readSaved(storageKey, id));
 
-  function toggle(e) {
+  // LP-10: pengguna keluar -> prompt login, bukan simpan diam-diam.
+  async function toggle(e) {
     e.preventDefault();
     e.stopPropagation();
+    try {
+      const { data } = await createClient().auth.getSession();
+      if (!data.session) {
+        router.push("/login?next=/");
+        return;
+      }
+    } catch {
+      /* env belum terpasang: lanjut simpan lokal */
+    }
     try {
       const list = JSON.parse(localStorage.getItem(storageKey) ?? "[]");
       const next = list.includes(id) ? list.filter((x) => x !== id) : [...list, id];

@@ -36,7 +36,7 @@ const ROLE_PILLS = [
 export default async function JobsPage({ searchParams }) {
   const params = await searchParams;
   const q = (params?.q ?? "").toString().trim();
-  const loc = (params?.loc ?? "").toString().trim();
+  const loc = (params?.location ?? params?.loc ?? "").toString().trim();
   const type = (params?.type ?? "").toString().trim();
   const jobParam = (params?.job ?? "").toString().trim();
   const savedOnly = params?.saved === "1";

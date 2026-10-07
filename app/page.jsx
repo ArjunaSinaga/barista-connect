@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { MapPin, Banknote, Briefcase, ChevronRight, Star, ShieldCheck, BadgeCheck, MessageSquareHeart, ThumbsUp, GraduationCap, Users, Store } from "lucide-react";
+import { MapPin, Banknote, Briefcase, ChevronRight, Star, ShieldCheck, BadgeCheck, MessageSquareHeart, GraduationCap, Users, Store } from "lucide-react";
 import { createClient, isSupabaseConfigured, getSessionSafe } from "@/lib/supabase/server";
 import Avatar from "@/components/ui/Avatar";
 import VerifiedBadge from "@/components/ui/VerifiedBadge";
@@ -39,16 +39,19 @@ async function getLiveStats() {
   if (!isSupabaseConfigured()) return fallback;
   try {
     const supabase = await createClient();
-    const [{ count: baristas }, { count: cafes }, { count: jobs }] = await Promise.all([
+    const [{ count: baristas }, { count: cafes }, { count: jobs }, { data: locRows }] = await Promise.all([
       supabase.from("baristas_public").select("id", { count: "exact", head: true }),
       supabase.from("cafes").select("id", { count: "exact", head: true }).eq("is_active", true),
       supabase.from("job_posts").select("id", { count: "exact", head: true }).eq("is_active", true),
+      // LP-08: hitung kota riil dari data (bukan angka mockup), gagal -> strip.
+      supabase.from("baristas_public").select("location_place").limit(1000),
     ]);
+    const cities = new Set((locRows ?? []).map((r) => r.location_place).filter(Boolean)).size;
     return [
       [`${(baristas ?? 0).toLocaleString()}+`, "Barista di platform"],
       [`${(cafes ?? 0).toLocaleString()}+`, "Kafe merekrut"],
       [`${(jobs ?? 0).toLocaleString()}`, "Loker aktif"],
-      ["80+", "Kota terjangkau"],
+      [cities > 0 ? `${cities}` : "–", "Kota terjangkau"],
     ];
   } catch {
     return fallback;
@@ -79,11 +82,11 @@ async function getFeaturedBaristas() {
   }
 }
 
+// LP-13: 3 pilar sesuai spec (identitas, profil terverifikasi, rating komunitas).
 const TRUST_STEPS = [
-  { icon: BadgeCheck, title: "Identitas Terverifikasi", desc: "Profil barista dan kafe dicek sebelum tampil." },
-  { icon: ShieldCheck, title: "Riwayat Terverifikasi", desc: "Pengalaman kerja tercatat dan bisa ditelusur." },
-  { icon: MessageSquareHeart, title: "Rating dan Ulasan Asli", desc: "Hanya dari owner yang pernah mempekerjakan." },
-  { icon: ThumbsUp, title: "Endorse Rekan", desc: "Satu pengguna satu suara per skill." },
+  { icon: BadgeCheck, title: "Verifikasi Identitas", desc: "Setiap worker dan bisnis melalui proses verifikasi." },
+  { icon: ShieldCheck, title: "Profil & Pengalaman Tervalidasi", desc: "Lihat riwayat kerja, skill, dan ulasan nyata." },
+  { icon: MessageSquareHeart, title: "Sistem Rating & Ulasan", desc: "Keamanan dan kepercayaan dari komunitas." },
 ];
 
 export default async function LandingPage() {
@@ -95,7 +98,7 @@ export default async function LandingPage() {
   ]);
 
   return (
-    <div className="min-h-screen bg-paper text-espresso">
+    <div className="min-h-screen bg-[#F8F5EE] text-espresso">
       {/* Hero */}
       <section className="mx-auto w-full max-w-[1400px] px-4 pt-6 sm:px-6">
         <div className="grid items-center gap-6 overflow-hidden rounded-3xl bg-gradient-to-br from-[#f3ecdd] via-[#efe4cf] to-[#e7d6b8] p-6 sm:p-8 lg:grid-cols-2 lg:p-10">
@@ -138,7 +141,7 @@ export default async function LandingPage() {
               priority
             />
             <span className="absolute top-4 right-4 max-w-[180px] rounded-xl bg-white/95 px-3 py-2 text-right shadow">
-              <span className="font-chalk block text-sm leading-4">Kerja ikut pengalaman, bukan kenalan</span>
+              <span className="font-chalk block text-sm leading-5">Kerja baik, lebih banyak kemungkinan.</span>
             </span>
           </div>
         </div>
@@ -171,7 +174,7 @@ export default async function LandingPage() {
               const types = job.employment_types?.length ? job.employment_types : (job.employment_type ? [job.employment_type] : []);
               const tags = skillTags(job);
               return (
-                <li key={job.id} className="flex min-w-0 flex-1 flex-col rounded-2xl border border-[#e8e0cf] bg-white p-4 shadow-[0_1px_3px_rgba(43,33,24,0.08)] transition-shadow hover:shadow-[0_4px_16px_rgba(43,33,24,0.12)]">
+                <li key={job.id} className="flex min-w-0 flex-1 flex-col rounded-2xl border border-stone-200/60 bg-white p-4 shadow-[0_1px_3px_rgba(43,33,24,0.08)] transition-shadow hover:shadow-[0_4px_16px_rgba(43,33,24,0.12)]">
                   <div className="flex items-start gap-2.5">
                     <CafeLogo job={job} />
                     <div className="min-w-0 flex-1">
@@ -222,10 +225,10 @@ export default async function LandingPage() {
       {/* How Trust Works */}
       <section className="pt-8">
         <h2 className="text-xl font-extrabold tracking-tight">How Trust Works</h2>
-        <p className="mt-0.5 text-xs text-espresso-soft">Empat mekanisme yang menjaga kualitas setiap profil dan loker.</p>
-        <ol className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <p className="mt-0.5 text-xs text-espresso-soft">Kami memverifikasi profil, pengalaman, dan ulasan untuk lingkungan kerja yang lebih aman.</p>
+        <ol className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {TRUST_STEPS.map((s, i) => (
-            <li key={s.title} className="rounded-2xl border border-[#e8e0cf] bg-white p-4 shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
+            <li key={s.title} className="rounded-2xl border border-stone-200/60 bg-white p-4 shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
               <span className="flex h-9 w-9 items-center justify-center rounded-full bg-[#efe8d8] text-xs font-extrabold">{i + 1}</span>
               <s.icon size={20} className="mt-3 text-matcha" />
               <p className="mt-1 text-sm font-bold">{s.title}</p>
@@ -250,7 +253,7 @@ export default async function LandingPage() {
           </Link>
         </div>
         {talents.length === 0 ? (
-          <p className="mt-4 rounded-2xl border border-[#e8e0cf] bg-white p-6 text-center text-sm text-espresso-soft">
+          <p className="mt-4 rounded-2xl border border-stone-200/60 bg-white p-6 text-center text-sm text-espresso-soft">
             Talenta unggulan segera tampil di sini.
           </p>
         ) : (
@@ -259,7 +262,7 @@ export default async function LandingPage() {
               const avg = avgStars(b.ratings);
               const count = b.ratings?.length ?? 0;
               return (
-                <li key={b.id} className="rounded-2xl border border-[#e8e0cf] bg-white p-4 text-center shadow-[0_1px_3px_rgba(43,33,24,0.08)] transition-shadow hover:shadow-[0_4px_16px_rgba(43,33,24,0.12)]">
+                <li key={b.id} className="rounded-2xl border border-stone-200/60 bg-white p-4 text-center shadow-[0_1px_3px_rgba(43,33,24,0.08)] transition-shadow hover:shadow-[0_4px_16px_rgba(43,33,24,0.12)]">
                   <div className="flex items-center justify-between">
                     {b.is_open_to_work ? (
                       <span className="rounded-full bg-[#e3f0e8] px-2 py-0.5 text-[10px] font-bold text-matcha">Siap kerja</span>
@@ -307,7 +310,7 @@ export default async function LandingPage() {
 
       {/* Academy banner */}
       <section className="pt-8">
-        <div className="grid overflow-hidden rounded-2xl border border-[#e8e0cf] bg-white shadow-[0_2px_12px_rgba(43,33,24,0.10)] lg:grid-cols-2">
+        <div className="grid overflow-hidden rounded-2xl bg-[#2C1810] text-[#F8F5EE] shadow-[0_2px_12px_rgba(43,33,24,0.10)] lg:grid-cols-2">
           <div className="relative h-56 lg:h-auto lg:min-h-[280px]">
             <Image
               src="/images/landing/cafe-1.jpg"
@@ -318,22 +321,22 @@ export default async function LandingPage() {
             />
           </div>
           <div className="flex flex-col justify-center p-6 sm:p-8">
-            <p className="inline-flex w-fit items-center gap-1.5 rounded-full bg-[#e3f0e8] px-3 py-1 text-[11px] font-bold text-matcha">
+            <p className="inline-flex w-fit items-center gap-1.5 rounded-full bg-white/10 px-3 py-1 text-[11px] font-bold text-[#F8F5EE]">
               <GraduationCap size={13} /> kerja.inc Academy
             </p>
             <h2 className="mt-3 text-2xl font-extrabold tracking-tight">Skill hari ini, peluang kerja esok</h2>
-            <p className="mt-1 text-sm leading-6 text-espresso-soft">
+            <p className="mt-1 text-sm leading-6 text-white/70">
               Dari pemula sampai mahir, kursus berbasis industri membantu barista membangun skill asli dan kepercayaan diri siap kafe.
             </p>
             <ul className="mt-3 space-y-1.5">
               {["Pemula sampai Mahir", "Belajar dari Praktisi Industri", "Sertifikasi kerja.inc"].map((t) => (
-                <li key={t} className="flex items-center gap-2 text-xs font-semibold">
-                  <span className="inline-flex h-4 w-4 items-center justify-center rounded-full bg-[#e3f0e8] text-[10px] font-bold text-matcha">✓</span>{t}
+                <li key={t} className="flex items-center gap-2 text-xs font-semibold text-white/85">
+                  <span className="inline-flex h-4 w-4 items-center justify-center rounded-full bg-white/15 text-[10px] font-bold">✓</span>{t}
                 </li>
               ))}
             </ul>
             <div className="mt-4">
-              <Link href="/training" className="inline-flex min-h-[44px] items-center rounded-full bg-coffee px-6 text-xs font-bold text-white hover:bg-[#2e2015]">
+              <Link href="/training" className="inline-flex min-h-[44px] items-center rounded-full bg-[#F8F5EE] px-6 text-xs font-bold text-[#2C1810] hover:bg-white">
                 Lihat Program Academy
               </Link>
             </div>

@@ -68,18 +68,21 @@ export default function Footer() {
               </ul>
             </nav>
           ))}
+          {/* LP-22: kanal tanpa URL resmi disembunyikan, bukan placeholder. */}
+          {SOCIALS.some(([, href]) => href !== "#") && (
           <div>
             <p className="text-xs font-bold">Ikuti kami</p>
             <div className="mt-3 flex gap-3">
-              {SOCIALS.map(([label, href, d]) => (
-                <Link key={label} href={href} aria-label={label} className="text-paper/70 hover:text-paper">
+              {SOCIALS.filter(([, href]) => href !== "#").map(([label, href, d]) => (
+                <a key={label} href={href} target="_blank" rel="noopener noreferrer" aria-label={label} className="text-paper/70 hover:text-paper">
                   <svg viewBox="0 0 24 24" className="h-5 w-5 fill-current" aria-hidden="true">
                     <path d={d} />
                   </svg>
-                </Link>
+                </a>
               ))}
             </div>
           </div>
+          )}
         </div>
         <div className="mt-8 flex flex-col gap-1 border-t border-paper/15 pt-4 text-[11px] text-paper/60 sm:flex-row sm:items-center sm:justify-between">
           <p>© 2024 kerja.inc. Semua hak dilindungi.</p>
