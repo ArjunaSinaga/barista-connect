@@ -6,7 +6,7 @@ import PostComposer from "@/components/social/PostComposer";
 export const revalidate = 30; // feed cache 30 detik
 
 export function generateMetadata() {
-  return { title: "Feed Barista — BaristaConnect" };
+  return { title: "Feed Barista — kerja.inc" };
 }
 
 function timeAgo(iso) {

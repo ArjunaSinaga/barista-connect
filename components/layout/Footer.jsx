@@ -8,6 +8,7 @@ const NAV = [
   ["Academy", "/academy"],
   ["Ulasan", "/reviews"],
   ["Pelatihan", "/training"],
+  ["Kepercayaan", "/trust"],
 ];
 
 export default function Footer() {
@@ -16,7 +17,7 @@ export default function Footer() {
       <div className="mx-auto w-full max-w-[1400px] px-4 py-6 sm:px-6">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
           <div className="max-w-xs">
-            <p className="font-display text-base font-semibold text-espresso">BaristaConnect</p>
+            <p className="font-display text-base font-semibold text-espresso">kerja.inc</p>
             <p className="mt-1 text-xs leading-5 text-espresso-soft">
               Platform rekrutmen khusus kopi: barista temukan loker, kafe temukan barista.
             </p>
@@ -30,7 +31,7 @@ export default function Footer() {
           </nav>
         </div>
         <p className="mt-4 border-t border-coffee/10 pt-3 text-[11px] text-espresso-soft">
-          © {new Date().getFullYear()} BaristaConnect. Seluruh hak cipta dilindungi.
+          © {new Date().getFullYear()} kerja.inc. Seluruh hak cipta dilindungi.
         </p>
       </div>
     </footer>

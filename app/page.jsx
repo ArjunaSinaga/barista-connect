@@ -188,7 +188,7 @@ export default async function LandingPage() {
                   Rekrut barista hebat. <span className="text-matcha">Temukan loker kafe terbaik.</span>
                 </h1>
                 <p className="mt-1 max-w-xl text-xs leading-5 text-espresso-soft">
-                  BaristaConnect menghubungkan barista dan pemilik kafe: pengalaman terverifikasi, rating, dan ulasan real. Lebih dari papan loker — ekosistem rekrutmen kopi.
+                  kerja.inc menghubungkan barista dan pemilik kafe: pengalaman terverifikasi, rating, dan ulasan real. Lebih dari papan loker — ekosistem rekrutmen kopi.
                 </p>
                 <div className="mt-1.5 flex flex-wrap items-center gap-2">
                   <Link href="/jobs" className="inline-flex min-h-[44px] items-center gap-2 rounded-full bg-coffee px-4 text-xs font-bold text-white hover:bg-[#2e2015]">

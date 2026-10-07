@@ -1,8 +1,8 @@
 export default function manifest() {
   return {
-    name: "BaristaConnect Mobile",
+    name: "kerja.inc Mobile",
     short_name: "BaristaMobile",
-    description: "Kontrol BaristaConnect & AI assistant dari HP - tanpa laptop",
+    description: "Kontrol kerja.inc & AI assistant dari HP - tanpa laptop",
     start_url: "/m",
     display: "standalone",
     background_color: "#f2f0eb",

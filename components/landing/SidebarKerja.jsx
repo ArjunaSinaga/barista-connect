@@ -6,9 +6,9 @@ import { thumb } from "@/lib/img";
 
 // Tiap blok mandiri (kartu putih sendiri). Tanpa DB — statis kecuali foto.
 const ITEMS = [
-  { icon: <ShieldCheck size={18} className="text-matcha" />, tint: "bg-[#e3f0e8]", title: "Pengalaman Terverifikasi", desc: "Riwayat kerja diverifikasi kafe", href: "/find-baristas" },
+  { icon: <ShieldCheck size={18} className="text-matcha" />, tint: "bg-[#e3f0e8]", title: "Pengalaman Terverifikasi", desc: "Riwayat kerja diverifikasi kafe", href: "/trust" },
   { icon: <Star size={18} className="text-[#8a6d1f]" />, tint: "bg-[#f5ecd4]", title: "Ulasan & Rating Kafe", desc: "Penilaian asli dari pemberi kerja", href: "/reviews" },
-  { icon: <GraduationCap size={18} className="text-matcha" />, tint: "bg-[#e3f0e8]", title: "Talenta Hasil Pelatihan", desc: "Barista dilatih dan disertifikasi BaristaConnect", href: "/training" },
+  { icon: <GraduationCap size={18} className="text-matcha" />, tint: "bg-[#e3f0e8]", title: "Talenta Hasil Pelatihan", desc: "Barista dilatih dan disertifikasi kerja.inc", href: "/training" },
   { icon: <BarChart3 size={18} className="text-matcha" />, tint: "bg-[#e3f0e8]", title: "Rekap Hadir & Shift", desc: "Pantau kehadiran dan reliabilitas tim", badge: "Segera hadir", href: null },
 ];
 
@@ -51,11 +51,11 @@ export function EcosystemCard() {
 }
 
 export function AcademyCard({ image }) {
-  const points = ["Pemula sampai Mahir", "Belajar dari Praktisi Industri", "Sertifikasi BaristaConnect"];
+  const points = ["Pemula sampai Mahir", "Belajar dari Praktisi Industri", "Sertifikasi kerja.inc"];
   return (
     <div className="rounded-2xl border border-[#e8e0cf] bg-white p-4 shadow-[0_1px_3px_rgba(43,33,24,0.08)] lg:min-h-full">
       <div className="flex items-center justify-between">
-        <h3 className="text-sm font-extrabold text-espresso">BaristaConnect Academy</h3>
+        <h3 className="text-sm font-extrabold text-espresso">kerja.inc Academy</h3>
         <Link href="/training" className="inline-flex shrink-0 items-center gap-0.5 text-xs font-bold text-link hover:underline">
           Lihat semua kursus <ChevronRight size={13} />
         </Link>
@@ -87,7 +87,7 @@ export function AcademyCard({ image }) {
             ))}
           </ul>
           <span className="absolute right-2 bottom-2 flex h-12 w-12 rotate-6 items-center justify-center rounded-full bg-[#c9a227] px-1 text-center text-[8px] leading-tight font-extrabold text-white shadow">
-            CERTIFIED BY BARISTACONNECT
+            CERTIFIED BY KERJA.INC
           </span>
         </div>
       </div>

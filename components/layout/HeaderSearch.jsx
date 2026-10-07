@@ -3,6 +3,7 @@
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import { Search } from "lucide-react";
+import { CITIES } from "@/lib/constants";
 
 // Satu search bar global di header. Sembunyi otomatis di halaman
 // yang sudah punya search sendiri (loker, talenta, dst) agar tidak dobel.
@@ -13,6 +14,7 @@ export default function HeaderSearch() {
   const router = useRouter();
   const [q, setQ] = useState("");
   const [scope, setScope] = useState("jobs");
+  const [loc, setLoc] = useState("");
 
   if (OWN_SEARCH_PREFIXES.some((p) => pathname === p || pathname?.startsWith(p + "/"))) {
     return null;
@@ -20,9 +22,12 @@ export default function HeaderSearch() {
 
   function onSubmit(e) {
     e.preventDefault();
+    const params = new URLSearchParams();
     const needle = q.trim();
-    if (!needle) return;
-    router.push(`${scope === "talenta" ? "/find-baristas" : "/jobs"}?q=${encodeURIComponent(needle)}`);
+    if (needle) params.set("q", needle);
+    if (loc) params.set("loc", loc);
+    if (!params.toString()) return;
+    router.push(`${scope === "talenta" ? "/find-baristas" : "/jobs"}?${params.toString()}`);
   }
 
   return (
@@ -53,6 +58,19 @@ export default function HeaderSearch() {
       >
         <Search size={14} />
       </button>
+      <label htmlFor="header-loc" className="sr-only">Lokasi</label>
+      <select
+        id="header-loc"
+        value={loc}
+        onChange={(e) => setLoc(e.target.value)}
+        className="max-w-24 cursor-pointer bg-transparent text-xs font-bold text-espresso outline-none"
+        aria-label="Filter lokasi"
+      >
+        <option value="">Semua lokasi</option>
+        {CITIES.map((c) => (
+          <option key={c} value={c}>{c}</option>
+        ))}
+      </select>
     </form>
   );
 }

@@ -36,7 +36,7 @@ export default async function VerifyPage() {
         </span>
         <h1 className="mt-4 text-2xl font-black text-espresso">Centang Biru</h1>
         <p className="mx-auto mt-2 inline-flex items-center gap-1.5 rounded-full bg-caramel/10 px-4 py-1.5 text-xs font-bold text-caramel">
-          <Sparkles size={13} /> Hadir di BaristaConnect v2
+          <Sparkles size={13} /> Hadir di kerja.inc v2
         </p>
         <ul className="mx-auto mt-6 max-w-sm space-y-2 text-left">
           {PERKS.map((p) => (

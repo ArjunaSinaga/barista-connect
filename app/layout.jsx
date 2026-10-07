@@ -33,23 +33,23 @@ const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://barista-connect.ve
 export const metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "BaristaConnect — Lowongan kerja barista & casual worker",
-    template: "%s · BaristaConnect",
+    default: "kerja.inc — Lowongan kerja barista & casual worker",
+    template: "%s · kerja.inc",
   },
   description:
     "Platform pencarian kerja untuk barista dan tempat coffee shop mencari barista. Gratis, cepat, tanpa ribet.",
   openGraph: {
-    title: "BaristaConnect — Lowongan kerja barista & casual worker",
+    title: "kerja.inc — Lowongan kerja barista & casual worker",
     description:
       "Cari loker barista, lamar gratis, chat langsung dengan pemilik kafe.",
     url: SITE_URL,
-    siteName: "BaristaConnect",
+    siteName: "kerja.inc",
     locale: "id_ID",
     type: "website",
   },
   twitter: {
     card: "summary",
-    title: "BaristaConnect — Lowongan kerja barista",
+    title: "kerja.inc — Lowongan kerja barista",
     description:
       "Cari loker barista, lamar gratis, chat langsung dengan pemilik kafe.",
   },

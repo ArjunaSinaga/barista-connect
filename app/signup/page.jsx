@@ -37,7 +37,7 @@ function SignupForm() {
   const router = useRouter();
   const params = useSearchParams();
   const toast = useToast();
-  const roleParam = params.get("role");
+  const roleParam = params.get("role") === "employer" ? "owner" : params.get("role");
   const [role, setRole] = useState(["owner", "barista", "academy"].includes(roleParam) ? roleParam : "");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");

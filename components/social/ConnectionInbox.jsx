@@ -44,7 +44,7 @@ export default function ConnectionInbox({ viewerId }) {
             <Link href={`/barista/${r.requester_id}`} className="flex min-w-0 items-center gap-2.5">
               <Avatar src={r.person?.profile_picture_url} name={r.person?.full_name ?? "?"} size="sm" />
               <span className="truncate text-sm font-bold text-espresso hover:text-caramel hover:underline">
-                {r.person?.full_name ?? "Pengguna BaristaConnect"}
+                {r.person?.full_name ?? "Pengguna kerja.inc"}
               </span>
             </Link>
             <ConnectButton targetId={r.requester_id} viewerId={viewerId} />

@@ -5,7 +5,7 @@ import { aiConfigured, aiProvider, callLLM } from "@/lib/ai";
 
 export const runtime = "nodejs";
 
-const SYSTEM = `Kamu adalah OpenCode Mobile Assistant untuk project BaristaConnect (Next.js 16 + Tailwind v4 + Supabase).
+const SYSTEM = `Kamu adalah OpenCode Mobile Assistant untuk project kerja.inc (Next.js 16 + Tailwind v4 + Supabase).
 
 Konteks project:
 - Stack: Next.js App Router, React 19, Tailwind v4, Supabase (auth, DB, RLS), Vercel deploy

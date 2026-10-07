@@ -153,7 +153,7 @@ export default function SidebarOwner({ kafe, ownerName, completeness, completene
       <div className="relative shrink-0 rounded-2xl border border-[#e8e0cf] bg-[#efe9d9] p-4 shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
         <p className="flex items-center gap-2 text-sm font-extrabold text-espresso">
           <span className="flex h-8 w-8 items-center justify-center rounded-full bg-coffee text-white"><Crown size={15} /></span>
-          BaristaConnect Pro
+          kerja.inc Pro
         </p>
         <p className="mt-2 text-xs leading-5 text-espresso-soft">
           Upgrade ke Pro untuk akses talenta prioritas, insight lebih dalam, dan fitur eksklusif.

@@ -6,7 +6,7 @@ import { getBusinessCompleteness } from "@/lib/profile-completeness"
 import { countTeamByCafe } from "@/lib/team";
 import DashboardShell from "@/components/owner/dashboard/DashboardShell"
 
-export const metadata = { title: "Dashboard Owner - Barista Connect" }
+export const metadata = { title: "Dashboard Owner - kerja.inc" }
 
 function rankBaristas(list) {
   return [...(list ?? [])].sort((a, b) => {

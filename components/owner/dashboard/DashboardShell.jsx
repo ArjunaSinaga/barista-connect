@@ -116,7 +116,7 @@ export default function DashboardShell({ initialView = "talenta", initialCafeId 
           <div className="flex items-start justify-between gap-2">
             <div>
               <h3 className="text-sm font-extrabold text-espresso">Certified Baristas</h3>
-              <p className="mt-0.5 text-[11px] text-espresso-soft">Barista yang telah menyelesaikan pelatihan di BaristaConnect.</p>
+              <p className="mt-0.5 text-[11px] text-espresso-soft">Barista yang telah menyelesaikan pelatihan di kerja.inc.</p>
             </div>
             <Link href="/find-baristas" className="inline-flex shrink-0 items-center gap-0.5 text-xs font-bold text-link hover:underline">
               Lihat semua <ChevronRight size={13} />

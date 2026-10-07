@@ -27,7 +27,7 @@ export default async function CafesPage({ searchParams }) {
         <Store size={22} className="text-caramel" /> Daftar Kafe
       </h1>
       <p className="mt-1 text-sm text-espresso-soft">
-        Jelajahi kafe yang terdaftar di BaristaConnect.
+        Jelajahi kafe yang terdaftar di kerja.inc.
       </p>
 
       <form method="get" action="/cafes" role="search" className="mt-4 flex items-center gap-2 rounded-2xl card-dark p-2 pl-4">
