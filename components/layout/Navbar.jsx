@@ -6,6 +6,7 @@ import { useState } from "react";
 import { ChevronDown, Coffee, LogOut, MessageSquareText } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import NotifBell from "@/components/NotifBell";
+import HeaderSearch from "@/components/layout/HeaderSearch";
 import { APP_NAME } from "@/lib/constants";
 
 const NAV = [
@@ -80,6 +81,8 @@ export default function Navbar({ user, role }) {
           </Link>
           )}
         </nav>
+
+        <HeaderSearch />
 
         {user ? (
           <>

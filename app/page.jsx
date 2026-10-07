@@ -9,6 +9,7 @@ import { EcosystemCard, AcademyCard, SmarterOpsCard } from "@/components/landing
 import { avgStars } from "@/lib/ratings";
 import { attachOwners, attachBaristaNames, attachRatings } from "@/lib/publicProfiles";
 import { STR } from "@/lib/strings";
+import { SKILL_PRESETS } from "@/lib/constants";
 import { thumb } from "@/lib/img";
 
 export const revalidate = 60; // P0 ISR: feed cache 60s, ringankan DB
@@ -227,6 +228,18 @@ export default async function LandingPage() {
                 </span>
                 <ChevronRight size={16} className="shrink-0 text-[#b6a98f] group-hover:text-espresso" />
               </Link>
+            </div>
+            {/* Kategori skill: jalan pintas ke direktori talenta per skill. */}
+            <div className="mt-2 flex gap-2 overflow-x-auto pb-1 no-scrollbar" aria-label="Jelajahi berdasarkan skill">
+              {SKILL_PRESETS.map((s) => (
+                <Link
+                  key={s}
+                  href={`/find-baristas?q=${encodeURIComponent(s)}`}
+                  className="inline-flex min-h-[44px] shrink-0 items-center rounded-full border border-[#d8cdae] bg-white px-4 text-xs font-bold text-espresso hover:border-coffee"
+                >
+                  {s}
+                </Link>
+              ))}
             </div>
           </div>
           <div className="min-w-0">
