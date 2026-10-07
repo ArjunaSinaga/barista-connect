@@ -52,7 +52,7 @@ export default function AcademyProfilePage() {
     try {
       const blob = await compressImage(file);
       if (blob.size > AVATAR_MAX_BYTES) {
-        toast("Gambar terlalu besar (maks 2MB)", "error");
+        toast("Gambar terlalu besar (maks 5MB)", "error");
         return;
       }
       const supabase = createClient();

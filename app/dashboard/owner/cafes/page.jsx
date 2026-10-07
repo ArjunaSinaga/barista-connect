@@ -2,15 +2,16 @@ import Link from "next/link";
 import Image from "next/image";
 import { thumb } from "@/lib/img";
 import { Plus, Store } from "lucide-react";
+import { redirect } from "next/navigation";
 import { createClient, getSessionSafe, isSupabaseConfigured } from "@/lib/supabase/server";
 import { EmptyState } from "@/components/ui/EmptyState";
 
 export const metadata = { title: "Kafe Saya" };
 
 export default async function CafesPage() {
-  if (!isSupabaseConfigured()) return null;
+  if (!isSupabaseConfigured()) redirect("/login");
   const { user } = await getSessionSafe();
-  if (!user) return null;
+  if (!user) redirect("/login");
   const supabase = await createClient();
 
   const { data: cafes } = await supabase

@@ -125,7 +125,7 @@ export default function BaristaOnboardingPage() {
     const blob = await compressImage(file);
 
     if (blob.size > AVATAR_MAX_BYTES) {
-      toast("Ukuran gambar terlalu besar (maks 2MB)", "error");
+      toast("Ukuran gambar terlalu besar (maks 5MB)", "error");
       setPhoto((p) => ({ ...p, uploading: false }));
       return;
     }
@@ -394,7 +394,7 @@ export default function BaristaOnboardingPage() {
             </Button>
 
             <p className="mt-3 text-center text-[11px] text-espresso-soft">
-              JPG/PNG/WebP • otomatis dikompres • maks 2MB
+              JPG/PNG/WebP • otomatis dikompres • maks 5MB
               {photo.url &&
                 photo.size > 0 &&
                 ` • terkirim ${formatBytes(photo.size)}`}

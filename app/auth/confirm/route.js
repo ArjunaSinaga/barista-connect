@@ -10,7 +10,8 @@ export async function GET(request) {
   const url = new URL(request.url);
   const code = url.searchParams.get("code");
   const rawNext = url.searchParams.get("next") || "/auth/verified";
-  const role = url.searchParams.get("role") === "owner" ? "owner" : "barista";
+  const roleParam = url.searchParams.get("role");
+  const role = ["owner", "barista", "academy"].includes(roleParam) ? roleParam : "barista";
 
   // Hanya izinkan redirect internal biar tak bisa dibajak ke situs lain
   const next = rawNext.startsWith("/") && !rawNext.startsWith("//") ? rawNext : "/update-password";
@@ -55,6 +56,8 @@ export async function GET(request) {
         const phone = (meta.phone || "").trim() || null;
         if (displayName && role === "owner") {
           await supabase.from("owners").insert({ id: data.user.id, business_name: displayName, location: "", whatsapp: phone });
+        } else if (displayName && role === "academy") {
+          await supabase.from("academy_profiles").insert({ id: data.user.id, name: displayName, description: "" });
         }
       } catch {
         // diam

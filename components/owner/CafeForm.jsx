@@ -81,7 +81,7 @@ export default function CafeForm({ initial = null }) {
         }
         const blob = await compressImage(file);
         if (blob.size > AVATAR_MAX_BYTES) {
-          toast(`${file.name}: terlalu besar (maks 2MB)`, "error");
+          toast(`${file.name}: terlalu besar (maks 5MB)`, "error");
           continue;
         }
         const path = `${user.id}/kafe-${Date.now()}-${Math.floor(Math.random() * 1e6)}.jpg`;
