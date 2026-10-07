@@ -5,19 +5,13 @@ import { createClient, isSupabaseConfigured, getSessionSafe } from "@/lib/supaba
 import Avatar from "@/components/ui/Avatar";
 import VerifiedBadge from "@/components/ui/VerifiedBadge";
 import HeroSearch from "@/components/landing/HeroSearch";
+import SaveButton from "@/components/landing/SaveButton";
 import { CafeLogo, skillTags } from "@/components/landing/LatestJobs";
 import { EMPLOYMENT_LABELS } from "@/lib/constants";
 import { avgStars } from "@/lib/ratings";
 import { attachOwners, attachRatings } from "@/lib/publicProfiles";
 
 export const revalidate = 60;
-
-const CAFE_FALLBACKS = [
-  "/images/landing/cafe-1.jpg",
-  "/images/landing/cafe-6.jpg",
-  "/images/landing/cafe-2.jpg",
-  "/images/landing/cafe-3.jpg",
-];
 
 async function getLatestJobs() {
   if (!isSupabaseConfigured()) return [];
@@ -173,28 +167,24 @@ export default async function LandingPage() {
           </div>
         ) : (
           <ul className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {jobs.map((job, i) => {
+            {jobs.map((job) => {
               const types = job.employment_types?.length ? job.employment_types : (job.employment_type ? [job.employment_type] : []);
               const tags = skillTags(job);
-              const cover = job.cafes?.photo_urls?.[0] ?? CAFE_FALLBACKS[i % CAFE_FALLBACKS.length];
               return (
-                <li key={job.id} className="flex flex-col overflow-hidden rounded-2xl border border-[#e8e0cf] bg-white shadow-[0_1px_3px_rgba(43,33,24,0.08)] transition-shadow hover:shadow-[0_4px_16px_rgba(43,33,24,0.12)]">
-                  <div className="relative h-28 w-full">
-                    <Image src={cover} alt={job.cafes?.name ?? "Kafe"} fill sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw" className="object-cover" />
-                  </div>
-                  <div className="flex min-w-0 flex-1 flex-col p-4">
-                    <div className="flex items-center gap-2">
-                      <CafeLogo job={job} />
-                      <div className="min-w-0">
-                        <Link href={`/jobs/${job.id}`} className="block truncate text-sm font-bold hover:text-matcha">
-                          {job.title}
-                        </Link>
-                        <p className="flex items-center gap-1 truncate text-xs text-espresso-soft">
-                          {job.cafes?.name ?? job.owners?.business_name}
-                          {job.owners?.is_verified && <VerifiedBadge size={12} />}
-                        </p>
-                      </div>
+                <li key={job.id} className="flex min-w-0 flex-1 flex-col rounded-2xl border border-[#e8e0cf] bg-white p-4 shadow-[0_1px_3px_rgba(43,33,24,0.08)] transition-shadow hover:shadow-[0_4px_16px_rgba(43,33,24,0.12)]">
+                  <div className="flex items-start gap-2.5">
+                    <CafeLogo job={job} />
+                    <div className="min-w-0 flex-1">
+                      <Link href={`/jobs/${job.id}`} className="block truncate text-sm font-bold hover:text-matcha">
+                        {job.title}
+                      </Link>
+                      <p className="flex items-center gap-1 truncate text-xs text-espresso-soft">
+                        {job.cafes?.name ?? job.owners?.business_name}
+                        {job.owners?.is_verified && <VerifiedBadge size={12} />}
+                      </p>
                     </div>
+                    <SaveButton storageKey="kerja_saved_jobs" id={job.id} label={`Simpan loker ${job.title}`} />
+                  </div>
                     <p className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-0.5 text-[11px] text-espresso-soft">
                       <span className="inline-flex items-center gap-1"><MapPin size={11} />{job.location}</span>
                       {job.salary_text && <span className="inline-flex items-center gap-1"><Banknote size={11} />{job.salary_text}</span>}
@@ -209,10 +199,9 @@ export default async function LandingPage() {
                         ))}
                       </div>
                     )}
-                    <Link href={`/jobs/${job.id}`} className="mt-3 inline-flex min-h-[40px] items-center justify-center rounded-full border border-[#d8cdae] text-xs font-bold hover:border-coffee">
-                      Detail
+                    <Link href={`/jobs/${job.id}`} className="mt-3 inline-flex items-center gap-0.5 text-xs font-bold text-link hover:underline">
+                      Lihat detail <ChevronRight size={13} />
                     </Link>
-                  </div>
                 </li>
               );
             })}
@@ -271,7 +260,17 @@ export default async function LandingPage() {
               const count = b.ratings?.length ?? 0;
               return (
                 <li key={b.id} className="rounded-2xl border border-[#e8e0cf] bg-white p-4 text-center shadow-[0_1px_3px_rgba(43,33,24,0.08)] transition-shadow hover:shadow-[0_4px_16px_rgba(43,33,24,0.12)]">
-                  <Avatar src={b.profile_picture_url} name={b.full_name} size="lg" />
+                  <div className="flex items-center justify-between">
+                    {b.is_open_to_work ? (
+                      <span className="rounded-full bg-[#e3f0e8] px-2 py-0.5 text-[10px] font-bold text-matcha">Siap kerja</span>
+                    ) : (
+                      <span className="rounded-full bg-[#f2ecdf] px-2 py-0.5 text-[10px] font-bold text-espresso-soft">Terisi</span>
+                    )}
+                    <SaveButton storageKey="kerja_saved_talent" id={b.id} label={`Simpan talenta ${b.full_name}`} />
+                  </div>
+                  <div className="mt-1 flex justify-center">
+                    <Avatar src={b.profile_picture_url} name={b.full_name} size="lg" />
+                  </div>
                   <p className="mt-2 flex items-center justify-center gap-1 text-sm font-bold">
                     {b.full_name}
                     {b.is_verified && <VerifiedBadge size={14} />}
