@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { MapPin, Banknote, Briefcase, ChevronRight, Star, ShieldCheck, BadgeCheck, MessageSquareHeart, ThumbsUp, GraduationCap } from "lucide-react";
+import { MapPin, Banknote, Briefcase, ChevronRight, Star, ShieldCheck, BadgeCheck, MessageSquareHeart, ThumbsUp, GraduationCap, Users, Store } from "lucide-react";
 import { createClient, isSupabaseConfigured, getSessionSafe } from "@/lib/supabase/server";
 import Avatar from "@/components/ui/Avatar";
 import VerifiedBadge from "@/components/ui/VerifiedBadge";
@@ -14,9 +14,9 @@ export const revalidate = 60;
 
 const CAFE_FALLBACKS = [
   "/images/landing/cafe-1.jpg",
+  "/images/landing/cafe-6.jpg",
   "/images/landing/cafe-2.jpg",
   "/images/landing/cafe-3.jpg",
-  "/images/landing/cafe-4.jpg",
 ];
 
 async function getLatestJobs() {
@@ -104,9 +104,12 @@ export default async function LandingPage() {
     <div className="min-h-screen bg-paper text-espresso">
       {/* Hero */}
       <section className="mx-auto w-full max-w-[1400px] px-4 pt-6 sm:px-6">
-        <div className="grid items-center gap-6 lg:grid-cols-2">
+        <div className="grid items-center gap-6 overflow-hidden rounded-3xl bg-gradient-to-br from-[#f3ecdd] via-[#efe4cf] to-[#e7d6b8] p-6 sm:p-8 lg:grid-cols-2 lg:p-10">
           <div className="min-w-0">
-            <h1 className="font-display text-4xl leading-[1.05] font-semibold tracking-tight sm:text-5xl">
+            <p className="inline-flex items-center gap-1.5 rounded-full bg-white/80 px-3 py-1 text-[11px] font-bold text-matcha">
+              <ShieldCheck size={13} /> Dipercaya talenta dan kafe di seluruh Indonesia
+            </p>
+            <h1 className="font-display mt-3 text-4xl leading-[1.05] font-semibold tracking-tight sm:text-5xl">
               Frontline talent for a brighter Indonesia
             </h1>
             <p className="mt-3 max-w-xl text-sm leading-6 text-espresso-soft">
@@ -115,15 +118,23 @@ export default async function LandingPage() {
             </p>
             <HeroSearch />
             <dl className="mt-5 grid grid-cols-2 gap-4 sm:grid-cols-4">
-              {stats.map(([v, l]) => (
-                <div key={l}>
-                  <dd className="text-xl font-extrabold tracking-tight">{v}</dd>
-                  <dt className="mt-0.5 text-[11px] leading-4 text-espresso-soft">{l}</dt>
-                </div>
-              ))}
+              {stats.map(([v, l], i) => {
+                const Icon = [Users, Store, Briefcase, MapPin][i % 4];
+                return (
+                  <div key={l} className="flex items-center gap-2">
+                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white/80 text-coffee">
+                      <Icon size={16} />
+                    </span>
+                    <div>
+                      <dd className="text-xl font-extrabold tracking-tight">{v}</dd>
+                      <dt className="text-[11px] leading-4 text-espresso-soft">{l}</dt>
+                    </div>
+                  </div>
+                );
+              })}
             </dl>
           </div>
-          <div className="relative h-72 overflow-hidden rounded-2xl shadow-[0_2px_12px_rgba(43,33,24,0.10)] sm:h-96">
+          <div className="relative h-72 overflow-hidden rounded-2xl shadow-[0_4px_24px_rgba(43,33,24,0.18)] sm:h-96 lg:h-[460px]">
             <Image
               src="/images/landing/barista-1.jpg"
               alt="Barista kerja.inc sedang menyeduh kopi"
@@ -202,6 +213,16 @@ export default async function LandingPage() {
                 </li>
               );
             })}
+            {jobs.length > 0 && jobs.length < 4 && (
+              <li className="flex min-h-[280px] flex-col items-center justify-center rounded-2xl border-2 border-dashed border-[#d8cdae] bg-white/60 p-4 text-center">
+                <Store size={24} className="text-coffee" />
+                <p className="mt-2 text-sm font-bold">Punya kafe? Pasang loker gratis</p>
+                <p className="mt-1 text-xs text-espresso-soft">Jangkau barista siap kerja di kotamu.</p>
+                <Link href="/signup?role=owner" className="mt-3 inline-flex min-h-[40px] items-center rounded-full bg-coffee px-5 text-xs font-bold text-white hover:bg-[#2e2015]">
+                  Pasang Loker
+                </Link>
+              </li>
+            )}
           </ul>
         )}
       </section>
@@ -268,6 +289,16 @@ export default async function LandingPage() {
                 </li>
               );
             })}
+            {talents.length > 0 && talents.length < 4 && (
+              <li className="flex min-h-[240px] flex-col items-center justify-center rounded-2xl border-2 border-dashed border-[#d8cdae] bg-white/60 p-4 text-center">
+                <Users size={24} className="text-coffee" />
+                <p className="mt-2 text-sm font-bold">Barista? Tampil di sini</p>
+                <p className="mt-1 text-xs text-espresso-soft">Lengkapi profil dan portofoliomu gratis.</p>
+                <Link href="/signup?role=barista" className="mt-3 inline-flex min-h-[40px] items-center rounded-full bg-coffee px-5 text-xs font-bold text-white hover:bg-[#2e2015]">
+                  Daftar Gratis
+                </Link>
+              </li>
+            )}
           </ul>
         )}
       </section>
@@ -277,7 +308,7 @@ export default async function LandingPage() {
         <div className="grid overflow-hidden rounded-2xl border border-[#e8e0cf] bg-white shadow-[0_2px_12px_rgba(43,33,24,0.10)] lg:grid-cols-2">
           <div className="relative h-56 lg:h-auto lg:min-h-[280px]">
             <Image
-              src="/images/landing/cafe-5.jpg"
+              src="/images/landing/cafe-1.jpg"
               alt="Suasana pelatihan barista kerja.inc Academy"
               fill
               sizes="(max-width: 1024px) 100vw, 50vw"
