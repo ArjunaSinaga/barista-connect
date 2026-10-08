@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { MapPin, Banknote, Briefcase, ChevronRight, Star, ShieldCheck, BadgeCheck, MessageSquareHeart, GraduationCap, Users, Store } from "lucide-react";
+import { MapPin, Banknote, Briefcase, Star, ShieldCheck, BadgeCheck, MessageSquareHeart, Users, Store } from "lucide-react";
 import { createClient, isSupabaseConfigured, getSessionSafe } from "@/lib/supabase/server";
 import Avatar from "@/components/ui/Avatar";
 import VerifiedBadge from "@/components/ui/VerifiedBadge";
@@ -143,6 +143,12 @@ export default async function LandingPage() {
             <span className="absolute top-4 right-4 max-w-[180px] rounded-xl bg-white/95 px-3 py-2 text-right shadow">
               <span className="font-chalk block text-sm leading-5">Kerja baik, lebih banyak kemungkinan.</span>
             </span>
+            <span className="absolute bottom-4 left-4 flex max-w-[220px] items-center gap-2 rounded-xl bg-white/95 px-3 py-2 text-left shadow">
+              <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#e3f0e8] text-matcha">
+                <Users size={15} />
+              </span>
+              <span className="text-[11px] leading-4 font-semibold">Talenta lokal untuk Indonesia yang lebih kuat.</span>
+            </span>
           </div>
         </div>
       </section>
@@ -158,7 +164,7 @@ export default async function LandingPage() {
             <p className="mt-0.5 text-xs text-espresso-soft">Pekerjaan pilihan dari kafe terverifikasi di seluruh Indonesia.</p>
           </div>
           <Link href="/jobs" className="inline-flex shrink-0 items-center gap-0.5 text-xs font-bold text-link hover:underline">
-            See all jobs <ChevronRight size={13} />
+            See all jobs <span aria-hidden="true">→</span>
           </Link>
         </div>
         {jobs.length === 0 ? (
@@ -197,13 +203,15 @@ export default async function LandingPage() {
                     </p>
                     {tags.length > 0 && (
                       <div className="mt-2 flex flex-wrap gap-1.5">
-                        {tags.slice(0, 3).map((t) => (
-                          <span key={t} className="rounded-full bg-[#f2ecdf] px-2 py-0.5 text-[10px] font-semibold text-espresso-soft">{t}</span>
+                        {tags.slice(0, 3).map((t, ti) => (
+                          <span key={t} className={ti === 0
+                            ? "rounded-full bg-[#e3f0e8] px-2 py-0.5 text-[10px] font-bold text-matcha"
+                            : "rounded-full bg-[#f2ecdf] px-2 py-0.5 text-[10px] font-semibold text-espresso-soft"}>{t}</span>
                         ))}
                       </div>
                     )}
                     <Link href={`/jobs/${job.id}`} className="mt-3 inline-flex items-center gap-0.5 text-xs font-bold text-link hover:underline">
-                      Lihat detail <ChevronRight size={13} />
+                      Lihat detail <span aria-hidden="true">→</span>
                     </Link>
                 </li>
               );
@@ -237,7 +245,7 @@ export default async function LandingPage() {
           ))}
         </ol>
         <Link href="/trust" className="mt-3 inline-flex min-h-[44px] items-center gap-1 rounded-full bg-coffee px-5 text-xs font-bold text-white hover:bg-[#2e2015]">
-          See how it works <ChevronRight size={14} />
+          See how it works <span aria-hidden="true">→</span>
         </Link>
       </section>
 
@@ -249,7 +257,7 @@ export default async function LandingPage() {
             <p className="mt-0.5 text-xs text-espresso-soft">Barista siap kerja dengan rating dan pengalaman terverifikasi.</p>
           </div>
           <Link href="/find-baristas" className="inline-flex shrink-0 items-center gap-0.5 text-xs font-bold text-link hover:underline">
-            Lihat semua talenta <ChevronRight size={13} />
+            Lihat semua talenta <span aria-hidden="true">→</span>
           </Link>
         </div>
         {talents.length === 0 ? (
@@ -261,35 +269,37 @@ export default async function LandingPage() {
             {talents.map((b) => {
               const avg = avgStars(b.ratings);
               const count = b.ratings?.length ?? 0;
+              const subtitle = (b.skills ?? []).slice(0, 2).join(" • ");
               return (
-                <li key={b.id} className="rounded-2xl border border-stone-200/60 bg-white p-4 text-center shadow-[0_1px_3px_rgba(43,33,24,0.08)] transition-shadow hover:shadow-[0_4px_16px_rgba(43,33,24,0.12)]">
-                  <div className="flex items-center justify-between">
-                    {b.is_open_to_work ? (
-                      <span className="rounded-full bg-[#e3f0e8] px-2 py-0.5 text-[10px] font-bold text-matcha">Siap kerja</span>
-                    ) : (
-                      <span className="rounded-full bg-[#f2ecdf] px-2 py-0.5 text-[10px] font-bold text-espresso-soft">Terisi</span>
-                    )}
+                <li key={b.id} className="relative rounded-2xl border border-stone-200/60 bg-white p-4 text-center shadow-[0_1px_3px_rgba(43,33,24,0.08)] transition-shadow hover:shadow-[0_4px_16px_rgba(43,33,24,0.12)]">
+                  <span className="absolute top-3 right-3">
                     <SaveButton storageKey="kerja_saved_talent" id={b.id} label={`Simpan talenta ${b.full_name}`} />
-                  </div>
-                  <div className="mt-1 flex justify-center">
-                    <Avatar src={b.profile_picture_url} name={b.full_name} size="lg" />
-                  </div>
-                  <p className="mt-2 flex items-center justify-center gap-1 text-sm font-bold">
-                    {b.full_name}
-                    {b.is_verified && <VerifiedBadge size={14} />}
-                  </p>
-                  <p className="mt-1 flex items-center justify-center gap-1 text-xs font-semibold text-espresso-soft">
-                    <Star size={12} className="fill-[#c98a2b] text-[#c98a2b]" />
-                    {avg ? `${avg} (${count} ulasan)` : "Belum ada ulasan"}
-                  </p>
-                  <p className="mt-0.5 flex items-center justify-center gap-1 text-[11px] text-espresso-soft">
-                    <MapPin size={11} />{b.location_place ?? "Indonesia"}
-                  </p>
+                  </span>
                   <Link
                     href={user ? `/barista/${b.id}` : `/login?next=/barista/${b.id}`}
-                    className="mt-3 inline-flex min-h-[40px] w-full items-center justify-center rounded-full border border-[#d8cdae] text-xs font-bold hover:border-coffee"
+                    className="block"
+                    aria-label={`Lihat profil ${b.full_name}`}
                   >
-                    View Profile
+                    <span className="mt-1 flex justify-center">
+                      <Avatar src={b.profile_picture_url} name={b.full_name} size="lg" />
+                    </span>
+                    <span className="mt-2 flex items-center justify-center gap-1 text-sm font-bold">
+                      {b.full_name}
+                      {b.is_verified && <VerifiedBadge size={14} />}
+                    </span>
+                    {subtitle && (
+                      <span className="mt-0.5 block truncate text-xs text-espresso-soft">{subtitle}</span>
+                    )}
+                    <span className="mt-1 flex items-center justify-center gap-1 text-[11px] text-espresso-soft">
+                      <MapPin size={11} />{b.location_place ?? "Indonesia"}
+                    </span>
+                    <span className="mt-1 flex items-center justify-center gap-1 text-xs font-semibold text-espresso-soft">
+                      <Star size={12} className="fill-[#c98a2b] text-[#c98a2b]" />
+                      {avg ? `${avg} (${count} ulasan)` : "Belum ada ulasan"}
+                    </span>
+                    <span className="mt-2 inline-block rounded-full bg-[#e3f0e8] px-2.5 py-1 text-[10px] font-bold text-matcha">
+                      Tersedia sekarang
+                    </span>
                   </Link>
                 </li>
               );
@@ -310,37 +320,37 @@ export default async function LandingPage() {
 
       {/* Academy banner */}
       <section className="pt-8">
-        <div className="grid overflow-hidden rounded-2xl bg-[#2C1810] text-[#F8F5EE] shadow-[0_2px_12px_rgba(43,33,24,0.10)] lg:grid-cols-2">
+        <div className="grid overflow-hidden rounded-2xl border border-stone-200/60 bg-[#e9f0e7] text-espresso shadow-[0_2px_12px_rgba(43,33,24,0.10)] lg:grid-cols-[1.1fr_1fr_0.9fr]">
           <div className="relative h-56 lg:h-auto lg:min-h-[280px]">
             <Image
               src="/images/landing/cafe-1.jpg"
               alt="Suasana pelatihan barista kerja.inc Academy"
               fill
-              sizes="(max-width: 1024px) 100vw, 50vw"
+              sizes="(max-width: 1024px) 100vw, 33vw"
               className="object-cover"
             />
           </div>
           <div className="flex flex-col justify-center p-6 sm:p-8">
-            <p className="inline-flex w-fit items-center gap-1.5 rounded-full bg-white/10 px-3 py-1 text-[11px] font-bold text-[#F8F5EE]">
-              <GraduationCap size={13} /> kerja.inc Academy
+            <p className="text-[11px] font-bold tracking-wide text-espresso-soft">
+              kerja.inc Academy
             </p>
-            <h2 className="mt-3 text-2xl font-extrabold tracking-tight">Skill hari ini, peluang kerja esok</h2>
-            <p className="mt-1 text-sm leading-6 text-white/70">
-              Dari pemula sampai mahir, kursus berbasis industri membantu barista membangun skill asli dan kepercayaan diri siap kafe.
+            <h2 className="mt-2 text-2xl font-extrabold tracking-tight">Skill hari ini, peluang kerja esok</h2>
+            <p className="mt-1 text-sm leading-6 text-espresso-soft">
+              Pelatihan praktis untuk barista, F and B, front office, dan hospitality bersama para profesional industri.
             </p>
-            <ul className="mt-3 space-y-1.5">
-              {["Pemula sampai Mahir", "Belajar dari Praktisi Industri", "Sertifikasi kerja.inc"].map((t) => (
-                <li key={t} className="flex items-center gap-2 text-xs font-semibold text-white/85">
-                  <span className="inline-flex h-4 w-4 items-center justify-center rounded-full bg-white/15 text-[10px] font-bold">✓</span>{t}
-                </li>
-              ))}
-            </ul>
             <div className="mt-4">
-              <Link href="/training" className="inline-flex min-h-[44px] items-center rounded-full bg-[#F8F5EE] px-6 text-xs font-bold text-[#2C1810] hover:bg-white">
-                Lihat Program Academy
+              <Link href="/training" className="inline-flex min-h-[44px] items-center gap-1 rounded-full bg-coffee px-6 text-xs font-bold text-white hover:bg-[#2e2015]">
+                Lihat Program Academy <span aria-hidden="true">→</span>
               </Link>
             </div>
           </div>
+          <ul className="flex flex-col justify-center gap-3 p-6 sm:p-8 lg:pl-0">
+            {["Kelas online & offline", "Sertifikat terpercaya", "Materi dari praktisi industri", "Akses ke peluang kerja"].map((t) => (
+              <li key={t} className="flex items-center gap-2 text-xs font-semibold">
+                <span className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-matcha text-[11px] font-bold text-white">✓</span>{t}
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
         </div>

@@ -5,11 +5,11 @@ import { useState } from "react";
 import { Search, MapPin } from "lucide-react";
 import { CITIES } from "@/lib/constants";
 
-// Search hero mockup UI-01: toggle Cari Loker / Rekrut Barista,
-// input keyword + dropdown lokasi + tombol Find Jobs.
+// Search hero mockup UI-01: kolom cari loker + baris "Looking to hire? Hire Workers".
+import Link from "next/link";
+
 export default function HeroSearch() {
   const router = useRouter();
-  const [mode, setMode] = useState("jobs");
   const [q, setQ] = useState("");
   const [loc, setLoc] = useState("");
 
@@ -20,30 +20,11 @@ export default function HeroSearch() {
     if (needle) params.set("q", needle);
     if (loc) params.set("location", loc);
     if (!params.toString()) return;
-    router.push(`${mode === "talenta" ? "/find-baristas" : "/jobs"}?${params.toString()}`);
+    router.push(`/jobs?${params.toString()}`);
   }
 
   return (
     <div className="mt-4">
-      <div role="tablist" aria-label="Mode pencarian" className="flex w-fit items-center gap-1 rounded-full bg-[#e4d9c2] p-1">
-        {[
-          ["jobs", "Looking to Hire?"],
-          ["talenta", "Hire Workers"],
-        ].map(([v, label]) => (
-          <button
-            key={v}
-            role="tab"
-            aria-selected={mode === v}
-            type="button"
-            onClick={() => setMode(v)}
-            className={`min-h-[36px] rounded-full px-4 text-xs font-bold transition-colors ${
-              mode === v ? "bg-white text-espresso shadow" : "text-espresso-soft hover:text-espresso"
-            }`}
-          >
-            {label}
-          </button>
-        ))}
-      </div>
       <form
         onSubmit={onSubmit}
         role="search"
@@ -55,7 +36,7 @@ export default function HeroSearch() {
           <input
             value={q}
             onChange={(e) => setQ(e.target.value)}
-            placeholder={mode === "talenta" ? "Skill, nama, atau peran..." : "Judul loker, skill, atau kafe..."}
+            placeholder="Judul loker, skill, atau kafe..."
             autoComplete="off"
             className="h-full w-full bg-transparent text-sm text-espresso placeholder:text-[#b6a98f] focus:outline-none"
           />
@@ -81,6 +62,15 @@ export default function HeroSearch() {
           Find Jobs
         </button>
       </form>
+      <p className="mt-3 flex flex-wrap items-center gap-2 text-xs text-espresso-soft">
+        Looking to hire?
+        <Link
+          href="/find-baristas"
+          className="inline-flex min-h-[36px] items-center gap-1 rounded-full border border-[#d8cdae] bg-white/70 px-4 font-bold text-espresso hover:border-coffee"
+        >
+          Hire Workers <span aria-hidden="true">→</span>
+        </Link>
+      </p>
     </div>
   );
 }
