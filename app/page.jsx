@@ -98,15 +98,15 @@ export default async function LandingPage() {
   ]);
 
   return (
-    <div className="min-h-screen bg-[#F8F5EE] text-espresso">
-      {/* Hero */}
+    <div className="min-h-screen bg-[#F5F0E4] text-espresso">
+      {/* Hero — zona krem 1: panel flat, gambar bleed ke tepi + fade kiri */}
       <section className="mx-auto w-full max-w-[1400px] px-4 pt-6 sm:px-6">
-        <div className="grid items-center gap-6 overflow-hidden rounded-3xl bg-gradient-to-br from-[#f3ecdd] via-[#efe4cf] to-[#e7d6b8] p-6 sm:p-8 lg:grid-cols-2 lg:p-10">
-          <div className="min-w-0">
+        <div className="grid items-stretch gap-6 overflow-hidden rounded-3xl border border-[#e7dabf] bg-[#F4EDDD] p-6 sm:p-8 lg:grid-cols-2 lg:gap-0 lg:p-0 lg:pl-10">
+          <div className="min-w-0 lg:py-10">
             <p className="inline-flex items-center gap-1.5 rounded-full bg-white/80 px-3 py-1 text-[11px] font-bold text-matcha">
               <ShieldCheck size={13} /> Dipercaya talenta dan kafe di seluruh Indonesia
             </p>
-            <h1 className="font-display mt-3 text-4xl leading-[1.05] font-semibold tracking-tight sm:text-5xl">
+            <h1 className="mt-3 text-4xl leading-[1.05] font-extrabold tracking-tight sm:text-5xl">
               Frontline talent for a brighter Indonesia
             </h1>
             <p className="mt-3 max-w-xl text-sm leading-6 text-espresso-soft">
@@ -131,19 +131,19 @@ export default async function LandingPage() {
               })}
             </dl>
           </div>
-          <div className="relative h-72 overflow-hidden rounded-2xl shadow-[0_4px_24px_rgba(43,33,24,0.18)] sm:h-96 lg:h-[460px]">
+          <div className="relative min-h-72 overflow-hidden rounded-2xl sm:h-96 lg:h-auto lg:min-h-[460px] lg:rounded-none lg:rounded-r-3xl">
             <Image
               src="/images/landing/barista-1.jpg"
               alt="Barista kerja.inc sedang menyeduh kopi"
               fill
               sizes="(max-width: 1024px) 100vw, 50vw"
-              className="object-cover"
+              className="object-cover lg:[mask-image:linear-gradient(to_right,transparent,black_22%)]"
               priority
             />
-            <span className="absolute top-4 right-4 max-w-[180px] rounded-xl bg-white/95 px-3 py-2 text-right shadow">
+            <span className="absolute top-4 right-4 max-w-[180px] rounded-xl bg-white/95 px-3 py-2 text-right shadow lg:top-6 lg:right-6">
               <span className="font-chalk block text-sm leading-5">Kerja baik, lebih banyak kemungkinan.</span>
             </span>
-            <span className="absolute bottom-4 left-4 flex max-w-[220px] items-center gap-2 rounded-xl bg-white/95 px-3 py-2 text-left shadow">
+            <span className="absolute bottom-4 left-4 flex max-w-[220px] items-center gap-2 rounded-xl bg-white/95 px-3 py-2 text-left shadow lg:bottom-6 lg:left-6">
               <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[#e3f0e8] text-matcha">
                 <Users size={15} />
               </span>
@@ -153,9 +153,9 @@ export default async function LandingPage() {
         </div>
       </section>
 
-      {/* Lapis 2 — panel krem gelap pembungkus konten */}
+      {/* Lapis 2 — zona putih: konten Featured Jobs / Trust / Talent / Academy */}
       <div className="mx-auto w-full max-w-[1400px] px-4 sm:px-6">
-        <div className="mt-6 rounded-3xl bg-[#ece2cc] px-4 pt-2 pb-10 sm:px-6">
+        <div className="mt-6 rounded-3xl border border-[#eee5d2] bg-white px-4 pt-2 pb-10 sm:px-6">
       {/* Featured Jobs */}
       <section className="pt-8">
         <div className="flex items-end justify-between gap-2">
@@ -180,8 +180,11 @@ export default async function LandingPage() {
               const types = job.employment_types?.length ? job.employment_types : (job.employment_type ? [job.employment_type] : []);
               const tags = skillTags(job);
               return (
-                <li key={job.id} className="flex min-w-0 flex-1 flex-col rounded-2xl border border-stone-200/60 bg-white p-4 shadow-[0_1px_3px_rgba(43,33,24,0.08)] transition-shadow hover:shadow-[0_4px_16px_rgba(43,33,24,0.12)]">
-                  <div className="flex items-start gap-2.5">
+                <li key={job.id} className="relative flex min-w-0 flex-1 flex-col rounded-2xl border border-stone-200/60 bg-white p-4 pt-5 shadow-[0_1px_3px_rgba(43,33,24,0.08)] transition-shadow hover:shadow-[0_4px_16px_rgba(43,33,24,0.12)]">
+                  <span className="absolute top-3 right-3">
+                    <SaveButton storageKey="kerja_saved_jobs" id={job.id} label={`Simpan loker ${job.title}`} />
+                  </span>
+                  <div className="flex items-start gap-2.5 pr-8">
                     <CafeLogo job={job} />
                     <div className="min-w-0 flex-1">
                       <Link href={`/jobs/${job.id}`} className="block truncate text-sm font-bold hover:text-matcha">
@@ -192,7 +195,6 @@ export default async function LandingPage() {
                         {job.owners?.is_verified && <VerifiedBadge size={12} />}
                       </p>
                     </div>
-                    <SaveButton storageKey="kerja_saved_jobs" id={job.id} label={`Simpan loker ${job.title}`} />
                   </div>
                     <p className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-0.5 text-[11px] text-espresso-soft">
                       <span className="inline-flex items-center gap-1"><MapPin size={11} />{job.location}</span>
@@ -320,7 +322,7 @@ export default async function LandingPage() {
 
       {/* Academy banner */}
       <section className="pt-8">
-        <div className="grid overflow-hidden rounded-2xl border border-stone-200/60 bg-[#e9f0e7] text-espresso shadow-[0_2px_12px_rgba(43,33,24,0.10)] lg:grid-cols-[1.1fr_1fr_0.9fr]">
+        <div className="grid overflow-hidden rounded-2xl border border-stone-200/60 bg-[#DDF0E5] text-espresso shadow-[0_2px_12px_rgba(43,33,24,0.10)] lg:grid-cols-[1.1fr_1fr_0.9fr]">
           <div className="relative h-56 lg:h-auto lg:min-h-[280px]">
             <Image
               src="/images/landing/cafe-1.jpg"

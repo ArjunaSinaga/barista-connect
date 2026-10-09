@@ -28,7 +28,7 @@ export default function HeroSearch() {
       <form
         onSubmit={onSubmit}
         role="search"
-        className="mt-2 flex flex-col gap-2 rounded-2xl border border-[#e8e0cf] bg-white p-2 shadow-[0_2px_12px_rgba(43,33,24,0.10)] sm:flex-row sm:items-center"
+        className="mt-2 flex flex-col gap-2 rounded-2xl border border-[#e8e0cf] bg-white p-2 shadow-[0_2px_12px_rgba(43,33,24,0.10)] sm:flex-row sm:items-center sm:rounded-full sm:py-1.5 sm:pr-1.5"
       >
         <label className="flex min-h-[44px] flex-1 items-center gap-2 rounded-xl px-3">
           <Search size={16} className="shrink-0 text-[#b6a98f]" />
@@ -57,7 +57,7 @@ export default function HeroSearch() {
         </label>
         <button
           type="submit"
-          className="inline-flex min-h-[44px] items-center justify-center rounded-xl bg-coffee px-6 text-sm font-bold text-white hover:bg-[#2e2015]"
+          className="inline-flex min-h-[44px] items-center justify-center rounded-xl bg-coffee px-6 text-sm font-bold text-white hover:bg-[#2e2015] sm:rounded-full"
         >
           Find Jobs
         </button>

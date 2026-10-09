@@ -46,11 +46,11 @@ const SOCIALS = [
 export default function Footer() {
   return (
     <footer className="mx-auto w-full max-w-[1400px] px-4 pb-6 sm:px-6">
-      <div className="rounded-2xl bg-espresso px-6 py-8 text-paper sm:px-10">
+      <div className="rounded-2xl bg-[#2A211A] px-6 py-8 text-[#F5F1E8] sm:px-10">
         <div className="grid gap-8 md:grid-cols-[1.2fr_repeat(4,1fr)_auto]">
           <div>
             <p className="font-display text-xl font-semibold">kerja.inc</p>
-            <p className="mt-2 max-w-[220px] text-xs leading-5 text-paper/70">
+            <p className="mt-2 max-w-[220px] text-xs leading-5 text-[#F5F1E8]/70">
               Talenta lokal untuk Indonesia yang lebih kuat.
             </p>
           </div>
@@ -60,7 +60,7 @@ export default function Footer() {
               <ul className="mt-3 space-y-2">
                 {col.links.map(([label, href]) => (
                   <li key={label}>
-                    <Link href={href} className="text-xs text-paper/70 hover:text-paper">
+                    <Link href={href} className="text-xs text-[#F5F1E8]/70 hover:text-[#F5F1E8]">
                       {label}
                     </Link>
                   </li>
@@ -74,7 +74,7 @@ export default function Footer() {
             <p className="text-xs font-bold">Ikuti kami</p>
             <div className="mt-3 flex gap-3">
               {SOCIALS.filter(([, href]) => href !== "#").map(([label, href, d]) => (
-                <a key={label} href={href} target="_blank" rel="noopener noreferrer" aria-label={label} className="text-paper/70 hover:text-paper">
+                <a key={label} href={href} target="_blank" rel="noopener noreferrer" aria-label={label} className="text-[#F5F1E8]/70 hover:text-[#F5F1E8]">
                   <svg viewBox="0 0 24 24" className="h-5 w-5 fill-current" aria-hidden="true">
                     <path d={d} />
                   </svg>
@@ -84,7 +84,7 @@ export default function Footer() {
           </div>
           )}
         </div>
-        <div className="mt-8 flex flex-col gap-1 border-t border-paper/15 pt-4 text-[11px] text-paper/60 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-8 flex flex-col gap-1 border-t border-white/15 pt-4 text-[11px] text-[#F5F1E8]/60 sm:flex-row sm:items-center sm:justify-between">
           <p>© 2024 kerja.inc. Semua hak dilindungi.</p>
           <p>
             <span className="text-red-400">♥</span> Dibuat untuk Indonesia
@@ -94,3 +94,4 @@ export default function Footer() {
     </footer>
   );
 }
+
