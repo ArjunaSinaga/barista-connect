@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Briefcase, Bookmark, FileText, Bell, BookOpen, Store } from "lucide-react";
+import { Briefcase, Bookmark, FileText, Bell, BookOpen, Sparkles, Award } from "lucide-react";
 import Avatar from "@/components/ui/Avatar";
 import { formatExpShort } from "@/lib/exp";
 
@@ -41,6 +41,17 @@ export default function JobsProfileCard({ barista, appliedCount, savedCount = 0,
       active ? "bg-[#efe9d9] text-espresso" : "text-espresso-soft hover:bg-[#faf7ef] hover:text-espresso"
     }`;
 
+  // H-08: skor kelengkapan dari data profil asli (foto, lokasi, pengalaman, skill, CV, cover letter).
+  const compItems = [
+    !!barista.full_name,
+    !!barista.profile_picture_url,
+    !!barista.location_place,
+    (barista.experience_months ?? 0) > 0 || (barista.years_of_experience ?? 0) > 0,
+    (barista.skills?.length ?? 0) > 0,
+    !!barista.cv_url,
+  ];
+  const completeness = Math.round((compItems.filter(Boolean).length / compItems.length) * 100);
+
   return (
     <div className="min-w-0 space-y-3">
       <div className="rounded-2xl border border-[#e8e0cf] bg-white p-5 text-center shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
@@ -73,37 +84,51 @@ export default function JobsProfileCard({ barista, appliedCount, savedCount = 0,
       <nav aria-label="Loker" className="rounded-2xl border border-[#e8e0cf] bg-white p-2 shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
         <Link href="/jobs" className={row(true)}>
           <Briefcase size={17} className="shrink-0" />
-          <span className="flex-1 text-left">Loker</span>
+          <span className="flex-1 text-left">Cari Kerja</span>
         </Link>
-        <Link href="/jobs?saved=1" className={row(false)}>
-          <Bookmark size={17} className="shrink-0" />
-          <span className="flex-1 text-left">Loker Tersimpan</span>
-          <span className="rounded-full bg-[#efe9d9] px-2 py-0.5 text-[11px] font-bold text-espresso-soft">{savedCount}</span>
+        <Link href="/jobs?reco=1" className={row(false)}>
+          <Sparkles size={17} className="shrink-0" />
+          <span className="flex-1 text-left">Rekomendasi</span>
         </Link>
         <Link href="/dashboard/barista/applications" className={row(false)}>
           <FileText size={17} className="shrink-0" />
           <span className="flex-1 text-left">Lamaran Saya</span>
           <span className="rounded-full bg-[#efe9d9] px-2 py-0.5 text-[11px] font-bold text-espresso-soft">{appliedCount}</span>
         </Link>
+        <Link href="/jobs?saved=1" className={row(false)}>
+          <Bookmark size={17} className="shrink-0" />
+          <span className="flex-1 text-left">Pekerjaan Disimpan</span>
+          <span className="rounded-full bg-[#efe9d9] px-2 py-0.5 text-[11px] font-bold text-espresso-soft">{savedCount}</span>
+        </Link>
         <Link href="/messages" className={row(false)}>
           <Bell size={17} className="shrink-0" />
-          <span className="flex-1 text-left">Pesan</span>
+          <span className="flex-1 text-left">Notifikasi</span>
         </Link>
+        <p className="px-3 pt-2 pb-1 text-[10px] font-extrabold tracking-wide text-[#b6a98f] uppercase">Pengembangan Diri</p>
         <Link href="/training" className={row(false)}>
           <BookOpen size={17} className="shrink-0" />
-          <span className="flex-1 text-left">Belajar</span>
+          <span className="flex-1 text-left">Kerja.inc Academy</span>
+        </Link>
+        <Link href="/verify-cert" className={row(false)}>
+          <Award size={17} className="shrink-0" />
+          <span className="flex-1 text-left">Sertifikat Saya</span>
         </Link>
       </nav>
 
-      <div className="overflow-hidden rounded-2xl border border-[#e8e0cf] bg-[#2b1c11] p-5 text-white shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
-        <p className="text-base leading-6 font-extrabold">Kopi enak berawal dari orang hebat.</p>
+      <div className="rounded-2xl border border-[#e8e0cf] bg-[#faf7ef] p-5 shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
+        <p className="text-sm leading-6 font-extrabold text-espresso">Lengkapi profil untuk lebih banyak rekomendasi kerja</p>
+        <div className="mt-2 h-2 overflow-hidden rounded-full bg-[#e8e0cf]">
+          <div className="h-full rounded-full bg-[#4a7c59]" style={{ width: `${completeness}%` }} />
+        </div>
+        <p className="mt-1 text-right text-[11px] font-bold text-[#4a7c59] tabular-nums">{completeness}%</p>
         <Link
-          href="/training"
-          className="mt-3 inline-flex min-h-[36px] items-center justify-center rounded-full bg-paper px-4 text-xs font-bold text-[#2b1c11] hover:bg-white"
+          href="/dashboard/barista/profile"
+          className="mt-2 block rounded-full bg-coffee px-4 py-2 text-center text-xs font-bold text-white hover:bg-[#2e2015]"
         >
-          <Store size={13} className="mr-1.5" /> Asah Skillmu
+          Lihat Profil
         </Link>
       </div>
+
     </div>
   );
 }

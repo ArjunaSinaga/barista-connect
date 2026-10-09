@@ -8,7 +8,7 @@ import { EMPLOYMENT_LABELS } from "@/lib/constants";
 import { relativeTime } from "@/lib/time";
 
 // Baris lowongan ala board G1: logo + info + View Job. Klik baris = ganti ?job= (panel kanan).
-export default function JobListRow({ job, active, applied, saved, showApply }) {
+export default function JobListRow({ job, active, applied, saved, showApply, qs = "" }) {
   const types = job.employment_types?.length
     ? job.employment_types
     : job.employment_type
@@ -16,6 +16,7 @@ export default function JobListRow({ job, active, applied, saved, showApply }) {
       : [];
   const tags = skillTags(job);
   const cafeName = job.cafes?.name ?? job.owners?.business_name ?? "-";
+  const detailHref = qs ? `/jobs?${qs}&job=${job.id}` : `/jobs?job=${job.id}`;
   return (
     <li
       className={`rounded-2xl border bg-white p-4 transition-colors ${
@@ -26,7 +27,7 @@ export default function JobListRow({ job, active, applied, saved, showApply }) {
         <CafeLogo job={job} />
         <div className="min-w-0 flex-1">
           <Link
-            href={`/jobs?job=${job.id}`}
+            href={detailHref}
             scroll={false}
             className="block truncate text-sm font-extrabold text-espresso hover:text-matcha"
           >
@@ -62,7 +63,7 @@ export default function JobListRow({ job, active, applied, saved, showApply }) {
             <SaveButton jobId={job.id} initialSaved={saved} />
           </span>
           <Link
-            href={`/jobs?job=${job.id}`}
+            href={detailHref}
             scroll={false}
             className="inline-flex min-h-[44px] items-center rounded-full bg-coffee px-4 text-[11px] font-bold text-white hover:bg-[#2e2015]"
           >

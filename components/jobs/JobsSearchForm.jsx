@@ -7,7 +7,7 @@ import { CITIES } from "@/lib/constants";
 export default function JobsSearchForm({ q, loc, type }) {
   return (
     <form action="/jobs" method="GET" role="search" className="mt-3 flex flex-col gap-2 sm:flex-row">
-      <div className="flex min-w-0 flex-1 items-center gap-2 rounded-full bg-white px-4 py-2">
+      <div className="flex min-w-0 flex-1 items-center gap-2 rounded-full border border-[#e8e0cf] bg-white px-4 py-2 shadow-sm">
         <Search size={14} className="shrink-0 text-[#b6a98f]" aria-hidden="true" />
         <label htmlFor="jobs-q" className="sr-only">Cari lowongan</label>
         <input
@@ -20,7 +20,7 @@ export default function JobsSearchForm({ q, loc, type }) {
         />
       </div>
       <div className="flex min-w-0 items-center gap-2">
-        <div className="flex min-w-0 flex-1 items-center gap-1.5 rounded-full bg-white px-4 py-2 sm:flex-none">
+        <div className="flex min-w-0 flex-1 items-center gap-1.5 rounded-full border border-[#e8e0cf] bg-white px-4 py-2 shadow-sm sm:flex-none">
           <MapPin size={14} className="shrink-0 text-[#b6a98f]" aria-hidden="true" />
           <label htmlFor="jobs-loc" className="sr-only">Lokasi</label>
           <select

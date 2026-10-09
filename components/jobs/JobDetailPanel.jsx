@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { MapPin, Star, X } from "lucide-react";
+import { MapPin, Star, X, Share2, Check } from "lucide-react";
 import VerifiedBadge from "@/components/ui/VerifiedBadge";
 import ApplyButton from "@/components/jobs/ApplyButton";
 import SaveButton from "@/components/jobs/SaveButton";
@@ -18,7 +18,21 @@ const TABS = ["Ringkasan", "Tentang", "Ulasan"];
 // Props plain (serializable) dari server.
 export default function JobDetailPanel({ job, cafeName, cafeHref, types, avg, count, reviews, applied, saved, canApply }) {
   const [tab, setTab] = useState("Ringkasan");
+  const [shared, setShared] = useState(false);
   const photos = job.cafes?.photo_urls?.filter(Boolean).slice(0, 4) ?? [];
+
+  async function share() {
+    const url = `${window.location.origin}/jobs/${job.id}`;
+    try {
+      if (navigator.share) {
+        await navigator.share({ title: job.title, url });
+        return;
+      }
+      await navigator.clipboard.writeText(url);
+      setShared(true);
+      setTimeout(() => setShared(false), 2000);
+    } catch { /* batal: diam */ }
+  }
 
   return (
     <div className="overflow-hidden rounded-2xl border border-[#e8e0cf] bg-white shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
@@ -71,8 +85,7 @@ export default function JobDetailPanel({ job, cafeName, cafeHref, types, avg, co
         <div className="mt-3 flex gap-2">
           {canApply ? (
             <>
-              <SaveButton jobId={job.id} initialSaved={saved} variant="full" />
-              <ApplyButton jobId={job.id} applied={applied} jobTypes={types} size="md" full variant="coffee" label={applied ? "Sudah dilamar" : "Lamar"} />
+              <ApplyButton jobId={job.id} applied={applied} jobTypes={types} size="md" full variant="coffee" label={applied ? "Sudah dilamar" : "Lamar Sekarang"} />
             </>
           ) : (
             <Link
@@ -82,6 +95,17 @@ export default function JobDetailPanel({ job, cafeName, cafeHref, types, avg, co
               Lihat & Lamar
             </Link>
           )}
+        </div>
+        <div className="mt-2 flex gap-2">
+          <SaveButton jobId={job.id} initialSaved={saved} variant="full" />
+          <button
+            type="button"
+            onClick={share}
+            className="inline-flex min-h-[38px] flex-1 items-center justify-center gap-1.5 rounded-full border border-[#e0d5bd] px-4 text-xs font-bold text-espresso hover:border-coffee"
+          >
+            {shared ? <Check size={14} /> : <Share2 size={14} />}
+            {shared ? "Tautan disalin" : "Bagikan"}
+          </button>
         </div>
         {!canApply && (
           <p className="mt-1.5 text-center text-[11px] text-espresso-soft">
@@ -123,6 +147,9 @@ export default function JobDetailPanel({ job, cafeName, cafeHref, types, avg, co
                   ))}
                 </div>
               )}
+              <Link href={`/jobs/${job.id}`} className="mt-2 inline-block text-xs font-bold text-link hover:underline">
+                Lihat detail lengkap →
+              </Link>
             </div>
           )}
           {tab === "Tentang" && (
@@ -146,7 +173,7 @@ export default function JobDetailPanel({ job, cafeName, cafeHref, types, avg, co
               </p>
               {cafeHref && (
                 <Link href={cafeHref} className="mt-2 inline-block text-xs font-bold text-link hover:underline">
-                  Kunjungi Kafe →
+                  Lihat Profil →
                 </Link>
               )}
             </div>

@@ -1,15 +1,17 @@
+import Image from "next/image";
 import Link from "next/link";
 import { Suspense } from "react";
 import { Search } from "lucide-react";
 import { createClient, getSessionSafe, isSupabaseConfigured } from "@/lib/supabase/server";
 import { EMPLOYMENT_TYPES } from "@/lib/constants";
 import { avgStars } from "@/lib/ratings";
+import { matchPayBand, matchShift, recoScore } from "@/lib/jobFilters";
 import { EmptyState } from "@/components/ui/EmptyState";
 import JobsProfileCard from "@/components/jobs/JobsProfileCard";
-import JobListRow from "@/components/jobs/JobListRow";
 import JobDetailPanel from "@/components/jobs/JobDetailPanel";
 import JobsSearchForm from "@/components/jobs/JobsSearchForm";
-import SortSelect from "@/components/jobs/SortSelect";
+import JobsFilterBar from "@/components/jobs/JobsFilterBar";
+import JobsResults from "@/components/jobs/JobsResults";
 
 export const metadata = { title: "Loker" };
 export const revalidate = 60; // tanpa filter: static 60s; ada searchParams/sesi: dynamic otomatis
@@ -27,11 +29,14 @@ function pillHref(base, patch) {
 const ROLE_PILLS = [
   { label: "Semua", patch: { q: "", type: "" }, active: (f) => !f.q && !f.type },
   { label: "Barista", patch: { q: "Barista" }, active: (f) => f.q === "Barista" },
-  { label: "Kepala Barista", patch: { q: "Kepala" }, active: (f) => f.q === "Kepala" },
+  { label: "Front Office", patch: { q: "Front Office" }, active: (f) => f.q === "Front Office" },
+  { label: "Server", patch: { q: "Server" }, active: (f) => f.q === "Server" },
   { label: "Penuh Waktu", patch: { type: "full_time" }, active: (f) => f.type === "full_time" },
   { label: "Paruh Waktu", patch: { type: "part_time" }, active: (f) => f.type === "part_time" },
   { label: "Harian", patch: { type: "casual" }, active: (f) => f.type === "casual" },
 ];
+
+const PAGE_SIZE = 20;
 
 export default async function JobsPage({ searchParams }) {
   const params = await searchParams;
@@ -40,6 +45,12 @@ export default async function JobsPage({ searchParams }) {
   const type = (params?.type ?? "").toString().trim();
   const jobParam = (params?.job ?? "").toString().trim();
   const savedOnly = params?.saved === "1";
+  const reco = params?.reco === "1";
+  const pay = (params?.pay ?? "").toString().trim();
+  const shift = (params?.shift ?? "").toString().trim();
+  const verifiedOnly = params?.verified === "1";
+  const hasSalaryOnly = params?.hasSalary === "1";
+  const limit = Math.min(Math.max(Number(params?.limit) || PAGE_SIZE, PAGE_SIZE), 100);
   const sort = ["oldest", "name"].includes(params?.sort) ? params.sort : "newest";
 
   const { user, profile } = await getSessionSafe();
@@ -63,15 +74,13 @@ export default async function JobsPage({ searchParams }) {
       if (q) req = req.or(`title.ilike.%${q}%,description.ilike.%${q}%`);
       if (loc) req = req.ilike("location", `%${loc}%`);
       if (type && EMPLOYMENT_TYPES.some((t) => t.value === type)) req = req.overlaps("employment_types", [type]);
-      const { data } = await req.limit(50);
+      const { data } = await req.limit(100);
       const { attachOwners } = await import("@/lib/publicProfiles");
       jobs = await attachOwners(data ?? [], supabase);
     } catch {
       jobs = [];
     }
   }
-
-  const selectedId = jobParam || "__first__";
 
   // Detail selected: rating kafe + ulasan + status lamaran/simpanan.
   let cafeAvg = null;
@@ -102,10 +111,21 @@ export default async function JobsPage({ searchParams }) {
     }
   }
 
+  // Filter sisi-JS (kolom DB tak tersedia): gaji, shift, verifikasi, ada-gaji, rekomendasi skill.
+  if (pay) jobs = jobs.filter((j) => matchPayBand(j.salary_text, pay));
+  if (shift) jobs = jobs.filter((j) => matchShift(j, shift));
+  if (verifiedOnly) jobs = jobs.filter((j) => j.owners?.is_verified);
+  if (hasSalaryOnly) jobs = jobs.filter((j) => !!j.salary_text);
+  if (reco && barista?.skills?.length) {
+    jobs = [...jobs].sort((a, b) => recoScore(b, barista.skills) - recoScore(a, barista.skills));
+  }
   if (savedOnly) {
     jobs = isBarista ? jobs.filter((j) => savedIds.has(j.id)) : [];
   }
-  const selected = jobs.find((j) => j.id === selectedId) ?? jobs[0] ?? null;
+
+  const total = jobs.length;
+  const visible = jobs.slice(0, limit);
+  const selected = jobs.find((j) => j.id === jobParam) ?? visible[0] ?? null;
   const appliedSelected = selected ? appliedIds.has(selected.id) : false;
   const savedSelected = selected ? savedIds.has(selected.id) : false;
 
@@ -141,20 +161,48 @@ export default async function JobsPage({ searchParams }) {
     : [];
   const selCafeName = selected ? (selected.cafes?.name ?? selected.owners?.business_name ?? "-") : "";
 
+  // Query string filter aktif — dibawa di link kartu agar state pencarian tak hilang (H-02).
+  const qsParams = new URLSearchParams();
+  if (q) qsParams.set("q", q);
+  if (loc) qsParams.set("loc", loc);
+  if (type) qsParams.set("type", type);
+  if (sort !== "newest") qsParams.set("sort", sort);
+  if (pay) qsParams.set("pay", pay);
+  if (shift) qsParams.set("shift", shift);
+  if (verifiedOnly) qsParams.set("verified", "1");
+  if (hasSalaryOnly) qsParams.set("hasSalary", "1");
+  if (reco) qsParams.set("reco", "1");
+  if (savedOnly) qsParams.set("saved", "1");
+  const qs = qsParams.toString();
+  const moreParams = new URLSearchParams(qsParams.toString());
+  moreParams.set("limit", String(limit + PAGE_SIZE));
+
   return (
     <div className="min-h-screen bg-paper text-espresso lg:flex lg:h-[calc(100dvh-3.5rem)] lg:min-h-0 lg:flex-col lg:overflow-hidden">
       <div className="mx-auto w-full max-w-[1400px] px-4 py-4 sm:px-6 lg:min-h-0 lg:flex-1">
         <div className="grid items-start gap-4 lg:h-full lg:grid-cols-[240px_minmax(0,1fr)] xl:grid-cols-[250px_minmax(0,1fr)_360px]">
           {/* Tengah: hero + filter + list */}
           <div className="order-1 min-w-0 space-y-3 lg:order-2 lg:h-full lg:min-h-0 lg:overflow-y-auto lg:pr-1 lg:pb-1 no-scrollbar">
-            <div className="relative overflow-hidden rounded-2xl bg-[#2b1c11] px-5 py-5 text-white sm:px-6">
-              <h1 className="font-display max-w-xl text-balance text-xl leading-tight font-semibold tracking-tight sm:text-2xl">
-                Temukan loker kafe yang cocok untukmu.
-              </h1>
-              <p className="mt-1 max-w-xl text-xs leading-5 text-white/70">
-                Loker untuk orang yang hidup dan bernapas kopi.
-              </p>
-              <JobsSearchForm q={q} loc={loc} type={type} />
+            <div className="relative grid overflow-hidden rounded-2xl border border-[#e8e0cf] bg-[#faf6ec] md:grid-cols-[1fr_220px]">
+              <div className="px-5 py-5 sm:px-6">
+                <h1 className="font-display max-w-xl text-balance text-xl leading-tight font-semibold tracking-tight sm:text-2xl">
+                  Temukan pekerjaan yang sesuai dengan keahlianmu.
+                </h1>
+                <p className="mt-1 max-w-xl text-xs leading-5 text-espresso-soft">
+                  Loker kopi, front office, dan hospitality dari bisnis terpercaya di seluruh Indonesia.
+                </p>
+                <JobsSearchForm q={q} loc={loc} type={type} />
+              </div>
+              <div className="relative hidden min-h-44 md:block">
+                <Image
+                  src="/images/landing/barista-2.jpg"
+                  alt="Barista menuang kopi"
+                  fill
+                  className="object-cover object-top"
+                  sizes="220px"
+                />
+                <div className="absolute inset-0 bg-gradient-to-r from-[#faf6ec] via-transparent to-transparent" />
+              </div>
             </div>
 
             <div className="no-scrollbar -mx-4 flex gap-1.5 overflow-x-auto px-4 pb-1 sm:mx-0 sm:px-0">
@@ -178,21 +226,22 @@ export default async function JobsPage({ searchParams }) {
               })}
             </div>
 
+            <Suspense>
+              <JobsFilterBar sort={sort} type={type} pay={pay} loc={loc} shift={shift} verified={verifiedOnly} hasSalary={hasSalaryOnly} />
+            </Suspense>
+
             <div className="flex flex-wrap items-center justify-between gap-2">
               <p className="text-xs text-espresso-soft" role="status">
-                {savedOnly ? `${jobs.length} loker tersimpan` : `${jobs.length} loker ditemukan`}
-                {(q || loc || type || savedOnly) && (
+                {reco ? `${total} rekomendasi untukmu` : savedOnly ? `${total} loker tersimpan` : `${total} lowongan ditemukan`}
+                {(q || loc || type || pay || shift || verifiedOnly || hasSalaryOnly || reco || savedOnly) && (
                   <Link href="/jobs" className="ml-2 font-bold text-link hover:underline">
                     Hapus filter
                   </Link>
                 )}
               </p>
-              <Suspense>
-                <SortSelect value={sort} />
-              </Suspense>
             </div>
 
-            {!jobs.length ? (
+            {!visible.length ? (
               <EmptyState
                 icon={<Search size={20} />}
                 title={savedOnly ? "Belum ada loker tersimpan" : "Tidak ada loker cocok"}
@@ -201,18 +250,29 @@ export default async function JobsPage({ searchParams }) {
                 actionHref="/jobs"
               />
             ) : (
-              <ul className="space-y-2.5">
-                {jobs.map((job) => (
-                  <JobListRow
-                    key={job.id}
-                    job={job}
-                    active={job.id === selected?.id}
-                    applied={appliedIds.has(job.id)}
-                    saved={savedIds.has(job.id)}
+              <>
+                <Suspense>
+                  <JobsResults
+                    jobs={visible}
+                    selectedId={selected?.id}
+                    appliedIds={[...appliedIds]}
+                    savedIds={[...savedIds]}
                     showApply={isBarista}
+                    qs={qs}
                   />
-                ))}
-              </ul>
+                </Suspense>
+                {total > visible.length && (
+                  <div className="pt-1 text-center">
+                    <Link
+                      href={`/jobs?${moreParams.toString()}`}
+                      scroll={false}
+                      className="inline-flex min-h-[40px] items-center rounded-full border border-[#e0d5bd] bg-white px-6 text-xs font-bold text-espresso hover:border-coffee"
+                    >
+                      Muat lebih ({visible.length} dari {total})
+                    </Link>
+                  </div>
+                )}
+              </>
             )}
           </div>
 
