@@ -2,7 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { createClient, getSessionSafe, isSupabaseConfigured } from "@/lib/supabase/server";
 import ProfileEditor from "@/components/barista/ProfileEditor";
-import BaristaProfileView from "@/components/barista/BaristaProfileView";
+import WorkerProfileView from "@/components/barista/WorkerProfileView";
 import ConnectionInbox from "@/components/social/ConnectionInbox";
 
 export const metadata = { title: "Profil Saya" };
@@ -65,16 +65,41 @@ export default async function BaristaProfilePage({ searchParams }) {
     .order("sort_order")
     .order("created_at");
 
+  // Nama pemberi ulasan: ratings -> team_members -> owners.
+  const rTeamIds = [...new Set(ratings.map((r) => r.team_member_id).filter(Boolean))];
+  let ownerByTeam = {};
+  if (rTeamIds.length) {
+    const { data: tm } = await supabase.from("team_members").select("id, owner_id").in("id", rTeamIds);
+    const oIds = [...new Set((tm ?? []).map((t) => t.owner_id).filter(Boolean))];
+    let owners = [];
+    if (oIds.length) {
+      const { data: ow } = await supabase.from("owners").select("id, business_name").in("id", oIds);
+      owners = ow ?? [];
+    }
+    const oName = Object.fromEntries(owners.map((o) => [o.id, o.business_name]));
+    (tm ?? []).forEach((t) => { ownerByTeam[t.id] = oName[t.owner_id] ?? "Pemberi kerja"; });
+  }
+  const ratingsNamed = ratings.map((r) => ({ ...r, ownerName: ownerByTeam[r.team_member_id] ?? "Pemberi kerja" }));
+
+  const completedCount = (workHistory ?? []).filter((w) => w.status === "terminated").length;
+  const compItems = [
+    !!row.full_name, !!row.profile_picture_url, !!row.location_place,
+    (row.experience_months ?? 0) > 0 || (row.years_of_experience ?? 0) > 0,
+    (row.skills?.length ?? 0) > 0, !!row.cv_url,
+  ];
+  const completeness = Math.round((compItems.filter(Boolean).length / compItems.length) * 100);
+
   return (
     <>
-      <div className="mx-auto max-w-3xl px-4 pt-6">
+      <div className="mx-auto max-w-6xl px-4 pt-6 sm:px-6">
         <ConnectionInbox viewerId={user.id} />
       </div>
-      <BaristaProfileView
-      b={row} workHistory={workHistory ?? []} ratings={ratings} avg={avg}
-      portfolio={portfolio ?? []}
-      isSelf viewerId={user.id} editHref="/dashboard/barista/profile?edit=1"
-    />
+      <WorkerProfileView
+        b={row} workHistory={workHistory ?? []} ratings={ratingsNamed} avg={avg}
+        ratingCount={visible.length} portfolio={portfolio ?? []}
+        completedCount={completedCount} completeness={completeness}
+        editHref="/dashboard/barista/profile?edit=1"
+      />
     </>
   );
 }
