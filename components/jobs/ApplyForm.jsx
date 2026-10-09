@@ -215,7 +215,9 @@ export default function ApplyForm({ jobId, jobTypes, profile, portfolio, existin
           ) : profile?.cv_url ? (
             <p className="flex items-center gap-2 text-sm">
               <FileText size={15} className="shrink-0 text-caramel" />
-              <a href={profile.cv_url} target="_blank" rel="noreferrer" className="truncate font-bold text-caramel hover:underline">CV profil (klik untuk lihat)</a>
+              <a href={profile.cv_url} target="_blank" rel="noreferrer" className="truncate font-bold text-caramel hover:underline" title={profile.cv_url}>
+                {decodeURIComponent((profile.cv_url.split("?")[0].split("/").pop() ?? "CV.pdf").replace(/^\d+-/, ""))} (PDF)
+              </a>
               <button type="button" onClick={() => cvRef.current?.click()} className="ml-auto shrink-0 rounded-lg bg-coffee px-3 py-1.5 text-xs font-bold text-white">
                 Ganti File
               </button>
