@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
 import SidebarOwner from "@/components/owner/dashboard/SidebarOwner";
+import OverviewView from "@/components/owner/dashboard/OverviewView";
 import TalentaView from "@/components/owner/dashboard/TalentaView";
 import ActiveJobsView from "@/components/owner/dashboard/ActiveJobsView";
 import PelamarView from "@/components/owner/dashboard/PelamarView";
@@ -18,9 +19,9 @@ import { SmarterOpsCard } from "@/components/landing/SidebarKerja";
 
 // Shell 3 kolom: sidebar tetap, hanya kolom TENGAH yang ganti
 // (talenta/active/pelamar/reviews/cafes) tanpa navigasi halaman.
-const VIEWS = ["talenta", "active", "pelamar", "reviews", "cafes", "settings", "saved", "team", "org"];
+const VIEWS = ["dashboard", "talenta", "active", "pelamar", "reviews", "cafes", "settings", "saved", "team", "org"];
 const LEGACY = { lowongan: "active", tim: "team" }; // deep-link lama tetap jalan
-export default function DashboardShell({ initialView = "talenta", initialCafeId = null, sidebar, middle, right }) {
+export default function DashboardShell({ initialView = "dashboard", initialCafeId = null, sidebar, middle, right }) {
   const start = LEGACY[initialView] ?? initialView;
   const [view, setView] = useState(VIEWS.includes(start) ? start : "talenta");
   return (
@@ -31,7 +32,9 @@ export default function DashboardShell({ initialView = "talenta", initialCafeId 
 
       <div className="flex min-w-0 flex-col gap-3 lg:h-full lg:min-h-0 lg:overflow-hidden">
         <div className="min-w-0 space-y-2 lg:min-h-0 lg:flex-1 lg:overflow-y-auto lg:pr-1 lg:pb-1 no-scrollbar">
-          {view === "active" ? (
+          {view === "dashboard" ? (
+            <OverviewView overview={middle.overview} />
+          ) : view === "active" ? (
             <ActiveJobsView {...middle.active} onBack={() => setView("talenta")} />
           ) : view === "pelamar" ? (
             <PelamarView {...middle.pelamar} onBack={() => setView("talenta")} />

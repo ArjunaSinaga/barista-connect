@@ -50,7 +50,7 @@ export default async function OwnerDashboardPage({ searchParams }) {
     jobs = res.data ?? []
     const jobIds = jobs.map(j=>j.id)
     if (jobIds.length) {
-      const r2 = await supabase.from("applications").select("job_post_id,status").in("job_post_id", jobIds)
+      const r2 = await supabase.from("applications").select("id,job_post_id,barista_id,status,created_at").in("job_post_id", jobIds)
       apps = r2.data ?? []
     }
     const [o, c, grRaw, cw, bRaw, sv, tmRaw] = await Promise.all([
@@ -126,6 +126,72 @@ export default async function OwnerDashboardPage({ searchParams }) {
   const monthAgo = Date.now() - 30 * 864e5;
   const jobsThisMonth = (jobs ?? []).filter((j) => j.created_at && new Date(j.created_at).getTime() >= monthAgo).length;
 
+  // Overview (EMPDASH): filter outlet + rentang tanggal via ?outlet= &range=7|30|90|all.
+  const outletParam = typeof params?.outlet === "string" && params.outlet ? params.outlet : "";
+  const rangeParam = ["7", "30", "90", "all"].includes(params?.range) ? params.range : "30";
+  const rangeMs = rangeParam === "all" ? null : Number(rangeParam) * 864e5;
+  const cutoff = rangeMs ? Date.now() - rangeMs : null;
+  const prevCutoff = rangeMs ? Date.now() - rangeMs * 2 : null;
+  const jobCafe = Object.fromEntries((jobs ?? []).map((j) => [j.id, j.cafe_id]));
+  const inOutlet = (a) => !outletParam || jobCafe[a.job_post_id] === outletParam;
+  const inRange = (ts) => !cutoff || (ts && new Date(ts).getTime() >= cutoff);
+  const inPrev = (ts) => cutoff && ts && new Date(ts).getTime() >= prevCutoff && new Date(ts).getTime() < cutoff;
+  const scopedJobs = outletParam ? jobs.filter((j) => j.cafe_id === outletParam) : jobs;
+  const scopedApps = apps.filter(inOutlet);
+  const rangedApps = scopedApps.filter((a) => inRange(a.created_at));
+  const prevApps = scopedApps.filter((a) => inPrev(a.created_at));
+  const byStatus = (list, s) => list.filter((a) => a.status === s).length;
+  const delta = (cur, prev) => {
+    if (!rangeMs || prev === 0) return null;
+    const pct = Math.round(((cur - prev) / prev) * 100);
+    return `${pct >= 0 ? "+" : ""}${pct}%`;
+  };
+  const { attachBaristaNames: attachNames } = await import("@/lib/publicProfiles");
+  let overviewApps = [];
+  try {
+    overviewApps = await attachNames(scopedApps, supabase);
+  } catch { overviewApps = scopedApps; }
+  const jobMap = Object.fromEntries((scopedJobs ?? []).map((j) => [j.id, j]));
+  const cafeMap = Object.fromEntries((cafes ?? []).map((c) => [c.id, c]));
+  const overview = {
+    businessName: ownerRow?.business_name ?? "Bisnis Anda",
+    heroPhoto: firstCafe?.photo_urls?.[0] ?? null,
+    cafes: cafes.map((c) => ({ id: c.id, name: c.name })),
+    outletParam, rangeParam,
+    stats: {
+      activeJobs: scopedJobs.filter((j) => j.is_active).length,
+      totalApps: rangedApps.length,
+      pending: byStatus(rangedApps, "pending"),
+      accepted: byStatus(rangedApps, "accepted"),
+      deltaApps: delta(rangedApps.length, prevApps.length),
+      deltaAccepted: delta(byStatus(rangedApps, "accepted"), byStatus(prevApps, "accepted")),
+    },
+    pipeline: [
+      { label: "Lamaran Masuk", count: rangedApps.length },
+      { label: "Disaring", count: byStatus(rangedApps, "viewed") },
+      { label: "Diterima", count: byStatus(rangedApps, "accepted") },
+      { label: "Ditolak", count: byStatus(rangedApps, "rejected") },
+    ],
+    recent: [...overviewApps].sort((a, b) => new Date(b.created_at) - new Date(a.created_at)).slice(0, 6).map((a) => ({
+      id: a.id, status: a.status, created_at: a.created_at,
+      name: a.barista?.full_name ?? "Pelamar",
+      jobTitle: jobMap[a.job_post_id]?.title ?? "-",
+    })),
+    pendingAction: overviewApps.filter((a) => a.status === "pending")
+      .sort((a, b) => new Date(b.created_at) - new Date(a.created_at)).slice(0, 5).map((a) => ({
+        id: a.id, created_at: a.created_at,
+        name: a.barista?.full_name ?? "Pelamar",
+        jobTitle: jobMap[a.job_post_id]?.title ?? "-",
+        jobId: a.job_post_id,
+      })),
+    topJobs: [...scopedJobs].map((j) => ({
+      id: j.id, title: j.title, is_active: j.is_active, created_at: j.created_at,
+      outlet: cafeMap[j.cafe_id]?.name ?? "-",
+      count: (scopedApps ?? []).filter((a) => a.job_post_id === j.id).length,
+    })).sort((a, b) => b.count - a.count).slice(0, 5),
+    hasJobs: (jobs ?? []).length > 0,
+  };
+
   const ranked = rankBaristas(baristas);
   const savedSet = new Set(savedBaristaIds);
   const savedList = ranked.filter((x) => savedSet.has(x.id));
@@ -164,6 +230,7 @@ export default async function OwnerDashboardPage({ searchParams }) {
             }}
             middle={{
               ownerId: user.id,
+              overview,
               talenta: {
                 heroPhoto: firstCafe?.photo_urls?.[0] ?? null,
                 cafeName: firstCafe?.name,

@@ -7,8 +7,10 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
   LayoutDashboard, Briefcase, Users, UsersRound, Heart, Star, GraduationCap, Settings,
-  Camera, Crown, ArrowRight, Building2,
+  Camera, Crown, ArrowRight, Building2, PlusCircle, Search, Store, LogOut,
 } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { createClient } from "@/lib/supabase/client";
 import Avatar from "@/components/ui/Avatar";
 import ProfileCompleteModal from "@/components/owner/dashboard/ProfileCompleteModal";
 import { snoozeCheck, snoozeHide } from "@/components/ui/useSnooze";
@@ -23,6 +25,7 @@ export default function SidebarOwner({ kafe, ownerName, completeness, completene
   const name = kafe?.name ?? ownerName ?? "Kafe Anda";
   const loc = kafe?.address ?? kafe?.location ?? "Lengkapi alamat kafe";
   const [modalOpen, setModalOpen] = useState(false);
+  const router = useRouter();
 
   // Auto-popup sekali, lalu snooze 2x tampil-buka bila di-X
   // (klik X → hilang → refresh 1 tetap hilang → refresh 2 muncul lagi).
@@ -96,13 +99,20 @@ export default function SidebarOwner({ kafe, ownerName, completeness, completene
       </div>
 
       <nav className="rounded-2xl border border-[#e8e0cf] bg-white p-2 shadow-[0_1px_3px_rgba(43,33,24,0.08)] lg:flex-1">
-        <button type="button" onClick={() => onNavigate?.("talenta")} className={cls(isMain && view === "talenta")}>
+        <button type="button" onClick={() => onNavigate?.("dashboard")} className={cls(isMain && view === "dashboard")}>
           <LayoutDashboard size={17} className="shrink-0" />
           <span className="flex-1 text-left">Dashboard</span>
         </button>
+        <Link
+          href="/dashboard/owner/jobs/new"
+          className="flex items-center gap-3 rounded-xl px-3 py-2 text-sm font-bold text-espresso-soft hover:bg-[#faf7ef] hover:text-espresso"
+        >
+          <PlusCircle size={17} className="shrink-0" />
+          <span className="flex-1">Buat Lowongan</span>
+        </Link>
         <button type="button" onClick={() => onNavigate?.("active")} className={cls(isMain && view === "active")}>
           <Briefcase size={17} className="shrink-0" />
-          <span className="flex-1 text-left">Loker Aktif</span>
+          <span className="flex-1 text-left">Kelola Lowongan</span>
           {countBadge(counts.activeJobs)}
         </button>
         <button type="button" onClick={() => onNavigate?.("pelamar")} className={cls(isMain && view === "pelamar")}>
@@ -110,11 +120,50 @@ export default function SidebarOwner({ kafe, ownerName, completeness, completene
           <span className="flex-1 text-left">Pelamar</span>
           {countBadge(counts.applicants)}
         </button>
+        <Link
+          href="/find-baristas"
+          className="flex items-center gap-3 rounded-xl px-3 py-2 text-sm font-bold text-espresso-soft hover:bg-[#faf7ef] hover:text-espresso"
+        >
+          <Search size={17} className="shrink-0" />
+          <span className="flex-1">Cari Talenta</span>
+        </Link>
+        <button type="button" onClick={() => onNavigate?.("cafes")} className={cls(isMain && view === "cafes")}>
+          <Store size={17} className="shrink-0" />
+          <span className="flex-1 text-left">Outlet Saya</span>
+          {countBadge(counts.cafes)}
+        </button>
         <button type="button" onClick={() => onNavigate?.("team")} className={cls(isMain && view === "team")}>
           <UsersRound size={17} className="shrink-0" />
-          <span className="flex-1 text-left">Tim Saya</span>
+          <span className="flex-1 text-left">Tim & Akses</span>
           {countBadge(counts.team)}
         </button>
+        <Link
+          href="/dashboard/owner/profile"
+          className="flex items-center gap-3 rounded-xl px-3 py-2 text-sm font-bold text-espresso-soft hover:bg-[#faf7ef] hover:text-espresso"
+        >
+          <Camera size={17} className="shrink-0" />
+          <span className="flex-1">Profil Perusahaan</span>
+        </Link>
+        {canSettings !== false && (
+        <button type="button" onClick={() => onNavigate?.("settings")} className={cls(isMain && view === "settings")}>
+          <Settings size={17} className="shrink-0" />
+          <span className="flex-1 text-left">Pengaturan</span>
+        </button>
+        )}
+        <button
+          type="button"
+          onClick={async () => {
+            const supabase = createClient();
+            await supabase.auth.signOut();
+            router.push("/");
+            router.refresh();
+          }}
+          className="flex w-full items-center gap-3 rounded-xl px-3 py-2 text-sm font-bold text-espresso-soft hover:bg-[#faf7ef] hover:text-espresso"
+        >
+          <LogOut size={17} className="shrink-0" />
+          <span className="flex-1 text-left">Keluar</span>
+        </button>
+        <p className="px-3 pt-2 pb-1 text-[10px] font-extrabold tracking-wide text-[#b6a98f] uppercase">Lainnya</p>
         <button type="button" onClick={() => onNavigate?.("saved")} className={cls(isMain && view === "saved")}>
           <Heart size={17} className="shrink-0" />
           <span className="flex-1 text-left">Kandidat Tersimpan</span>
@@ -125,22 +174,15 @@ export default function SidebarOwner({ kafe, ownerName, completeness, completene
           <span className="flex-1 text-left">Ulasan Diberi</span>
           {countBadge(counts.reviewsGiven)}
         </button>
-        <button type="button" onClick={() => onNavigate?.("cafes")} className={cls(isMain && view === "cafes")}>
-          <Camera size={17} className="shrink-0" />
-          <span className="flex-1 text-left">Kafe Saya</span>
-          {countBadge(counts.cafes)}
-        </button>
         <button type="button" onClick={() => onNavigate?.("org")} className={cls(isMain && view === "org")}>
           <Building2 size={17} className="shrink-0" />
           <span className="flex-1 text-left">PT / Organisasi</span>
           {countBadge(counts.orgs)}
         </button>
-        {canSettings !== false && (
-        <button type="button" onClick={() => onNavigate?.("settings")} className={cls(isMain && view === "settings")}>
-          <Settings size={17} className="shrink-0" />
-          <span className="flex-1 text-left">Pengaturan</span>
+        <button type="button" onClick={() => onNavigate?.("talenta")} className={cls(isMain && view === "talenta")}>
+          <GraduationCap size={17} className="shrink-0" />
+          <span className="flex-1 text-left">Jelajah Talenta</span>
         </button>
-        )}
         <Link
           href="/training"
           className="flex items-center gap-3 rounded-xl px-3 py-2 text-sm font-bold text-espresso-soft hover:bg-[#faf7ef] hover:text-espresso"
