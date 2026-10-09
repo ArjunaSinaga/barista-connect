@@ -244,10 +244,10 @@ export default function ApplicationsList() {
                   <CafeLogo job={job ?? {}} />
                   <div className="min-w-0 flex-1">
                     <div className="flex items-start justify-between gap-2">
-                      <Link href={job?.id ? `/jobs/${job.id}` : "/jobs"} className="block truncate font-bold text-espresso hover:text-caramel">
+                      <Link href={`/dashboard/barista/applications/${app.id}`} className="block truncate font-bold text-espresso hover:text-caramel">
                         {job?.title ?? "Lowongan dihapus"}
                       </Link>
-                      <Link href={job?.id ? `/jobs/${job.id}` : "/jobs"} aria-label="Lihat detail" className="shrink-0 text-espresso-soft hover:text-caramel">
+                      <Link href={`/dashboard/barista/applications/${app.id}`} aria-label="Lihat detail lamaran" className="shrink-0 text-espresso-soft hover:text-caramel">
                         <ChevronRight size={18} />
                       </Link>
                     </div>

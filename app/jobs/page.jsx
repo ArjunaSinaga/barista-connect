@@ -91,20 +91,23 @@ export default async function JobsPage({ searchParams }) {
   let barista = null;
   let appliedCount = 0;
   let savedCount = 0;
+  let unreadCount = 0;
   if (isSupabaseConfigured()) {
     try {
       const supabase = await createClient();
       if (isBarista && user) {
-        const [{ data: bp }, { data: apps }, { data: saved }] = await Promise.all([
+        const [{ data: bp }, { data: apps }, { data: saved }, { data: notifs }] = await Promise.all([
           supabase.from("barista_profiles").select("*").eq("id", user.id).maybeSingle(),
           supabase.from("applications").select("job_post_id").eq("barista_id", user.id),
           supabase.from("saved_jobs").select("job_post_id").eq("barista_id", user.id),
+          supabase.from("notifications").select("id").eq("user_id", user.id).eq("is_read", false).limit(100),
         ]);
         barista = bp ?? null;
         appliedIds = new Set((apps ?? []).map((a) => a.job_post_id));
         savedIds = new Set((saved ?? []).map((s) => s.job_post_id));
         appliedCount = appliedIds.size;
         savedCount = savedIds.size;
+        unreadCount = (notifs ?? []).length;
       }
     } catch {
       // diam: halaman tetap render dengan data parsial
@@ -302,7 +305,7 @@ export default async function JobsPage({ searchParams }) {
 
           {/* Kiri: profil */}
           <div className="order-3 min-w-0 lg:order-1 lg:h-full lg:min-h-0 lg:overflow-y-auto lg:pb-1 no-scrollbar">
-            <JobsProfileCard barista={barista} appliedCount={appliedCount} savedCount={savedCount} isOwner={isOwner} />
+            <JobsProfileCard barista={barista} appliedCount={appliedCount} savedCount={savedCount} isOwner={isOwner} unreadCount={unreadCount} />
           </div>
         </div>
       </div>

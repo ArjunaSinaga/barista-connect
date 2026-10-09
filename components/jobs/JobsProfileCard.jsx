@@ -5,7 +5,7 @@ import { formatExpShort } from "@/lib/exp";
 
 // Kolom kiri board: kartu profil barista + nav (Jobs aktif, Applied real).
 // Saved/Alerts menyusul di F3b — tidak dirender agar tidak ada link mati.
-export default function JobsProfileCard({ barista, appliedCount, savedCount = 0, isOwner = false }) {
+export default function JobsProfileCard({ barista, appliedCount, savedCount = 0, isOwner = false, unreadCount = 0 }) {
   if (isOwner) {
     return (
       <div className="rounded-2xl border border-[#e8e0cf] bg-white p-5 text-center shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
@@ -100,9 +100,12 @@ export default function JobsProfileCard({ barista, appliedCount, savedCount = 0,
           <span className="flex-1 text-left">Pekerjaan Disimpan</span>
           <span className="rounded-full bg-[#efe9d9] px-2 py-0.5 text-[11px] font-bold text-espresso-soft">{savedCount}</span>
         </Link>
-        <Link href="/messages" className={row(false)}>
+        <Link href="/dashboard/barista/notifikasi" className={row(false)}>
           <Bell size={17} className="shrink-0" />
           <span className="flex-1 text-left">Notifikasi</span>
+          {unreadCount > 0 && (
+            <span className="rounded-full bg-red-500 px-2 py-0.5 text-[11px] font-bold text-white tabular-nums">{unreadCount}</span>
+          )}
         </Link>
         <p className="px-3 pt-2 pb-1 text-[10px] font-extrabold tracking-wide text-[#b6a98f] uppercase">Pengembangan Diri</p>
         <Link href="/training" className={row(false)}>
