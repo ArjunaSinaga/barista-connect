@@ -12,9 +12,11 @@ import { APP_NAME } from "@/lib/constants";
 
 const NAV = [
   { label: "Loker", href: "/jobs", match: ["/jobs"] },
-  { label: "Talenta", href: "/find-baristas", match: ["/find-baristas", "/barista"] },
+  { label: "Talenta", href: "/talent", match: ["/talent", "/find-baristas", "/barista"] },
+  { label: "Academy", href: "/academy", match: ["/academy"] },
   { label: "Ulasan", href: "/reviews", match: ["/reviews"] },
-  { label: "Pelatihan", href: "/training", match: ["/training"] },
+  { label: "Tentang", href: "/about", match: ["/about"] },
+  { label: "FAQ", href: "/faq", match: ["/faq"] },
   { label: "Feed", href: "/feed", match: ["/feed"] },
 ];
 

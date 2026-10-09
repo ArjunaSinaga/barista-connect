@@ -108,7 +108,7 @@ export default function JobsProfileCard({ barista, appliedCount, savedCount = 0,
           )}
         </Link>
         <p className="px-3 pt-2 pb-1 text-[10px] font-extrabold tracking-wide text-[#b6a98f] uppercase">Pengembangan Diri</p>
-        <Link href="/training" className={row(false)}>
+        <Link href="/academy" className={row(false)}>
           <BookOpen size={17} className="shrink-0" />
           <span className="flex-1 text-left">Kerja.inc Academy</span>
         </Link>

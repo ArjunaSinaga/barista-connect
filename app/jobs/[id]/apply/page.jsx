@@ -58,7 +58,7 @@ export default async function ApplyPage({ params }) {
   return (
     <div className="min-h-screen bg-paper text-espresso">
       <div className="mx-auto max-w-5xl px-4 py-6 sm:px-6">
-        <BackButton />
+        <BackButton fallback={`/jobs/${id}`} label="Kembali ke lowongan" />
         <h1 className="mt-3 text-2xl font-extrabold tracking-tight">Ajukan Lamaran</h1>
         <p className="mt-0.5 text-sm text-espresso-soft">Lengkapi informasi berikut untuk melamar posisi ini.</p>
 

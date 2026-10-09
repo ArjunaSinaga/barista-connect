@@ -340,7 +340,7 @@ export default async function LandingPage() {
               Pelatihan praktis untuk barista, F and B, front office, dan hospitality bersama para profesional industri.
             </p>
             <div className="mt-4">
-              <Link href="/training" className="inline-flex min-h-[44px] items-center gap-1 rounded-full bg-coffee px-6 text-xs font-bold text-white hover:bg-[#2e2015]">
+              <Link href="/academy" className="inline-flex min-h-[44px] items-center gap-1 rounded-full bg-coffee px-6 text-xs font-bold text-white hover:bg-[#2e2015]">
                 Lihat Program Academy <span aria-hidden="true">→</span>
               </Link>
             </div>
