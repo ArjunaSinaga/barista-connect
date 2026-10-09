@@ -78,6 +78,8 @@ export default async function OwnerDashboardPage({ searchParams }) {
     teamMembers = (tmRaw.data ?? []).map((t) => ({ ...t, barista_profiles: tmMap.get(t.barista_id) ?? null }));
     ownerRow = o.data ?? null;
     cafes = c.data ?? [];
+    // OWN-ONB-01: owner tanpa nama bisnis = onboarding belum selesai -> kembali ke wizard.
+    if (!ownerRow?.business_name && !params?.tab) redirect("/onboarding/owner");
     // Organisasi: milik sendiri + diikuti sebagai manager (baca via policy org_read/members_read)
     try {
       const supabase3 = await createClient();
