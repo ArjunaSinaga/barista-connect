@@ -14,7 +14,6 @@ import {
 import { createClient, getSessionSafe, isSupabaseConfigured } from "@/lib/supabase/server";
 import Badge from "@/components/ui/Badge";
 import VerifiedBadge from "@/components/ui/VerifiedBadge";
-import ApplyButton from "@/components/jobs/ApplyButton";
 import SaveButton from "@/components/jobs/SaveButton";
 import BackButton from "@/components/jobs/BackButton";
 import JobGallery from "@/components/jobs/JobGallery";
@@ -192,7 +191,12 @@ export default async function JobDetailPage({ params }) {
             {profile?.role === "barista" ? (
               job.is_active && !applied && (
                 <>
-                  <ApplyButton jobId={job.id} applied={applied} jobTypes={types} size="md" full variant="coffee" label="Lamar Sekarang" />
+                  <Link
+                    href={`/jobs/${job.id}/apply`}
+                    className="inline-flex min-h-[44px] flex-1 items-center justify-center rounded-full bg-coffee px-4 text-sm font-bold text-white hover:bg-[#2e2015]"
+                  >
+                    Lamar Sekarang
+                  </Link>
                   <SaveButton jobId={job.id} initialSaved={saved} variant="full" />
                 </>
               )
@@ -201,7 +205,12 @@ export default async function JobDetailPage({ params }) {
                 Kamu masuk sebagai pemilik usaha. Hanya akun barista yang bisa melamar.
               </p>
             ) : (
-              <ApplyButton jobId={job.id} jobTypes={types} full size="lg" label="Lamar Sekarang" />
+              <Link
+                href={`/jobs/${job.id}/apply`}
+                className="inline-flex min-h-[44px] w-full items-center justify-center rounded-full bg-coffee px-4 text-sm font-bold text-white hover:bg-[#2e2015]"
+              >
+                Lamar Sekarang
+              </Link>
             )}
           </div>
           {profile?.role === "barista" && applied && (

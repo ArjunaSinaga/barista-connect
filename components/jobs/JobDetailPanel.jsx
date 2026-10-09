@@ -5,7 +5,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { MapPin, Star, X, Share2, Check } from "lucide-react";
 import VerifiedBadge from "@/components/ui/VerifiedBadge";
-import ApplyButton from "@/components/jobs/ApplyButton";
 import SaveButton from "@/components/jobs/SaveButton";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { EMPLOYMENT_LABELS } from "@/lib/constants";
@@ -85,7 +84,12 @@ export default function JobDetailPanel({ job, cafeName, cafeHref, types, avg, co
         <div className="mt-3 flex gap-2">
           {canApply ? (
             <>
-              <ApplyButton jobId={job.id} applied={applied} jobTypes={types} size="md" full variant="coffee" label={applied ? "Sudah dilamar" : "Lamar Sekarang"} />
+              <Link
+                href={`/jobs/${job.id}/apply`}
+                className="inline-flex min-h-[38px] flex-1 items-center justify-center rounded-full bg-coffee px-4 text-sm font-bold text-white hover:bg-[#2e2015]"
+              >
+                {applied ? "Sudah dilamar — Lihat" : "Lamar Sekarang"}
+              </Link>
             </>
           ) : (
             <Link
