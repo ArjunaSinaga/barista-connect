@@ -90,7 +90,6 @@ const TRUST_STEPS = [
 ];
 
 export default async function LandingPage() {
-  const { user } = await getSessionSafe();
   const [jobs, stats, talents] = await Promise.all([
     getLatestJobs(),
     getLiveStats(),
@@ -258,7 +257,7 @@ export default async function LandingPage() {
             <h2 className="text-xl font-extrabold tracking-tight">Featured Talent</h2>
             <p className="mt-0.5 text-xs text-espresso-soft">Barista siap kerja dengan rating dan pengalaman terverifikasi.</p>
           </div>
-          <Link href="/find-baristas" className="inline-flex shrink-0 items-center gap-0.5 text-xs font-bold text-link hover:underline">
+          <Link href="/talent" className="inline-flex shrink-0 items-center gap-0.5 text-xs font-bold text-link hover:underline">
             Lihat semua talenta <span aria-hidden="true">→</span>
           </Link>
         </div>
@@ -278,7 +277,7 @@ export default async function LandingPage() {
                     <SaveButton storageKey="kerja_saved_talent" id={b.id} label={`Simpan talenta ${b.full_name}`} />
                   </span>
                   <Link
-                    href={user ? `/barista/${b.id}` : `/login?next=/barista/${b.id}`}
+                    href={`/talent/${b.id}`}
                     className="block"
                     aria-label={`Lihat profil ${b.full_name}`}
                   >

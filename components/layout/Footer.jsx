@@ -13,27 +13,11 @@ const COLS = [
     title: "Untuk Bisnis",
     links: [
       ["Pasang Lowongan", "/signup?role=owner"],
-      ["Cari Talenta", "/find-baristas"],
+      ["Cari Talenta", "/talent"],
       ["Solusi Rekrutmen", "/trust"],
     ],
   },
-  {
-    title: "Tentang Kami",
-    links: [
-      ["Our Story", "#"],
-      ["Blog", "#"],
-      ["Karir di kerja.inc", "#"],
-    ],
-  },
-  {
-    title: "Bantuan",
-    links: [
-      ["FAQ", "#"],
-      ["Pusat Bantuan", "#"],
-      ["Kebijakan Privasi", "#"],
-      ["Syarat & Ketentuan", "#"],
-    ],
-  },
+  // LP-21: kolom berisi link mati ("#") dibuang — nol dead route produksi.
 ];
 
 const SOCIALS = [
@@ -47,7 +31,7 @@ export default function Footer() {
   return (
     <footer className="mx-auto w-full max-w-[1400px] px-4 pb-6 sm:px-6">
       <div className="rounded-2xl bg-[#2A211A] px-6 py-8 text-[#F5F1E8] sm:px-10">
-        <div className="grid gap-8 md:grid-cols-[1.2fr_repeat(4,1fr)_auto]">
+        <div className="grid gap-8 md:grid-cols-[1.2fr_repeat(2,1fr)]">
           <div>
             <p className="font-display text-xl font-semibold">kerja.inc</p>
             <p className="mt-2 max-w-[220px] text-xs leading-5 text-[#F5F1E8]/70">

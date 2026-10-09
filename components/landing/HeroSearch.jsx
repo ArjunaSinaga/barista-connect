@@ -65,7 +65,7 @@ export default function HeroSearch() {
       <p className="mt-3 flex flex-wrap items-center gap-2 text-xs text-espresso-soft">
         Looking to hire?
         <Link
-          href="/find-baristas"
+          href="/hire"
           className="inline-flex min-h-[36px] items-center gap-1 rounded-full border border-[#d8cdae] bg-white/70 px-4 font-bold text-espresso hover:border-coffee"
         >
           Hire Workers <span aria-hidden="true">→</span>
