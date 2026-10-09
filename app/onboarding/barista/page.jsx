@@ -228,7 +228,6 @@ export default function BaristaOnboardingPage() {
               </div>
               <div className="grid gap-4 sm:grid-cols-2">
                 {!locked.full_name && <Input name="full_name" label="Nama Lengkap" placeholder="cth. Andi Pratama" value={form.full_name} onChange={(e) => set("full_name", e.target.value)} error={errors.full_name} />}
-                <Input name="email" label="Email" placeholder="cth. andi@mail.com" value={form.whatsapp ? "" : ""} onChange={() => {}} />
                 <Input name="phone" label="No. HP / WhatsApp" placeholder="cth. 0812 3456 7890" value={form.whatsapp} onChange={(e) => set("whatsapp", e.target.value)} />
                 <Input name="age" type="number" min={15} max={90} label="Umur" placeholder="cth. 22" value={form.age} onChange={(e) => set("age", e.target.value)} error={errors.age} />
                 <div className="sm:col-span-2">
