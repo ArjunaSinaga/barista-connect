@@ -49,7 +49,7 @@ export default function LatestJobs({ jobs }) {
         <div className="mt-3 rounded-xl border-2 border-dashed border-[#e0d5bd] p-6 text-center">
           <p className="text-sm font-bold text-espresso">Belum ada loker — jadilah kafe pertama.</p>
           <p className="mt-1 text-xs text-espresso-soft">Gratis, 2 menit, langsung tampil di sini.</p>
-          <Link href="/signup?role=owner" className="mt-3 inline-flex min-h-[32px] items-center rounded-full bg-coffee px-4 text-xs font-bold text-white hover:bg-[#2e2015]">
+          <Link href="/register?role=owner" className="mt-3 inline-flex min-h-[32px] items-center rounded-full bg-coffee px-4 text-xs font-bold text-white hover:bg-[#2e2015]">
             Pasang loker gratis
           </Link>
         </div>

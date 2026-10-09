@@ -87,7 +87,7 @@ export default function TrustPage() {
         </p>
         <div className="mt-4 flex flex-wrap justify-center gap-3">
           <Link
-            href="/signup?role=owner"
+            href="/register?role=owner"
             className="inline-flex min-h-[44px] items-center rounded-full bg-white px-6 text-sm font-bold text-coffee hover:bg-[#f5efe0]"
           >
             Daftar sebagai pemilik kafe

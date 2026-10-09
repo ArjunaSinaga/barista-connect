@@ -66,7 +66,7 @@ export default async function AcademyIndexPage({ searchParams }) {
             title={q ? "Tidak ketemu" : "Belum ada akademi"}
             subtitle={q ? "Coba kata kunci lain." : "Jadilah yang pertama daftar sebagai akademi."}
             actionLabel={q ? undefined : "Daftar sebagai akademi"}
-            actionHref={q ? undefined : "/signup?role=academy"}
+            actionHref={q ? undefined : "/register?role=academy"}
           />
         </div>
       ) : (

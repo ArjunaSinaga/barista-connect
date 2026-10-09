@@ -169,7 +169,7 @@ export default async function LandingPage() {
         {jobs.length === 0 ? (
           <div className="mt-4 rounded-2xl border-2 border-dashed border-[#e0d5bd] bg-white p-8 text-center">
             <p className="text-sm font-bold">Belum ada loker — jadilah kafe pertama.</p>
-            <Link href="/signup?role=owner" className="mt-3 inline-flex min-h-[44px] items-center rounded-full bg-coffee px-5 text-xs font-bold text-white hover:bg-[#2e2015]">
+            <Link href="/register?role=owner" className="mt-3 inline-flex min-h-[44px] items-center rounded-full bg-coffee px-5 text-xs font-bold text-white hover:bg-[#2e2015]">
               Pasang loker gratis
             </Link>
           </div>
@@ -222,7 +222,7 @@ export default async function LandingPage() {
                 <Store size={24} className="text-coffee" />
                 <p className="mt-2 text-sm font-bold">Punya kafe? Pasang loker gratis</p>
                 <p className="mt-1 text-xs text-espresso-soft">Jangkau barista siap kerja di kotamu.</p>
-                <Link href="/signup?role=owner" className="mt-3 inline-flex min-h-[40px] items-center rounded-full bg-coffee px-5 text-xs font-bold text-white hover:bg-[#2e2015]">
+                <Link href="/register?role=owner" className="mt-3 inline-flex min-h-[40px] items-center rounded-full bg-coffee px-5 text-xs font-bold text-white hover:bg-[#2e2015]">
                   Pasang Loker
                 </Link>
               </li>
@@ -310,7 +310,7 @@ export default async function LandingPage() {
                 <Users size={24} className="text-coffee" />
                 <p className="mt-2 text-sm font-bold">Barista? Tampil di sini</p>
                 <p className="mt-1 text-xs text-espresso-soft">Lengkapi profil dan portofoliomu gratis.</p>
-                <Link href="/signup?role=barista" className="mt-3 inline-flex min-h-[40px] items-center rounded-full bg-coffee px-5 text-xs font-bold text-white hover:bg-[#2e2015]">
+                <Link href="/register?role=barista" className="mt-3 inline-flex min-h-[40px] items-center rounded-full bg-coffee px-5 text-xs font-bold text-white hover:bg-[#2e2015]">
                   Daftar Gratis
                 </Link>
               </li>

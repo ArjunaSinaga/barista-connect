@@ -5,14 +5,14 @@ const COLS = [
     title: "Untuk Pencari Kerja",
     links: [
       ["Cari Pekerjaan", "/jobs"],
-      ["Buat Profil", "/signup?role=barista"],
+      ["Buat Profil", "/register?role=barista"],
       ["Career Tips", "/academy"],
     ],
   },
   {
     title: "Untuk Bisnis",
     links: [
-      ["Pasang Lowongan", "/signup?role=owner"],
+      ["Pasang Lowongan", "/register?role=owner"],
       ["Cari Talenta", "/talent"],
       ["Solusi Rekrutmen", "/trust"],
     ],

@@ -25,7 +25,7 @@ export default function Navbar({ user, role }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const home = role === "owner" ? "/dashboard/owner" : "/dashboard/barista";
   const profileHref = role === "owner" ? "/dashboard/owner/profile" : "/dashboard/barista/profile";
-  const postJobHref = role === "owner" ? "/dashboard/owner/jobs/new" : "/signup?role=owner";
+  const postJobHref = role === "owner" ? "/dashboard/owner/jobs/new" : "/register?role=employer";
   const initial = (user?.email?.[0] ?? "?").toUpperCase();
   const roleLabel = role === "owner" ? "Pemilik Kafe" : role === "barista" ? "Barista" : null;
 
@@ -40,7 +40,9 @@ export default function Navbar({ user, role }) {
 
 
   const isActive = (m) => m.some((p) => pathname === p || pathname?.startsWith(p + "/"));
-  const forOwnersActive = pathname?.startsWith("/dashboard/owner") || pathname === "/signup";
+  const forOwnersActive = pathname?.startsWith("/dashboard/owner") || pathname === "/register";
+  // REG-19: di halaman pendaftaran, tombol Daftar disembunyikan (anti loop) — Masuk tetap ada (REG-18).
+  const onRegisterPage = pathname === "/register" || pathname?.startsWith("/signup");
 
   return (
     <header className="sticky top-0 z-40 border-b border-[#e0d5bd] bg-paper/90 backdrop-blur">
@@ -71,7 +73,7 @@ export default function Navbar({ user, role }) {
           ))}
           {!user && (
           <Link
-            href="/signup?role=owner"
+            href="/register?role=employer"
             className={`hidden min-h-[44px] shrink-0 items-center rounded-lg px-2.5 text-sm font-semibold whitespace-nowrap sm:px-3 lg:inline-flex ${
               forOwnersActive
                 ? "text-[#2f2721] underline decoration-[#3d2c1e] decoration-2 underline-offset-8"
@@ -147,7 +149,7 @@ export default function Navbar({ user, role }) {
         ) : (
           <>
             <Link
-              href="/signup?role=owner"
+              href="/register?role=employer"
               className="ml-auto hidden shrink-0 rounded-full bg-coffee px-4 py-2 text-sm font-bold whitespace-nowrap text-white hover:bg-[#2e2015] md:block"
             >
               Pasang Loker
@@ -158,12 +160,14 @@ export default function Navbar({ user, role }) {
             >
               Masuk
             </Link>
+            {!onRegisterPage && (
             <Link
-              href="/signup"
+              href="/register"
               className="inline-flex min-h-[44px] shrink-0 items-center rounded-xl bg-caramel px-4 text-sm font-bold whitespace-nowrap text-white shadow-sm hover:bg-caramel-dark"
             >
               Daftar
             </Link>
+            )}
           </>
         )}
       </div>

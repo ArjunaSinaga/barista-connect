@@ -152,7 +152,7 @@ function LoginForm() {
 
       <p className="mt-6 text-center text-sm text-espresso-soft">
         Belum punya akun?{" "}
-        <Link href="/signup" className="font-bold text-matcha hover:underline">
+        <Link href="/register" className="font-bold text-matcha hover:underline">
           Daftar gratis
         </Link>
       </p>
