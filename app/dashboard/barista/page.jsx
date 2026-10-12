@@ -247,7 +247,7 @@ export default async function BaristaDashboardPage({ searchParams }) {
 
   return (
     <div className="min-h-screen bg-paper text-espresso lg:flex lg:h-[calc(100dvh-3.5rem)] lg:min-h-0 lg:flex-col lg:overflow-hidden">
-      <div className="mx-auto w-full max-w-[1400px] px-4 py-4 sm:px-6 lg:min-h-0 lg:flex-1">
+      <div className="mx-auto w-full max-w-[1600px] px-4 sm:px-6 py-4 sm:px-6 lg:min-h-0 lg:flex-1">
         <BaristaShell
           initialView={tab}
           sidebar={{ barista: { ...(bp ?? {}), id: user.id, hasProfile: Boolean(bp) }, counts: { applied: total, saved: savedIds.size } }}

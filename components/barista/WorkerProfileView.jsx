@@ -24,7 +24,7 @@ export default function WorkerProfileView({ b, workHistory, ratings, avg, rating
   const openTypes = (b.open_to_types ?? []).map((t) => EMPLOYMENT_LABELS[t] ?? t);
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-6 sm:px-6">
+    <div className="mx-auto w-full max-w-[1600px] px-4 sm:px-6 py-6 sm:px-6">
       <div className="grid items-start gap-4 lg:grid-cols-[210px_minmax(0,1fr)] xl:grid-cols-[210px_minmax(0,1fr)_300px]">
         {/* Sidebar */}
         <nav aria-label="Profil" className="rounded-2xl border border-[#e8e0cf] bg-white p-2 max-lg:flex max-lg:gap-1 max-lg:overflow-x-auto">

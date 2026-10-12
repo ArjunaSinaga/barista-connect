@@ -45,7 +45,7 @@ export default async function InboxPage({ searchParams }) {
   }
 
   return (
-    <div className="mx-auto max-w-2xl px-4 py-8">
+    <div className="mx-auto w-full max-w-[1600px] px-4 sm:px-6 py-8">
       <h1 className="text-2xl font-extrabold text-espresso">Pesan</h1>
       <p className="mt-1 mb-4 text-sm text-espresso-soft">
         Percakapan kamu dengan{" "}

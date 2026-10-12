@@ -93,7 +93,7 @@ export default async function LandingPage() {
   return (
     <div className="min-h-screen bg-[#F5F0E4] text-espresso">
       {/* Hero — zona krem 1: panel flat, gambar bleed ke tepi + fade kiri */}
-      <section className="mx-auto w-full max-w-[1400px] px-4 pt-6 sm:px-6">
+      <section className="mx-auto w-full max-w-[1600px] px-4 sm:px-6 pt-6 sm:px-6">
         <div className="grid items-stretch gap-6 overflow-hidden rounded-3xl border border-[#e7dabf] bg-[#F4EDDD] p-6 sm:p-8 lg:grid-cols-2 lg:gap-0 lg:p-0 lg:pl-10">
           <div className="min-w-0 lg:py-10">
             <p className="inline-flex items-center gap-1.5 rounded-full bg-white/80 px-3 py-1 text-[11px] font-bold text-matcha">
@@ -147,7 +147,7 @@ export default async function LandingPage() {
       </section>
 
       {/* Lapis 2 — zona putih: konten Featured Jobs / Trust / Talent / Academy */}
-      <div className="mx-auto w-full max-w-[1400px] px-4 sm:px-6">
+      <div className="mx-auto w-full max-w-[1600px] px-4 sm:px-6">
         <div className="mt-6 rounded-3xl border border-[#eee5d2] bg-white px-4 pt-2 pb-10 sm:px-6">
       {/* Featured Jobs */}
       <section className="pt-8">

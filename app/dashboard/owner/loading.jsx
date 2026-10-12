@@ -3,7 +3,7 @@ import { Skeleton } from "@/components/ui/Skeleton";
 // Paritas barista: skeleton mirip layout (hero + 4 stat + 2 panel), bukan kotak generik.
 export default function OwnerDashboardLoading() {
   return (
-    <div className="mx-auto max-w-6xl space-y-4 px-4 py-8" aria-label="Memuat dashboard">
+    <div className="mx-auto w-full max-w-[1600px] space-y-4 px-4 sm:px-6 py-8" aria-label="Memuat dashboard">
       <div className="rounded-2xl border border-[#e8e0cf] bg-[#faf6ec] p-5 sm:p-6">
         <Skeleton className="h-4 w-40" />
         <Skeleton className="mt-2 h-8 w-64" />

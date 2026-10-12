@@ -1,6 +1,6 @@
 export default function BaristaDashboardLoading() {
   return (
-    <div className="mx-auto max-w-6xl animate-pulse px-4 py-8" aria-label="Memuat dashboard">
+    <div className="mx-auto w-full max-w-[1600px] animate-pulse px-4 sm:px-6 py-8" aria-label="Memuat dashboard">
       <div className="h-6 w-40 rounded bg-latte" />
       <div className="mt-2 h-9 w-56 rounded bg-latte" />
       <div className="mt-6 grid grid-cols-2 gap-3 lg:grid-cols-4">

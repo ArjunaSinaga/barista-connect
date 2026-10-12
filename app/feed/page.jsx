@@ -35,7 +35,7 @@ export default async function FeedPage() {
   const authorMap = new Map((authors ?? []).map((a) => [a.id, a]));
 
   return (
-    <div className="mx-auto max-w-2xl px-4 py-8">
+    <div className="mx-auto w-full max-w-4xl px-4 sm:px-6 py-8">
       <h1 className="text-2xl font-black text-espresso">Feed Barista</h1>
       <p className="mt-1 text-sm text-espresso-soft">
         Kreasi dan cerita dari barista — terlihat publik, siapa pun bisa melihat.

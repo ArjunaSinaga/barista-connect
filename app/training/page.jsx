@@ -78,7 +78,7 @@ export default async function TrainingPage({ searchParams }) {
   }
 
   return (
-    <div className="mx-auto max-w-5xl px-4 py-8">
+    <div className="mx-auto w-full max-w-[1600px] px-4 sm:px-6 py-8">
       <p className="text-[11px] font-bold tracking-[0.18em] text-espresso-soft uppercase">
         Komunitas kopi yang kuat
       </p>

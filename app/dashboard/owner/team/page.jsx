@@ -63,7 +63,7 @@ export default async function TeamPage({ searchParams }) {
   const grouped = groupTeamByBarista(inCafe);
 
   return (
-    <div className="mx-auto max-w-3xl px-4 py-8">
+    <div className="mx-auto w-full max-w-[1600px] px-4 sm:px-6 py-8">
       <p className="text-xs font-bold tracking-widest text-caramel uppercase">Owner</p>
       <h1 className="mt-1 text-2xl font-extrabold text-espresso">
         Tim Saya ({grouped.length})

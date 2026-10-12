@@ -68,7 +68,7 @@ export default async function ReviewsPage({ searchParams }) {
   groups.sort(sort === "rating" ? (a, b) => b.avg - a.avg : (a, b) => (b.latest < a.latest ? -1 : 1));
 
   return (
-    <div className="mx-auto max-w-3xl px-4 py-8">
+    <div className="mx-auto w-full max-w-[1600px] px-4 sm:px-6 py-8">
       <p className="text-[11px] font-bold tracking-[0.18em] text-espresso-soft uppercase">Ulasan komunitas</p>
       <h1 className="font-display mt-1 text-2xl font-semibold tracking-tight text-espresso">Ulasan</h1>
       <p className="mt-1 text-sm text-espresso-soft">Top barista berdasarkan penilaian real pemilik kafe. Klik untuk lihat ulasannya.</p>

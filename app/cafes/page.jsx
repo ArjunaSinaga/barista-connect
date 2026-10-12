@@ -22,7 +22,7 @@ export default async function CafesPage({ searchParams }) {
   const list = data ?? [];
 
   return (
-    <div className="mx-auto max-w-3xl px-4 py-8">
+    <div className="mx-auto w-full max-w-[1600px] px-4 sm:px-6 py-8">
       <h1 className="flex items-center gap-2 text-2xl font-extrabold text-espresso">
         <Store size={22} className="text-caramel" /> Daftar Kafe
       </h1>

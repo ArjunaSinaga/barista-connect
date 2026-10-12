@@ -32,7 +32,7 @@ export default async function ApplicantsPage({ params }) {
   }
   if (!allowed) {
     return (
-      <div className="mx-auto max-w-3xl px-4 py-8">
+      <div className="mx-auto w-full max-w-[1600px] px-4 sm:px-6 py-8">
         <EmptyState
           icon={<UsersRound size={22} />}
           title="Bukan lowonganmu"
@@ -75,7 +75,7 @@ export default async function ApplicantsPage({ params }) {
 
   return (
     <div>
-      <div className="mx-auto max-w-3xl px-4 pt-8">
+      <div className="mx-auto w-full max-w-[1600px] px-4 sm:px-6 pt-8">
         <p className="text-xs font-bold tracking-wide text-espresso-soft uppercase">
           Lowongan:{" "}
           <span className="text-caramel">{job.title}</span>{" "}

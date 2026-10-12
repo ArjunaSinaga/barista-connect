@@ -41,7 +41,7 @@ export default async function EditJobPage({ params }) {
 
   return (
     <div>
-      <div className="mx-auto max-w-4xl px-4 pt-8">
+      <div className="mx-auto w-full max-w-[1600px] px-4 sm:px-6 pt-8">
         <h1 className="text-2xl font-extrabold text-espresso">
           Edit Lowongan
         </h1>

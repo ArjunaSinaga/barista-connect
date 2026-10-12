@@ -50,7 +50,7 @@ export default async function CafePublicPage({ params }) {
     .limit(10);
 
   return (
-    <div className="mx-auto max-w-3xl px-4 py-8">
+    <div className="mx-auto w-full max-w-[1600px] px-4 sm:px-6 py-8">
       <div className="overflow-hidden rounded-2xl card-dark shadow-sm">
         {(kafe.photo_urls ?? []).length > 0 && (
           <div className="grid grid-cols-2 gap-1 p-1">
