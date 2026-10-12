@@ -20,8 +20,6 @@ const COLS = [
   {
     title: "Bantuan",
     links: [
-      ["FAQ", "/faq"],
-      ["Tentang Kami", "/about"],
       ["Kebijakan Trust", "/trust"],
     ],
   },
