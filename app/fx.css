@@ -126,8 +126,17 @@
 [class*="hover:border-coffee"]:active { scale: .96; }
 .bg-coffee:active { scale: .97; }
 
+/* Panel detail /jobs: slide-in dari kanan + fade saat mount (?job= diklik).
+   Keluar = navigasi server instan (tak bisa dianimasikan tanpa wrapper client). */
+@keyframes fx-panel-in {
+  from { transform: translateX(28px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+.fx-panel-enter { animation: fx-panel-in .28s cubic-bezier(.32,.72,.35,1); }
+
 /* Aksesibilitas: matikan gerak bila pengguna memintanya */
 @media (prefers-reduced-motion: reduce) {
+  .fx-panel-enter { animation: none !important; }
   .fx-lift, .fx-glow, .fx-shimmer::before, .fx-fill, .fx-fill::after,
   .fx-scale, .fx-underline::after, .fx-glowborder, .fx-rotate-icon svg,
   .fx-border-draw::before, .fx-border-draw::after, .fx-flip-inner,

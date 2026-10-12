@@ -128,7 +128,7 @@ export default async function JobsPage({ searchParams }) {
 
   const total = jobs.length;
   const visible = jobs.slice(0, limit);
-  const selected = jobs.find((j) => j.id === jobParam) ?? visible[0] ?? null;
+  const selected = jobParam ? (jobs.find((j) => j.id === jobParam) ?? null) : null;
   const appliedSelected = selected ? appliedIds.has(selected.id) : false;
   const savedSelected = selected ? savedIds.has(selected.id) : false;
 
@@ -183,7 +183,7 @@ export default async function JobsPage({ searchParams }) {
   return (
     <div className="min-h-screen bg-paper text-espresso lg:flex lg:h-[calc(100dvh-3.5rem)] lg:min-h-0 lg:flex-col lg:overflow-hidden">
       <div className="mx-auto w-full max-w-[1400px] px-4 py-4 sm:px-6 lg:min-h-0 lg:flex-1">
-        <div className="grid items-start gap-4 lg:h-full lg:grid-cols-[240px_minmax(0,1fr)] xl:grid-cols-[250px_minmax(0,1fr)_360px]">
+        <div className={`grid items-start gap-4 lg:h-full ${selected ? "lg:grid-cols-[240px_minmax(0,1fr)] xl:grid-cols-[250px_minmax(0,1fr)_360px]" : "lg:grid-cols-[240px_minmax(0,1fr)]"}`}>
           {/* Tengah: hero + filter + list */}
           <div className="order-1 min-w-0 space-y-3 lg:order-2 lg:h-full lg:min-h-0 lg:overflow-y-auto lg:pr-1 lg:pb-1 no-scrollbar">
             <div className="relative grid overflow-hidden rounded-2xl border border-[#e8e0cf] bg-[#faf6ec] md:grid-cols-[1fr_220px]">
@@ -279,9 +279,9 @@ export default async function JobsPage({ searchParams }) {
             )}
           </div>
 
-          {/* Kanan: panel detail */}
-          <div className="order-2 min-w-0 lg:order-3 lg:h-full lg:min-h-0 lg:overflow-y-auto lg:pb-1 no-scrollbar">
-            {selected ? (
+          {/* Kanan: panel detail — hanya muncul saat ?job= ada (klik kartu) */}
+          {selected && (
+          <div key={selected.id} className="fx-panel-enter order-2 min-w-0 lg:order-3 lg:h-full lg:min-h-0 lg:overflow-y-auto lg:pb-1 no-scrollbar">
               <JobDetailPanel
                 job={selected}
                 cafeName={selCafeName}
@@ -293,15 +293,10 @@ export default async function JobsPage({ searchParams }) {
                 applied={appliedSelected}
                 saved={savedSelected}
                 canApply={!isOwner}
+                closeHref={qs ? `/jobs?${qs}` : "/jobs"}
               />
-            ) : (
-              <EmptyState
-                icon={<Search size={20} />}
-                title="Pilih loker"
-                subtitle="Klik loker mana pun untuk melihat detailnya di sini."
-              />
-            )}
           </div>
+          )}
 
           {/* Kiri: profil */}
           <div className="order-3 min-w-0 lg:order-1 lg:h-full lg:min-h-0 lg:overflow-y-auto lg:pb-1 no-scrollbar">

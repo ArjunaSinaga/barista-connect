@@ -15,7 +15,7 @@ const TABS = ["Ringkasan", "Tentang", "Ulasan"];
 
 // Panel detail kanan ala board G1: galeri + info + tabs + Apply.
 // Props plain (serializable) dari server.
-export default function JobDetailPanel({ job, cafeName, cafeHref, types, avg, count, reviews, applied, saved, canApply }) {
+export default function JobDetailPanel({ job, cafeName, cafeHref, types, avg, count, reviews, applied, saved, canApply, closeHref }) {
   const [tab, setTab] = useState("Ringkasan");
   const [shared, setShared] = useState(false);
   const photos = job.cafes?.photo_urls?.filter(Boolean).slice(0, 4) ?? [];
@@ -60,7 +60,7 @@ export default function JobDetailPanel({ job, cafeName, cafeHref, types, avg, co
             <p className="truncate text-xs text-espresso-soft">{cafeName}</p>
           </div>
           <Link
-            href="/jobs"
+            href={closeHref ?? "/jobs"}
             scroll={false}
             aria-label="Close detail panel"
             title="Close"
