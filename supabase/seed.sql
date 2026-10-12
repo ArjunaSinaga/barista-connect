@@ -1,5 +1,5 @@
 -- ============================================================
--- BaristaConnect - Demo data (OPTIONAL)
+-- kerja.inc - Demo data (OPTIONAL)
 -- Creates 3 demo owner accounts + 8 demo baristas + job posts.
 -- Demo password for ALL seeded accounts: password123
 -- Safe to re-run: wipes previous demo users first.

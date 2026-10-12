@@ -1,6 +1,6 @@
 # Default Project Wiki
 
-Personal knowledge base for Barista Connect.
+Personal knowledge base for kerja.inc.
 
 ## Sections
 - [[purpose]]

@@ -1,4 +1,4 @@
-# ☕ BaristaConnect
+# ☕ kerja.inc
 
 Platform pencarian kerja khusus **barista & casual worker** — pemilik coffee shop memasang lowongan, barista melengkapi profil sekali lalu melamar. Termasuk chat real-time berbantu AI.
 

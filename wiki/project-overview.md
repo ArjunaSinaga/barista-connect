@@ -1,7 +1,7 @@
-# BaristaConnect — Project Overview
+# kerja.inc — Project Overview
 
 > Dokumen ini ditulis gaya Project Manager: status, fitur, alur, dan roadmap dalam satu tempat.
-> Update terakhir: 13 Sep 2026 · Live: `barista-connect.vercel.app` · Repo: `ArjunaSinaga/barista-connect` (branch `main`)
+> Update terakhir: 13 Sep 2026 · Live: `kerja-inc.vercel.app` · Repo: `ArjunaSinaga/kerja-inc` (branch `main`)
 
 ## 1. Ringkasan Eksekutif
 

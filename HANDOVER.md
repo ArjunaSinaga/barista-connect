@@ -1,4 +1,4 @@
-# BaristaConnect — Handover Programmer
+# kerja.inc — Handover Programmer
 
 > Copy-paste file ini ke Notion, lalu share link Notion ke programmer.
 
@@ -6,10 +6,10 @@
 
 | Apa | URL |
 |---|---|
-| GitHub repo | https://github.com/ArjunaSinaga/barista-connect |
-| Live site | https://barista-connect.vercel.app |
-| Vercel dashboard | https://vercel.com/dashboard (cari project `barista-connect`) |
-| Supabase dashboard | buka https://supabase.com/dashboard, cari project BaristaConnect |
+| GitHub repo | https://github.com/ArjunaSinaga/kerja-inc |
+| Live site | https://kerja-inc.vercel.app |
+| Vercel dashboard | https://vercel.com/dashboard (cari project `kerja-inc`) |
+| Supabase dashboard | buka https://supabase.com/dashboard, cari project kerja.inc |
 | Local dev | http://localhost:3000 |
 
 Branch aktif: `main`
@@ -23,8 +23,8 @@ Branch aktif: `main`
 ## 3. Cara jalan lokal (5 menit)
 
 ```powershell
-git clone https://github.com/ArjunaSinaga/barista-connect.git
-cd barista-connect
+git clone https://github.com/ArjunaSinaga/kerja-inc.git
+cd kerja-inc
 npm install
 # copy .env.local dari owner (jangan commit!), lalu:
 npm run dev
@@ -67,7 +67,7 @@ Sumber kebenaran: `supabase/migrations/` (15 file, dari 20250903 sampai 20260925
 
 ## 8. Deploy
 
-Push ke `main` → Vercel auto-deploy → cek https://barista-connect.vercel.app. Debug: Vercel → Deployments → Logs. API sehat: `/api/healthz`.
+Push ke `main` → Vercel auto-deploy → cek https://kerja-inc.vercel.app. Debug: Vercel → Deployments → Logs. API sehat: `/api/healthz`.
 
 ## 9. Folder non-produksi (abaikan, jangan hapus)
 

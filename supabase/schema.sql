@@ -1,5 +1,5 @@
 -- ============================================================
--- BaristaConnect - Full database schema
+-- kerja.inc - Full database schema
 -- Run once: Supabase Dashboard -> SQL Editor -> New query -> paste -> Run
 -- ============================================================
 

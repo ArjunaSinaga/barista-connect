@@ -73,7 +73,7 @@ export default async function AcademyPublicPage({ params }) {
         <ol className="mt-2 space-y-2 text-xs leading-5 text-espresso-soft">
           <li><span className="font-extrabold text-espresso">1. Gabung waitlist</span> — pilih kursus di halaman training, isi email.</li>
           <li><span className="font-extrabold text-espresso">2. Training tatap muka</span> — jadwal & pembayaran diatur langsung dengan akademi.</li>
-          <li><span className="font-extrabold text-espresso">3. Sertifikat terbit</span> — tercatat permanen di BarisCon dan bisa diverifikasi siapa saja.</li>
+          <li><span className="font-extrabold text-espresso">3. Sertifikat terbit</span> — tercatat permanen di kerja.inc dan bisa diverifikasi siapa saja.</li>
         </ol>
       </section>
 

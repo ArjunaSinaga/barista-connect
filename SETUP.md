@@ -1,4 +1,4 @@
-# BaristaConnect — Setup Guide
+# kerja.inc — Setup Guide
 
 Everything below is **free** and requires **no credit card**.
 Total time: ±10 minutes.
@@ -9,7 +9,7 @@ Total time: ±10 minutes.
 
 1. Go to <https://supabase.com> → **Start your project** → sign up (GitHub recommended).
 2. Click **New Project**:
-   - Name: `barista-connect`
+   - Name: `kerja-inc`
    - Database password: generate one and save it somewhere safe
    - Region: **Singapore** (closest to Indonesia)
 3. Wait ~2 minutes for provisioning.

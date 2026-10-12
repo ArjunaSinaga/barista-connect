@@ -1,4 +1,4 @@
-package id.baristaconnect.app;
+package id.kerjainc.app;
 
 import com.getcapacitor.BridgeActivity;
 

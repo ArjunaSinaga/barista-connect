@@ -1,10 +1,10 @@
-# BaristaConnect — Dokumen Konsultan
+# kerja.inc — Dokumen Konsultan
 
-Tanggal: 2026-10-06 | Versi aplikasi: main pasca commit eb9d806 | Lingkungan: Next.js + Supabase + Vercel (live: https://barista-connect.vercel.app)
+Tanggal: 2026-10-06 | Versi aplikasi: main pasca commit eb9d806 | Lingkungan: Next.js + Supabase + Vercel (live: https://kerja-inc.vercel.app)
 
 ## 1. Ringkasan Eksekutif
 
-BaristaConnect adalah platform yang mempertemukan barista (pencari dan pekerja kopi) dengan pemilik kedai kopi, dilengkapi modul akademi pelatihan. Posisi produk ini setara LinkedIn yang dikhususkan untuk industri kopi: profil profesional barista (portofolio foto, Curriculum Vitae, endorsement keahlian), jaringan koneksi antar profesional, feed publik, serta modul hiring yang lengkap bagi pemilik kedai (pemasangan lowongan, pengelolaan pelamar, pengelolaan tim, pesan, dan penilaian dua arah).
+kerja.inc adalah platform yang mempertemukan barista (pencari dan pekerja kopi) dengan pemilik kedai kopi, dilengkapi modul akademi pelatihan. Posisi produk ini setara LinkedIn yang dikhususkan untuk industri kopi: profil profesional barista (portofolio foto, Curriculum Vitae, endorsement keahlian), jaringan koneksi antar profesional, feed publik, serta modul hiring yang lengkap bagi pemilik kedai (pemasangan lowongan, pengelolaan pelamar, pengelolaan tim, pesan, dan penilaian dua arah).
 
 Status implementasi pada saat dokumen ini disusun:
 

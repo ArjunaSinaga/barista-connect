@@ -4,7 +4,7 @@
 
 ## Identitas
 - Nama: Arjuna Rahman Maulana Sinaga
-- Role: Founder Barista Connect, Mahasiswa SI Amikom Yogyakarta 2024-2028
+- Role: Founder kerja.inc, Mahasiswa SI Amikom Yogyakarta 2024-2028
 - Lokasi: Greater Yogyakarta | WA 085228883510
 - Tagline: "Kedai Kopi Go-Digital. Tanpa Ribet."
 
@@ -23,7 +23,7 @@
 - Skeptis sama jalur pemerintah/birokrasi, prefer solusi mandiri/teknis yang bisa dia kontrol
 - Kalau bilang "gua bodoh, ga ada skill" = lagi down, butuh di-empower dengan langkah no-skill, bukan diiyakan
 - Values: protektif & loyal ke orang dekat, marah kalau orang disayang disakiti
-- Project: Barista Connect - 5 langkah (Daftar Profil -> Pasang/Cari Lowongan -> Apply 1-Klik -> Chat & Interview realtime -> Hired & Rating), KPI <2 menit apply, <30 detik chat
+- Project: kerja.inc - 5 langkah (Daftar Profil -> Pasang/Cari Lowongan -> Apply 1-Klik -> Chat & Interview realtime -> Hired & Rating), KPI <2 menit apply, <30 detik chat
 
 ## Konteks Sensitif Aktif
 - Mantan: di-block sejak akhir 2024 pas putus, tidak bisa kontak langsung. Komunikasi titip via adik mantan
@@ -41,4 +41,4 @@
 
 ## Update Log
 - 2026-09-05: Initial profile dari sesi curhat kasus mantan
-- 2026-09-05: Enriched dengan vibe coding, Barista Connect, work style dari biodata & repo
+- 2026-09-05: Enriched dengan vibe coding, kerja.inc, work style dari biodata & repo

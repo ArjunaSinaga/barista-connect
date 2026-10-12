@@ -57,7 +57,7 @@ export default async function VerifyCertPage({ searchParams }) {
         Verifikasi sertifikat
       </h1>
       <p className="mt-1 max-w-xl text-sm leading-6 text-espresso-soft">
-        Setiap sertifikat yang diterbitkan lewat BarisCon tercatat permanen. Cari nama barista untuk memeriksa.
+        Setiap sertifikat yang diterbitkan lewat kerja.inc tercatat permanen. Cari nama barista untuk memeriksa.
       </p>
       <form action="/verify-cert" method="GET" role="search" className="mt-4 flex items-center gap-2">
         <div className="flex min-w-0 flex-1 items-center gap-2 rounded-full border border-[#e0d5bd] bg-white px-4 py-2">
