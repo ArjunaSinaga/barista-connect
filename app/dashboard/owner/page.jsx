@@ -213,7 +213,7 @@ export default async function OwnerDashboardPage({ searchParams }) {
 
   return (
     <div className="min-h-screen bg-paper text-espresso lg:flex lg:h-[calc(100dvh-3.5rem)] lg:min-h-0 lg:flex-col lg:overflow-hidden">
-      <div className="mx-auto w-full max-w-[1600px] px-4 sm:px-6 py-4 sm:px-6 lg:min-h-0 lg:flex-1">
+      <div className="mx-auto w-full max-w-[1600px] px-4 py-4 sm:px-6 lg:min-h-0 lg:flex-1">
         {loadError && (
           <p className="mb-3 rounded-xl border border-red-300 bg-red-50 px-4 py-3 text-xs font-bold text-red-600">
             Data gagal dimuat — periksa koneksi lalu muat ulang halaman ini.

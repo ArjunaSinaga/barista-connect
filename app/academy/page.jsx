@@ -29,7 +29,7 @@ export default async function AcademyIndexPage({ searchParams }) {
 
   return (
     <div className="min-h-screen bg-paper text-espresso">
-      <div className="mx-auto w-full max-w-[1600px] px-4 sm:px-6 py-4 sm:px-6">
+      <div className="mx-auto w-full max-w-[1600px] px-4 py-4 sm:px-6">
         <div className="relative grid overflow-hidden rounded-2xl border border-[#e8e0cf] bg-[#faf6ec] md:grid-cols-[1fr_220px]">
           <div className="px-5 py-5 sm:px-6">
             <p className="text-[11px] font-bold tracking-[0.18em] text-espresso-soft uppercase">

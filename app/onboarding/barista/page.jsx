@@ -176,7 +176,7 @@ export default function BaristaOnboardingPage() {
   return (
     <div className="min-h-screen bg-[#f6f1e7] text-[#1c1412]">
       {/* header */}
-      <header className="mx-auto w-full flex max-w-[1600px] items-center justify-between px-4 sm:px-6 py-4">
+      <header className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4">
         <Link href="/" className="text-xl font-extrabold tracking-tight">kerja<span className="text-[#b07a3b]">.inc</span></Link>
         <nav className="hidden items-center gap-6 text-sm font-semibold text-[#6b5d4d] md:flex">
           <Link href="/jobs">Cari Kerja</Link><Link href="/talent">Talenta</Link><Link href="/training">Academy</Link><Link href="/feed">Feed</Link>
@@ -188,7 +188,7 @@ export default function BaristaOnboardingPage() {
       </header>
 
       {/* hero */}
-      <section className="mx-auto w-full grid max-w-[1600px] gap-6 px-4 sm:px-6 pb-6 md:grid-cols-2 md:items-center">
+      <section className="mx-auto grid max-w-6xl gap-6 px-4 pb-6 md:grid-cols-2 md:items-center">
         <div>
           <h1 className="text-3xl font-extrabold leading-tight md:text-4xl">Buat profil kamu<br />dan temukan peluang<br />kerja terbaik</h1>
           <p className="mt-3 max-w-md text-sm text-[#6b5d4d]">Lengkapi profilmu langkah demi langkah, dan sistem kami akan mencocokkannya dengan peluang kerja yang sesuai dengan keahlianmu.</p>
@@ -201,7 +201,7 @@ export default function BaristaOnboardingPage() {
       </section>
 
       {/* stepper */}
-      <div className="mx-auto w-full max-w-[1600px] px-4 sm:px-6">
+      <div className="mx-auto max-w-6xl px-4">
         <div className="flex items-center rounded-2xl bg-white px-4 py-4 shadow-sm">
           {STEPS.map((label, i) => (
             <div key={label} className="flex flex-1 items-center last:flex-none">
@@ -218,7 +218,7 @@ export default function BaristaOnboardingPage() {
       </div>
 
       {/* body */}
-      <main className="mx-auto w-full grid max-w-[1600px] gap-6 px-4 sm:px-6 py-6 lg:grid-cols-[1fr_300px]">
+      <main className="mx-auto grid max-w-6xl gap-6 px-4 py-6 lg:grid-cols-[1fr_300px]">
         <section className="rounded-2xl bg-white p-6 shadow-sm">
           {step === 0 && (
             <div className="space-y-4">

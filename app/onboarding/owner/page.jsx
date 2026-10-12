@@ -276,7 +276,7 @@ export default function OwnerOnboardingPage() {
 
   return (
     <div className="min-h-screen bg-[#f6f1e7] text-[#1c1412]">
-      <div className="mx-auto w-full max-w-[1600px] px-4 sm:px-6 py-6 sm:px-6">
+      <div className="mx-auto max-w-6xl px-4 py-6 sm:px-6">
         <h1 className="text-2xl font-extrabold">Selamat datang, {form.business_name || "Owner"}! 👋</h1>
         <p className="mt-1 max-w-2xl text-sm text-[#6b5d4d]">
           Sebelum memulai proses rekrutmen, lengkapi terlebih dahulu data outlet dan profil perusahaan Anda.

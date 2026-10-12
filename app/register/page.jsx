@@ -38,7 +38,7 @@ export default async function RegisterPage() {
   const stats = await getPromoStats();
   return (
     <div className="bg-[#f6f1e5] text-[#2f2721]">
-      <div className="mx-auto w-full max-w-[1600px] px-4 sm:px-6 py-6 sm:px-6 sm:py-8">
+      <div className="mx-auto w-full max-w-[1600px] px-4 py-6 sm:px-6 sm:py-8">
         {/* REG-01: kembali ke beranda */}
         <Link
           href="/"

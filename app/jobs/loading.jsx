@@ -4,7 +4,7 @@ import { CardSkeleton } from "@/components/ui/Skeleton";
 export default function Loading() {
   return (
     <div className="min-h-screen bg-paper text-espresso">
-      <div className="mx-auto w-full max-w-[1600px] px-4 sm:px-6 py-4 sm:px-6">
+      <div className="mx-auto w-full max-w-[1600px] px-4 py-4 sm:px-6">
         <div className="grid items-start gap-4 lg:grid-cols-[240px_minmax(0,1fr)] xl:grid-cols-[250px_minmax(0,1fr)_360px]">
           <div className="order-1 space-y-3 lg:order-2">
             <div className="h-44 animate-pulse rounded-2xl bg-[#efe9d9]" />
