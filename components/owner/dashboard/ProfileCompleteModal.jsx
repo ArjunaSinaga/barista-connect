@@ -1,10 +1,22 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import { CheckCircle2, Circle, X } from "lucide-react";
 
 // Popup daftar bagian profil yang belum lengkap.
 // Props: open, onClose, items [{key,label,done,target}], onAction(target) — pindah tab tengah.
+// Paritas barista (JobGallery modal): ESC menutup + fokus awal + labelledby.
 export default function ProfileCompleteModal({ open, onClose, items = [], onAction }) {
+  const closeRef = useRef(null);
+  useEffect(() => {
+    if (!open) return;
+    closeRef.current?.focus?.();
+    function onKey(e) {
+      if (e.key === "Escape") onClose?.();
+    }
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [open, onClose]);
   if (!open) return null;
   const missing = items.filter((i) => !i.done);
   const go = (target) => {
@@ -12,17 +24,17 @@ export default function ProfileCompleteModal({ open, onClose, items = [], onActi
     onAction?.(target);
   };
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4" role="dialog" aria-modal="true">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4" role="dialog" aria-modal="true" aria-labelledby="pcm-title">
       <button aria-label="Tutup" onClick={onClose} className="absolute inset-0 bg-black/50" />
       <div className="relative w-full max-w-md rounded-2xl border border-[#e8e0cf] bg-white p-5 shadow-xl">
         <div className="flex items-start justify-between gap-2">
           <div>
-            <h3 className="text-base font-extrabold text-espresso">Lengkapi Profil Bisnis</h3>
+            <h3 id="pcm-title" className="text-base font-extrabold text-espresso">Lengkapi Profil Bisnis</h3>
             <p className="mt-0.5 text-xs text-espresso-soft">
               {missing.length ? `${missing.length} bagian lagi menuju 100%` : "Semua lengkap — profil 100% 🎉"}
             </p>
           </div>
-          <button onClick={onClose} aria-label="Tutup popup" className="flex h-8 w-8 items-center justify-center rounded-full border border-[#e0d5bd] text-espresso-soft hover:text-espresso">
+          <button ref={closeRef} onClick={onClose} aria-label="Tutup popup" className="flex h-8 w-8 items-center justify-center rounded-full border border-[#e0d5bd] text-espresso-soft hover:text-espresso">
             <X size={15} />
           </button>
         </div>

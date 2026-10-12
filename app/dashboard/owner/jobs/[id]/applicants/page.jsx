@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { redirect } from "next/navigation";
+import { redirect, notFound } from "next/navigation";
 import { createClient, getSessionSafe, isSupabaseConfigured } from "@/lib/supabase/server";
 import ApplicantsBoard from "@/components/owner/ApplicantsBoard";
 import JobDeleteButton from "@/components/jobs/JobDeleteButton";
@@ -22,11 +22,8 @@ export default async function ApplicantsPage({ params }) {
     .eq("id", id)
     .maybeSingle();
   if (!jobRow) {
-    return (
-      <div className="mx-auto max-w-3xl px-4 py-8">
-        <EmptyState icon={<UsersRound size={22} />} title="Lowongan tidak ditemukan" subtitle="Lowongan ini sudah dihapus atau ID-nya salah. Cek daftar lowongan di dashboard." actionLabel="Ke Dashboard" actionHref="/dashboard/owner" />
-      </div>
-    );
+    // Paritas barista (JOBDET notFound guard): ID salah/hapus -> not-found.jsx.
+    notFound();
   }
   let allowed = jobRow.owner_id === user.id;
   if (!allowed) {
@@ -96,6 +93,7 @@ export default async function ApplicantsPage({ params }) {
       </div>
       <ApplicantsBoard
         jobId={job.id}
+        jobTitle={job.title}
         ownerId={user.id}
         initialApplicants={apps ?? []}
         viewedBlocked={viewedBlocked}

@@ -1,10 +1,29 @@
+"use client";
+
+import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { Users, Eye, Store, Clock3, CheckCircle2, XCircle } from "lucide-react";
+import { Users, Eye, Store, Clock3, CheckCircle2, XCircle, Search } from "lucide-react";
 import { EmptyState } from "@/components/ui/EmptyState";
 import StatCard from "@/components/ui/StatCard";
 
 // Kolom tengah mode pelamar: tiap lowongan + pelamarnya, fokus ke Kelola.
+// Paritas barista (JobsFilterBar): pencarian tersinkron URL (?q=) — shareable + survive refresh.
 export default function PelamarView({ jobs, appCountByJob, statusByJob, totals, onBack }) {
+  const router = useRouter();
+  const params = useSearchParams();
+  const q = (params.get("q") ?? "").trim().toLowerCase();
+  function setQ(v) {
+    const next = new URLSearchParams(params.toString());
+    if (v.trim()) next.set("q", v.trim());
+    else next.delete("q");
+    router.push(`/dashboard/owner?${next.toString()}`, { scroll: false });
+  }
+  const list = q
+    ? (jobs ?? []).filter((j) =>
+        (j.title ?? "").toLowerCase().includes(q) ||
+        (j.cafes?.name ?? "").toLowerCase().includes(q)
+      )
+    : (jobs ?? []);
   return (
     <>
       <div className="flex flex-wrap items-start justify-between gap-3">
@@ -22,14 +41,37 @@ export default function PelamarView({ jobs, appCountByJob, statusByJob, totals, 
         </button>
       </div>
 
-      <div className="grid grid-cols-2 gap-3 xl:grid-cols-4">
+      <div className="grid grid-cols-2 gap-3 xl:grid-cols-4" role="status" aria-label="Ringkasan pelamar">
         <StatCard icon={Users} label="Total" value={totals.total} circled={false} />
         <StatCard icon={Clock3} label="Menunggu" value={totals.pending} valueClass="text-[#9a6a2f]" circled={false} />
         <StatCard icon={CheckCircle2} label="Diterima" value={totals.accepted} valueClass="text-matcha" circled={false} />
         <StatCard icon={XCircle} label="Ditolak" value={totals.rejected} valueClass="text-espresso-soft" circled={false} />
       </div>
 
-      {!jobs?.length ? (
+      <div className="flex flex-wrap items-center gap-2">
+        <label htmlFor="pelamar-q" className="sr-only">Cari lowongan</label>
+        <span className="flex min-w-52 flex-1 items-center gap-1.5 rounded-full border border-[#e0d5bd] bg-white px-3.5 py-2 text-sm">
+          <Search size={14} className="shrink-0 text-espresso-soft" />
+          <input
+            id="pelamar-q"
+            defaultValue={params.get("q") ?? ""}
+            onChange={(e) => setQ(e.target.value)}
+            placeholder="Cari judul / outlet…"
+            className="w-full bg-transparent text-sm text-espresso outline-none placeholder:text-[#b6a98f]"
+          />
+        </span>
+        {q && <p className="text-xs text-espresso-soft" role="status">{list.length} dari {(jobs ?? []).length} lowongan</p>}
+      </div>
+
+      {!list?.length ? (
+        q ? (
+          <EmptyState
+            compact
+            icon={<Users size={18} />}
+            title="Tidak ketemu"
+            subtitle={`Tidak ada lowongan cocok "${params.get("q")}". Coba kata lain.`}
+          />
+        ) : (
         <EmptyState
           compact
           icon={<Users size={18} />}
@@ -38,10 +80,11 @@ export default function PelamarView({ jobs, appCountByJob, statusByJob, totals, 
           actionLabel="Buat Lowongan"
           actionHref="/dashboard/owner/jobs/new"
         />
+        )
       ) : (
         <div className="rounded-2xl border border-[#e8e0cf] bg-[#faf7ef] p-3">
           <ul className="max-h-[300px] space-y-3 overflow-y-auto no-scrollbar">
-          {jobs.map((job) => {
+          {list.map((job) => {
             const sb = statusByJob[job.id] ?? { pending: 0 };
             return (
               <li key={job.id} className="flex items-center gap-3 rounded-2xl border border-[#e8e0cf] bg-white p-4">

@@ -54,7 +54,7 @@ export default async function OwnerDashboardPage({ searchParams }) {
       apps = r2.data ?? []
     }
     const [o, c, grRaw, cw, bRaw, sv, tmRaw] = await Promise.all([
-      supabase.from("owners").select("business_name,avatar_url,whatsapp,location").eq("id", user.id).maybeSingle(),
+      supabase.from("owners").select("business_name,avatar_url,whatsapp,location,is_verified").eq("id", user.id).maybeSingle(),
       scope.length
         ? supabase.from("cafes").select("id,name,address,location,photo_urls,is_active,invite_code,owner_id,org_id").or(`owner_id.eq.${user.id},id.in.(${scopeCsv})`).order("created_at", { ascending: true })
         : supabase.from("cafes").select("id,name,address,location,photo_urls,is_active,invite_code,owner_id,org_id").eq("owner_id", user.id).order("created_at", { ascending: true }),
@@ -157,6 +157,7 @@ export default async function OwnerDashboardPage({ searchParams }) {
   const cafeMap = Object.fromEntries((cafes ?? []).map((c) => [c.id, c]));
   const overview = {
     businessName: ownerRow?.business_name ?? "Bisnis Anda",
+    isVerified: ownerRow?.is_verified === true,
     heroPhoto: firstCafe?.photo_urls?.[0] ?? null,
     cafes: cafes.map((c) => ({ id: c.id, name: c.name })),
     outletParam, rangeParam,

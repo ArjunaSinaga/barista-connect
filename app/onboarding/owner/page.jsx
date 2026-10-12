@@ -15,6 +15,7 @@ import { useToast } from "@/components/ui/toast";
 import { createClient } from "@/lib/supabase/client";
 import { AVATAR_MIME_TYPES, AVATAR_MAX_BYTES } from "@/lib/constants";
 import { compressImage } from "@/lib/image";
+import { thumb } from "@/lib/img";
 import { friendlyUpload } from "@/lib/errors";
 
 const STEPS = ["Informasi Dasar Perusahaan", "Detail Outlet", "Foto & Media Outlet", "Tim & Kontak Rekrutmen", "Review & Aktivasi"];
@@ -463,7 +464,7 @@ function PhotoGrid({ photos, onRemove, photoRef, onPick, uploading }) {
       <div className="mt-2 grid grid-cols-3 gap-2">
         {photos.map((u) => (
           <div key={u} className="group relative h-24 overflow-hidden rounded-xl">
-            <Image src={u} alt="Foto outlet" fill className="object-cover" sizes="160px" />
+            <Image src={thumb(u, { w: 320 })} alt="Foto outlet" fill className="object-cover" sizes="160px" />
             <button type="button" onClick={() => onRemove(u)} aria-label="Hapus foto" className="absolute top-1 right-1 flex h-6 w-6 items-center justify-center rounded-full bg-black/55 text-white opacity-0 group-hover:opacity-100">
               <Trash2 size={13} />
             </button>

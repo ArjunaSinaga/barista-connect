@@ -21,6 +21,12 @@ export default function SaveBaristaButton({ baristaId, baristaName, initialSaved
       router.push("/login");
       return;
     }
+    // Paritas barista (SaveButton "Hanya akun barista…"): tolak peran non-owner eksplisit.
+    const { data: prof } = await supabase.from("profiles").select("role").eq("id", user.id).maybeSingle();
+    if (prof && prof.role !== "owner" && prof.role !== "employer") {
+      toast("Hanya akun usaha yang bisa menyimpan kandidat", "error");
+      return;
+    }
     setBusy(true);
     try {
       if (saved) {

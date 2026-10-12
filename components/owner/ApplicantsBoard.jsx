@@ -4,7 +4,6 @@ import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
-  ArrowLeft,
   Check,
   FileText,
   MapPin,
@@ -24,6 +23,8 @@ import { relativeTime } from "@/lib/time";
 import { formatExpShort } from "@/lib/exp";
 import { createClient } from "@/lib/supabase/client";
 import RatingForm from "@/components/ratings/RatingForm";
+import BackButton from "@/components/jobs/BackButton";
+import JobShareButton from "@/components/jobs/JobShareButton";
 
 const ORDER = { accepted: 0, pending: 1, viewed: 2, rejected: 3, terminated: 4 };
 
@@ -67,6 +68,7 @@ function exportCsv(apps, title) {
 
 export default function ApplicantsBoard({
   jobId,
+  jobTitle,
   ownerId,
   initialApplicants,
   viewedBlocked = false,
@@ -75,6 +77,9 @@ export default function ApplicantsBoard({
   const toast = useToast();
   const [apps, setApps] = useState(initialApplicants);
   const [tab, setTab] = useState("all");
+  // Paritas barista (JobsFilterBar sort + JobsResults muat-lebih): sort eksplisit + pagination.
+  const [sort, setSort] = useState("newest");
+  const [visible, setVisible] = useState(10);
   const [busyId, setBusyId] = useState(null);
   const [ratings, setRatings] = useState({});
   const [teamByApp, setTeamByApp] = useState({});
@@ -106,17 +111,19 @@ export default function ApplicantsBoard({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const filtered = useMemo(
-    () =>
-      [...apps]
-        .filter((a) => tab === "all" || a.status === tab)
-        .sort(
-          (a, b) =>
-            ORDER[a.status] - ORDER[b.status] ||
-            new Date(b.created_at) - new Date(a.created_at)
-        ),
-    [apps, tab]
-  );
+  const filtered = useMemo(() => {
+    const list = [...apps].filter((a) => tab === "all" || a.status === tab);
+    const byName = (a, b) => (a.barista_profiles?.full_name ?? "").localeCompare(b.barista_profiles?.full_name ?? "", "id");
+    if (sort === "oldest") list.sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
+    else if (sort === "name") list.sort(byName);
+    else list.sort(
+      (a, b) =>
+        ORDER[a.status] - ORDER[b.status] ||
+        new Date(b.created_at) - new Date(a.created_at)
+    );
+    return list;
+  }, [apps, tab, sort]);
+  const shown = filtered.slice(0, visible);
 
   async function setStatus(appId, status) {
     setBusyId(appId);
@@ -154,14 +161,9 @@ export default function ApplicantsBoard({
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-8">
-      <Link
-        href="/dashboard/owner"
-        className="inline-flex items-center gap-1.5 text-sm font-bold text-espresso-soft hover:text-caramel"
-      >
-        <ArrowLeft size={16} /> Lowongan saya
-      </Link>
+      <BackButton fallback="/dashboard/owner?tab=pelamar" label="Lowongan saya" />
       <div className="mt-4 flex flex-wrap items-center gap-2">
-        <h1 className="text-2xl font-extrabold text-espresso">
+        <h1 className="text-2xl font-extrabold text-espresso" role="status">
                     Pelamar ({apps.length})
         </h1>
         {viewedBlocked && (
@@ -177,6 +179,21 @@ export default function ApplicantsBoard({
             ⬇ Unduh CSV
           </button>
         )}
+        <JobShareButton jobId={jobId} title={jobTitle ?? "Lowongan"} />
+      </div>
+
+      <div className="mt-4 flex flex-wrap items-center gap-2">
+        <label htmlFor="pelamar-sort" className="text-xs font-bold text-espresso-soft">Urutkan</label>
+        <select
+          id="pelamar-sort"
+          value={sort}
+          onChange={(e) => setSort(e.target.value)}
+          className="cursor-pointer rounded-full border border-[#e0d5bd] bg-white px-3 py-1.5 text-xs font-bold text-espresso outline-none"
+        >
+          <option value="newest">Terbaru</option>
+          <option value="oldest">Terlama</option>
+          <option value="name">Nama A–Z</option>
+        </select>
       </div>
 
       <div className="no-scrollbar mt-4 flex gap-2 overflow-x-auto">
@@ -188,7 +205,7 @@ export default function ApplicantsBoard({
           return (
             <button
               key={k}
-              onClick={() => setTab(k)}
+              onClick={() => { setTab(k); setVisible(10); }}
               className={`shrink-0 rounded-full px-4 py-2 min-h-[44px] inline-flex items-center text-xs font-bold transition-colors ${
                 tab === k
                   ? "bg-coffee text-white"
@@ -212,7 +229,7 @@ export default function ApplicantsBoard({
           />
         )}
 
-        {filtered.map((app) => {
+        {shown.map((app) => {
           const b = app.barista_profiles;
           const meta = STATUS_META[app.status];
           return (
@@ -355,6 +372,15 @@ export default function ApplicantsBoard({
           );
         })}
       </div>
+      {visible < filtered.length && (
+        <button
+          type="button"
+          onClick={() => setVisible((v) => v + 10)}
+          className="mt-2 w-full rounded-full border border-[#e0d5bd] bg-white px-4 py-2.5 text-xs font-bold text-espresso hover:border-coffee"
+        >
+          Muat lebih ({filtered.length - visible} lagi)
+        </button>
+      )}
     </div>
   );
 }

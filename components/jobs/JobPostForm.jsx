@@ -145,6 +145,10 @@ export default function JobPostForm({ initial = null }) {
   const [reqInput, setReqInput] = useState("");
   const [busy, setBusy] = useState(false);
   const [cafes, setCafes] = useState([]);
+  // Paritas barista (ApplyForm errors inline): pesan per-field, bukan cuma toast.
+  const [errors, setErrors] = useState({});
+  // Paritas barista (ApplyForm success state): panel sukses + CTA ganda ganti toast+redirect.
+  const [published, setPublished] = useState(null);
 
   const set = (k, v) => setForm((f) => ({ ...f, [k]: v }));
 
@@ -175,49 +179,59 @@ export default function JobPostForm({ initial = null }) {
   const line = schedLine(form.days, form.shifts, form.start_date, form.end_date, form.open_filled);
   const dirty = form.cafe_id || form.description || form.emp_type || form.resp.length || form.req.length;
 
+  // Kembalikan {field, message} agar bisa fokus otomatis (focusFirstError) + inline.
   function validStep(s) {
     if (s === 0) {
-      if (!form.cafe_id) return "Pilih outlet dulu";
-      if (!form.emp_type) return "Pilih 1 tipe pekerjaan";
+      if (!form.cafe_id) return { field: "cafe_id", message: "Pilih outlet dulu" };
+      if (!form.emp_type) return { field: "emp-type", message: "Pilih 1 tipe pekerjaan" };
       return null;
     }
     if (s === 1) {
-      if (form.description.trim().length < 20) return "Deskripsi minimal 20 karakter";
-      if (!form.resp.length) return "Tambahkan minimal 1 tanggung jawab";
-      if (!form.req.length) return "Tambahkan minimal 1 persyaratan";
-      if (form.salary_min && form.salary_max && Number(form.salary_max) < Number(form.salary_min)) return "Gaji maks harus >= gaji min";
-      if (form.emp_type === "casual" && form.salary_min && form.salary_period !== "shift") return "Untuk Harian gunakan periode Per shift";
+      if (form.description.trim().length < 20) return { field: "description", message: "Deskripsi minimal 20 karakter" };
+      if (!form.resp.length) return { field: "respInput", message: "Tambahkan minimal 1 tanggung jawab" };
+      if (!form.req.length) return { field: "reqInput", message: "Tambahkan minimal 1 persyaratan" };
+      if (form.salary_min && form.salary_max && Number(form.salary_max) < Number(form.salary_min)) return { field: "salary_min", message: "Gaji maks harus >= gaji min" };
+      if (form.emp_type === "casual" && form.salary_min && form.salary_period !== "shift") return { field: "salary_min", message: "Untuk Harian gunakan periode Per shift" };
       return null;
     }
     if (s === 2) {
-      if (!form.days.length) return "Pilih minimal 1 hari kerja";
+      if (!form.days.length) return { field: "days", message: "Pilih minimal 1 hari kerja" };
       const valid = form.shifts.filter((x) => x.start && x.end);
-      if (!valid.length) return "Isi minimal 1 shift (jam mulai & selesai)";
-      if (valid.some((x) => x.start >= x.end)) return "Jam selesai harus setelah jam mulai";
+      if (!valid.length) return { field: "shift-start", message: "Isi minimal 1 shift (jam mulai & selesai)" };
+      if (valid.some((x) => x.start >= x.end)) return { field: "shift-start", message: "Jam selesai harus setelah jam mulai" };
       const today = new Date().toISOString().slice(0, 10);
-      if (!form.start_date) return "Isi tanggal mulai";
-      if (!isEdit && form.start_date < today) return "Tanggal mulai tidak boleh masa lalu";
-      if (form.end_date && form.end_date <= form.start_date) return "Tanggal selesai harus setelah tanggal mulai";
+      if (!form.start_date) return { field: "start_date", message: "Isi tanggal mulai" };
+      if (!isEdit && form.start_date < today) return { field: "start_date", message: "Tanggal mulai tidak boleh masa lalu" };
+      if (form.end_date && form.end_date <= form.start_date) return { field: "end_date", message: "Tanggal selesai harus setelah tanggal mulai" };
       return null;
     }
     return null;
   }
 
+  function fail(err) {
+    setErrors({ [err.field]: err.message });
+    toast(err.message, "error");
+    focusFirstError({ [err.field]: 1 });
+  }
+
   function next() {
     const err = validStep(step);
-    if (err) { toast(err, "error"); return; }
+    if (err) { fail(err); return; }
+    setErrors({});
     setStep((s) => Math.min(s + 1, 3));
   }
 
   function cancel() {
     if (dirty && !confirm("Tinggalkan wizard? Data yang belum diterbitkan akan hilang dari halaman ini (draft browser tetap tersimpan).")) return;
-    router.push("/dashboard/owner?tab=active");
+    // Paritas barista (BackButton): kembali ke riwayat bila dari dashboard, fallback tab aktif.
+    if (typeof window !== "undefined" && window.history.length > 1 && document.referrer.includes("/dashboard/owner")) router.back();
+    else router.push("/dashboard/owner?tab=active");
   }
 
   async function publish() {
     for (const s of [0, 1, 2]) {
       const err = validStep(s);
-      if (err) { toast(`Langkah ${s + 1}: ${err}`, "error"); setStep(s); return; }
+      if (err) { setStep(s); fail(err); return; }
     }
     if (!kafe?.location?.trim() && !form.location) {
       toast("Kafe belum punya kota — lengkapi dulu di Kafe Saya", "error");
@@ -255,12 +269,14 @@ export default function JobPostForm({ initial = null }) {
         toast("Lowongan diperbarui ✓");
       } else {
         const { data: { user } } = await supabase.auth.getUser();
-        const { error } = await supabase.from("job_posts").insert({
+        const { data: inserted, error } = await supabase.from("job_posts").insert({
           ...payload, owner_id: kafe?.owner_id ?? user.id, is_active: true,
-        });
+        }).select("id").single();
         if (error) throw error;
         try { sessionStorage.removeItem(DRAFT_KEY); } catch { /* abaikan */ }
-        toast("Lowongan tayang! 🎉");
+        setPublished({ id: inserted?.id, title: withAuto.title });
+        router.refresh();
+        return;
       }
       router.push("/dashboard/owner?tab=active");
       router.refresh();
@@ -272,6 +288,39 @@ export default function JobPostForm({ initial = null }) {
   }
 
   const sec = "rounded-2xl border border-[#e8e0cf] bg-white p-5 sm:p-6";
+  const errLine = "mt-1 text-xs font-bold text-red-500";
+
+  // Panel sukses terbit (paritas ApplyForm success state + CTA ganda).
+  if (published) {
+    return (
+      <div className="mx-auto max-w-4xl px-4 py-6">
+        <section className={`${sec} text-center`} aria-label="Lowongan tayang">
+          <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-green-50 text-green-600">
+            <CheckCircle2 size={26} />
+          </span>
+          <h1 className="mt-4 text-xl font-extrabold text-espresso">Lowongan tayang! 🎉</h1>
+          <p className="mx-auto mt-1 max-w-md text-sm text-espresso-soft">
+            <span className="font-bold text-espresso">{published.title}</span> sudah bisa dilamar barista.
+          </p>
+          <div className="mt-5 flex flex-col justify-center gap-2 sm:flex-row">
+            {published.id && (
+              <Link href={`/jobs/${published.id}`} className="inline-flex min-h-[44px] items-center justify-center rounded-full bg-coffee px-6 text-sm font-bold text-white hover:bg-[#2e2015]">
+                Lihat Lowongan
+              </Link>
+            )}
+            {published.id && (
+              <Link href={`/dashboard/owner/jobs/${published.id}/applicants`} className="inline-flex min-h-[44px] items-center justify-center rounded-full border border-[#e0d5bd] bg-white px-6 text-sm font-bold text-espresso hover:border-coffee">
+                Pantau Pelamar
+              </Link>
+            )}
+            <Link href="/dashboard/owner?tab=active" className="inline-flex min-h-[44px] items-center justify-center text-sm font-bold text-espresso-soft hover:text-espresso">
+              Kembali ke Dashboard
+            </Link>
+          </div>
+        </section>
+      </div>
+    );
+  }
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-6">
@@ -299,12 +348,13 @@ export default function JobPostForm({ initial = null }) {
             <div className="mt-3 space-y-3">
               <div>
                 <label htmlFor="job-kafe" className="text-sm font-bold text-espresso">Outlet / Lokasi <span className="text-red-500">*</span></label>
-                <select id="job-kafe" value={form.cafe_id} onChange={(e) => set("cafe_id", e.target.value)} className="mt-1 w-full rounded-xl border border-latte bg-white px-4 py-3 text-sm text-espresso focus:border-caramel focus:outline-none">
+                <select id="job-kafe" name="cafe_id" value={form.cafe_id} onChange={(e) => set("cafe_id", e.target.value)} className="mt-1 w-full rounded-xl border border-latte bg-white px-4 py-3 text-sm text-espresso focus:border-caramel focus:outline-none">
                   <option value="">— Pilih outlet —</option>
                   {cafes.map((c) => (
                     <option key={c.id} value={c.id}>{c.name}{c.location ? ` • ${c.location}` : ""}</option>
                   ))}
                 </select>
+                {errors.cafe_id && <p className={errLine}>{errors.cafe_id}</p>}
                 <p className="mt-1 text-xs text-espresso-soft">
                   {cafes.length === 0 ? <>Belum ada outlet. <Link href="/dashboard/owner/cafes/new" className="font-bold text-caramel hover:underline">Daftarkan outlet dulu →</Link></> : <Link href="/dashboard/owner?tab=cafes" className="font-bold text-caramel hover:underline">Kelola outlet →</Link>}
                   {" "}Lokasi & alamat diwarisi dari profil outlet.
@@ -327,6 +377,7 @@ export default function JobPostForm({ initial = null }) {
                     </label>
                   ))}
                 </div>
+                {errors["emp-type"] && <p className={errLine}>{errors["emp-type"]}</p>}
               </div>
             </div>
             <div className="mt-4 flex justify-between">
@@ -341,7 +392,7 @@ export default function JobPostForm({ initial = null }) {
             <h2 className="text-base font-extrabold text-espresso">2. Role & Pay</h2>
             <div className="mt-3 space-y-4">
               <div>
-                <Textarea name="description" label="Deskripsi pekerjaan" rows={4} placeholder="Ceritakan peran ini..." value={form.description} maxLength={2000} onChange={(e) => set("description", e.target.value)} />
+                <Textarea name="description" label="Deskripsi pekerjaan" rows={4} placeholder="Ceritakan peran ini..." value={form.description} maxLength={2000} onChange={(e) => set("description", e.target.value)} error={errors.description} />
                 <p className="mt-1 text-right text-[11px] text-espresso-soft tabular-nums">{form.description.length}/2000</p>
               </div>
               <div>
@@ -355,9 +406,11 @@ export default function JobPostForm({ initial = null }) {
                   ))}
                 </ul>
                 <div className="mt-2 flex gap-2">
-                  <input value={respInput} onChange={(e) => setRespInput(e.target.value)} onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); if (respInput.trim()) { set("resp", [...form.resp, respInput.trim()]); setRespInput(""); } } }} placeholder="cth. Menyajikan espresso standar" className="w-full rounded-xl border border-[#e0d5bd] bg-white px-4 py-2.5 text-sm outline-none" />
+                  <input name="respInput" value={respInput} maxLength={200} onChange={(e) => setRespInput(e.target.value)} onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); if (respInput.trim()) { set("resp", [...form.resp, respInput.trim()]); setRespInput(""); } } }} placeholder="cth. Menyajikan espresso standar" className="w-full rounded-xl border border-[#e0d5bd] bg-white px-4 py-2.5 text-sm outline-none" />
                   <Button variant="secondary" onClick={() => { if (respInput.trim()) { set("resp", [...form.resp, respInput.trim()]); setRespInput(""); } }}><Plus size={15} /></Button>
                 </div>
+                <p className="mt-1 text-right text-[11px] text-espresso-soft tabular-nums">{respInput.length}/200</p>
+                {errors.respInput && <p className={errLine}>{errors.respInput}</p>}
               </div>
               <div>
                 <p className="text-sm font-bold text-espresso">Persyaratan <span className="text-red-500">*</span></p>
@@ -370,16 +423,18 @@ export default function JobPostForm({ initial = null }) {
                   ))}
                 </ul>
                 <div className="mt-2 flex gap-2">
-                  <input value={reqInput} onChange={(e) => setReqInput(e.target.value)} onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); if (reqInput.trim()) { set("req", [...form.req, reqInput.trim()]); setReqInput(""); } } }} placeholder="cth. Pengalaman min 1 tahun" className="w-full rounded-xl border border-[#e0d5bd] bg-white px-4 py-2.5 text-sm outline-none" />
+                  <input name="reqInput" value={reqInput} maxLength={200} onChange={(e) => setReqInput(e.target.value)} onKeyDown={(e) => { if (e.key === "Enter") { e.preventDefault(); if (reqInput.trim()) { set("req", [...form.req, reqInput.trim()]); setReqInput(""); } } }} placeholder="cth. Pengalaman min 1 tahun" className="w-full rounded-xl border border-[#e0d5bd] bg-white px-4 py-2.5 text-sm outline-none" />
                   <Button variant="secondary" onClick={() => { if (reqInput.trim()) { set("req", [...form.req, reqInput.trim()]); setReqInput(""); } }}><Plus size={15} /></Button>
                 </div>
+                <p className="mt-1 text-right text-[11px] text-espresso-soft tabular-nums">{reqInput.length}/200</p>
+                {errors.reqInput && <p className={errLine}>{errors.reqInput}</p>}
               </div>
               <div>
                 <p className="text-sm font-bold text-espresso">Gaji</p>
                 <div className="mt-2 grid grid-cols-2 gap-2">
                   <div>
                     <label htmlFor="job-salary-min" className="text-xs font-semibold text-espresso-soft">Minimal</label>
-                    <select id="job-salary-min" value={form.salary_min} onChange={(e) => set("salary_min", e.target.value)} className="mt-1 w-full rounded-xl border border-latte bg-white px-4 py-3 text-sm focus:border-caramel focus:outline-none">
+                    <select id="job-salary-min" name="salary_min" value={form.salary_min} onChange={(e) => set("salary_min", e.target.value)} className="mt-1 w-full rounded-xl border border-latte bg-white px-4 py-3 text-sm focus:border-caramel focus:outline-none">
                       <option value="">— Min —</option>
                       {salarySteps(form.salary_period).map((v) => <option key={v} value={v}>{RUPIAH(v)}</option>)}
                     </select>
@@ -398,6 +453,7 @@ export default function JobPostForm({ initial = null }) {
                   ))}
                 </div>
                 {liveSalary && <p className="mt-1.5 text-xs font-bold text-espresso">Tampil sebagai: {liveSalary}</p>}
+                {errors.salary_min && <p className={errLine}>{errors.salary_min}</p>}
               </div>
             </div>
             <div className="mt-4 flex justify-between">
@@ -416,10 +472,11 @@ export default function JobPostForm({ initial = null }) {
                 <div className="mt-2 flex flex-wrap gap-2">
                   {DAYS.map((d) => (
                     <label key={d} className={`cursor-pointer rounded-full border px-3.5 py-1.5 text-xs font-bold ${form.days.includes(d) ? "border-coffee bg-coffee text-white" : "border-[#e0d5bd] text-espresso-soft"}`}>
-                      <input type="checkbox" className="sr-only" checked={form.days.includes(d)} onChange={(e) => set("days", e.target.checked ? [...form.days, d] : form.days.filter((x) => x !== d))} />{d.slice(0, 3)}
+                      <input type="checkbox" name="days" className="sr-only" checked={form.days.includes(d)} onChange={(e) => set("days", e.target.checked ? [...form.days, d] : form.days.filter((x) => x !== d))} />{d.slice(0, 3)}
                     </label>
                   ))}
                 </div>
+                {(errors.days || errors["shift-start"]) && <p className={errLine}>{errors.days ?? errors["shift-start"]}</p>}
               </div>
               <div>
                 <p className="text-sm font-bold text-espresso">Shift <span className="text-red-500">*</span></p>
@@ -427,7 +484,7 @@ export default function JobPostForm({ initial = null }) {
                   {form.shifts.map((s, i) => (
                     <div key={i} className="flex items-center gap-2">
                       <span className="text-xs font-bold text-espresso-soft">Shift {i + 1}</span>
-                      <input type="time" value={s.start} onChange={(e) => set("shifts", form.shifts.map((x, j) => (j === i ? { ...x, start: e.target.value } : x)))} className="rounded-xl border border-[#e0d5bd] bg-white px-3 py-2 text-sm" aria-label={`Shift ${i + 1} mulai`} />
+                      <input type="time" name="shift-start" value={s.start} onChange={(e) => set("shifts", form.shifts.map((x, j) => (j === i ? { ...x, start: e.target.value } : x)))} className="rounded-xl border border-[#e0d5bd] bg-white px-3 py-2 text-sm" aria-label={`Shift ${i + 1} mulai`} />
                       <span className="text-espresso-soft">–</span>
                       <input type="time" value={s.end} onChange={(e) => set("shifts", form.shifts.map((x, j) => (j === i ? { ...x, end: e.target.value } : x)))} className="rounded-xl border border-[#e0d5bd] bg-white px-3 py-2 text-sm" aria-label={`Shift ${i + 1} selesai`} />
                       {form.shifts.length > 1 && (
@@ -441,8 +498,8 @@ export default function JobPostForm({ initial = null }) {
                 </button>
               </div>
               <div className="grid gap-3 sm:grid-cols-2">
-                <Input name="start_date" type="date" label="Tanggal mulai" value={form.start_date} onChange={(e) => set("start_date", e.target.value)} />
-                <Input name="end_date" type="date" label="Tanggal selesai (opsional)" value={form.end_date} onChange={(e) => set("end_date", e.target.value)} />
+                <Input name="start_date" type="date" label="Tanggal mulai" value={form.start_date} onChange={(e) => set("start_date", e.target.value)} error={errors.start_date} />
+                <Input name="end_date" type="date" label="Tanggal selesai (opsional)" value={form.end_date} onChange={(e) => set("end_date", e.target.value)} error={errors.end_date} />
               </div>
               <label className="flex cursor-pointer items-center gap-2.5 text-sm text-espresso-soft">
                 <input type="checkbox" checked={form.open_filled} onChange={(e) => set("open_filled", e.target.checked)} className="h-4 w-4 accent-[#4a2f1d]" />

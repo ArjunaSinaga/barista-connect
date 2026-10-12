@@ -2,14 +2,16 @@ import Image from "next/image";
 import Link from "next/link";
 import {
   Briefcase, Users, Hourglass, CheckCircle2, Plus, LayoutList,
-  Search, Store, UserPlus, ChevronRight, Info,
+  Search, Store, UserPlus, ChevronRight, Info, BadgeCheck,
 } from "lucide-react";
 import { Suspense } from "react";
 import OverviewFilters from "@/components/owner/dashboard/OverviewFilters";
 import JobRowMenu from "@/components/owner/dashboard/JobRowMenu";
+import JobShareButton from "@/components/jobs/JobShareButton";
 import Avatar from "@/components/ui/Avatar";
 import { relativeTime } from "@/lib/time";
 import { STATUS_META } from "@/lib/constants";
+import { thumb } from "@/lib/img";
 
 // EMPDASH overview: hero + 4 stat + pipeline + aktivitas + aksi cepat + tabel + butuh tindakan.
 // Semua angka dari props server (data real). Tahap interview tidak ada di DB:
@@ -59,6 +61,16 @@ export default function OverviewView({ overview }) {
         <div className="p-5 sm:p-6">
           <p className="text-sm text-espresso-soft">Selamat datang kembali,</p>
           <h1 className="font-display text-2xl font-extrabold tracking-tight text-espresso sm:text-3xl">{o.businessName}</h1>
+          {/* Paritas barista (VerifiedBadge): status verifikasi milik sendiri + ajakan. */}
+          {o.isVerified ? (
+            <p className="mt-1.5 inline-flex items-center gap-1 rounded-full bg-green-50 px-2.5 py-1 text-[11px] font-bold text-green-700">
+              <BadgeCheck size={13} /> Terverifikasi
+            </p>
+          ) : (
+            <Link href="/verify" className="mt-1.5 inline-flex items-center gap-1 rounded-full bg-amber-50 px-2.5 py-1 text-[11px] font-bold text-amber-700 hover:underline">
+              <BadgeCheck size={13} /> Belum terverifikasi — verifikasi usaha →
+            </Link>
+          )}
           <p className="mt-1 max-w-md text-xs leading-5 text-espresso-soft">
             Terus temukan talenta terbaik untuk tim Anda. Kelola lowongan, pantau progres pelamar, dan kembangkan bisnis Anda bersama kerja.inc.
           </p>
@@ -70,14 +82,14 @@ export default function OverviewView({ overview }) {
         </div>
         {o.heroPhoto && (
           <div className="relative hidden min-h-48 md:block">
-            <Image src={o.heroPhoto} alt={o.businessName} fill className="object-cover" sizes="240px" />
+            <Image src={thumb(o.heroPhoto, { w: 480 })} alt={o.businessName} fill className="object-cover" sizes="240px" />
             <div className="absolute inset-0 bg-gradient-to-r from-[#faf6ec] via-transparent to-transparent" />
           </div>
         )}
       </section>
 
       {/* Stat cards */}
-      <section className="grid grid-cols-2 gap-3 xl:grid-cols-4" aria-label="Ringkasan metrik">
+      <section className="grid grid-cols-2 gap-3 xl:grid-cols-4" aria-label="Ringkasan metrik" role="status">
         {stats.map((s) => (
           <div key={s.label} className="rounded-2xl border border-[#e8e0cf] bg-white p-4">
             <p className="flex items-center gap-1.5 text-xs font-bold text-espresso-soft">
@@ -188,6 +200,7 @@ export default function OverviewView({ overview }) {
                 <span className={`shrink-0 rounded-full px-2 py-0.5 text-[10px] font-bold ${j.is_active ? "bg-green-50 text-green-700" : "bg-gray-100 text-gray-500"}`}>
                   {j.is_active ? "Aktif" : "Nonaktif"}
                 </span>
+                <JobShareButton jobId={j.id} title={j.title} />
                 <JobRowMenu job={j} />
               </li>
             ))}
