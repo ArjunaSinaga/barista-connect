@@ -47,9 +47,14 @@ export default function WorkerProfileView({ b, workHistory, ratings, avg, rating
                   <h1 className="flex items-center gap-1.5 text-2xl font-extrabold text-espresso">
                     {b.full_name}{b.is_verified && <VerifiedBadge size={20} />}
                   </h1>
-                  <Link href={editHref} className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-[#e0d5bd] px-3.5 py-1.5 text-xs font-bold text-espresso hover:border-coffee">
-                    <Pencil size={12} /> Edit Profil
-                  </Link>
+                  <div className="flex shrink-0 items-center gap-1.5">
+                    <Link href={`/talent/${b.id}`} className="inline-flex items-center gap-1.5 rounded-full bg-coffee px-3.5 py-1.5 text-xs font-bold text-white hover:bg-[#2e2015]">
+                      Lihat Profil
+                    </Link>
+                    <Link href={editHref} className="inline-flex items-center gap-1.5 rounded-full border border-[#e0d5bd] px-3.5 py-1.5 text-xs font-bold text-espresso hover:border-coffee">
+                      <Pencil size={12} /> Edit Profil
+                    </Link>
+                  </div>
                 </div>
                 <p className="mt-0.5 text-sm font-bold text-espresso-soft">
                   {skills.slice(0, 2).map(skillLabel).join(" & ") || "Barista"}
@@ -109,7 +114,10 @@ export default function WorkerProfileView({ b, workHistory, ratings, avg, rating
           </section>
 
           <section className="rounded-2xl border border-[#e8e0cf] bg-white p-5 sm:p-6">
-            <h2 className="text-base font-extrabold text-espresso">Pengalaman Kerja</h2>
+            <div className="flex items-center justify-between">
+              <h2 className="text-base font-extrabold text-espresso">Pengalaman Kerja</h2>
+              <Link href={editHref} className="rounded-full border border-[#e0d5bd] px-3 py-1 text-[11px] font-bold hover:border-coffee">+ Tambah Pengalaman</Link>
+            </div>
             {workHistory.length ? (
               <ol className="mt-3 space-y-4">
                 {workHistory.map((w, i) => (
@@ -134,12 +142,12 @@ export default function WorkerProfileView({ b, workHistory, ratings, avg, rating
             )}
           </section>
 
-          {portfolio.length > 0 && (
-            <section className="rounded-2xl border border-[#e8e0cf] bg-white p-5 sm:p-6">
-              <div className="flex items-center justify-between">
-                <h2 className="text-base font-extrabold text-espresso">Portofolio / Dokumen</h2>
-                <Link href={editHref} className="rounded-full border border-[#e0d5bd] px-3 py-1 text-[11px] font-bold hover:border-coffee">+ Tambah File</Link>
-              </div>
+          <section className="rounded-2xl border border-[#e8e0cf] bg-white p-5 sm:p-6">
+            <div className="flex items-center justify-between">
+              <h2 className="text-base font-extrabold text-espresso">Portofolio / Dokumen</h2>
+              <Link href={editHref} className="rounded-full border border-[#e0d5bd] px-3 py-1 text-[11px] font-bold hover:border-coffee">+ Tambah File</Link>
+            </div>
+            {portfolio.length > 0 ? (
               <div className="mt-3 grid grid-cols-4 gap-2">
                 {portfolio.slice(0, 3).map((p) => (
                   <div key={p.id} className="relative h-24 overflow-hidden rounded-xl">
@@ -152,11 +160,16 @@ export default function WorkerProfileView({ b, workHistory, ratings, avg, rating
                   </Link>
                 )}
               </div>
-            </section>
-          )}
+            ) : (
+              <p className="mt-2 text-sm text-espresso-soft">Belum ada portofolio. <Link href={editHref} className="font-bold text-link hover:underline">Upload foto hasil karyamu →</Link></p>
+            )}
+          </section>
 
           <section className="rounded-2xl border border-[#e8e0cf] bg-white p-5 sm:p-6">
-            <h2 className="text-base font-extrabold text-espresso">Ulasan dari Pemberi Kerja</h2>
+            <div className="flex items-center justify-between">
+              <h2 className="text-base font-extrabold text-espresso">Ulasan dari Pemberi Kerja</h2>
+              {ratings.length > 0 && <Link href="/reviews" className="text-xs font-bold text-link hover:underline">Lihat Semua →</Link>}
+            </div>
             {ratings.length ? (
               <ul className="mt-3 space-y-3">
                 {ratings.slice(0, 4).map((r) => (
@@ -200,7 +213,7 @@ export default function WorkerProfileView({ b, workHistory, ratings, avg, rating
           <section className="rounded-2xl border border-[#e8e0cf] bg-white p-5">
             <div className="flex items-center justify-between">
               <h2 className="text-sm font-extrabold text-espresso">Sertifikat</h2>
-              <Link href={editHref} className="rounded-full border border-[#e0d5bd] px-3 py-1 text-[11px] font-bold hover:border-coffee">+ Tambah</Link>
+              <Link href={editHref} className="rounded-full border border-[#e0d5bd] px-3 py-1 text-[11px] font-bold hover:border-coffee">+ Tambah Sertifikat</Link>
             </div>
             {certs.length ? (
               <ul className="mt-2.5 space-y-2">
