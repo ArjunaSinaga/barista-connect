@@ -6,13 +6,16 @@ import { Star } from "lucide-react";
 import VerifiedBadge from "@/components/ui/VerifiedBadge";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { relativeTime } from "@/lib/time";
+import { splitSections } from "@/lib/jobSections";
 
-const TABS = ["Deskripsi", "Perusahaan", "Ulasan"];
+const TABS = ["Deskripsi Pekerjaan", "Perusahaan", "Ulasan"];
 
-// T-13/T-15/T-16: tab Deskripsi / Perusahaan / Ulasan. Tab Persyaratan sengaja tidak ada:
-// tidak ada kolom persyaratan terstruktur di DB — tidak dikarang dari frontend.
-export default function JobDetailTabs({ job, cafeName, cafeHref, avg, count, reviews }) {
-  const [tab, setTab] = useState("Deskripsi");
+// T-13/T-15/T-16: tab Deskripsi / Perusahaan / Ulasan. Tanggung Jawab +
+// Persyaratan diurai dari marker di description (format JobPostForm) dan
+// tampil di dalam tab Deskripsi Pekerjaan seperti mockup UI-06.
+export default function JobDetailTabs({ job, cafeName, cafeHref, avg, count, reviews, saved, showSave }) {
+  const [tab, setTab] = useState("Deskripsi Pekerjaan");
+  const sections = splitSections(job.description);
 
   return (
     <div>
@@ -35,10 +38,33 @@ export default function JobDetailTabs({ job, cafeName, cafeHref, avg, count, rev
       </div>
 
       <div className="py-4">
-        {tab === "Deskripsi" && (
-          <p className="text-sm leading-7 whitespace-pre-line text-espresso-soft">
-            {job.description || "Belum ada deskripsi."}
-          </p>
+        {tab === "Deskripsi Pekerjaan" && (
+          <div>
+            <p className="text-sm leading-7 whitespace-pre-line text-espresso-soft">
+              {sections.base || "Belum ada deskripsi."}
+            </p>
+            {sections.resp.length > 0 && (
+              <div className="mt-4">
+                <h3 className="text-sm font-extrabold text-espresso">Tanggung Jawab</h3>
+                <ul className="mt-2 list-disc space-y-1 pl-5 text-sm leading-6 text-espresso-soft">
+                  {sections.resp.map((r, i) => <li key={i}>{r}</li>)}
+                </ul>
+              </div>
+            )}
+            {sections.req.length > 0 && (
+              <div className="mt-4">
+                <h3 className="text-sm font-extrabold text-espresso">Persyaratan</h3>
+                <ul className="mt-2 list-disc space-y-1 pl-5 text-sm leading-6 text-espresso-soft">
+                  {sections.req.map((r, i) => <li key={i}>{r}</li>)}
+                </ul>
+              </div>
+            )}
+            {sections.sched && (
+              <p className="mt-4 text-sm text-espresso-soft">
+                <span className="font-extrabold text-espresso">Jadwal: </span>{sections.sched}
+              </p>
+            )}
+          </div>
         )}
         {tab === "Perusahaan" && (
           <div>

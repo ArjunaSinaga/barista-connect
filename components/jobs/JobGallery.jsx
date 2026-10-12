@@ -2,10 +2,11 @@
 
 import { useCallback, useEffect, useState } from "react";
 import Image from "next/image";
-import { ChevronLeft, ChevronRight, Expand, X } from "lucide-react";
+import { ChevronLeft, ChevronRight, Expand, Store, X } from "lucide-react";
 import { thumb } from "@/lib/img";
 
 // T-02/T-03: strip foto + tombol "Lihat N foto" -> modal galeri (Esc tutup, panah navigasi).
+// Tanpa foto: mosaik placeholder agar layout tetap seperti mockup UI-06.
 export default function JobGallery({ photos, cafeName }) {
   const [open, setOpen] = useState(false);
   const [idx, setIdx] = useState(0);
@@ -26,9 +27,25 @@ export default function JobGallery({ photos, cafeName }) {
     }
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [open, close, step]);
+  }, [open, close, step, total]);
 
-  if (!total) return null;
+  if (!total) {
+    return (
+      <div className="grid grid-cols-3 gap-1.5 overflow-hidden rounded-2xl" aria-hidden="true">
+        <div className="col-span-2 flex h-40 items-center justify-center bg-gradient-to-br from-coffee to-[#4a3423] sm:h-52">
+          <Store size={40} className="text-white/40" />
+        </div>
+        <div className="grid grid-rows-2 gap-1.5">
+          <div className="flex items-center justify-center bg-gradient-to-br from-caramel/70 to-caramel-dark/80">
+            <Store size={22} className="text-white/50" />
+          </div>
+          <div className="flex items-center justify-center bg-gradient-to-br from-[#4a3423] to-coffee">
+            <Store size={22} className="text-white/50" />
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div>

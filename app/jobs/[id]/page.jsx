@@ -144,7 +144,7 @@ export default async function JobDetailPage({ params }) {
   ];
 
   return (
-    <div className="mx-auto max-w-5xl px-4 py-6 sm:px-6">
+    <div className="mx-auto max-w-6xl px-4 py-6 sm:px-6">
       <BackButton />
 
       <div className="mt-4 grid gap-5 lg:grid-cols-[1fr_300px]">
@@ -172,7 +172,10 @@ export default async function JobDetailPage({ params }) {
                 <span>{relativeTime(job.created_at)}</span>
               </p>
             </div>
-            <JobShareButton jobId={job.id} title={job.title} />
+            <div className="flex shrink-0 items-center gap-1.5">
+              {profile?.role === "barista" && <SaveButton jobId={job.id} initialSaved={saved} />}
+              <JobShareButton jobId={job.id} title={job.title} />
+            </div>
           </div>
 
           <div className="mt-3 flex flex-wrap gap-1.5">
@@ -180,6 +183,23 @@ export default async function JobDetailPage({ params }) {
               <Badge key={t} classes={TYPE_CLASSES[t]}>{EMPLOYMENT_LABELS[t]}</Badge>
             ))}
           </div>
+
+          {/* Kartu info ala mockup UI-06: Gaji / Jenis / Shift / Lokasi */}
+          <dl className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-4">
+            {[
+              { icon: Banknote, label: "Gaji", value: job.salary_text || "Lihat deskripsi" },
+              { icon: Briefcase, label: "Jenis", value: types.map((t) => EMPLOYMENT_LABELS[t] ?? t).join(", ") || "-" },
+              { icon: AlarmClock, label: "Shift", value: shifts.length ? shifts.map((s) => SHIFT_LABEL[s]).join(", ") : "Lihat deskripsi" },
+              { icon: MapPin, label: "Lokasi", value: job.location || "-" },
+            ].map((c) => (
+              <div key={c.label} className="rounded-2xl border border-[#e8e0cf] bg-white p-3">
+                <dt className="flex items-center gap-1.5 text-[11px] font-bold text-espresso-soft">
+                  <c.icon size={13} className="text-caramel" aria-hidden="true" />{c.label}
+                </dt>
+                <dd className="mt-1 truncate text-[13px] font-extrabold text-espresso" title={c.value}>{c.value}</dd>
+              </div>
+            ))}
+          </dl>
 
           {!job.is_active && (
             <p className="mt-4 rounded-xl bg-red-50 px-4 py-2.5 text-xs font-bold text-red-600">
@@ -236,7 +256,7 @@ export default async function JobDetailPage({ params }) {
                 <h2 className="text-base font-extrabold text-espresso">Lowongan Serupa</h2>
                 <Link href={seeAllHref} className="text-xs font-bold text-link hover:underline">Lihat semua →</Link>
               </div>
-              <ul className="mt-3 grid gap-2.5 sm:grid-cols-2">
+              <ul className="mt-3 grid gap-2.5 sm:grid-cols-2 lg:grid-cols-4">
                 {similar.map((s) => {
                   const sName = s.cafes?.name ?? s.owners?.business_name ?? "-";
                   return (
