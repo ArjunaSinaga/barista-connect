@@ -185,7 +185,7 @@ export default function BaristaDirectory({ ownerId }) {
   );
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-8">
+    <div className="mx-auto w-full max-w-[1400px] px-4 py-8 sm:px-6">
       <h1 className="text-2xl font-extrabold text-espresso">Cari Barista</h1>
       <p className="mt-1 text-sm text-espresso-soft">
         {list === null ? "Memuat..." : `${list.length} barista ditemukan`}
