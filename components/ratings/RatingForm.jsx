@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Star } from "lucide-react";
 import Button from "@/components/ui/Button";
 import { useToast } from "@/components/ui/toast";
@@ -51,15 +51,15 @@ export default function RatingForm({
   const [saved, setSaved] = useState(existing ?? null);
 
   // existing datang belakangan (async load di parent) → sinkronkan state
-  // saat rating existing tiba, supaya form tidak stuck mode insert.
-  useEffect(() => {
-    if (existing?.id && existing.id !== saved?.id) {
-      setSaved(existing);
-      setStars(existing.stars ?? 0);
-      setComment(existing.comment ?? "");
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [existing?.id]);
+  // saat render (pola React "adjust state during render"), bukan di effect,
+  // supaya form tidak stuck mode insert.
+  const [prevExistingId, setPrevExistingId] = useState(existing?.id);
+  if (existing?.id && existing.id !== prevExistingId) {
+    setPrevExistingId(existing.id);
+    setSaved(existing);
+    setStars(existing.stars ?? 0);
+    setComment(existing.comment ?? "");
+  }
 
   const editable = canEdit(saved?.updated_at);
   const nextDate = saved ? nextEditableAt(saved.updated_at) : null;

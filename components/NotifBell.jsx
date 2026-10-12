@@ -14,7 +14,9 @@ export default function NotifBell() {
     } catch { /* offline: diam */ }
   }
 
+  // Polling API eksternal + interval: setState di callback async, bukan render cascade.
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     load();
     const t = setInterval(load, 60000);
     return () => clearInterval(t);
