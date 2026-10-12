@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { MapPin, Banknote, Briefcase, Star, ShieldCheck, BadgeCheck, MessageSquareHeart, Users, Store } from "lucide-react";
+import { MapPin, Banknote, Briefcase, Star, ShieldCheck, Users, Store } from "lucide-react";
 import { createClient, isSupabaseConfigured, getSessionSafe } from "@/lib/supabase/server";
 import Avatar from "@/components/ui/Avatar";
 import VerifiedBadge from "@/components/ui/VerifiedBadge";
@@ -10,6 +10,7 @@ import { CafeLogo, skillTags } from "@/components/landing/LatestJobs";
 import { EMPLOYMENT_LABELS } from "@/lib/constants";
 import { avgStars } from "@/lib/ratings";
 import { attachOwners, attachRatings } from "@/lib/publicProfiles";
+import { BentoGrid, BentoGridItem } from "@/components/ui/BentoGrid";
 
 export const revalidate = 60;
 
@@ -81,13 +82,6 @@ async function getFeaturedBaristas() {
     return [];
   }
 }
-
-// LP-13: 3 pilar sesuai spec (identitas, profil terverifikasi, rating komunitas).
-const TRUST_STEPS = [
-  { icon: BadgeCheck, title: "Verifikasi Identitas", desc: "Setiap worker dan bisnis melalui proses verifikasi." },
-  { icon: ShieldCheck, title: "Profil & Pengalaman Tervalidasi", desc: "Lihat riwayat kerja, skill, dan ulasan nyata." },
-  { icon: MessageSquareHeart, title: "Sistem Rating & Ulasan", desc: "Keamanan dan kepercayaan dari komunitas." },
-];
 
 export default async function LandingPage() {
   const [jobs, stats, talents] = await Promise.all([
@@ -231,23 +225,94 @@ export default async function LandingPage() {
         )}
       </section>
 
-      {/* How Trust Works */}
+      {/* Kenapa kerja.inc — bento */}
       <section className="pt-8">
-        <h2 className="text-xl font-extrabold tracking-tight">How Trust Works</h2>
-        <p className="mt-0.5 text-xs text-espresso-soft">Kami memverifikasi profil, pengalaman, dan ulasan untuk lingkungan kerja yang lebih aman.</p>
-        <ol className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {TRUST_STEPS.map((s, i) => (
-            <li key={s.title} className="rounded-2xl border border-stone-200/60 bg-white p-4 shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
-              <span className="flex h-9 w-9 items-center justify-center rounded-full bg-[#efe8d8] text-xs font-extrabold">{i + 1}</span>
-              <s.icon size={20} className="mt-3 text-matcha" />
-              <p className="mt-1 text-sm font-bold">{s.title}</p>
-              <p className="mt-0.5 text-xs leading-5 text-espresso-soft">{s.desc}</p>
-            </li>
-          ))}
-        </ol>
-        <Link href="/trust" className="mt-3 inline-flex min-h-[44px] items-center gap-1 rounded-full bg-coffee px-5 text-xs font-bold text-white hover:bg-[#2e2015]">
-          See how it works <span aria-hidden="true">→</span>
-        </Link>
+        <div className="flex items-end justify-between gap-2">
+          <div>
+            <h2 className="text-xl font-extrabold tracking-tight">Kenapa kerja.inc</h2>
+            <p className="mt-0.5 text-xs text-espresso-soft">Verifikasi, data nyata, dan komunitas dalam satu tempat.</p>
+          </div>
+          <Link href="/trust" className="inline-flex shrink-0 items-center gap-0.5 text-xs font-bold text-link hover:underline">
+            See how it works <span aria-hidden="true">→</span>
+          </Link>
+        </div>
+        <BentoGrid className="mt-4">
+          <BentoGridItem
+            className="md:col-span-2"
+            header={
+              <Image
+                src="/images/landing/barista-2.jpg"
+                alt="Barista terverifikasi kerja.inc"
+                fill
+                sizes="(max-width: 768px) 100vw, 66vw"
+                className="object-cover transition-transform duration-200 group-hover:scale-105"
+              />
+            }
+            title="Verifikasi Identitas"
+            description="Setiap worker dan bisnis melalui proses verifikasi sebelum tampil di platform."
+          />
+          <BentoGridItem
+            title="Profil & Pengalaman Tervalidasi"
+            description="Lihat riwayat kerja, skill, dan ulasan nyata sebelum merekrut."
+          />
+          <BentoGridItem
+            title="Sistem Rating & Ulasan"
+            description="Keamanan dan kepercayaan yang tumbuh dari komunitas."
+            href="/reviews"
+            linkLabel="Lihat ulasan"
+          />
+          <BentoGridItem
+            className="md:col-span-2"
+            title="Angka nyata, bukan pajangan"
+            description={
+              <span className="mt-2 grid grid-cols-2 gap-3 sm:grid-cols-4">
+                {stats.map(([v, l], i) => {
+                  const Icon = [Users, Store, Briefcase, MapPin][i % 4];
+                  return (
+                    <span key={l} className="flex items-center gap-2">
+                      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#f2ecdf] text-coffee">
+                        <Icon size={16} />
+                      </span>
+                      <span>
+                        <span className="block text-xl font-extrabold tracking-tight text-espresso">{v}</span>
+                        <span className="block text-[11px] leading-4">{l}</span>
+                      </span>
+                    </span>
+                  );
+                })}
+              </span>
+            }
+          />
+          <BentoGridItem
+            header={
+              <Image
+                src="/images/landing/cafe-4.jpg"
+                alt="Komunitas kopi kerja.inc"
+                fill
+                sizes="(max-width: 768px) 100vw, 33vw"
+                className="object-cover transition-transform duration-200 group-hover:scale-105"
+              />
+            }
+            title="Cerita Komunitas"
+            description="Ngobrol, berbagi lowongan, dan update industri kopi."
+            href="/feed"
+            linkLabel="Buka feed"
+          />
+          <BentoGridItem
+            className="md:col-span-2"
+            title="Mulai sekarang, gratis"
+            description={
+              <span className="mt-2 flex flex-wrap gap-2">
+                <Link href="/register?role=barista" className="inline-flex min-h-[44px] items-center rounded-full bg-coffee px-5 text-xs font-bold text-white hover:bg-[#2e2015]">
+                  Daftar sebagai Barista
+                </Link>
+                <Link href="/register?role=employer" className="inline-flex min-h-[44px] items-center rounded-full border border-coffee px-5 text-xs font-bold text-coffee hover:bg-coffee hover:text-white">
+                  Pasang Loker
+                </Link>
+              </span>
+            }
+          />
+        </BentoGrid>
       </section>
 
       {/* Featured Talent */}
