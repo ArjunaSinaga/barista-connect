@@ -183,7 +183,7 @@ export default async function JobsPage({ searchParams }) {
   return (
     <div className="min-h-screen bg-paper text-espresso lg:flex lg:h-[calc(100dvh-3.5rem)] lg:min-h-0 lg:flex-col lg:overflow-hidden">
       <div className="mx-auto w-full max-w-[1400px] px-4 py-4 sm:px-6 lg:min-h-0 lg:flex-1">
-        <div className={`grid items-start gap-4 lg:h-full ${selected ? "lg:grid-cols-[240px_minmax(0,1fr)] xl:grid-cols-[250px_minmax(0,1fr)_360px]" : "lg:grid-cols-[240px_minmax(0,1fr)]"}`}>
+        <div className={`fx-grid-smooth grid items-start gap-4 lg:h-full ${selected ? "lg:grid-cols-[240px_minmax(0,1fr)] xl:grid-cols-[250px_minmax(0,1fr)_360px]" : "lg:grid-cols-[240px_minmax(0,1fr)]"}`}>
           {/* Tengah: hero + filter + list */}
           <div className="order-1 min-w-0 space-y-3 lg:order-2 lg:h-full lg:min-h-0 lg:overflow-y-auto lg:pr-1 lg:pb-1 no-scrollbar">
             <div className="relative grid overflow-hidden rounded-2xl border border-[#e8e0cf] bg-[#faf6ec] md:grid-cols-[1fr_220px]">
