@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Search, SlidersHorizontal, UsersRound, X } from "lucide-react";
 import BaristaCard from "@/components/cards/BaristaCard";
+import BaristaDetailPanel from "@/components/search/BaristaDetailPanel";
 import EmptyState from "@/components/ui/EmptyState";
 import Button from "@/components/ui/Button";
 import Sheet from "@/components/ui/Sheet";
@@ -37,7 +38,9 @@ export default function BaristaDirectory({ ownerId }) {
   const [list, setList] = useState(null);
   const [loadError, setLoadError] = useState(false);
   const [sheetOpen, setSheetOpen] = useState(false);
+  const [selectedId, setSelectedId] = useState(null);
   const debounceRef = useRef(null);
+  const selected = (list ?? []).find((b) => b.id === selectedId) ?? null;
 
   // State diinisialisasi dari URL sekali saat mount; navigasi antar-query me-remount
   // via key={...} dari page (lihat app/find-baristas/page.jsx).
@@ -258,7 +261,7 @@ export default function BaristaDirectory({ ownerId }) {
         </div>
       )}
 
-      <div className="mt-6 grid gap-6 md:grid-cols-[240px_1fr]">
+      <div className={`fx-grid-smooth mt-6 grid gap-6 md:grid-cols-[240px_1fr] ${selected ? "xl:grid-cols-[240px_minmax(0,1fr)_340px]" : ""}`}>
         {/* desktop sidebar */}
         <aside className="hidden self-start rounded-2xl card-dark p-5 md:sticky md:top-20 md:block">
           <p className="mb-4 flex items-center justify-between text-sm font-extrabold text-espresso">
@@ -276,7 +279,7 @@ export default function BaristaDirectory({ ownerId }) {
         </aside>
 
         {/* grid */}
-        <div className="grid gap-4 pb-10 sm:grid-cols-2 xl:grid-cols-3">
+        <div className={`grid gap-4 pb-10 sm:grid-cols-2 ${selected ? "" : "xl:grid-cols-3"}`}>
           {list === null &&
             Array.from({ length: 6 }).map((_, i) => <CardSkeleton key={i} />)}
 
@@ -296,11 +299,19 @@ export default function BaristaDirectory({ ownerId }) {
 
           {list !== null &&
             list.map((b) => (
-              <BaristaCard
+              <div
                 key={b.id}
+                role="button"
+                tabIndex={0}
+                aria-label={`Lihat ringkasan ${b.full_name}`}
+                onClick={() => setSelectedId(b.id)}
+                onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); setSelectedId(b.id); } }}
+                className={`cursor-pointer rounded-2xl outline-none transition-shadow focus-visible:ring-2 focus-visible:ring-gold ${selectedId === b.id ? "ring-2 ring-caramel" : ""}`}
+              >
+              <BaristaCard
                 barista={b}
                 actions={
-                  <>
+                  <span className="flex items-center gap-2" onClick={(e) => e.stopPropagation()}>
                     <Button size="sm" href={`/barista/${b.id}`}>
                       Lihat Profil
                     </Button>
@@ -311,11 +322,23 @@ export default function BaristaDirectory({ ownerId }) {
                     >
                       Chat
                     </Button>
-                  </>
+                  </span>
                 }
               />
+              </div>
             ))}
         </div>
+
+        {/* Kanan: panel profil singkat — hanya muncul saat 1 kartu diklik */}
+        {selected && (
+          <div key={selected.id} className="fx-panel-enter min-w-0 xl:sticky xl:top-20">
+            <BaristaDetailPanel
+              barista={selected}
+              onClose={() => setSelectedId(null)}
+              onChat={() => startChat(selected.id)}
+            />
+          </div>
+        )}
       </div>
 
       <Sheet open={sheetOpen} onClose={() => setSheetOpen(false)} title="Filter">
