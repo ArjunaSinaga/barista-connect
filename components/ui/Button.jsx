@@ -30,7 +30,7 @@ export default function Button({
   children,
   ...props
 }) {
-  const cls = `inline-flex items-center justify-center gap-2 rounded-full font-semibold tracking-[-0.01em] transition-all active:scale-[0.95] cursor-pointer disabled:cursor-not-allowed ${VARIANTS[variant]} ${SIZES[size]} ${full ? "w-full" : ""} ${className}`;
+  const cls = `fx-ripple fx-press inline-flex items-center justify-center gap-2 rounded-full font-semibold tracking-[-0.01em] transition-all active:scale-[0.95] cursor-pointer disabled:cursor-not-allowed focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#9a6a2f] ${VARIANTS[variant]} ${SIZES[size]} ${full ? "w-full" : ""} ${className}`;
 
   if (href) {
     if (disabled) {

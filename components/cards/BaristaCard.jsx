@@ -24,7 +24,7 @@ export function OpenToWorkDot({ open }) {
 
 export default function BaristaCard({ barista, actions = null }) {
   return (
-    <div className="flex flex-col rounded-2xl card-dark p-5 shadow-sm transition-shadow hover:shadow-md">
+    <div className="fx-lift fx-spotlight flex flex-col rounded-2xl card-dark p-5 shadow-sm transition-shadow hover:shadow-md">
       <div className="flex items-start gap-4">
         <Avatar
           src={barista.profile_picture_url}

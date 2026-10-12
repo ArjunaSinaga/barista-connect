@@ -1,0 +1,139 @@
+/* — kerja.inc FX: 15 efek interaksi versi tema kopi (espresso/karamel/emas).
+   Semua warna efek diambil dari token tema, bukan warna demo.
+   Hormati prefers-reduced-motion: matikan semua animasi gerak. — */
+
+/* 1. Hover to lift — kartu terangkat + bayangan kopi membesar */
+.fx-lift { transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease; }
+.fx-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px rgba(43,33,24,.16);
+}
+
+/* 2. Glow ring — cincin cahaya karamel mengembang dari tepi */
+.fx-glow { transition: box-shadow .2s ease, transform .2s ease; }
+.fx-glow:hover {
+  box-shadow: 0 0 0 3px rgba(154,106,47,.28), 0 8px 24px rgba(43,33,24,.14);
+}
+
+/* 3. Shimmer sweep — kilau emas menyapu elemen saat hover */
+.fx-shimmer { position: relative; overflow: hidden; }
+.fx-shimmer::before {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(100deg, transparent 20%, rgba(212,162,78,.35) 50%, transparent 80%);
+  transform: translateX(-100%);
+  transition: transform .6s ease;
+}
+.fx-shimmer:hover::before { transform: translateX(100%); }
+
+/* 4. Color fill — latar karamel mengisi dari bawah ke atas */
+.fx-fill { position: relative; overflow: hidden; isolation: isolate; transition: color .2s ease, border-color .2s ease; }
+.fx-fill::after {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background: linear-gradient(180deg, #b56a2a, #9a6a2f);
+  transform: scaleY(0); transform-origin: bottom;
+  transition: transform .25s ease;
+}
+.fx-fill:hover { color: #fff !important; border-color: #9a6a2f !important; }
+.fx-fill:hover::after { transform: scaleY(1); }
+
+/* 5. Scale up — membesar halus pegas */
+.fx-scale { transition: transform .25s cubic-bezier(.34,1.56,.64,1); }
+.fx-scale:hover { transform: scale(1.04); }
+.fx-scale:active { transform: scale(.97); }
+
+/* 6. Underline slide — garis karamel tumbuh dari tengah ke luar */
+.fx-underline { position: relative; }
+.fx-underline::after {
+  content: ""; position: absolute; left: 50%; bottom: -2px; height: 2px; width: 100%;
+  background: var(--color-caramel, #9a6a2f); border-radius: 2px;
+  transform: translateX(-50%) scaleX(0);
+  transition: transform .25s ease;
+}
+.fx-underline:hover::after, .fx-underline[data-active="true"]::after {
+  transform: translateX(-50%) scaleX(1);
+}
+
+/* 7. Glow border — bingkai emas berdenyut saat hover (bukan neon) */
+.fx-glowborder { transition: border-color .2s ease, box-shadow .2s ease; }
+.fx-glowborder:hover {
+  border-color: rgba(154,106,47,.7) !important;
+  animation: fx-glowpulse 1.6s ease-in-out infinite;
+}
+@keyframes fx-glowpulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(212,162,78,.45); }
+  50% { box-shadow: 0 0 0 5px rgba(212,162,78,0); }
+}
+
+/* 8. Rotate icon — ikon (mis. +) berputar 45° */
+.fx-rotate-icon svg, .fx-rotate-icon .fx-icon { transition: transform .25s ease; display: inline-flex; }
+.fx-rotate-icon:hover svg, .fx-rotate-icon:hover .fx-icon { transform: rotate(45deg); }
+
+/* 9. Border draw — bingkai karamel tergambar dari sudut kiri atas */
+.fx-border-draw { position: relative; }
+.fx-border-draw::before, .fx-border-draw::after {
+  content: ""; position: absolute; width: 0; height: 0; pointer-events: none;
+  transition: width .25s ease, height .25s ease;
+}
+.fx-border-draw::before { top: 0; left: 0; border-top: 2px solid var(--color-caramel, #9a6a2f); border-left: 2px solid var(--color-caramel, #9a6a2f); border-top-left-radius: inherit; }
+.fx-border-draw::after { bottom: 0; right: 0; border-bottom: 2px solid var(--color-caramel, #9a6a2f); border-right: 2px solid var(--color-caramel, #9a6a2f); border-bottom-right-radius: inherit; }
+.fx-border-draw:hover::before, .fx-border-draw:hover::after { width: 100%; height: 100%; }
+
+/* 10. Card flip — kartu membalik (3D) memperlihatkan sisi belakang */
+.fx-flip { perspective: 800px; }
+.fx-flip-inner { position: relative; width: 100%; height: 100%; transform-style: preserve-3d; transition: transform .5s ease; }
+.fx-flip:hover .fx-flip-inner { transform: rotateY(180deg); }
+.fx-flip-face { backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+.fx-flip-back { position: absolute; inset: 0; transform: rotateY(180deg); }
+
+/* 11. Blur & reveal — konten blur, label tersembunyi muncul */
+.fx-reveal { position: relative; overflow: hidden; }
+.fx-reveal .fx-reveal-content { transition: filter .25s ease, opacity .25s ease; }
+.fx-reveal .fx-reveal-label {
+  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+  opacity: 0; transition: opacity .25s ease;
+  font-weight: 800; color: var(--color-espresso, #2b2118);
+  background: rgba(245,241,232,.55);
+}
+.fx-reveal:hover .fx-reveal-content { filter: blur(3px); opacity: .6; }
+.fx-reveal:hover .fx-reveal-label { opacity: 1; }
+
+/* 12. Ripple click — riak karamel memancar dari titik klik (butuh JS: FxMount) */
+.fx-ripple { position: relative; overflow: hidden; }
+.fx-ripple-ink {
+  position: absolute; border-radius: 9999px; pointer-events: none;
+  background: rgba(154,106,47,.35);
+  transform: scale(0); animation: fx-ripple .55s ease-out forwards;
+}
+@keyframes fx-ripple { to { transform: scale(3); opacity: 0; } }
+
+/* 13–15. Butuh JS (FxMount): tilt, spotlight, magnetic — variabel diisi mouse */
+.fx-tilt { transition: transform .15s ease-out; transform-style: preserve-3d; will-change: transform; }
+.fx-spotlight { position: relative; }
+.fx-spotlight::before {
+  content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0;
+  transition: opacity .25s ease; border-radius: inherit;
+  background: radial-gradient(220px circle at var(--fx-x, 50%) var(--fx-y, 50%), rgba(212,162,78,.22), transparent 65%);
+}
+.fx-spotlight:hover::before { opacity: 1; }
+.fx-magnetic { transition: transform .2s cubic-bezier(.34,1.56,.64,1); will-change: transform; }
+
+/* Tekan (pengganti hover di layar sentuh) — untuk semua tombol */
+.fx-press { transition: transform .15s ease; }
+.fx-press:active { transform: scale(.96); }
+
+/* Cakupan global hemat: SEMUA tombol bergaris kopi + CTA kopi pekat
+   otomatis dapat umpan tekan, tanpa edit per file. */
+[class*="hover:border-coffee"]:active { scale: .96; }
+.bg-coffee:active { scale: .97; }
+
+/* Aksesibilitas: matikan gerak bila pengguna memintanya */
+@media (prefers-reduced-motion: reduce) {
+  .fx-lift, .fx-glow, .fx-shimmer::before, .fx-fill, .fx-fill::after,
+  .fx-scale, .fx-underline::after, .fx-glowborder, .fx-rotate-icon svg,
+  .fx-border-draw::before, .fx-border-draw::after, .fx-flip-inner,
+  .fx-reveal .fx-reveal-content, .fx-reveal .fx-reveal-label,
+  .fx-tilt, .fx-magnetic, .fx-press {
+    transition: none !important; animation: none !important; transform: none !important;
+  }
+  .fx-shimmer::before, .fx-spotlight::before, .fx-reveal .fx-reveal-label { display: none !important; }
+}

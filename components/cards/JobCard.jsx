@@ -19,7 +19,7 @@ export default function JobCard({
   actions = null,
 }) {
   return (
-    <div className="relative flex min-w-0 flex-col rounded-2xl card-dark p-4 shadow-sm transition-shadow hover:shadow-md">
+    <div className="fx-lift fx-spotlight relative flex min-w-0 flex-col rounded-2xl card-dark p-4 shadow-sm transition-shadow hover:shadow-md">
       <div className="flex items-start justify-between gap-2">
         <div className="min-w-0">
           <Link

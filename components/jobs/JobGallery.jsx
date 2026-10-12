@@ -41,7 +41,7 @@ export default function JobGallery({ photos, cafeName }) {
             className={`relative block h-40 w-full overflow-hidden sm:h-52 ${total > 1 && i === 0 ? "col-span-2" : ""}`}
             aria-label={`Lihat foto ${i + 1}`}
           >
-            <Image src={thumb(src, { w: 800 })} alt={i === 0 ? `Suasana ${cafeName}` : `Foto ${cafeName} ${i + 1}`} fill className="object-cover hover:scale-105 transition-transform" sizes="(max-width: 768px) 100vw, 800px" />
+            <Image src={thumb(src, { w: 800 })} alt={i === 0 ? `Suasana ${cafeName}` : `Foto ${cafeName} ${i + 1}`} fill className="object-cover hover:scale-105 transition-transform duration-200" sizes="(max-width: 768px) 100vw, 800px" />
             {i === 2 && total > 3 && (
               <span className="absolute inset-0 flex items-center justify-center gap-1.5 bg-black/55 text-sm font-bold text-white">
                 <Expand size={15} /> Lihat {total} foto
