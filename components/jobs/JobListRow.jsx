@@ -19,20 +19,25 @@ export default function JobListRow({ job, active, applied, saved, showApply, qs 
   const detailHref = qs ? `/jobs?${qs}&job=${job.id}` : `/jobs?job=${job.id}`;
   return (
     <li
-      className={`rounded-2xl border bg-white p-4 transition-colors ${
+      className={`group relative rounded-2xl border bg-white p-4 transition-colors ${
         active ? "border-coffee shadow-[0_2px_12px_rgba(43,33,24,0.12)]" : "border-[#e8e0cf] hover:border-[#c9b992]"
       }`}
     >
+      {/* Klik seluruh blok = buka panel detail; tombol di kolom kanan tetap di atas overlay. */}
+      <Link
+        href={detailHref}
+        scroll={false}
+        aria-label={`Lihat detail ${job.title}`}
+        className="absolute inset-0 rounded-2xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#9a6a2f]"
+      />
       <div className="flex gap-3">
         <CafeLogo job={job} />
         <div className="min-w-0 flex-1">
-          <Link
-            href={detailHref}
-            scroll={false}
-            className="block truncate text-sm font-extrabold text-espresso hover:text-matcha"
+          <span
+            className="block truncate text-sm font-extrabold text-espresso group-hover:text-matcha"
           >
             {job.title}
-          </Link>
+          </span>
           <p className="flex items-center gap-1 truncate text-xs text-espresso-soft">
             {cafeName}
             {job.owners?.is_verified && <VerifiedBadge size={12} />}
@@ -57,7 +62,7 @@ export default function JobListRow({ job, active, applied, saved, showApply, qs 
             </div>
           )}
         </div>
-        <div className="flex shrink-0 flex-col items-end justify-between gap-2">
+        <div className="relative z-10 flex shrink-0 flex-col items-end justify-between gap-2">
           <span className="flex items-center gap-2 text-[11px] text-[#b6a98f]">
             {relativeTime(job.created_at)}
             <SaveButton jobId={job.id} initialSaved={saved} />
@@ -72,7 +77,7 @@ export default function JobListRow({ job, active, applied, saved, showApply, qs 
         </div>
       </div>
       {showApply && (
-        <div className="mt-2.5 border-t border-[#efe9d9] pt-2.5">
+        <div className="relative z-10 mt-2.5 border-t border-[#efe9d9] pt-2.5">
           <ApplyButton jobId={job.id} applied={applied} jobTypes={types} size="sm" variant="coffee" label="Lamar" />
         </div>
       )}

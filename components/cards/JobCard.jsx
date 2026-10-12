@@ -19,15 +19,20 @@ export default function JobCard({
   actions = null,
 }) {
   return (
-    <div className="fx-lift fx-spotlight relative flex min-w-0 flex-col rounded-2xl card-dark p-4 shadow-sm transition-shadow hover:shadow-md">
+    <div className="fx-lift fx-spotlight group relative flex min-w-0 flex-col rounded-2xl card-dark p-4 shadow-sm transition-shadow hover:shadow-md">
+      {/* Klik seluruh kartu = buka detail; slot aksi tetap di atas overlay. */}
+      <Link
+        href={`/jobs/${job.id}`}
+        aria-label={`Lihat detail ${job.title}`}
+        className="absolute inset-0 rounded-2xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#9a6a2f]"
+      />
       <div className="flex items-start justify-between gap-2">
         <div className="min-w-0">
-          <Link
-            href={`/jobs/${job.id}`}
-            className="block truncate text-sm font-bold text-espresso hover:text-caramel"
+          <span
+            className="block truncate text-sm font-bold text-espresso group-hover:text-caramel"
           >
             {job.title}
-          </Link>
+          </span>
           <p className="mt-0.5 flex items-center gap-1 truncate text-[11px] font-medium text-espresso-soft">
             <Store size={11} /> {ownerName ?? "Coffee Shop"}{ownerVerified && <VerifiedBadge size={12} />}
           </p>
@@ -57,7 +62,7 @@ export default function JobCard({
       </div>
 
       {(applied || actions) && (
-        <div className="mt-2.5 flex items-center gap-2 border-t border-latte/60 pt-2.5">
+        <div className="relative z-10 mt-2.5 flex items-center gap-2 border-t border-latte/60 pt-2.5">
           {applied && !actions && (
             <Badge classes="bg-matcha/15 text-matcha">✓ Sudah dilamar</Badge>
           )}
