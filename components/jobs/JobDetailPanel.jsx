@@ -15,7 +15,7 @@ const TABS = ["Ringkasan", "Tentang", "Ulasan"];
 
 // Panel detail kanan ala board G1: galeri + info + tabs + Apply.
 // Props plain (serializable) dari server.
-export default function JobDetailPanel({ job, cafeName, cafeHref, types, avg, count, reviews, applied, saved, canApply, closeHref }) {
+export default function JobDetailPanel({ job, cafeName, cafeHref, types, avg, count, reviews, applied, saved, canApply, closeHref, onClose }) {
   const [tab, setTab] = useState("Ringkasan");
   const [shared, setShared] = useState(false);
   const photos = job.cafes?.photo_urls?.filter(Boolean).slice(0, 4) ?? [];
@@ -59,15 +59,27 @@ export default function JobDetailPanel({ job, cafeName, cafeHref, types, avg, co
             <h2 className="truncate text-base font-extrabold tracking-tight text-espresso">{job.title}</h2>
             <p className="truncate text-xs text-espresso-soft">{cafeName}</p>
           </div>
-          <Link
-            href={closeHref ?? "/jobs"}
-            scroll={false}
-            aria-label="Close detail panel"
-            title="Close"
-            className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-[#e0d5bd] text-espresso-soft hover:border-coffee hover:text-espresso"
-          >
-            <X size={14} />
-          </Link>
+          {onClose ? (
+            <button
+              type="button"
+              onClick={onClose}
+              aria-label="Close detail panel"
+              title="Close"
+              className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-[#e0d5bd] text-espresso-soft hover:border-coffee hover:text-espresso"
+            >
+              <X size={14} />
+            </button>
+          ) : (
+            <Link
+              href={closeHref ?? "/jobs"}
+              scroll={false}
+              aria-label="Close detail panel"
+              title="Close"
+              className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-[#e0d5bd] text-espresso-soft hover:border-coffee hover:text-espresso"
+            >
+              <X size={14} />
+            </Link>
+          )}
         </div>
 
         <p className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-0.5 text-xs text-espresso-soft">

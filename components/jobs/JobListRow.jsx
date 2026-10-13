@@ -8,7 +8,8 @@ import { EMPLOYMENT_LABELS } from "@/lib/constants";
 import { relativeTime } from "@/lib/time";
 
 // Baris lowongan ala board G1: logo + info + View Job. Klik baris = ganti ?job= (panel kanan).
-export default function JobListRow({ job, active, applied, saved, showApply, qs = "" }) {
+// Bila onSelect diberikan (mode instan tanpa navigasi), klik memanggil onSelect(job.id).
+export default function JobListRow({ job, active, applied, saved, showApply, qs = "", onSelect }) {
   const types = job.employment_types?.length
     ? job.employment_types
     : job.employment_type
@@ -17,6 +18,7 @@ export default function JobListRow({ job, active, applied, saved, showApply, qs 
   const tags = skillTags(job);
   const cafeName = job.cafes?.name ?? job.owners?.business_name ?? "-";
   const detailHref = qs ? `/jobs?${qs}&job=${job.id}` : `/jobs?job=${job.id}`;
+  const overlayCls = "absolute inset-0 rounded-2xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#9a6a2f]";
   return (
     <li
       className={`group relative rounded-2xl border bg-white p-4 transition-colors ${
@@ -24,12 +26,21 @@ export default function JobListRow({ job, active, applied, saved, showApply, qs 
       }`}
     >
       {/* Klik seluruh blok = buka panel detail; tombol di kolom kanan tetap di atas overlay. */}
-      <Link
-        href={detailHref}
-        scroll={false}
-        aria-label={`Lihat detail ${job.title}`}
-        className="absolute inset-0 rounded-2xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#9a6a2f]"
-      />
+      {onSelect ? (
+        <button
+          type="button"
+          onClick={() => onSelect(job.id)}
+          aria-label={`Lihat detail ${job.title}`}
+          className={overlayCls}
+        />
+      ) : (
+        <Link
+          href={detailHref}
+          scroll={false}
+          aria-label={`Lihat detail ${job.title}`}
+          className={overlayCls}
+        />
+      )}
       <div className="flex gap-3">
         <CafeLogo job={job} />
         <div className="min-w-0 flex-1">
@@ -67,13 +78,23 @@ export default function JobListRow({ job, active, applied, saved, showApply, qs 
             {relativeTime(job.created_at)}
             <SaveButton jobId={job.id} initialSaved={saved} />
           </span>
-          <Link
-            href={detailHref}
-            scroll={false}
-            className="inline-flex min-h-[44px] items-center rounded-full bg-coffee px-4 text-[11px] font-bold text-white hover:bg-[#2e2015]"
-          >
-            Lihat
-          </Link>
+          {onSelect ? (
+            <button
+              type="button"
+              onClick={() => onSelect(job.id)}
+              className="inline-flex min-h-[44px] items-center rounded-full bg-coffee px-4 text-[11px] font-bold text-white hover:bg-[#2e2015]"
+            >
+              Lihat
+            </button>
+          ) : (
+            <Link
+              href={detailHref}
+              scroll={false}
+              className="inline-flex min-h-[44px] items-center rounded-full bg-coffee px-4 text-[11px] font-bold text-white hover:bg-[#2e2015]"
+            >
+              Lihat
+            </Link>
+          )}
         </div>
       </div>
       {showApply && (

@@ -10,7 +10,7 @@ import { CafeLogo } from "@/components/landing/LatestJobs";
 import { relativeTime } from "@/lib/time";
 
 // Toggle List/Grid (H-20): pilihan tersimpan di sessionStorage, tidak hilang pindah halaman sesi ini.
-export default function JobsResults({ jobs, selectedId, appliedIds, savedIds, showApply, qs }) {
+export default function JobsResults({ jobs, selectedId, appliedIds, savedIds, showApply, qs, onSelect }) {
   const [view, setView] = useState(() => {
     try {
       return typeof window !== "undefined" && sessionStorage.getItem("jobs-view") === "grid" ? "grid" : "list";
@@ -46,7 +46,7 @@ export default function JobsResults({ jobs, selectedId, appliedIds, savedIds, sh
             <JobListRow
               key={job.id} job={job} active={job.id === selectedId}
               applied={appliedIds.includes(job.id)} saved={savedIds.includes(job.id)}
-              showApply={showApply} qs={qs}
+              showApply={showApply} qs={qs} onSelect={onSelect}
             />
           ))}
         </ul>
@@ -61,9 +61,15 @@ export default function JobsResults({ jobs, selectedId, appliedIds, savedIds, sh
                   <CafeLogo job={job} />
                   <SaveButton jobId={job.id} initialSaved={savedIds.includes(job.id)} />
                 </div>
-                <Link href={href} scroll={false} className="mt-2 block truncate text-sm font-extrabold text-espresso hover:text-matcha">
-                  {job.title}
-                </Link>
+                {onSelect ? (
+                  <button type="button" onClick={() => onSelect(job.id)} className="mt-2 block w-full truncate text-left text-sm font-extrabold text-espresso hover:text-matcha">
+                    {job.title}
+                  </button>
+                ) : (
+                  <Link href={href} scroll={false} prefetch={false} className="mt-2 block truncate text-sm font-extrabold text-espresso hover:text-matcha">
+                    {job.title}
+                  </Link>
+                )}
                 <p className="flex items-center gap-1 truncate text-xs text-espresso-soft">
                   {cafeName}{job.owners?.is_verified && <VerifiedBadge size={12} />}
                 </p>

@@ -8,10 +8,9 @@ import { avgStars } from "@/lib/ratings";
 import { matchPayBand, matchShift, recoScore } from "@/lib/jobFilters";
 import { EmptyState } from "@/components/ui/EmptyState";
 import JobsProfileCard from "@/components/jobs/JobsProfileCard";
-import JobDetailPanel from "@/components/jobs/JobDetailPanel";
+import JobsBrowser from "@/components/jobs/JobsBrowser";
 import JobsSearchForm from "@/components/jobs/JobsSearchForm";
 import JobsFilterBar from "@/components/jobs/JobsFilterBar";
-import JobsResults from "@/components/jobs/JobsResults";
 
 export const metadata = { title: "Loker" };
 export const revalidate = 60; // tanpa filter: static 60s; ada searchParams/sesi: dynamic otomatis
@@ -129,8 +128,6 @@ export default async function JobsPage({ searchParams }) {
   const total = jobs.length;
   const visible = jobs.slice(0, limit);
   const selected = jobParam ? (jobs.find((j) => j.id === jobParam) ?? null) : null;
-  const appliedSelected = selected ? appliedIds.has(selected.id) : false;
-  const savedSelected = selected ? savedIds.has(selected.id) : false;
 
   if (selected && isSupabaseConfigured()) {
     try {
@@ -155,15 +152,6 @@ export default async function JobsPage({ searchParams }) {
     }
   }
 
-  const selTypes = selected
-    ? selected.employment_types?.length
-      ? selected.employment_types
-      : selected.employment_type
-        ? [selected.employment_type]
-        : []
-    : [];
-  const selCafeName = selected ? (selected.cafes?.name ?? selected.owners?.business_name ?? "-") : "";
-
   // Query string filter aktif — dibawa di link kartu agar state pencarian tak hilang (H-02).
   const qsParams = new URLSearchParams();
   if (q) qsParams.set("q", q);
@@ -183,8 +171,8 @@ export default async function JobsPage({ searchParams }) {
   return (
     <div className="min-h-screen bg-paper text-espresso lg:flex lg:h-[calc(100dvh-3.5rem)] lg:min-h-0 lg:flex-col lg:overflow-hidden">
       <div className="mx-auto w-full max-w-[1600px] px-4 py-4 sm:px-6 lg:min-h-0 lg:flex-1">
-        <div className={`fx-grid-smooth grid items-start gap-4 lg:h-full ${selected ? "lg:grid-cols-[240px_minmax(0,1fr)] xl:grid-cols-[250px_minmax(0,1fr)_360px]" : "lg:grid-cols-[240px_minmax(0,1fr)]"}`}>
-          {/* Tengah: hero + filter + list */}
+        <div className="fx-grid-smooth grid items-start gap-4 lg:h-full lg:grid-cols-[240px_minmax(0,1fr)]">
+          {/* Tengah: hero + filter + list + panel instan (tanpa navigasi server) */}
           <div className="order-1 min-w-0 space-y-3 lg:order-2 lg:h-full lg:min-h-0 lg:overflow-y-auto lg:pr-1 lg:pb-1 no-scrollbar">
             <div className="relative grid overflow-hidden rounded-2xl border border-[#e8e0cf] bg-[#faf6ec] md:grid-cols-[1fr_220px]">
               <div className="px-5 py-5 sm:px-6">
@@ -254,16 +242,16 @@ export default async function JobsPage({ searchParams }) {
               />
             ) : (
               <>
-                <Suspense>
-                  <JobsResults
-                    jobs={visible}
-                    selectedId={selected?.id}
-                    appliedIds={[...appliedIds]}
-                    savedIds={[...savedIds]}
-                    showApply={isBarista}
-                    qs={qs}
-                  />
-                </Suspense>
+                <JobsBrowser
+                  jobs={visible}
+                  appliedIds={[...appliedIds]}
+                  savedIds={[...savedIds]}
+                  showApply={isBarista}
+                  qs={qs}
+                  canApply={!isOwner}
+                  initialSelectedId={selected?.id ?? null}
+                  initialReviews={{ avg: cafeAvg, count: cafeCount, reviews: cafeReviews }}
+                />
                 {total > visible.length && (
                   <div className="pt-1 text-center">
                     <Link
@@ -278,25 +266,6 @@ export default async function JobsPage({ searchParams }) {
               </>
             )}
           </div>
-
-          {/* Kanan: panel detail — hanya muncul saat ?job= ada (klik kartu) */}
-          {selected && (
-          <div key={selected.id} className="fx-panel-enter order-2 min-w-0 lg:order-3 lg:h-full lg:min-h-0 lg:overflow-y-auto lg:pb-1 no-scrollbar">
-              <JobDetailPanel
-                job={selected}
-                cafeName={selCafeName}
-                cafeHref={selected.cafe_id ? `/cafes/${selected.cafe_id}` : null}
-                types={selTypes}
-                avg={cafeAvg}
-                count={cafeCount}
-                reviews={cafeReviews}
-                applied={appliedSelected}
-                saved={savedSelected}
-                canApply={!isOwner}
-                closeHref={qs ? `/jobs?${qs}` : "/jobs"}
-              />
-          </div>
-          )}
 
           {/* Kiri: profil */}
           <div className="order-3 min-w-0 lg:order-1 lg:h-full lg:min-h-0 lg:overflow-y-auto lg:pb-1 no-scrollbar">
