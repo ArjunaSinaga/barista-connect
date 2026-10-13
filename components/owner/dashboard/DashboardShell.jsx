@@ -24,6 +24,11 @@ const LEGACY = { lowongan: "active", tim: "team" }; // deep-link lama tetap jala
 export default function DashboardShell({ initialView = "dashboard", initialCafeId = null, sidebar, middle, right }) {
   const start = LEGACY[initialView] ?? initialView;
   const [view, setView] = useState(VIEWS.includes(start) ? start : "talenta");
+  const [activeCafeId, setActiveCafeId] = useState(initialCafeId);
+  function selectCafe(id) {
+    setActiveCafeId(id);
+    setView("team");
+  }
   return (
     <div className="grid items-start gap-4 lg:h-full lg:grid-cols-[240px_minmax(0,1fr)] xl:grid-cols-[250px_minmax(0,1fr)_320px]">
       <div className="min-w-0 lg:h-full lg:min-h-0 lg:overflow-y-auto lg:pb-1 no-scrollbar">
@@ -33,7 +38,7 @@ export default function DashboardShell({ initialView = "dashboard", initialCafeI
       <div className="flex min-w-0 flex-col gap-3 lg:h-full lg:min-h-0 lg:overflow-hidden">
         <div className="min-w-0 space-y-2 lg:min-h-0 lg:flex-1 lg:overflow-y-auto lg:pr-1 lg:pb-1 no-scrollbar">
           {view === "dashboard" ? (
-            <OverviewView overview={middle.overview} />
+            <OverviewView overview={middle.overview} onNavigate={setView} />
           ) : view === "active" ? (
             <ActiveJobsView {...middle.active} onBack={() => setView("talenta")} />
           ) : view === "pelamar" ? (
@@ -41,7 +46,7 @@ export default function DashboardShell({ initialView = "dashboard", initialCafeI
           ) : view === "reviews" ? (
             <ReviewsView {...middle.reviews} onBack={() => setView("talenta")} />
           ) : view === "cafes" ? (
-            <CafesView {...middle.cafes} teamCountByCafe={middle.teamCountByCafe ?? {}} canAdd={middle.canAddCafe !== false} onBack={() => setView("talenta")} />
+            <CafesView {...middle.cafes} teamCountByCafe={middle.teamCountByCafe ?? {}} canAdd={middle.canAddCafe !== false} onBack={() => setView("talenta")} onSelectCafe={selectCafe} />
           ) : view === "settings" ? (
             middle.canSettings === false ? (
               <EmptyState
@@ -55,7 +60,7 @@ export default function DashboardShell({ initialView = "dashboard", initialCafeI
               <SettingsView {...middle.settings} onBack={() => setView("talenta")} />
             )
           ) : view === "team" ? (
-            <TeamView {...middle.team} initialCafeId={initialCafeId} onBack={() => setView("talenta")} />
+            <TeamView key={activeCafeId ?? "all"} {...middle.team} initialCafeId={activeCafeId} onBack={() => setView("talenta")} />
           ) : view === "org" ? (
             <OrgView orgs={middle.orgs ?? []} cafes={middle.cafes?.cafes ?? []} onBack={() => setView("talenta")} />
           ) : view === "saved" ? (

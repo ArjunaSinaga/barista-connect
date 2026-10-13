@@ -13,28 +13,44 @@ import { relativeTime } from "@/lib/time";
 import { STATUS_META } from "@/lib/constants";
 import { thumb } from "@/lib/img";
 
+// Pindah tab tanpa navigasi server (instan); fallback ke URL bila onNavigate tak ada.
+function TabLink({ tab, onNavigate, className, children, title }) {
+  if (onNavigate) {
+    return (
+      <button type="button" onClick={() => onNavigate(tab)} title={title} className={className}>
+        {children}
+      </button>
+    );
+  }
+  return (
+    <Link href={`/dashboard/owner?tab=${tab}`} scroll={false} title={title} className={className}>
+      {children}
+    </Link>
+  );
+}
+
 // EMPDASH overview: hero + 4 stat + pipeline + aktivitas + aksi cepat + tabel + butuh tindakan.
 // Semua angka dari props server (data real). Tahap interview tidak ada di DB:
 // kartu ke-3 = Lamaran Diproses (pending) dan pipeline tanpa baris interview.
-export default function OverviewView({ overview }) {
+export default function OverviewView({ overview, onNavigate }) {
   const o = overview;
   const maxPipe = Math.max(1, ...o.pipeline.map((p) => p.count));
   const rangeLabel = o.rangeParam === "all" ? "Semua waktu" : `${o.rangeParam} hari terakhir`;
 
   const stats = [
-    { icon: Briefcase, label: "Lowongan Aktif", value: o.stats.activeJobs, sub: "saat ini", href: "?tab=active", link: "Lihat Lowongan" },
-    { icon: Users, label: "Total Pelamar", value: o.stats.totalApps, sub: rangeLabel, delta: o.stats.deltaApps, href: "?tab=pelamar", link: "Lihat Pelamar" },
-    { icon: Hourglass, label: "Lamaran Diproses", value: o.stats.pending, sub: "menunggu keputusan", href: "?tab=pelamar", link: "Lihat Pipeline" },
-    { icon: CheckCircle2, label: "Kandidat Diterima", value: o.stats.accepted, sub: rangeLabel, delta: o.stats.deltaAccepted, href: "?tab=pelamar", link: "Lihat Riwayat" },
+    { icon: Briefcase, label: "Lowongan Aktif", value: o.stats.activeJobs, sub: "saat ini", tab: "active", link: "Lihat Lowongan" },
+    { icon: Users, label: "Total Pelamar", value: o.stats.totalApps, sub: rangeLabel, delta: o.stats.deltaApps, tab: "pelamar", link: "Lihat Pelamar" },
+    { icon: Hourglass, label: "Lamaran Diproses", value: o.stats.pending, sub: "menunggu keputusan", tab: "pelamar", link: "Lihat Pipeline" },
+    { icon: CheckCircle2, label: "Kandidat Diterima", value: o.stats.accepted, sub: rangeLabel, delta: o.stats.deltaAccepted, tab: "pelamar", link: "Lihat Riwayat" },
   ];
 
   const quick = [
     { icon: Plus, title: "Buat Lowongan", sub: "Temukan talenta baru", href: "/dashboard/owner/jobs/new", dark: true },
-    { icon: LayoutList, title: "Kelola Lowongan", sub: "Edit & pantau performa", href: "?tab=active" },
-    { icon: Users, title: "Lihat Pelamar", sub: "Kelola semua pelamar", href: "?tab=pelamar" },
+    { icon: LayoutList, title: "Kelola Lowongan", sub: "Edit & pantau performa", tab: "active" },
+    { icon: Users, title: "Lihat Pelamar", sub: "Kelola semua pelamar", tab: "pelamar" },
     { icon: Search, title: "Cari Talenta", sub: "Cari kandidat proaktif", href: "/find-baristas" },
-    { icon: Store, title: "Kelola Outlet", sub: "Atur cabang / lokasi", href: "?tab=cafes" },
-    { icon: UserPlus, title: "Undang Tim", sub: "Tambah recruiter", href: "?tab=org" },
+    { icon: Store, title: "Kelola Outlet", sub: "Atur cabang / lokasi", tab: "cafes" },
+    { icon: UserPlus, title: "Undang Tim", sub: "Tambah recruiter", tab: "org" },
   ];
 
   if (!o.hasJobs) {
@@ -100,9 +116,9 @@ export default function OverviewView({ overview }) {
               {s.delta && <span className="text-[11px] font-bold text-green-600">{s.delta}</span>}
             </p>
             <p className="text-[11px] text-[#b6a98f]">{s.sub}</p>
-            <Link href={s.href} className="mt-1.5 inline-flex items-center gap-0.5 text-[11px] font-bold text-link hover:underline">
+            <TabLink onNavigate={onNavigate} tab={s.tab} className="mt-1.5 inline-flex items-center gap-0.5 text-[11px] font-bold text-link hover:underline">
               {s.link} <ChevronRight size={12} />
-            </Link>
+            </TabLink>
           </div>
         ))}
       </section>
@@ -132,9 +148,9 @@ export default function OverviewView({ overview }) {
         <section className="rounded-2xl border border-[#e8e0cf] bg-white p-5">
           <div className="flex items-center justify-between">
             <h2 className="text-sm font-extrabold text-espresso">Aktivitas Terbaru</h2>
-            <Link href="?tab=pelamar" className="inline-flex items-center gap-0.5 text-[11px] font-bold text-link hover:underline">
+            <TabLink onNavigate={onNavigate} tab="pelamar" className="inline-flex items-center gap-0.5 text-[11px] font-bold text-link hover:underline">
               Lihat semua <ChevronRight size={12} />
-            </Link>
+            </TabLink>
           </div>
           {o.recent.length ? (
             <ul className="mt-3 space-y-2.5">
@@ -164,15 +180,28 @@ export default function OverviewView({ overview }) {
         <h2 className="text-sm font-extrabold text-espresso">Aksi Cepat <span className="ml-1 font-medium text-espresso-soft">Lakukan aktivitas rekrutmen dengan cepat.</span></h2>
         <div className="mt-3 grid grid-cols-2 gap-2.5 sm:grid-cols-3 xl:grid-cols-6">
           {quick.map((q) => (
-            <Link
-              key={q.title}
-              href={q.href}
-              className={`rounded-xl p-3.5 ${q.dark ? "bg-coffee text-white hover:bg-[#2e2015]" : "border border-[#e8e0cf] hover:border-coffee"}`}
-            >
-              <q.icon size={18} className={q.dark ? "" : "text-caramel"} />
-              <p className={`mt-2 text-xs font-extrabold ${q.dark ? "" : "text-espresso"}`}>{q.title}</p>
-              <p className={`mt-0.5 text-[10px] leading-3 ${q.dark ? "text-white/70" : "text-espresso-soft"}`}>{q.sub}</p>
-            </Link>
+            q.tab ? (
+              <button
+                key={q.title}
+                type="button"
+                onClick={() => onNavigate?.(q.tab)}
+                className="rounded-xl border border-[#e8e0cf] p-3.5 text-left hover:border-coffee"
+              >
+                <q.icon size={18} className="text-caramel" />
+                <p className="mt-2 text-xs font-extrabold text-espresso">{q.title}</p>
+                <p className="mt-0.5 text-[10px] leading-3 text-espresso-soft">{q.sub}</p>
+              </button>
+            ) : (
+              <Link
+                key={q.title}
+                href={q.href}
+                className={`rounded-xl p-3.5 ${q.dark ? "bg-coffee text-white hover:bg-[#2e2015]" : "border border-[#e8e0cf] hover:border-coffee"}`}
+              >
+                <q.icon size={18} className={q.dark ? "" : "text-caramel"} />
+                <p className={`mt-2 text-xs font-extrabold ${q.dark ? "" : "text-espresso"}`}>{q.title}</p>
+                <p className={`mt-0.5 text-[10px] leading-3 ${q.dark ? "text-white/70" : "text-espresso-soft"}`}>{q.sub}</p>
+              </Link>
+            )
           ))}
         </div>
       </section>
@@ -182,9 +211,9 @@ export default function OverviewView({ overview }) {
         <section className="min-w-0 rounded-2xl border border-[#e8e0cf] bg-white p-5">
           <div className="flex items-center justify-between">
             <h2 className="text-sm font-extrabold text-espresso">Lowongan Aktif</h2>
-            <Link href="?tab=active" className="inline-flex items-center gap-0.5 text-[11px] font-bold text-link hover:underline">
+            <TabLink onNavigate={onNavigate} tab="active" className="inline-flex items-center gap-0.5 text-[11px] font-bold text-link hover:underline">
               Lihat semua <ChevronRight size={12} />
-            </Link>
+            </TabLink>
           </div>
           <ul className="mt-3 space-y-2">
             {o.topJobs.map((j) => (
@@ -193,10 +222,10 @@ export default function OverviewView({ overview }) {
                   <Link href={`/jobs/${j.id}`} className="block truncate text-[13px] font-extrabold text-espresso hover:text-caramel">{j.title}</Link>
                   <p className="truncate text-[11px] text-espresso-soft">{j.outlet}</p>
                 </div>
-                <Link href="?tab=pelamar" className="shrink-0 text-center" title="Lihat pelamar">
+                <TabLink onNavigate={onNavigate} tab="pelamar" className="shrink-0 text-center" title="Lihat pelamar">
                   <span className="block text-sm font-extrabold text-espresso tabular-nums">{j.count}</span>
                   <span className="block text-[10px] text-espresso-soft">pelamar</span>
-                </Link>
+                </TabLink>
                 <span className={`shrink-0 rounded-full px-2 py-0.5 text-[10px] font-bold ${j.is_active ? "bg-green-50 text-green-700" : "bg-gray-100 text-gray-500"}`}>
                   {j.is_active ? "Aktif" : "Nonaktif"}
                 </span>
@@ -217,9 +246,9 @@ export default function OverviewView({ overview }) {
                 <span className="ml-1.5 rounded-full bg-red-500 px-2 py-0.5 text-[10px] font-bold text-white tabular-nums">{o.pendingAction.length}</span>
               )}
             </h2>
-            <Link href="?tab=pelamar" className="inline-flex items-center gap-0.5 text-[11px] font-bold text-link hover:underline">
+            <TabLink onNavigate={onNavigate} tab="pelamar" className="inline-flex items-center gap-0.5 text-[11px] font-bold text-link hover:underline">
               Lihat semua <ChevronRight size={12} />
-            </Link>
+            </TabLink>
           </div>
           <p className="mt-1.5 rounded-xl bg-[#fff8e8] px-3.5 py-2.5 text-[11px] leading-4 text-espresso-soft">
             Setelah interview, mohon update status kandidat ke Diterima atau Ditolak melalui halaman detail lamaran.
@@ -228,7 +257,7 @@ export default function OverviewView({ overview }) {
             <ul className="mt-2.5 space-y-2">
               {o.pendingAction.map((c) => (
                 <li key={c.id}>
-                  <Link href="?tab=pelamar" className="flex items-center gap-2.5 rounded-xl p-2 hover:bg-[#faf7ef]">
+                  <TabLink onNavigate={onNavigate} tab="pelamar" className="flex items-center gap-2.5 rounded-xl p-2 hover:bg-[#faf7ef]">
                     <Avatar name={c.name} size="md" className="shrink-0" />
                     <span className="min-w-0 flex-1">
                       <span className="block truncate text-[13px] font-extrabold text-espresso">{c.name}</span>
@@ -236,7 +265,7 @@ export default function OverviewView({ overview }) {
                     </span>
                     <span className="shrink-0 text-[10px] text-[#b6a98f]">{relativeTime(c.created_at)}</span>
                     <ChevronRight size={15} className="shrink-0 text-espresso-soft" />
-                  </Link>
+                  </TabLink>
                 </li>
               ))}
             </ul>

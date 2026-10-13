@@ -42,8 +42,27 @@ export default function BaristaDirectory({ ownerId }) {
   const debounceRef = useRef(null);
   const selected = (list ?? []).find((b) => b.id === selectedId) ?? null;
 
-  // State diinisialisasi dari URL sekali saat mount; navigasi antar-query me-remount
-  // via key={...} dari page (lihat app/find-baristas/page.jsx).
+  // Sinkron dari URL saat query berubah TANPA remount (pilihan panel tidak hilang).
+  // Quick-filter pills menavigasi ke /find-baristas?q=...; nilai baru diadopsi saat render
+  // (pola React resmi "adjust state during render", bukan efek).
+  const spKey = searchParams.toString();
+  const [syncedKey, setSyncedKey] = useState(spKey);
+  {
+    const nq = searchParams.get("q") ?? "";
+    const nLoc = (searchParams.get("location") ?? searchParams.get("loc") ?? "").toString();
+    const nType = normType(searchParams.get("type"));
+    const nAvail = searchParams.get("available");
+    const nMinR = parseFloat(searchParams.get("minRating") ?? "") || 0;
+    if (syncedKey !== spKey) {
+      setSyncedKey(spKey);
+      setQ(nq);
+      setLoc(nLoc);
+      setTypeFilter(nType);
+      setOpenOnly(nAvail === null ? true : nAvail !== "0");
+      setMinRating(nMinR);
+      setSkills(nq && SKILL_PRESETS.some((s) => s.toLowerCase() === nq.trim().toLowerCase()) ? [SKILL_PRESETS.find((s) => s.toLowerCase() === nq.trim().toLowerCase())] : []);
+    }
+  }
 
   const fetchList = useCallback(async () => {
     setLoadError(false);

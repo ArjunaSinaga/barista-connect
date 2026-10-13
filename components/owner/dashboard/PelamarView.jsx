@@ -1,27 +1,20 @@
 "use client";
 
-import { useRouter, useSearchParams } from "next/navigation";
+import { useState } from "react";
 import Link from "next/link";
 import { Users, Eye, Store, Clock3, CheckCircle2, XCircle, Search } from "lucide-react";
 import { EmptyState } from "@/components/ui/EmptyState";
 import StatCard from "@/components/ui/StatCard";
 
 // Kolom tengah mode pelamar: tiap lowongan + pelamarnya, fokus ke Kelola.
-// Paritas barista (JobsFilterBar): pencarian tersinkron URL (?q=) — shareable + survive refresh.
-export default function PelamarView({ jobs, appCountByJob, statusByJob, totals, onBack }) {
-  const router = useRouter();
-  const params = useSearchParams();
-  const q = (params.get("q") ?? "").trim().toLowerCase();
-  function setQ(v) {
-    const next = new URLSearchParams(params.toString());
-    if (v.trim()) next.set("q", v.trim());
-    else next.delete("q");
-    router.push(`/dashboard/owner?${next.toString()}`, { scroll: false });
-  }
-  const list = q
+// Pencarian disaring di memori (instan, tanpa navigasi server).
+export default function PelamarView({ jobs, appCountByJob, statusByJob, totals, onBack, initialQ = "" }) {
+  const [q, setQ] = useState(initialQ);
+  const needle = q.trim().toLowerCase();
+  const list = needle
     ? (jobs ?? []).filter((j) =>
-        (j.title ?? "").toLowerCase().includes(q) ||
-        (j.cafes?.name ?? "").toLowerCase().includes(q)
+        (j.title ?? "").toLowerCase().includes(needle) ||
+        (j.cafes?.name ?? "").toLowerCase().includes(needle)
       )
     : (jobs ?? []);
   return (
@@ -54,7 +47,7 @@ export default function PelamarView({ jobs, appCountByJob, statusByJob, totals, 
           <Search size={14} className="shrink-0 text-espresso-soft" />
           <input
             id="pelamar-q"
-            defaultValue={params.get("q") ?? ""}
+            value={q}
             onChange={(e) => setQ(e.target.value)}
             placeholder="Cari judul / outlet…"
             className="w-full bg-transparent text-sm text-espresso outline-none placeholder:text-[#b6a98f]"
@@ -69,7 +62,7 @@ export default function PelamarView({ jobs, appCountByJob, statusByJob, totals, 
             compact
             icon={<Users size={18} />}
             title="Tidak ketemu"
-            subtitle={`Tidak ada lowongan cocok "${params.get("q")}". Coba kata lain.`}
+            subtitle={`Tidak ada lowongan cocok "${q}". Coba kata lain.`}
           />
         ) : (
         <EmptyState

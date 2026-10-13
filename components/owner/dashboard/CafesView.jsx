@@ -6,7 +6,7 @@ import { EmptyState } from "@/components/ui/EmptyState";
 import CafeInvite from "@/components/owner/dashboard/CafeInvite";
 
 // Kolom tengah mode cafes: daftar kafe owner.
-export default function CafesView({ cafes, countByCafe, teamCountByCafe = {}, canAdd = true, onBack }) {
+export default function CafesView({ cafes, countByCafe, teamCountByCafe = {}, canAdd = true, onBack, onSelectCafe }) {
   return (
     <>
       <div className="flex flex-wrap items-start justify-between gap-3">
@@ -64,9 +64,15 @@ export default function CafesView({ cafes, countByCafe, teamCountByCafe = {}, ca
                   </p>
                   <p className="truncate text-[11px] text-espresso-soft">
                     {teamCountByCafe[c.id] ?? 0} anggota tim ·{" "}
-                    <Link href={`/dashboard/owner?tab=team&kafe=${c.id}`} className="font-bold text-link hover:underline">
-                      Lihat tim
-                    </Link>
+                    {onSelectCafe ? (
+                      <button type="button" onClick={() => onSelectCafe(c.id)} className="font-bold text-link hover:underline">
+                        Lihat tim
+                      </button>
+                    ) : (
+                      <Link href={`/dashboard/owner?tab=team&kafe=${c.id}`} className="font-bold text-link hover:underline">
+                        Lihat tim
+                      </Link>
+                    )}
                   </p>
                   <CafeInvite cafeId={c.id} initialCode={c.invite_code} />
                 </div>
