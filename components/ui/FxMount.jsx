@@ -7,6 +7,42 @@ import { useEffect } from "react";
 // Tanpa library tambahan.
 export default function FxMount() {
   useEffect(() => {
+    // Reveal saat scroll: amati .fx-reveal-scroll + otomatis untuk
+    // section/article/kartu di dalam main agar seluruh situs hidup
+    // tanpa edit per halaman. Hormati prefers-reduced-motion.
+    const reduceMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+    let observer = null;
+    let mo = null;
+    if (!reduceMotion && "IntersectionObserver" in window) {
+      observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((en) => {
+            if (en.isIntersecting) {
+              en.target.classList.add("fx-in");
+              observer.unobserve(en.target);
+            }
+          });
+        },
+        { threshold: 0.12, rootMargin: "0px 0px -8% 0px" }
+      );
+      const watch = (root = document) => {
+        root.querySelectorAll?.(
+          ".fx-reveal-scroll, main section, main article, main .card-dark, main .fx-stagger"
+        ).forEach((el) => {
+          if (!el.classList.contains("fx-reveal-scroll") && !el.classList.contains("fx-stagger")) {
+            el.classList.add("fx-reveal-scroll");
+          }
+          if (!el.classList.contains("fx-in") && el.getBoundingClientRect().top > window.innerHeight) {
+            observer.observe(el);
+          } else {
+            el.classList.add("fx-in");
+          }
+        });
+      };
+      watch();
+      mo = new MutationObserver(() => watch());
+      mo.observe(document.body, { childList: true, subtree: true });
+    }
     const onPointerDown = (e) => {
       const el = e.target?.closest?.(".fx-ripple");
       if (!el) return;
@@ -71,6 +107,8 @@ export default function FxMount() {
       document.removeEventListener("pointerdown", onPointerDown);
       document.removeEventListener("pointermove", onPointerMove);
       document.removeEventListener("pointerout", onPointerOut);
+      observer?.disconnect();
+      mo?.disconnect();
     };
   }, []);
 

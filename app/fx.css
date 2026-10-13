@@ -138,8 +138,54 @@
 /* Grid list /jobs: susut halus saat panel muncul (bukan jepret) */
 .fx-grid-smooth { transition: grid-template-columns .45s cubic-bezier(.22,.9,.28,1); }
 
+/* — Lapisan gerak global (tanpa ubah tata letak, tanpa edit per halaman) — */
+/* 16. Masuk halaman: fade naik halus saat mount */
+@keyframes fx-page-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+main { animation: fx-page-in .35s ease-out; }
+/* 17. Reveal saat scroll: elemen .fx-reveal-scroll muncul saat terlihat */
+.fx-reveal-scroll { opacity: 0; transform: translateY(14px); transition: opacity .5s ease, transform .5s ease; }
+.fx-reveal-scroll.fx-in { opacity: 1; transform: none; }
+/* Otomatis: kartu dan section di bawah lipatan ikut reveal tanpa edit per file */
+main section, main article, .card-dark { content-visibility: auto; }
+/* 18. Daftar berjenjang: anak muncul satu per satu */
+@keyframes fx-item-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.fx-stagger > * { animation: fx-item-in .4s ease-out backwards; }
+.fx-stagger > *:nth-child(2) { animation-delay: .05s; }
+.fx-stagger > *:nth-child(3) { animation-delay: .1s; }
+.fx-stagger > *:nth-child(4) { animation-delay: .15s; }
+.fx-stagger > *:nth-child(5) { animation-delay: .2s; }
+.fx-stagger > *:nth-child(6) { animation-delay: .25s; }
+.fx-stagger > *:nth-child(n+7) { animation-delay: .3s; }
+/* 19. Skeleton kilau: ganti denyut kasar dengan sapuan halus */
+@keyframes fx-skeleton-sweep {
+  from { background-position: 200% 0; }
+  to { background-position: -200% 0; }
+}
+/* 20. Dialog/lembar bawah: naik + fade saat mount */
+@keyframes fx-sheet-in {
+  from { opacity: 0; transform: translateY(24px) scale(.99); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+dialog[open], [data-slot="sheet"], [role="dialog"] { animation: fx-sheet-in .3s ease-out; }
+/* 21. Toast/notifikasi: geser masuk dari bawah */
+@keyframes fx-toast-in {
+  from { opacity: 0; transform: translateY(12px) scale(.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+[class*="toast"], [role="status"], [role="alert"] { animation: fx-toast-in .25s ease-out; }
+/* 22. Gambar: fade-in saat selesai dimuat (tanpa lompatan tata letak) */
+img { animation: fx-page-in .4s ease-out; }
+
 /* Aksesibilitas: matikan gerak bila pengguna memintanya */
 @media (prefers-reduced-motion: reduce) {
+  main, img, dialog[open], [data-slot="sheet"], [role="dialog"],
+  [class*="toast"], [role="status"], [role="alert"] { animation: none !important; }
   .fx-panel-enter { animation: none !important; }
   .fx-grid-smooth { transition: none !important; }
   .fx-lift, .fx-glow, .fx-shimmer::before, .fx-fill, .fx-fill::after,
