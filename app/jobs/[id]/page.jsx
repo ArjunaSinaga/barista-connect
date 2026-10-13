@@ -260,14 +260,21 @@ export default async function JobDetailPage({ params }) {
                 {similar.map((s) => {
                   const sName = s.cafes?.name ?? s.owners?.business_name ?? "-";
                   return (
-                    <li key={s.id} className="rounded-2xl border border-[#e8e0cf] bg-white p-4">
-                      <div className="flex items-start justify-between gap-2">
+                    <li key={s.id} className="group relative rounded-2xl border border-[#e8e0cf] bg-white p-4 transition-colors hover:border-[#c9b992]">
+                      <Link
+                        href={`/jobs/${s.id}`}
+                        aria-label={`Lihat detail ${s.title}`}
+                        className="absolute inset-0 rounded-2xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#9a6a2f]"
+                      />
+                      <div className="relative flex items-start justify-between gap-2">
                         <CafeLogo job={s} />
-                        <SaveButton jobId={s.id} initialSaved={similarSaved.has(s.id)} />
+                        <span className="relative z-10">
+                          <SaveButton jobId={s.id} initialSaved={similarSaved.has(s.id)} />
+                        </span>
                       </div>
-                      <Link href={`/jobs/${s.id}`} className="mt-2 block truncate text-sm font-extrabold text-espresso hover:text-matcha">
+                      <span className="relative mt-2 block truncate text-sm font-extrabold text-espresso group-hover:text-matcha">
                         {s.title}
-                      </Link>
+                      </span>
                       <p className="truncate text-xs text-espresso-soft">{sName}</p>
                       <p className="mt-1 flex items-center gap-1 text-[11px] text-espresso-soft">
                         <MapPin size={11} aria-hidden="true" />{s.location}

@@ -56,17 +56,24 @@ export default function JobsResults({ jobs, selectedId, appliedIds, savedIds, sh
             const cafeName = job.cafes?.name ?? job.owners?.business_name ?? "-";
             const href = qs ? `/jobs?${qs}&job=${job.id}` : `/jobs?job=${job.id}`;
             return (
-              <li key={job.id} className={`rounded-2xl border bg-white p-4 ${job.id === selectedId ? "border-coffee" : "border-[#e8e0cf]"}`}>
+              <li key={job.id} className={`group relative rounded-2xl border bg-white p-4 transition-colors hover:border-[#c9b992] ${job.id === selectedId ? "border-coffee" : "border-[#e8e0cf]"}`}>
                 <div className="flex items-start justify-between gap-2">
                   <CafeLogo job={job} />
-                  <SaveButton jobId={job.id} initialSaved={savedIds.includes(job.id)} />
+                  <span className="relative z-10">
+                    <SaveButton jobId={job.id} initialSaved={savedIds.includes(job.id)} />
+                  </span>
                 </div>
                 {onSelect ? (
-                  <button type="button" onClick={() => onSelect(job.id)} className="mt-2 block w-full truncate text-left text-sm font-extrabold text-espresso hover:text-matcha">
+                  <button type="button" onClick={() => onSelect(job.id)} aria-label={`Lihat detail ${job.title}`} className="absolute inset-0 rounded-2xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#9a6a2f]" />
+                ) : (
+                  <Link href={href} scroll={false} prefetch={false} aria-label={`Lihat detail ${job.title}`} className="absolute inset-0 rounded-2xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#9a6a2f]" />
+                )}
+                {onSelect ? (
+                  <button type="button" onClick={() => onSelect(job.id)} className="relative mt-2 block w-full truncate text-left text-sm font-extrabold text-espresso group-hover:text-matcha">
                     {job.title}
                   </button>
                 ) : (
-                  <Link href={href} scroll={false} prefetch={false} className="mt-2 block truncate text-sm font-extrabold text-espresso hover:text-matcha">
+                  <Link href={href} scroll={false} prefetch={false} className="relative mt-2 block truncate text-sm font-extrabold text-espresso group-hover:text-matcha">
                     {job.title}
                   </Link>
                 )}
