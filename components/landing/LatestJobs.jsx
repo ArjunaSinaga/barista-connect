@@ -59,12 +59,17 @@ export default function LatestJobs({ jobs }) {
             const types = job.employment_types?.length ? job.employment_types : (job.employment_type ? [job.employment_type] : []);
             const tags = skillTags(job);
             return (
-              <li key={job.id} className="flex gap-3 py-3.5">
+              <li key={job.id} className="group relative flex gap-3 py-3.5">
+                <Link
+                  href={`/jobs/${job.id}`}
+                  aria-label={`Lihat detail ${job.title}`}
+                  className="absolute inset-0 rounded-xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#9a6a2f]"
+                />
                 <CafeLogo job={job} />
                 <div className="min-w-0 flex-1">
-                  <Link href={`/jobs/${job.id}`} className="block truncate text-sm font-bold text-espresso hover:text-matcha">
+                  <span className="block truncate text-sm font-bold text-espresso group-hover:text-matcha">
                     {job.title}
-                  </Link>
+                  </span>
                   <p className="flex items-center gap-1 truncate text-xs text-espresso-soft">
                     {job.cafes?.name ?? job.owners?.business_name}
                     {job.owners?.is_verified && <VerifiedBadge size={12} />}
@@ -84,7 +89,7 @@ export default function LatestJobs({ jobs }) {
                     </div>
                   )}
                 </div>
-                <div className="flex shrink-0 flex-col items-end justify-start gap-1.5">
+                <div className="relative z-10 flex shrink-0 flex-col items-end justify-start gap-1.5">
                   <span className="flex items-center gap-2 text-[11px] text-[#b6a98f]">
                     {relativeTime(job.created_at)}
                     <button type="button" disabled title="Saved jobs coming soon" aria-label="Save job (coming soon)" className="text-espresso">

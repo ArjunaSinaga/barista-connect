@@ -29,7 +29,12 @@ export function CandidateCard({ barista, rank, compact = false, strip = false, s
 
   if (strip) {
     return (
-      <div className="flex h-full min-w-0 items-center gap-3 rounded-xl border border-[#e8e0cf] bg-white p-2.5 shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
+      <div className="group relative flex h-full min-w-0 items-center gap-3 rounded-xl border border-[#e8e0cf] bg-white p-2.5 shadow-[0_1px_3px_rgba(43,33,24,0.08)] transition-colors hover:border-[#c9b992]">
+        <Link
+          href={`/barista/${barista.id}`}
+          aria-label={`Lihat profil ${barista.full_name}`}
+          className="absolute inset-0 rounded-xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#9a6a2f]"
+        />
         <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-lg bg-[#efe9d9]">
           {photo ? (
             <Image src={photo} alt={barista.full_name} fill sizes="64px" className="object-cover" />
@@ -48,7 +53,7 @@ export function CandidateCard({ barista, rank, compact = false, strip = false, s
               <span className="truncate">{barista.full_name}</span>
               {barista.is_verified && <VerifiedBadge size={11} />}
             </p>
-            <div className="flex items-center gap-1 shrink-0">
+            <div className="relative z-10 flex items-center gap-1 shrink-0">
               <span className="flex items-center gap-0.5 text-[11px] font-bold text-espresso">
                 <Star size={10} className="fill-[#c98a2b] text-[#c98a2b]" />
                 {avg ?? "-"} <span className="font-semibold text-espresso-soft">({count})</span>
@@ -73,13 +78,12 @@ export function CandidateCard({ barista, rank, compact = false, strip = false, s
                 ))}
               </div>
             )}
-            <div className="ml-auto flex gap-1">
-              <Link
-                href={`/barista/${barista.id}`}
-                className="inline-flex items-center justify-center rounded border border-[#d8cdae] px-2 py-1 text-[10px] font-bold text-espresso hover:border-coffee"
+            <div className="relative z-10 ml-auto flex gap-1">
+              <span
+                className="inline-flex items-center justify-center rounded border border-[#d8cdae] px-2 py-1 text-[10px] font-bold text-espresso"
               >
                 Profil
-              </Link>
+              </span>
               <InviteButton
                 ownerId={ownerId}
                 baristaId={barista.id}
@@ -96,7 +100,12 @@ export function CandidateCard({ barista, rank, compact = false, strip = false, s
   const coverCls = compact ? "aspect-[16/7]" : "aspect-[16/8]";
 
   return (
-    <div className="flex h-full min-w-0 flex-col overflow-hidden rounded-2xl border border-[#e8e0cf] bg-white shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
+    <div className="group relative flex h-full min-w-0 flex-col overflow-hidden rounded-2xl border border-[#e8e0cf] bg-white shadow-[0_1px_3px_rgba(43,33,24,0.08)] transition-colors hover:border-[#c9b992]">
+      <Link
+        href={`/barista/${barista.id}`}
+        aria-label={`Lihat profil ${barista.full_name}`}
+        className="absolute inset-0 z-10 rounded-2xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#9a6a2f]"
+      />
 <div className={`relative ${coverCls}`}>
         {photo ? (
           <Image src={photo} alt={barista.full_name} fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover" />
@@ -105,10 +114,12 @@ export function CandidateCard({ barista, rank, compact = false, strip = false, s
             <Avatar name={barista.full_name} size="lg" />
           </div>
         )}
-        <span className={`absolute top-2 left-2 rounded-full px-2.5 py-1 text-[10px] font-bold ${badge.cls}`}>
+        <span className="absolute top-2 left-2 rounded-full px-2.5 py-1 text-[10px] font-bold ${badge.cls}">
           {badge.label}
         </span>
-        <SaveBaristaButton baristaId={barista.id} baristaName={barista.full_name} initialSaved={saved} />
+        <span className="absolute top-2 right-2 z-20">
+          <SaveBaristaButton baristaId={barista.id} baristaName={barista.full_name} initialSaved={saved} />
+        </span>
       </div>
       <div className={compact ? "flex flex-1 flex-col p-2.5" : "p-3"}>
         <p className="flex items-center gap-1.5 text-sm font-extrabold text-espresso">
@@ -141,13 +152,12 @@ export function CandidateCard({ barista, rank, compact = false, strip = false, s
             )}
           </div>
         )}
-        <div className="mt-1.5 flex gap-1.5">
-          <Link
-            href={`/barista/${barista.id}`}
-            className="inline-flex min-h-[34px] flex-1 items-center justify-center rounded-full border border-[#d8cdae] px-2 py-1.5 text-[11px] font-bold text-espresso hover:border-coffee"
+        <div className="relative z-20 mt-1.5 flex gap-1.5">
+          <span
+            className="inline-flex min-h-[34px] flex-1 items-center justify-center rounded-full border border-[#d8cdae] px-2 py-1.5 text-[11px] font-bold text-espresso"
           >
             Lihat Profil
-          </Link>
+          </span>
           <InviteButton
             ownerId={ownerId}
             baristaId={barista.id}

@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
-import { ChevronDown, LogOut, MessageSquareText } from "lucide-react";
+import { ChevronDown, LogOut, Menu, MessageSquareText, X } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import NotifBell from "@/components/NotifBell";
 import HeaderSearch from "@/components/layout/HeaderSearch";
@@ -23,6 +23,7 @@ export default function Navbar({ user, role }) {
   const pathname = usePathname();
   const [busy, setBusy] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [navOpen, setNavOpen] = useState(false);
   const home = role === "owner" ? "/dashboard/owner" : "/dashboard/barista";
   const profileHref = role === "owner" ? "/dashboard/owner/profile" : "/dashboard/barista/profile";
   const postJobHref = role === "owner" ? "/dashboard/owner/jobs/new" : "/register?role=employer";
@@ -56,13 +57,13 @@ export default function Navbar({ user, role }) {
           </Link>
         </span>
 
-        <nav aria-label="Utama" className="flex min-w-0 flex-1 items-center gap-0.5 overflow-x-auto no-scrollbar sm:gap-1">
+        <nav aria-label="Utama" className="hidden min-w-0 flex-1 items-center gap-0.5 overflow-x-auto no-scrollbar sm:gap-1 md:flex">
           {NAV.map((n) => (
             <Link
               key={n.label}
               href={n.href}
               aria-current={isActive(n.match) ? "page" : undefined}
-              className={`inline-flex min-h-[44px] shrink-0 items-center rounded-lg px-2.5 text-sm font-semibold whitespace-nowrap sm:px-3 ${
+              className={`fx-underline inline-flex min-h-[44px] shrink-0 items-center rounded-lg px-2.5 text-sm font-semibold whitespace-nowrap sm:px-3 ${
                 isActive(n.match)
                   ? "text-[#2f2721] underline decoration-[#3d2c1e] decoration-2 underline-offset-8"
                   : "text-[#2f2721]/70 hover:text-[#6f5a3e]"
@@ -84,6 +85,45 @@ export default function Navbar({ user, role }) {
           </Link>
           )}
         </nav>
+
+        <div className="relative ml-auto shrink-0 md:hidden">
+          <button
+            type="button"
+            onClick={() => setNavOpen((o) => !o)}
+            aria-expanded={navOpen}
+            aria-haspopup="menu"
+            aria-label="Menu navigasi"
+            className="fx-press inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-xl text-[#2f2721] hover:bg-[#2f2721]/10"
+          >
+            {navOpen ? <X size={20} /> : <Menu size={20} />}
+          </button>
+          {navOpen && (
+            <div role="menu" className="absolute top-full right-0 z-50 mt-1 w-52 overflow-hidden rounded-xl border border-[#e0d5bd] bg-white py-1 shadow-lg">
+              {NAV.map((n) => (
+                <Link
+                  key={n.label}
+                  href={n.href}
+                  role="menuitem"
+                  aria-current={isActive(n.match) ? "page" : undefined}
+                  onClick={() => setNavOpen(false)}
+                  className={`flex min-h-[44px] items-center px-4 text-sm font-semibold ${isActive(n.match) ? "bg-paper text-[#2f2721]" : "text-[#2f2721]/70 hover:bg-paper"}`}
+                >
+                  {n.label}
+                </Link>
+              ))}
+              {!user && (
+                <Link
+                  href="/register?role=employer"
+                  role="menuitem"
+                  onClick={() => setNavOpen(false)}
+                  className="flex min-h-[44px] items-center px-4 text-sm font-semibold text-[#2f2721]/70 hover:bg-paper"
+                >
+                  Untuk Owner
+                </Link>
+              )}
+            </div>
+          )}
+        </div>
 
         <HeaderSearch />
 

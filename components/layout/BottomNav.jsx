@@ -2,25 +2,25 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Briefcase, FileText, UserRound, Megaphone, UsersRound, Search, GraduationCap, Award } from "lucide-react";
+import { Briefcase, FileText, UserRound, MessageSquareText, UsersRound, Search, GraduationCap, Award, LayoutDashboard } from "lucide-react";
 
 const SETS = {
   barista: [
     { href: "/dashboard/barista", label: "Lowongan", icon: Briefcase },
     { href: "/dashboard/barista/applications", label: "Lamaran", icon: FileText },
-    { href: "/messages", label: "Pesan", icon: Megaphone },
+    { href: "/messages", label: "Pesan", icon: MessageSquareText },
     { href: "/dashboard/barista/profile", label: "Profil", icon: UserRound },
   ],
   owner: [
-    { href: "/dashboard/owner", label: "Lowongan", icon: Megaphone },
+    { href: "/dashboard/owner", label: "Dasbor", icon: LayoutDashboard },
     { href: "/find-baristas", label: "Cari", icon: Search },
-    { href: "/messages", label: "Pesan", icon: Megaphone },
+    { href: "/messages", label: "Pesan", icon: MessageSquareText },
     { href: "/dashboard/owner/profile", label: "Bisnis", icon: UserRound },
   ],
   academy: [
     { href: "/dashboard/academy", label: "Akademi", icon: GraduationCap },
     { href: "/training", label: "Training", icon: Award },
-    { href: "/messages", label: "Pesan", icon: Megaphone },
+    { href: "/messages", label: "Pesan", icon: MessageSquareText },
     { href: "/dashboard/academy/profile", label: "Profil", icon: UserRound },
   ],
 };
@@ -41,7 +41,7 @@ export default function BottomNav({ role }) {
             <Link
               key={href}
               href={href}
-              className={`flex flex-col items-center gap-0.5 py-2.5 text-[10px] font-bold transition-colors ${
+              className={`flex min-h-[56px] flex-col items-center justify-center gap-0.5 py-2 text-[10px] font-bold transition-colors ${
                 active ? "text-caramel" : "text-espresso-soft"
               }`}
             >

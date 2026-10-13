@@ -39,6 +39,15 @@ export default function BaristaDirectory({ ownerId }) {
   const [loadError, setLoadError] = useState(false);
   const [sheetOpen, setSheetOpen] = useState(false);
   const [selectedId, setSelectedId] = useState(null);
+  // Panel samping hanya di xl+; di bawah itu detail dibuka sebagai bottom sheet.
+  const [isXl, setIsXl] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 1280px)");
+    const sync = () => setIsXl(mq.matches);
+    sync();
+    mq.addEventListener("change", sync);
+    return () => mq.removeEventListener("change", sync);
+  }, []);
   const debounceRef = useRef(null);
   const selected = (list ?? []).find((b) => b.id === selectedId) ?? null;
 
@@ -157,7 +166,7 @@ export default function BaristaDirectory({ ownerId }) {
               key={s}
               type="button"
               onClick={() => toggleSkill(s)}
-              className={`rounded-full px-3 py-1.5 text-xs font-bold transition-colors ${
+              className={`fx-press rounded-full px-4 py-1.5 text-xs font-bold transition-colors min-h-[36px] ${
                 skills.includes(s)
                   ? "bg-caramel text-white"
                   : "border border-latte card-dark text-espresso-soft hover:border-caramel hover:text-caramel"
@@ -222,7 +231,7 @@ export default function BaristaDirectory({ ownerId }) {
 
       {/* toolbar */}
       <div className="mt-5 flex flex-wrap items-center gap-2">
-        <div className="flex min-w-0 flex-1 items-center gap-2 rounded-full border border-latte card-dark px-4 py-2 focus-within:border-caramel sm:max-w-sm">
+        <div className="flex min-w-0 basis-full items-center gap-2 rounded-full border border-latte card-dark px-4 py-2 focus-within:border-caramel sm:basis-auto sm:max-w-sm sm:flex-1">
           <Search size={15} className="shrink-0 text-espresso-soft" aria-hidden="true" />
           <label htmlFor="dir-q" className="sr-only">Cari nama, skill, atau lokasi</label>
           <input
@@ -234,29 +243,30 @@ export default function BaristaDirectory({ ownerId }) {
             className="h-6 w-full bg-transparent text-sm text-espresso placeholder:text-espresso-soft/60 focus:outline-none"
           />
           {q && (
-            <button type="button" onClick={() => setQ("")} aria-label="Hapus pencarian" className="shrink-0 text-espresso-soft hover:text-espresso">
+            <button type="button" onClick={() => setQ("")} aria-label="Hapus pencarian" className="flex min-h-[36px] min-w-[36px] shrink-0 items-center justify-center rounded-full text-espresso-soft hover:text-espresso">
               <X size={14} />
             </button>
           )}
         </div>
         <button
           onClick={() => setSheetOpen(true)}
-          className="relative inline-flex items-center gap-2 rounded-xl card-dark px-4 py-2.5 text-sm font-bold text-espresso hover:border-caramel hover:text-caramel md:hidden"
+          className="fx-press relative inline-flex min-h-[44px] items-center gap-2 rounded-xl card-dark px-4 py-2.5 text-sm font-bold text-espresso hover:border-caramel hover:text-caramel md:hidden"
         >
           <SlidersHorizontal size={16} /> Filter
           {activeFilters > 0 && (
-            <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-caramel px-1 text-[10px] font-extrabold text-white">
+            <span className="flex h-6 min-w-6 items-center justify-center rounded-full bg-caramel px-1.5 text-[10px] font-extrabold text-white">
               {activeFilters}
             </span>
           )}
         </button>
 
-        <div className="ml-auto flex items-center gap-2 text-sm">
-          <span className="font-semibold text-espresso-soft">Urutkan:</span>
+        <div className="flex items-center gap-1.5 text-sm">
+          <span className="hidden font-semibold text-espresso-soft min-[400px]:inline">Urutkan:</span>
           <select
             value={sort}
             onChange={(e) => setSort(e.target.value)}
-            className="rounded-xl card-dark px-3 py-2 text-sm font-bold outline-none focus:border-caramel"
+            aria-label="Urutkan"
+            className="max-w-[160px] truncate rounded-xl card-dark px-3 py-2 text-sm font-bold outline-none focus:border-caramel"
           >
             <option value="open">Buka kerja dulu</option>
             <option value="exp">Pengalaman tertinggi</option>
@@ -329,6 +339,7 @@ export default function BaristaDirectory({ ownerId }) {
               >
               <BaristaCard
                 barista={b}
+                linkOverlay={false}
                 actions={
                   <span className="flex items-center gap-2" onClick={(e) => e.stopPropagation()}>
                     <Button size="sm" href={`/barista/${b.id}`}>
@@ -348,8 +359,8 @@ export default function BaristaDirectory({ ownerId }) {
             ))}
         </div>
 
-        {/* Kanan: panel profil singkat — hanya muncul saat 1 kartu diklik */}
-        {selected && (
+        {/* Kanan: panel profil singkat — side panel di xl+, bottom sheet di bawahnya */}
+        {selected && isXl && (
           <div key={selected.id} className="fx-panel-enter min-w-0 xl:sticky xl:top-20">
             <BaristaDetailPanel
               barista={selected}
@@ -359,6 +370,20 @@ export default function BaristaDirectory({ ownerId }) {
           </div>
         )}
       </div>
+
+      <Sheet
+        open={!!selected && !isXl}
+        onClose={() => setSelectedId(null)}
+        title={selected?.full_name ?? "Detail barista"}
+      >
+        {selected && (
+          <BaristaDetailPanel
+            barista={selected}
+            onClose={() => setSelectedId(null)}
+            onChat={() => startChat(selected.id)}
+          />
+        )}
+      </Sheet>
 
       <Sheet open={sheetOpen} onClose={() => setSheetOpen(false)} title="Filter">
         {filterPanel}

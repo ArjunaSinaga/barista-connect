@@ -14,7 +14,12 @@ export default function FeaturedBarista({ barista, isAnon }) {
   const count = barista.ratings?.length ?? 0;
   const inviteHref = isAnon ? `/login?next=/barista/${barista.id}` : `/barista/${barista.id}`;
   return (
-    <div className="rounded-2xl border border-[#e8e0cf] bg-white p-5 shadow-[0_1px_3px_rgba(43,33,24,0.08)] lg:min-h-full">
+    <div className="group relative rounded-2xl border border-[#e8e0cf] bg-white p-5 shadow-[0_1px_3px_rgba(43,33,24,0.08)] transition-colors hover:border-[#c9b992] lg:min-h-full">
+      <Link
+        href={`/barista/${barista.id}`}
+        aria-label={`Lihat profil ${barista.full_name}`}
+        className="absolute inset-0 rounded-2xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#9a6a2f]"
+      />
       <div className="flex items-center justify-between">
         <h3 className="text-[15px] font-extrabold text-espresso">Barista Unggulan</h3>
         {barista.is_open_to_work && (
@@ -58,7 +63,7 @@ export default function FeaturedBarista({ barista, isAnon }) {
           ))}
         </div>
       )}
-      <div className="mt-4 flex gap-2">
+      <div className="relative z-10 mt-4 flex gap-2">
         <Button size="sm" full variant="coffee" href={inviteHref}><Send size={13} />Undang Interview</Button>
         <Link href={`/barista/${barista.id}`} className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-[#d8cdae] bg-white px-3 py-1.5 text-xs font-semibold text-espresso transition-all hover:border-coffee active:scale-[0.95]">
           Lihat Profil Lengkap

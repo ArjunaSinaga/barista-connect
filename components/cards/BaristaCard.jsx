@@ -22,9 +22,17 @@ export function OpenToWorkDot({ open }) {
   );
 }
 
-export default function BaristaCard({ barista, actions = null }) {
+export default function BaristaCard({ barista, actions = null, linkOverlay = true }) {
+  const href = `/barista/${barista.id}`;
   return (
-    <div className="fx-lift fx-spotlight flex flex-col rounded-2xl card-dark p-5 shadow-sm transition-shadow hover:shadow-md">
+    <div className="fx-lift fx-spotlight group relative flex flex-col rounded-2xl card-dark p-5 shadow-sm transition-shadow hover:shadow-md">
+      {linkOverlay && (
+        <Link
+          href={href}
+          aria-label={`Lihat profil ${barista.full_name}`}
+          className="absolute inset-0 rounded-2xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#9a6a2f]"
+        />
+      )}
       <div className="flex items-start gap-4">
         <Avatar
           src={barista.profile_picture_url}
@@ -32,15 +40,14 @@ export default function BaristaCard({ barista, actions = null }) {
           size="lg"
         />
         <div className="min-w-0 flex-1">
-          <Link
-            href={`/barista/${barista.id}`}
-            className="block truncate font-bold text-espresso hover:text-caramel"
+          <span
+            className="block truncate font-bold text-espresso group-hover:text-caramel"
           >
             {barista.full_name}
-          </Link>
-          <p className="mt-0.5 flex items-center gap-1 text-xs font-semibold text-espresso-soft">
-            <MapPin size={11} className="text-caramel" />
-            {barista.location_place}
+          </span>
+          <p className="mt-0.5 flex min-w-0 items-center gap-1 text-xs font-semibold text-espresso-soft">
+            <MapPin size={11} className="shrink-0 text-caramel" />
+            <span className="truncate">{barista.location_place}</span>
           </p>
           <div className="mt-2">
             <OpenToWorkDot open={barista.is_open_to_work} />
@@ -70,7 +77,7 @@ export default function BaristaCard({ barista, actions = null }) {
       )}
 
       {actions && (
-        <div className="mt-auto flex items-center gap-2 pt-4">{actions}</div>
+        <div className="relative z-10 mt-auto flex flex-wrap items-center gap-2 pt-4">{actions}</div>
       )}
     </div>
   );

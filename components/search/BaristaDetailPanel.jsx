@@ -27,7 +27,7 @@ export default function BaristaDetailPanel({ barista, onClose, onChat }) {
           type="button"
           onClick={onClose}
           aria-label="Tutup panel"
-          className="fx-press rounded-full border border-[#e0d5bd] p-1.5 text-espresso-soft hover:border-coffee hover:text-espresso"
+          className="fx-press flex min-h-[44px] min-w-[44px] items-center justify-center rounded-full border border-[#e0d5bd] text-espresso-soft hover:border-coffee hover:text-espresso"
         >
           <X size={14} />
         </button>

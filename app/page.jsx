@@ -173,16 +173,21 @@ export default async function LandingPage() {
               const types = job.employment_types?.length ? job.employment_types : (job.employment_type ? [job.employment_type] : []);
               const tags = skillTags(job);
               return (
-                <li key={job.id} className="relative flex min-w-0 flex-1 flex-col rounded-2xl border border-stone-200/60 bg-white p-4 pt-5 shadow-[0_1px_3px_rgba(43,33,24,0.08)] transition-shadow hover:shadow-[0_4px_16px_rgba(43,33,24,0.12)]">
-                  <span className="absolute top-3 right-3">
+                <li key={job.id} className="group relative flex min-w-0 flex-1 flex-col rounded-2xl border border-stone-200/60 bg-white p-4 pt-5 shadow-[0_1px_3px_rgba(43,33,24,0.08)] transition-shadow hover:shadow-[0_4px_16px_rgba(43,33,24,0.12)]">
+                  <Link
+                    href={`/jobs/${job.id}`}
+                    aria-label={`Lihat detail ${job.title}`}
+                    className="absolute inset-0 rounded-2xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#9a6a2f]"
+                  />
+                  <span className="absolute top-3 right-3 z-10">
                     <SaveButton storageKey="kerja_saved_jobs" id={job.id} label={`Simpan loker ${job.title}`} />
                   </span>
                   <div className="flex items-start gap-2.5 pr-8">
                     <CafeLogo job={job} />
                     <div className="min-w-0 flex-1">
-                      <Link href={`/jobs/${job.id}`} className="block truncate text-sm font-bold hover:text-matcha">
+                      <span className="block truncate text-sm font-bold group-hover:text-matcha">
                         {job.title}
-                      </Link>
+                      </span>
                       <p className="flex items-center gap-1 truncate text-xs text-espresso-soft">
                         {job.cafes?.name ?? job.owners?.business_name}
                         {job.owners?.is_verified && <VerifiedBadge size={12} />}
@@ -205,9 +210,9 @@ export default async function LandingPage() {
                         ))}
                       </div>
                     )}
-                    <Link href={`/jobs/${job.id}`} className="mt-3 inline-flex items-center gap-0.5 text-xs font-bold text-link hover:underline">
+                    <span className="mt-3 inline-flex items-center gap-0.5 text-xs font-bold text-link">
                       Lihat detail <span aria-hidden="true">→</span>
-                    </Link>
+                    </span>
                 </li>
               );
             })}

@@ -26,13 +26,13 @@ export default function Sheet({ open, onClose, title, children }) {
         className="absolute inset-0 bg-black/40 backdrop-blur-[2px]"
         onClick={onClose}
       />
-      <div className="animate-rise relative max-h-[90dvh] w-full overflow-y-auto rounded-t-3xl border border-[#e0d5bd] bg-white p-5 sm:max-w-lg sm:rounded-3xl sm:p-6">
+      <div role="dialog" aria-modal="true" aria-label={title} className="fx-sheet-in relative max-h-[90dvh] w-full overflow-y-auto rounded-t-3xl border border-[#e0d5bd] bg-white p-5 sm:max-w-lg sm:rounded-3xl sm:p-6">
         <div className="mb-4 flex items-center justify-between">
           <h3 className="text-base font-bold text-espresso">{title}</h3>
           <button
             onClick={onClose}
             aria-label="Tutup"
-            className="rounded-full p-1.5 text-espresso-soft hover:bg-cream-dark hover:text-espresso"
+            className="fx-press flex min-h-[44px] min-w-[44px] items-center justify-center rounded-full text-espresso-soft hover:bg-cream-dark hover:text-espresso"
           >
             <X size={18} />
           </button>
