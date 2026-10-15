@@ -42,26 +42,44 @@ function completeness(app) {
   return Math.min(100, s);
 }
 
-function exportCsv(apps, title) {
-  const rows = [["Nama", "Lokasi", "Pengalaman", "Skill", "Status", "Tanggal", "CV"]];
+async function exportXlsx(apps, title) {
+  const { default: ExcelJS } = await import("exceljs");
+  const wb = new ExcelJS.Workbook();
+  const ws = wb.addWorksheet("Pelamar");
+  ws.columns = [
+    { header: "Nama", key: "nama", width: 25 },
+    { header: "Lokasi", key: "lokasi", width: 22 },
+    { header: "Pengalaman", key: "exp", width: 14 },
+    { header: "Skill", key: "skill", width: 35 },
+    { header: "Status", key: "status", width: 12 },
+    { header: "Tanggal", key: "tgl", width: 13 },
+    { header: "CV", key: "cv", width: 14 },
+  ];
   for (const a of apps) {
     const b = a.barista_profiles ?? {};
-    rows.push([
-      b.full_name ?? "",
-      b.location_place ?? "",
-      `${Math.floor((b.experience_months ?? 0) / 12)} thn ${(b.experience_months ?? 0) % 12} bln`,
-      (b.skills ?? []).join(", "),
-      STATUS_META[a.status]?.label ?? a.status,
-      new Date(a.created_at).toLocaleDateString("id-ID"),
-      a.cv_url ?? "",
-    ]);
+    ws.addRow({
+      nama: b.full_name ?? "",
+      lokasi: b.location_place ?? "",
+      exp: `${Math.floor((b.experience_months ?? 0) / 12)} thn ${(b.experience_months ?? 0) % 12} bln`,
+      skill: (b.skills ?? []).join(" | "),
+      status: STATUS_META[a.status]?.label ?? a.status,
+      tgl: new Date(a.created_at),
+      cv: a.cv_url ? { text: "Buka CV", hyperlink: a.cv_url } : "-",
+    });
   }
-  const csv = rows.map((r) => r.map((c) => `"${String(c).replace(/"/g, '""')}"`).join(";")).join("\r\n");
-  const blob = new Blob(["\uFEFF" + csv], { type: "text/csv;charset=utf-8" });
+  const head = ws.getRow(1);
+  head.font = { bold: true, color: { argb: "FFFFFFFF" } };
+  head.fill = { type: "pattern", pattern: "solid", fgColor: { argb: "FF3D2C1E" } };
+  ws.getColumn("tgl").numFmt = "DD/MM/YYYY";
+  ws.getColumn("cv").font = { color: { argb: "FF0563C1" }, underline: true };
+  ws.views = [{ state: "frozen", ySplit: 1 }];
+  ws.autoFilter = "A1:G1";
+  const buf = await wb.xlsx.writeBuffer();
+  const blob = new Blob([buf], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
   const url = URL.createObjectURL(blob);
   const el = document.createElement("a");
   el.href = url;
-  el.download = `pelamar-${(title ?? "loker").replace(/[^a-z0-9]+/gi, "-")}.csv`;
+  el.download = `pelamar-${(title ?? "loker").replace(/[^a-z0-9]+/gi, "-")}.xlsx`;
   el.click();
   URL.revokeObjectURL(url);
 }
@@ -173,10 +191,10 @@ export default function ApplicantsBoard({
         )}        {apps.length > 0 && (
           <button
             type="button"
-            onClick={() => exportCsv(filtered, "loker")}
+            onClick={() => exportXlsx(filtered, "loker")}
             className="ml-auto inline-flex items-center gap-1.5 rounded-full border border-latte bg-white px-4 py-2 text-xs font-bold text-espresso hover:border-caramel"
           >
-            ⬇ Unduh CSV
+            ⬇ Unduh Excel
           </button>
         )}
         <JobShareButton jobId={jobId} title={jobTitle ?? "Lowongan"} />
