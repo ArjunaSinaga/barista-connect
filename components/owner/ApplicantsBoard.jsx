@@ -50,7 +50,7 @@ function exportCsv(apps, title) {
       b.full_name ?? "",
       b.location_place ?? "",
       `${Math.floor((b.experience_months ?? 0) / 12)} thn ${(b.experience_months ?? 0) % 12} bln`,
-      (b.skills ?? []).join("; "),
+      (b.skills ?? []).join(", "),
       STATUS_META[a.status]?.label ?? a.status,
       new Date(a.created_at).toLocaleDateString("id-ID"),
       a.cv_url ?? "",
