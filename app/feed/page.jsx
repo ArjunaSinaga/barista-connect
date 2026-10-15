@@ -36,7 +36,7 @@ export default async function FeedPage() {
 
   return (
     <div className="mx-auto w-full max-w-4xl px-4 sm:px-6 py-8">
-      <h1 className="text-2xl font-black text-espresso">Feed Barista</h1>
+      <h1 className="font-serif text-2xl font-black text-espresso">Feed Barista</h1>
       <p className="mt-1 text-sm text-espresso-soft">
         Kreasi dan cerita dari barista — terlihat publik, siapa pun bisa melihat.
       </p>

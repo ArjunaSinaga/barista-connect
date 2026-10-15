@@ -23,7 +23,7 @@ export default async function CafesPage({ searchParams }) {
 
   return (
     <div className="mx-auto w-full max-w-[1600px] px-4 sm:px-6 py-8">
-      <h1 className="flex items-center gap-2 text-2xl font-extrabold text-espresso">
+      <h1 className="flex items-center gap-2 font-serif text-2xl font-extrabold text-espresso">
         <Store size={22} className="text-caramel" /> Daftar Kafe
       </h1>
       <p className="mt-1 text-sm text-espresso-soft">

@@ -63,7 +63,7 @@ export default async function CafePublicPage({ params }) {
           <p className="text-xs font-bold tracking-widest text-caramel uppercase">
             {kafe.owners?.business_name}
           </p>
-          <h1 className="mt-1 text-2xl font-extrabold text-espresso">{kafe.name}</h1>
+          <h1 className="mt-1 font-serif text-2xl font-extrabold text-espresso">{kafe.name}</h1>
           <p className="mt-1 flex items-center gap-1 text-sm font-semibold text-espresso-soft">
             <MapPin size={13} className="text-caramel" />
             {kafe.address || kafe.location || "-"}

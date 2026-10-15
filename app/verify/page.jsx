@@ -34,7 +34,7 @@ export default async function VerifyPage() {
         <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-sky-500/10">
           <BadgeCheck size={30} className="text-sky-500" />
         </span>
-        <h1 className="mt-4 text-2xl font-black text-espresso">Centang Biru</h1>
+        <h1 className="mt-4 font-serif text-2xl font-black text-espresso">Centang Biru</h1>
         <p className="mx-auto mt-2 inline-flex items-center gap-1.5 rounded-full bg-caramel/10 px-4 py-1.5 text-xs font-bold text-caramel">
           <Sparkles size={13} /> Hadir di kerja.inc v2
         </p>
