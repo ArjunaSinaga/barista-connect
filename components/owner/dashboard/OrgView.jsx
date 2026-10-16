@@ -48,14 +48,14 @@ export default function OrgView({ orgs = [], cafes = [], onBack }) {
       </div>
 
       <div className="grid gap-3 sm:grid-cols-2">
-        <form onSubmit={(e) => { e.preventDefault(); call("accept_invite", { p_token: token }, "Gabung PT berhasil").then((d) => { if (d) setToken(""); }); }} className="rounded-2xl border border-[#e8e0cf] bg-white p-4">
+        <form onSubmit={(e) => { e.preventDefault(); call("accept_invite", { p_token: token }, "Gabung PT berhasil").then((d) => { if (d) setToken(""); }); }} className="rounded-3xl border border-[#e8e0cf] bg-white p-4">
           <h3 className="flex items-center gap-2 text-sm font-extrabold text-espresso"><UserPlus size={15} /> Gabung via undangan</h3>
           <div className="mt-3 flex gap-2">
             <input value={token} onChange={(e) => setToken(e.target.value.toUpperCase())} placeholder="XXXXXXXX-XXXXXXXX" maxLength={17} className="min-w-0 flex-1 rounded-full border border-[#e0d5bd] bg-[#faf7ef] px-4 py-2 font-mono text-sm font-bold tracking-wider uppercase focus:border-coffee focus:outline-none" />
             <button disabled={busy || !token.trim()} className="shrink-0 rounded-full bg-[#1f6b4a] px-4 py-2 text-xs font-bold text-white hover:bg-[#17573c] disabled:opacity-50">Gabung</button>
           </div>
         </form>
-        <form onSubmit={(e) => { e.preventDefault(); call("create_org", { p_name: name, p_iam_owner: true }, "PT dibuat — kamu pemiliknya").then(() => setName("")); }} className="rounded-2xl border border-[#e8e0cf] bg-white p-4">
+        <form onSubmit={(e) => { e.preventDefault(); call("create_org", { p_name: name, p_iam_owner: true }, "PT dibuat — kamu pemiliknya").then(() => setName("")); }} className="rounded-3xl border border-[#e8e0cf] bg-white p-4">
           <h3 className="flex items-center gap-2 text-sm font-extrabold text-espresso"><Building2 size={15} /> Buat PT baru</h3>
           <div className="mt-3 flex gap-2">
             <input value={name} onChange={(e) => setName(e.target.value)} placeholder="cth. Senja Group" className="min-w-0 flex-1 rounded-full border border-[#e0d5bd] bg-[#faf7ef] px-4 py-2 text-sm font-bold text-espresso focus:border-coffee focus:outline-none" />
@@ -65,7 +65,7 @@ export default function OrgView({ orgs = [], cafes = [], onBack }) {
             Saya manager-nya (pemilik menyusul)
           </button>
         </form>
-        <form onSubmit={(e) => { e.preventDefault(); call("claim_org_owner", { p_code: claim }, "Kamu kini pemilik PT").then(() => setClaim("")); }} className="rounded-2xl border border-[#e8e0cf] bg-white p-4">
+        <form onSubmit={(e) => { e.preventDefault(); call("claim_org_owner", { p_code: claim }, "Kamu kini pemilik PT").then(() => setClaim("")); }} className="rounded-3xl border border-[#e8e0cf] bg-white p-4">
           <h3 className="flex items-center gap-2 text-sm font-extrabold text-espresso"><KeyRound size={15} /> Klaim PT (owner telat daftar)</h3>
           <div className="mt-3 flex gap-2">
             <input value={claim} onChange={(e) => setClaim(e.target.value.toUpperCase())} placeholder="XXXX-XXXX" maxLength={9} className="min-w-0 flex-1 rounded-full border border-[#e0d5bd] bg-[#faf7ef] px-4 py-2 font-mono text-sm font-bold tracking-wider uppercase focus:border-coffee focus:outline-none" />
@@ -76,7 +76,7 @@ export default function OrgView({ orgs = [], cafes = [], onBack }) {
 
       <ul className="space-y-3">
         {orgs.map((o) => (
-          <li key={o.id} className="rounded-2xl border border-[#e8e0cf] bg-white p-4">
+          <li key={o.id} className="rounded-3xl border border-[#e8e0cf] bg-white p-4">
             <div className="flex flex-wrap items-center justify-between gap-2">
               <p className="text-sm font-extrabold text-espresso">{o.name} {o.kind === "personal" && <span className="ml-1 rounded-full bg-[#e3f0e8] px-2 py-0.5 text-[10px] font-bold text-matcha">pribadi</span>} {o.needs_owner && <span className="ml-1 rounded-full bg-amber-100 px-2 py-0.5 text-[10px] font-bold text-amber-700">tunggu owner</span>} {!o.isOwner && <span className="ml-1 rounded-full bg-[#e3f0e8] px-2 py-0.5 text-[10px] font-bold text-matcha">manager</span>}</p>
             </div>

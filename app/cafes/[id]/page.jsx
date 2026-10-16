@@ -51,7 +51,7 @@ export default async function CafePublicPage({ params }) {
 
   return (
     <div className="mx-auto w-full max-w-[1600px] px-4 sm:px-6 py-8">
-      <div className="overflow-hidden rounded-2xl card-dark shadow-sm">
+      <div className="overflow-hidden rounded-3xl card-dark shadow-sm">
         {(kafe.photo_urls ?? []).length > 0 && (
           <div className="grid grid-cols-2 gap-1 p-1">
             {kafe.photo_urls.slice(0, 4).map((url) => (
@@ -83,7 +83,7 @@ export default async function CafePublicPage({ params }) {
         </div>
       </div>
 
-      <section className="mt-4 rounded-2xl card-dark p-6">
+      <section className="mt-4 rounded-3xl card-dark p-6">
         <h2 className="flex items-center gap-2 text-xs font-extrabold tracking-wide text-espresso uppercase">
           <Briefcase size={14} /> Lowongan aktif ({jobs?.length ?? 0})
         </h2>
@@ -102,7 +102,7 @@ export default async function CafePublicPage({ params }) {
         </ul>
       </section>
 
-      <section className="mt-4 rounded-2xl card-dark p-6">
+      <section className="mt-4 rounded-3xl card-dark p-6">
         <h2 className="text-xs font-extrabold tracking-wide text-espresso uppercase">
           Ulasan barista ({cafeRatings.length})
         </h2>

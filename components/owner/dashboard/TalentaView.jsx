@@ -19,7 +19,7 @@ export default function TalentaView({ heroPhoto, cafeName, cafeLocation, stats, 
           <StatCard key={s.label} icon={s.icon} label={s.label} value={s.value} sub={s.sub} delta={s.delta} chevron onSelect={s.onSelect} href={s.href} />
         ))}
       </div>
-      <Link href="/feed" className="mt-3 flex items-center gap-3 rounded-2xl border border-[#e0d5bd] bg-white/70 px-4 py-3 transition hover:border-caramel">
+      <Link href="/feed" className="mt-3 flex items-center gap-3 rounded-3xl border border-[#e0d5bd] bg-white/70 px-4 py-3 transition hover:border-caramel">
         <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-caramel/15 text-caramel">
           <Newspaper size={18} />
         </span>

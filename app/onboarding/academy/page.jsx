@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { Check, FileText, LoaderCircle } from "lucide-react";
+import { ArrowLeft, Check, FileText, LoaderCircle } from "lucide-react";
 import Button from "@/components/ui/Button";
 import { Input, Textarea } from "@/components/ui/Field";
 import { useToast } from "@/components/ui/toast";
@@ -120,21 +120,11 @@ export default function AcademyOnboardingPage() {
   const descLen = description.trim().length;
 
   return (
-    <div className="min-h-[calc(100dvh-3.5rem)] bg-[#f5f1e8] text-espresso">
-      <div className="border-b border-[#e8e0cf] bg-white">
-        <div className="mx-auto flex w-full max-w-[1600px] items-center justify-between px-4 py-3 sm:px-6">
-          <Link href="/" className="font-display text-xl font-extrabold tracking-tight">
-            kerja<span className="text-caramel">.inc</span>
-          </Link>
-          <div className="flex items-center gap-3">
-            <Link href="/login" className="rounded-full border border-espresso px-5 py-2 text-xs font-bold hover:bg-espresso hover:text-white">
-              Login
-            </Link>
-            <Link href="/signup" className="rounded-full bg-espresso px-5 py-2 text-xs font-bold text-white hover:opacity-90">
-              Get Started
-            </Link>
-          </div>
-        </div>
+    <div className="min-h-[calc(100dvh-3.5rem)] bg-[#f6f1e5] text-espresso">
+      <div className="mx-auto w-full max-w-[1600px] px-4 pt-6 sm:px-6">
+        <Link href="/" className="inline-flex items-center gap-2 text-sm font-bold text-espresso-soft hover:text-espresso">
+          <ArrowLeft size={16} /> Kembali ke beranda
+        </Link>
       </div>
 
       <div className="mx-auto w-full max-w-[1600px] px-4 py-8 sm:px-6">
@@ -161,7 +151,7 @@ export default function AcademyOnboardingPage() {
         </ol>
 
         <div className="mt-6 grid gap-6 lg:grid-cols-[1fr_320px]">
-          <form onSubmit={handleSubmit} className="rounded-2xl border border-[#e8e0cf] bg-white p-6 shadow-[0_2px_12px_rgba(43,33,24,0.10)] sm:p-8">
+          <form onSubmit={handleSubmit} className="rounded-3xl border border-[#e8e0cf] bg-white p-6 shadow-[0_2px_12px_rgba(43,33,24,0.10)] sm:p-8">
             <h2 className="text-base font-extrabold">1. Profil Lembaga</h2>
             <div className="mt-4 grid gap-4 sm:grid-cols-2">
               <Input name="nama" type="text" label="Nama lembaga *" placeholder="Barista Academy Nusantara" value={name} onChange={(e) => setName(e.target.value)} />
@@ -205,11 +195,11 @@ export default function AcademyOnboardingPage() {
               <button
                 type="button"
                 onClick={handleSaveDraft}
-                className="min-h-[44px] rounded-full border border-espresso px-6 text-sm font-bold text-espresso hover:bg-espresso hover:text-white"
+                className="min-h-[50px] rounded-xl border border-espresso px-6 text-sm font-bold text-espresso hover:bg-espresso hover:text-white"
               >
                 Simpan Draft
               </button>
-              <Button type="submit" size="lg" variant="coffee" disabled={busy} className="rounded-full min-h-[44px]">
+              <Button type="submit" size="lg" variant="coffee" disabled={busy} className="rounded-xl min-h-[50px]">
                 {busy ? <LoaderCircle size={16} className="animate-spin" /> : "Simpan & Lanjutkan →"}
               </Button>
             </div>

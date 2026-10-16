@@ -21,7 +21,7 @@ export default function OwnerProfileView({
         <Link href="/cafes" className="text-sm font-bold text-caramel hover:underline">← Kembali</Link>
 
         {isSelf && (
-          <div className="mt-3 flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-caramel/30 bg-white px-5 py-3.5">
+          <div className="mt-3 flex flex-wrap items-center justify-between gap-3 rounded-3xl border border-caramel/30 bg-white px-5 py-3.5">
             <p className="text-sm font-semibold text-espresso">
               Ini tampilan publik bisnismu — begini barista lain melihatmu.
             </p>
@@ -34,9 +34,9 @@ export default function OwnerProfileView({
         )}
 
         {/* Header bisnis */}
-        <div className="mt-3 rounded-2xl border border-[#e5d9c3] bg-white px-6 py-6 shadow-sm">
+        <div className="mt-3 rounded-3xl border border-[#e5d9c3] bg-white px-6 py-6 shadow-sm">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-start">
-            <Avatar src={o.avatar_url} name={o.business_name} size="xl" className="h-20 w-20 shrink-0 rounded-2xl border-4 border-white shadow-md" />
+            <Avatar src={o.avatar_url} name={o.business_name} size="xl" className="h-20 w-20 shrink-0 rounded-3xl border-4 border-white shadow-md" />
             <div className="min-w-0 flex-1">
               <h1 className="flex flex-wrap items-center gap-2 font-serif text-3xl font-extrabold text-espresso">
                 {o.business_name}
@@ -66,7 +66,7 @@ export default function OwnerProfileView({
         </div>
 
         <div className="mt-4 grid gap-4 lg:grid-cols-[1fr_300px]">
-          <section className="rounded-2xl border border-[#e5d9c3] bg-white p-6">
+          <section className="rounded-3xl border border-[#e5d9c3] bg-white p-6">
             <h2 className="font-serif text-lg font-extrabold text-espresso">Outlet</h2>
             {(cafes ?? []).length === 0 && <p className="mt-2 text-sm text-espresso-soft">Belum ada kafe terdaftar.</p>}
             <div className="mt-3 space-y-3">
@@ -92,7 +92,7 @@ export default function OwnerProfileView({
           </section>
 
           <div className="space-y-4">
-            <section className="rounded-2xl border border-[#e5d9c3] bg-white p-6">
+            <section className="rounded-3xl border border-[#e5d9c3] bg-white p-6">
               <h2 className="font-serif text-lg font-extrabold text-espresso">Ulasan dari Pekerja</h2>
               {isBarista && myTeam && (
                 <div className="mt-3">
@@ -127,7 +127,7 @@ export default function OwnerProfileView({
               )}
             </section>
 
-            <section className="rounded-2xl border border-[#e5d9c3] bg-[#faf7ef] p-6">
+            <section className="rounded-3xl border border-[#e5d9c3] bg-[#faf7ef] p-6">
               <p className="text-xs leading-relaxed text-espresso-soft">Kontak pribadi owner tidak ditampilkan. Gunakan Lamar atau pesan lamaran.</p>
               <div className="mt-3 text-right">
                 <Link href="/help" className="text-xs font-bold text-caramel hover:underline">▸ Laporkan</Link>

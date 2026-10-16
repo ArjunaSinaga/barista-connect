@@ -89,7 +89,7 @@ export default function DashboardShell({ initialView = "dashboard", initialCafeI
       <div className="min-w-0 space-y-4 lg:col-span-2 lg:h-full lg:min-h-0 lg:overflow-y-auto lg:pb-1 xl:col-span-1 no-scrollbar">
         {right.recs.length === 0 && right.certified.length === 0 ? (
           (middle.talenta.top3?.length ?? 0) === 0 ? (
-          <div className="rounded-2xl border border-[#e8e0cf] bg-white p-4 text-center shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
+          <div className="rounded-3xl border border-[#e8e0cf] bg-white p-4 text-center shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
             <h3 className="text-sm font-extrabold text-espresso">Belum ada talenta</h3>
             <p className="mt-0.5 text-[11px] text-espresso-soft">Barista baru yang daftar akan muncul di sini.</p>
             <Link href="/find-baristas" className="mt-3 inline-flex min-h-[32px] items-center rounded-full bg-coffee px-4 text-xs font-bold text-white hover:bg-[#2e2015]">
@@ -99,7 +99,7 @@ export default function DashboardShell({ initialView = "dashboard", initialCafeI
           ) : null
         ) : (
           <>
-        <div className="rounded-2xl border border-[#e8e0cf] bg-white p-4 shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
+        <div className="rounded-3xl border border-[#e8e0cf] bg-white p-4 shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
           <div className="flex items-start justify-between gap-2">
             <div>
               <h3 className="text-sm font-extrabold text-espresso">Recommended Today</h3>
@@ -120,7 +120,7 @@ export default function DashboardShell({ initialView = "dashboard", initialCafeI
           </div>
         </div>
 
-        <div className="rounded-2xl border border-[#e8e0cf] bg-white p-4 shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
+        <div className="rounded-3xl border border-[#e8e0cf] bg-white p-4 shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
           <div className="flex items-start justify-between gap-2">
             <div>
               <h3 className="text-sm font-extrabold text-espresso">Certified Baristas</h3>

@@ -30,7 +30,7 @@ export default async function AcademyIndexPage({ searchParams }) {
   return (
     <div className="min-h-screen bg-paper text-espresso">
       <div className="mx-auto w-full max-w-[1600px] px-4 py-4 sm:px-6">
-        <div className="relative grid overflow-hidden rounded-2xl border border-[#e8e0cf] bg-[#faf6ec] md:grid-cols-[1fr_220px]">
+        <div className="relative grid overflow-hidden rounded-3xl border border-[#e8e0cf] bg-[#faf6ec] md:grid-cols-[1fr_220px]">
           <div className="px-5 py-5 sm:px-6">
             <p className="text-[11px] font-bold tracking-[0.18em] text-espresso-soft uppercase">
               Komunitas kopi yang kuat
@@ -101,7 +101,7 @@ export default async function AcademyIndexPage({ searchParams }) {
               <Link
                 key={a.id}
                 href={`/academy/${a.id}`}
-                className="flex flex-col rounded-2xl border border-[#e8e0cf] bg-white p-4 shadow-[0_1px_3px_rgba(43,33,24,0.08)] hover:border-coffee"
+                className="flex flex-col rounded-3xl border border-[#e8e0cf] bg-white p-4 shadow-[0_1px_3px_rgba(43,33,24,0.08)] hover:border-coffee"
               >
                 <div className="flex items-center gap-3">
                   <Avatar src={a.logo_url} name={a.name} size="md" />

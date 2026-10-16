@@ -30,7 +30,7 @@ export default async function CafesPage({ searchParams }) {
         Jelajahi kafe yang terdaftar di kerja.inc.
       </p>
 
-      <form method="get" action="/cafes" role="search" className="mt-4 flex items-center gap-2 rounded-2xl card-dark p-2 pl-4">
+      <form method="get" action="/cafes" role="search" className="mt-4 flex items-center gap-2 rounded-3xl card-dark p-2 pl-4">
         <Search size={16} className="shrink-0 text-espresso-soft" />
         <label htmlFor="cafe-q" className="sr-only">Cari kafe</label>
         <input
@@ -50,7 +50,7 @@ export default async function CafesPage({ searchParams }) {
       </form>
 
       {list.length === 0 ? (
-        <p className="mt-6 rounded-2xl card-dark p-6 text-center text-sm text-espresso-soft">
+        <p className="mt-6 rounded-3xl card-dark p-6 text-center text-sm text-espresso-soft">
           {q ? `Tidak ada kafe yang cocok dengan "${q}".` : "Belum ada kafe terdaftar."}
         </p>
       ) : (
@@ -59,7 +59,7 @@ export default async function CafesPage({ searchParams }) {
             <li key={c.id}>
               <Link
                 href={`/cafes/${c.id}`}
-                className="flex items-center gap-4 rounded-2xl card-dark p-4 hover:ring-2 hover:ring-caramel"
+                className="flex items-center gap-4 rounded-3xl card-dark p-4 hover:ring-2 hover:ring-caramel"
               >
                 {(c.photo_urls ?? []).length > 0 ? (
                   <Image

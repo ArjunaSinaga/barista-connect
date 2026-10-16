@@ -3,7 +3,7 @@
 import { Suspense, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { MailCheck } from "lucide-react";
+import { MailCheck, ArrowLeft } from "lucide-react";
 import Button from "@/components/ui/Button";
 import { useToast } from "@/components/ui/toast";
 import { createClient } from "@/lib/supabase/client";
@@ -37,19 +37,16 @@ function CheckEmailInner() {
   }
 
   return (
-    <div className="min-h-[calc(100dvh-3.5rem)] bg-[#f5f1e8] text-espresso">
-      <div className="border-b border-[#e8e0cf] bg-white">
-        <div className="mx-auto flex w-full max-w-[1600px] items-center justify-between px-4 py-3 sm:px-6">
-          <Link href="/" className="font-display text-xl font-extrabold tracking-tight">
-            kerja<span className="text-caramel">.inc</span>
-          </Link>
-          <Link href="/" className="text-xs font-bold text-link hover:underline">
-            Kembali ke beranda
-          </Link>
-        </div>
-      </div>
-      <div className="mx-auto max-w-md px-4 py-12">
-        <div className="rounded-2xl border border-[#e8e0cf] bg-white p-6 text-center shadow-[0_2px_12px_rgba(43,33,24,0.10)] sm:p-8">
+    <div className="min-h-[calc(100dvh-3.5rem)] bg-[#f6f1e5] text-[#2f2721]">
+      <div className="mx-auto w-full max-w-[1600px] px-4 py-6 sm:px-6 sm:py-8">
+        <Link
+          href="/"
+          className="inline-flex min-h-[44px] items-center gap-1.5 rounded-lg text-sm font-semibold text-[#2f2721]/70 hover:text-[#6f5a3e]"
+        >
+          <ArrowLeft size={16} aria-hidden="true" /> Kembali ke beranda
+        </Link>
+      <div className="mx-auto mt-4 max-w-md">
+        <div className="rounded-3xl border border-[#e8e0cf] bg-white p-6 text-center shadow-[0_2px_16px_rgba(43,33,24,0.10)] sm:p-8">
           <span className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-[#e3f0e8]">
             <MailCheck size={32} className="text-matcha" />
           </span>
@@ -62,7 +59,7 @@ function CheckEmailInner() {
             Tidak ketemu? Cek folder Spam atau Promosi.
           </p>
           <div className="mt-6 space-y-3">
-            <Button full variant="coffee" disabled={busy || !email} onClick={resend} className="rounded-full min-h-[44px]">
+            <Button full variant="coffee" disabled={busy || !email} onClick={resend} className="rounded-xl min-h-[50px] text-sm font-bold">
               {busy ? "Mengirim..." : "Kirim ulang dalam 00:60"}
             </Button>
             <Link href="/register" className="block text-xs font-bold text-link hover:underline">
@@ -72,6 +69,7 @@ function CheckEmailInner() {
               Kembali ke Masuk
             </Link>
           </div>
+        </div>
         </div>
       </div>
     </div>

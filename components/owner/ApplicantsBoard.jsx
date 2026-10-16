@@ -253,7 +253,7 @@ export default function ApplicantsBoard({
           return (
             <div
               key={app.id}
-              className="rounded-2xl card-dark p-5 shadow-sm transition-opacity"
+              className="rounded-3xl card-dark p-5 shadow-sm transition-opacity"
             >
               <div className="flex items-start gap-4">
                 <Avatar src={b?.profile_picture_url} name={b?.full_name} size="md" />

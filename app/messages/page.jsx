@@ -102,7 +102,7 @@ export default async function InboxPage({ searchParams }) {
           return (
             <div
               key={c.id}
-              className="flex items-center gap-2 rounded-2xl card-dark p-4 shadow-sm transition-shadow hover:shadow-md"
+              className="flex items-center gap-2 rounded-3xl card-dark p-4 shadow-sm transition-shadow hover:shadow-md"
             >
               <Link
                 href={`/messages/${c.id}`}

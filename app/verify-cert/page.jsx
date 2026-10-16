@@ -98,7 +98,7 @@ export default async function VerifyCertPage({ searchParams }) {
         {rows.length > 0 && (
           <ul className="space-y-2">
             {rows.map((r, i) => (
-              <li key={`${r.barista_id}-${r.label}-${i}`} className="rounded-2xl border border-[#e8e0cf] bg-white p-4">
+              <li key={`${r.barista_id}-${r.label}-${i}`} className="rounded-3xl border border-[#e8e0cf] bg-white p-4">
                 <p className="flex items-center gap-1.5 text-sm font-extrabold text-espresso">
                   <BadgeCheck size={15} className="shrink-0 text-matcha" /> {r.label}
                 </p>

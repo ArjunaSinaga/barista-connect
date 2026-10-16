@@ -122,7 +122,7 @@ export default async function TrainingPage({ searchParams }) {
       ) : (
         <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {courses.map((c) => (
-            <article key={c.id} className="flex flex-col rounded-2xl border border-[#e8e0cf] bg-white p-4 shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
+            <article key={c.id} className="flex flex-col rounded-3xl border border-[#e8e0cf] bg-white p-4 shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
               <p className="inline-flex w-fit items-center gap-1 rounded-full bg-[#e3f0e8] px-2.5 py-0.5 text-[10px] font-bold text-matcha">
                 <BadgeCheck size={11} aria-hidden="true" /> Contoh kurikulum
               </p>
@@ -142,15 +142,15 @@ export default async function TrainingPage({ searchParams }) {
       )}
 
       <div className="mt-6 grid gap-3 sm:grid-cols-3">
-        <div className="rounded-2xl border border-[#e8e0cf] bg-white p-4 text-center">
+        <div className="rounded-3xl border border-[#e8e0cf] bg-white p-4 text-center">
           <p className="text-2xl font-black text-espresso">{certStats.total}</p>
           <p className="mt-0.5 text-xs text-espresso-soft">Sertifikat terdaftar</p>
         </div>
-        <div className="rounded-2xl border border-[#e8e0cf] bg-white p-4 text-center">
+        <div className="rounded-3xl border border-[#e8e0cf] bg-white p-4 text-center">
           <p className="text-2xl font-black text-espresso">{certStats.members}</p>
           <p className="mt-0.5 text-xs text-espresso-soft">Member bersertifikat</p>
         </div>
-        <div className="rounded-2xl border border-[#e8e0cf] bg-white p-4 text-center">
+        <div className="rounded-3xl border border-[#e8e0cf] bg-white p-4 text-center">
           <p className="flex items-center justify-center gap-1.5 text-base font-extrabold text-espresso">
             <Award size={16} className="text-[#9a6a2f]" aria-hidden="true" />
             {certStats.top ? `${certStats.top.label} (${certStats.top.n})` : "—"}
@@ -173,7 +173,7 @@ export default async function TrainingPage({ searchParams }) {
           { icon: Star, title: "Kualitas Layanan Naik", desc: "Pelanggan lebih puas, lebih sering kembali." },
           { icon: HeartHandshake, title: "Retensi Tim Kuat", desc: "Tim merasa dihargai dan lebih loyal." },
         ].map((b) => (
-          <div key={b.title} className="rounded-2xl border border-[#e8e0cf] bg-white p-4 text-center">
+          <div key={b.title} className="rounded-3xl border border-[#e8e0cf] bg-white p-4 text-center">
             <span className="mx-auto flex h-9 w-9 items-center justify-center rounded-full bg-[#efe9d9] text-espresso">
               <b.icon size={16} aria-hidden="true" />
             </span>

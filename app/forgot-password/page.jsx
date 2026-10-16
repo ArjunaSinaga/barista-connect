@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { Suspense } from "react";
-import { Lock } from "lucide-react";
+import { Lock, ArrowLeft } from "lucide-react";
 import Button from "@/components/ui/Button";
 import { Input } from "@/components/ui/Field";
 import { useToast } from "@/components/ui/toast";
@@ -54,24 +54,16 @@ function ForgotPasswordForm() {
   }
 
   return (
-    <div className="min-h-[calc(100dvh-3.5rem)] bg-[#f5f1e8] text-espresso">
-      <div className="border-b border-[#e8e0cf] bg-white">
-        <div className="mx-auto flex w-full max-w-[1600px] items-center justify-between px-4 py-3 sm:px-6">
-          <Link href="/" className="font-display text-xl font-extrabold tracking-tight">
-            kerja<span className="text-caramel">.inc</span>
-          </Link>
-          <div className="flex items-center gap-3">
-            <Link href="/login" className="rounded-full border border-espresso px-5 py-2 text-xs font-bold hover:bg-espresso hover:text-white">
-              Login
-            </Link>
-            <Link href="/signup" className="rounded-full bg-espresso px-5 py-2 text-xs font-bold text-white hover:opacity-90">
-              Get Started
-            </Link>
-          </div>
-        </div>
-      </div>
+    <div className="min-h-[calc(100dvh-3.5rem)] bg-[#f6f1e5] text-[#2f2721]">
+      <div className="mx-auto w-full max-w-[1600px] px-4 py-6 sm:px-6 sm:py-8">
+        <Link
+          href="/"
+          className="inline-flex min-h-[44px] items-center gap-1.5 rounded-lg text-sm font-semibold text-[#2f2721]/70 hover:text-[#6f5a3e]"
+        >
+          <ArrowLeft size={16} aria-hidden="true" /> Kembali ke beranda
+        </Link>
 
-      <div className="mx-auto grid w-full max-w-5xl gap-6 px-4 py-10 sm:px-6 lg:grid-cols-2">
+      <div className="mx-auto mt-4 grid w-full max-w-5xl gap-6 lg:grid-cols-2">
         <div className="relative hidden overflow-hidden rounded-2xl bg-[#c69a6b] lg:block">
           <div className="absolute inset-0 flex items-center justify-center">
             <div className="flex h-64 w-64 items-center justify-center rounded-full bg-white">
@@ -86,7 +78,7 @@ function ForgotPasswordForm() {
             lebih banyak kemungkinan.
           </p>
         </div>
-        <div className="rounded-2xl border border-[#e8e0cf] bg-white p-6 shadow-[0_2px_12px_rgba(43,33,24,0.10)] sm:p-8">
+        <div className="rounded-3xl border border-[#e8e0cf] bg-white p-6 shadow-[0_2px_16px_rgba(43,33,24,0.10)] sm:p-8">
           <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-[#f0e4cf]">
             <Lock size={26} className="text-[#7a4f2c]" />
           </span>
@@ -110,7 +102,7 @@ function ForgotPasswordForm() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
-            <Button type="submit" full size="lg" variant="coffee" disabled={busy} className="rounded-full min-h-[44px]">
+            <Button type="submit" full size="lg" variant="coffee" disabled={busy} className="rounded-xl min-h-[50px] text-sm font-bold">
               {busy ? "Mengirim..." : "Kirim Link Reset"}
             </Button>
             <p className="text-center text-sm">
@@ -124,6 +116,7 @@ function ForgotPasswordForm() {
             </p>
             <p className="mt-2 text-[11px] text-espresso-soft">Link reset berlaku 30 menit.</p>
           </div>
+        </div>
         </div>
       </div>
     </div>

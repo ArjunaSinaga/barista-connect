@@ -47,10 +47,10 @@ export default function ActiveJobsView({ jobs, appCountByJob, totalJobs, activeJ
           actionHref="/dashboard/owner/jobs/new"
         />
       ) : (
-        <div className="rounded-2xl border border-[#e8e0cf] bg-[#faf7ef] p-3">
+        <div className="rounded-3xl border border-[#e8e0cf] bg-[#faf7ef] p-3">
           <ul className="max-h-[300px] space-y-3 overflow-y-auto no-scrollbar">
           {jobs.map((job) => (
-            <li key={job.id} className="rounded-2xl border border-[#e8e0cf] bg-white p-4">
+            <li key={job.id} className="rounded-3xl border border-[#e8e0cf] bg-white p-4">
               <div className="flex items-start justify-between gap-3">
                 <div className="min-w-0">
                   <p className="flex items-center gap-2 text-sm font-bold text-espresso">

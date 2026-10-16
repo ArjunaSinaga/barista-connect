@@ -106,7 +106,7 @@ export default async function TeamPage({ searchParams }) {
           const b = g.profile;
           const meta = g.isActive ? TEAM_META.active : TEAM_META.terminated;
           return (
-            <div key={g.baristaId} className="rounded-2xl card-dark p-4">
+            <div key={g.baristaId} className="rounded-3xl card-dark p-4">
               <div className="flex items-center gap-4">
                 <Avatar src={b?.profile_picture_url} name={b?.full_name} size="md" />
                 <div className="min-w-0 flex-1">

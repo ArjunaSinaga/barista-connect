@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { BadgeCheck } from "lucide-react";
+import { BadgeCheck, ArrowLeft } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 
 export default function VerifiedPage() {
@@ -32,9 +32,16 @@ export default function VerifiedPage() {
   }, []);
 
   return (
-    <div className="auth-light min-h-[calc(100dvh-3.5rem)] text-espresso">
-      <div className="mx-auto max-w-md px-4 py-12">
-        <div className="rounded-2xl border border-[#e8e0cf] bg-white p-6 text-center shadow-[0_2px_12px_rgba(43,33,24,0.10)] sm:p-8">
+    <div className="min-h-[calc(100dvh-3.5rem)] bg-[#f6f1e5] text-[#2f2721]">
+      <div className="mx-auto w-full max-w-[1600px] px-4 py-6 sm:px-6 sm:py-8">
+        <Link
+          href="/"
+          className="inline-flex min-h-[44px] items-center gap-1.5 rounded-lg text-sm font-semibold text-[#2f2721]/70 hover:text-[#6f5a3e]"
+        >
+          <ArrowLeft size={16} aria-hidden="true" /> Kembali ke beranda
+        </Link>
+      <div className="mx-auto mt-4 max-w-md">
+        <div className="rounded-3xl border border-[#e8e0cf] bg-white p-6 text-center shadow-[0_2px_16px_rgba(43,33,24,0.10)] sm:p-8">
           <BadgeCheck size={40} className="mx-auto text-matcha" />
           <h1 className="mt-4 text-2xl font-extrabold tracking-tight">Verifikasi selesai</h1>
           <p className="mt-2 text-sm leading-6 text-espresso-soft">
@@ -42,10 +49,11 @@ export default function VerifiedPage() {
           </p>
           <Link
             href={dest}
-            className="mt-6 inline-flex min-h-[44px] w-full items-center justify-center rounded-full bg-coffee px-5 text-sm font-bold text-white hover:bg-[#2e2015]"
+            className="mt-6 inline-flex min-h-[50px] w-full items-center justify-center rounded-xl bg-coffee px-5 text-sm font-bold text-white hover:bg-[#2e2015]"
           >
             {label}
           </Link>
+        </div>
         </div>
       </div>
     </div>

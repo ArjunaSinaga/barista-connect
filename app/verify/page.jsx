@@ -30,8 +30,8 @@ export default async function VerifyPage() {
 
   return (
     <div className="mx-auto max-w-xl px-4 py-10">
-      <div className="rounded-2xl card-dark p-8 text-center">
-        <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-sky-500/10">
+      <div className="rounded-3xl card-dark p-8 text-center">
+        <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-3xl bg-sky-500/10">
           <BadgeCheck size={30} className="text-sky-500" />
         </span>
         <h1 className="mt-4 font-serif text-2xl font-black text-espresso">Centang Biru</h1>

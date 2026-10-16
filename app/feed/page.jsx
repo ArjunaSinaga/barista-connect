@@ -51,7 +51,7 @@ export default async function FeedPage() {
         {(posts ?? []).map((p) => {
           const a = authorMap.get(p.barista_id);
           return (
-            <article key={p.id} className="overflow-hidden rounded-2xl card-dark">
+            <article key={p.id} className="overflow-hidden rounded-3xl card-dark">
               <div className="flex items-center gap-3 px-5 pt-4">
                 <Avatar src={a?.profile_picture_url} name={a?.full_name ?? "?"} size="md" />
                 <div className="min-w-0">
@@ -73,7 +73,7 @@ export default async function FeedPage() {
           );
         })}
         {(!posts || posts.length === 0) && (
-          <div className="rounded-2xl card-dark p-8 text-center">
+          <div className="rounded-3xl card-dark p-8 text-center">
             <p className="text-sm font-bold text-espresso">Feed masih kosong</p>
             <p className="mt-1 text-xs text-espresso-soft">
               {isBarista ? "Jadilah yang pertama posting kreasi terbaikmu." : "Segera ada postingan dari para barista."}

@@ -43,7 +43,7 @@ export default function CafesView({ cafes, countByCafe, teamCountByCafe = {}, ca
         <ul className="space-y-3">
           {(cafes ?? []).map((c) => (
             <li key={c.id}>
-              <div className="flex items-center gap-4 rounded-2xl border border-[#e8e0cf] bg-white p-4 shadow-[0_1px_3px_rgba(43,33,24,0.08)] hover:border-coffee">
+              <div className="flex items-center gap-4 rounded-3xl border border-[#e8e0cf] bg-white p-4 shadow-[0_1px_3px_rgba(43,33,24,0.08)] hover:border-coffee">
                 {c.photo_urls?.[0] ? (
                   <Image src={thumb(c.photo_urls[0], { w: 128 })} alt={c.name} width={56} height={56} className="h-14 w-14 shrink-0 rounded-xl object-cover" />
                 ) : (

@@ -49,11 +49,11 @@ export default function NotifList({ items }) {
 
   if (!list.length) {
     return (
-      <div className="rounded-2xl border border-[#e8e0cf] bg-white p-10 text-center shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
+      <div className="rounded-3xl border border-[#e8e0cf] bg-white p-10 text-center shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
         <Bell size={22} className="mx-auto text-[#b6a98f]" />
         <p className="mt-2 font-serif text-lg font-black text-espresso">Belum ada notifikasi</p>
         <p className="mt-0.5 text-xs text-espresso-soft">Update lamaran, undangan, dan pengumuman akan muncul di sini.</p>
-        <Link href="/jobs" className="mt-4 inline-flex min-h-[44px] items-center rounded-full bg-coffee px-6 text-xs font-bold text-white hover:bg-[#2e2015]">
+        <Link href="/jobs" className="mt-4 inline-flex min-h-[50px] items-center rounded-xl bg-coffee px-6 text-xs font-bold text-white hover:bg-[#2e2015]">
           Cari Lowongan
         </Link>
       </div>
@@ -85,14 +85,14 @@ export default function NotifList({ items }) {
             type="button"
             onClick={markAll}
             disabled={busy}
-            className="inline-flex min-h-[40px] items-center gap-1.5 rounded-full border border-coffee bg-white px-5 py-2 text-xs font-bold text-espresso hover:bg-coffee hover:text-white disabled:opacity-50"
+            className="inline-flex min-h-[50px] items-center gap-1.5 rounded-xl border border-coffee bg-white px-5 py-2 text-xs font-bold text-espresso hover:bg-coffee hover:text-white disabled:opacity-50"
           >
             <CheckCheck size={14} /> Tandai semua dibaca
           </button>
         )}
       </div>
       {filtered.length === 0 ? (
-        <div className="rounded-2xl border border-[#e8e0cf] bg-white p-10 text-center">
+        <div className="rounded-3xl border border-[#e8e0cf] bg-white p-10 text-center">
           <p className="font-serif text-lg font-black text-espresso">Belum ada notifikasi</p>
           <p className="mt-0.5 text-xs text-espresso-soft">Coba lagi atau pilih kategori lain.</p>
         </div>
@@ -101,7 +101,7 @@ export default function NotifList({ items }) {
         {shown.map((n) => (
           <li key={n.id}>
             <div
-              className={`flex items-center gap-3 rounded-2xl border bg-white p-4 shadow-[0_1px_3px_rgba(43,33,24,0.06)] ${n.is_read ? "border-[#e8e0cf]" : "border-coffee/40"}`}
+              className={`flex items-center gap-3 rounded-3xl border bg-white p-4 shadow-[0_1px_3px_rgba(43,33,24,0.06)] ${n.is_read ? "border-[#e8e0cf]" : "border-coffee/40"}`}
             >
               <span className={`mt-1 h-2 w-2 shrink-0 self-start rounded-full ${n.is_read ? "bg-[#e0d5bd]" : "bg-red-500"}`} aria-label={n.is_read ? "Sudah dibaca" : "Belum dibaca"} />
               <span className="min-w-0 flex-1">
@@ -112,7 +112,7 @@ export default function NotifList({ items }) {
               <Link
                 href="/dashboard/barista/applications"
                 onClick={() => open(n.id)}
-                className="inline-flex shrink-0 items-center rounded-full bg-[#ece2cc] px-4 py-2 text-xs font-bold text-espresso hover:bg-coffee hover:text-white"
+                className="inline-flex shrink-0 items-center rounded-xl bg-[#ece2cc] px-4 py-2 text-xs font-bold text-espresso hover:bg-coffee hover:text-white"
               >
                 Lihat detail
               </Link>
@@ -125,7 +125,7 @@ export default function NotifList({ items }) {
         <Link href="/help" className="text-xs font-bold text-caramel hover:underline">⚙ Pengaturan notifikasi</Link>
         {visible < filtered.length ? (
           <div className="text-center">
-            <button type="button" onClick={() => setVisible((v) => v + 5)} className="inline-flex min-h-[40px] items-center rounded-full border border-coffee bg-white px-6 text-xs font-bold text-espresso hover:bg-coffee hover:text-white">
+            <button type="button" onClick={() => setVisible((v) => v + 5)} className="inline-flex min-h-[50px] items-center rounded-xl border border-coffee bg-white px-6 text-xs font-bold text-espresso hover:bg-coffee hover:text-white">
               Muat lebih banyak
             </button>
             <p className="mt-1 text-[11px] text-espresso-soft">Menampilkan {shown.length} dari {filtered.length} notifikasi</p>

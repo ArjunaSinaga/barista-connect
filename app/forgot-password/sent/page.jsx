@@ -3,7 +3,7 @@
 import { useEffect, useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { MailCheck } from "lucide-react";
+import { MailCheck, ArrowLeft } from "lucide-react";
 import { useToast } from "@/components/ui/toast";
 import { createClient } from "@/lib/supabase/client";
 import { SITE_URL } from "@/lib/site";
@@ -60,25 +60,17 @@ function SentContent() {
   if (!email) return null;
 
   return (
-    <div className="min-h-[calc(100dvh-3.5rem)] bg-[#f5f1e8] text-espresso">
-      <div className="border-b border-[#e8e0cf] bg-white">
-        <div className="mx-auto flex w-full max-w-[1600px] items-center justify-between px-4 py-3 sm:px-6">
-          <Link href="/" className="font-display text-xl font-extrabold tracking-tight">
-            kerja<span className="text-caramel">.inc</span>
-          </Link>
-          <div className="flex items-center gap-3">
-            <Link href="/login" className="rounded-full border border-espresso px-5 py-2 text-xs font-bold hover:bg-espresso hover:text-white">
-              Login
-            </Link>
-            <Link href="/signup" className="rounded-full bg-espresso px-5 py-2 text-xs font-bold text-white hover:opacity-90">
-              Get Started
-            </Link>
-          </div>
-        </div>
-      </div>
+    <div className="min-h-[calc(100dvh-3.5rem)] bg-[#f6f1e5] text-[#2f2721]">
+      <div className="mx-auto w-full max-w-[1600px] px-4 py-6 sm:px-6 sm:py-8">
+        <Link
+          href="/"
+          className="inline-flex min-h-[44px] items-center gap-1.5 rounded-lg text-sm font-semibold text-[#2f2721]/70 hover:text-[#6f5a3e]"
+        >
+          <ArrowLeft size={16} aria-hidden="true" /> Kembali ke beranda
+        </Link>
 
-      <div className="mx-auto max-w-xl px-4 py-12">
-        <div className="rounded-2xl border border-[#e8e0cf] bg-white p-6 text-center shadow-[0_2px_12px_rgba(43,33,24,0.10)] sm:p-10">
+      <div className="mx-auto mt-4 max-w-xl">
+        <div className="rounded-3xl border border-[#e8e0cf] bg-white p-6 text-center shadow-[0_2px_16px_rgba(43,33,24,0.10)] sm:p-10">
           <span className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-[#e3f0e8]">
             <MailCheck size={32} className="text-matcha" />
           </span>
@@ -90,7 +82,7 @@ function SentContent() {
           </p>
           <a
             href={`mailto:${email}`}
-            className="mt-6 flex min-h-[44px] items-center justify-center rounded-full bg-espresso px-6 text-sm font-bold text-white hover:opacity-90"
+            className="mt-6 flex min-h-[50px] items-center justify-center rounded-xl bg-espresso px-6 text-sm font-bold text-white hover:opacity-90"
           >
             Buka Aplikasi Email
           </a>
@@ -98,7 +90,7 @@ function SentContent() {
             type="button"
             onClick={handleResend}
             disabled={cooldown > 0 || busy}
-            className="mt-3 min-h-[44px] w-full rounded-full bg-[#e8e0cf] px-6 text-sm font-bold text-espresso-soft disabled:opacity-60"
+            className="mt-3 min-h-[50px] w-full rounded-xl bg-[#e8e0cf] px-6 text-sm font-bold text-espresso-soft disabled:opacity-60"
           >
             {cooldown > 0
               ? `Kirim Ulang Link (00:${String(cooldown).padStart(2, "0")})`
@@ -121,6 +113,7 @@ function SentContent() {
               Kembali ke Login
             </Link>
           </div>
+        </div>
         </div>
       </div>
     </div>

@@ -75,12 +75,12 @@ export default function PelamarView({ jobs, appCountByJob, statusByJob, totals, 
         />
         )
       ) : (
-        <div className="rounded-2xl border border-[#e8e0cf] bg-[#faf7ef] p-3">
+        <div className="rounded-3xl border border-[#e8e0cf] bg-[#faf7ef] p-3">
           <ul className="max-h-[300px] space-y-3 overflow-y-auto no-scrollbar">
           {list.map((job) => {
             const sb = statusByJob[job.id] ?? { pending: 0 };
             return (
-              <li key={job.id} className="flex items-center gap-3 rounded-2xl border border-[#e8e0cf] bg-white p-4">
+              <li key={job.id} className="flex items-center gap-3 rounded-3xl border border-[#e8e0cf] bg-white p-4">
                 <div className="min-w-0 flex-1">
                   <p className="flex items-center gap-2 truncate text-sm font-bold text-espresso">
                     {job.title}

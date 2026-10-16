@@ -68,7 +68,7 @@ export default async function AcademyDashboardPage({ searchParams }) {
         </Link>
       </div>
 
-      <section className="mt-6 rounded-2xl card-dark p-4">
+      <section className="mt-6 rounded-3xl card-dark p-4">
         <h2 className="flex items-center gap-1.5 text-sm font-extrabold text-espresso">
           <Store size={14} /> Kafe partner ({partners.length})
         </h2>
@@ -78,7 +78,7 @@ export default async function AcademyDashboardPage({ searchParams }) {
         </div>
       </section>
 
-      <section className="mt-4 rounded-2xl card-dark p-4">
+      <section className="mt-4 rounded-3xl card-dark p-4">
         <h2 className="flex items-center gap-1.5 text-sm font-extrabold text-espresso">
           <GraduationCap size={14} /> Instruktur
         </h2>
@@ -88,7 +88,7 @@ export default async function AcademyDashboardPage({ searchParams }) {
         </div>
       </section>
 
-      <section className="mt-4 rounded-2xl card-dark p-4">
+      <section className="mt-4 rounded-3xl card-dark p-4">
         <h2 className="flex items-center gap-1.5 text-sm font-extrabold text-espresso">
           <Award size={14} /> Terbitkan sertifikat
         </h2>
@@ -124,7 +124,7 @@ export default async function AcademyDashboardPage({ searchParams }) {
         )}
       </section>
 
-      <section className="mt-4 rounded-2xl card-dark p-4">
+      <section className="mt-4 rounded-3xl card-dark p-4">
         <h2 className="flex items-center gap-1.5 text-sm font-extrabold text-espresso">
           <History size={14} /> Riwayat penerbitan
         </h2>

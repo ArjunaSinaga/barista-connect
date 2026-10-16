@@ -174,7 +174,7 @@ export default function CafeForm({ initial = null }) {
         Satu akun bisa punya banyak kafe. Lowongan dipasang per kafe.
       </p>
 
-      <form onSubmit={handleSave} className="space-y-4 rounded-2xl card-dark p-6">
+      <form onSubmit={handleSave} className="space-y-4 rounded-3xl card-dark p-6">
         <Input
           name="name"
           label="Nama kafe"

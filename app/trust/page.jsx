@@ -57,7 +57,7 @@ export default function TrustPage() {
         {MECHANISMS.map((m, i) => (
           <section
             key={m.title}
-            className="rounded-2xl border border-[#e8e0cf] bg-white p-5 shadow-[0_1px_3px_rgba(43,33,24,0.08)]"
+            className="rounded-3xl border border-[#e8e0cf] bg-white p-5 shadow-[0_1px_3px_rgba(43,33,24,0.08)]"
           >
             <div className="flex items-start gap-4">
               <span className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-full ${m.tint}`}>
@@ -80,7 +80,7 @@ export default function TrustPage() {
         ))}
       </div>
 
-      <div className="mt-8 rounded-2xl bg-coffee p-6 text-center text-white">
+      <div className="mt-8 rounded-3xl bg-coffee p-6 text-center text-white">
         <h2 className="font-display text-xl font-semibold">Mulai merekrut dengan percaya diri</h2>
         <p className="mx-auto mt-1 max-w-md text-sm text-white/80">
           Pasang loker gratis dan terima lamaran dari barista terverifikasi.

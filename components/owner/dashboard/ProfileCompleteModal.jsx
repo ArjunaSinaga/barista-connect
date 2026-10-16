@@ -26,7 +26,7 @@ export default function ProfileCompleteModal({ open, onClose, items = [], onActi
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4" role="dialog" aria-modal="true" aria-labelledby="pcm-title">
       <button aria-label="Tutup" onClick={onClose} className="absolute inset-0 bg-black/50" />
-      <div className="relative w-full max-w-md rounded-2xl border border-[#e8e0cf] bg-white p-5 shadow-xl">
+      <div className="relative w-full max-w-md rounded-3xl border border-[#e8e0cf] bg-white p-5 shadow-xl">
         <div className="flex items-start justify-between gap-2">
           <div>
             <h3 id="pcm-title" className="text-base font-extrabold text-espresso">Lengkapi Profil Bisnis</h3>

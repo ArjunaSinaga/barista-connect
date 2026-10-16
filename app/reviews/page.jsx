@@ -105,7 +105,7 @@ export default async function ReviewsPage({ searchParams }) {
       ) : (
         <ul className="mt-4 space-y-3">
           {groups.map((g) => (
-            <li key={g.name} className="overflow-hidden rounded-2xl border border-[#e8e0cf] bg-white">
+            <li key={g.name} className="overflow-hidden rounded-3xl border border-[#e8e0cf] bg-white">
               <details className="group">
                 <summary className="flex cursor-pointer list-none items-center gap-3 p-4 [&::-webkit-details-marker]:hidden">
                   <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#efe8d8] text-sm font-extrabold text-espresso" aria-hidden="true">

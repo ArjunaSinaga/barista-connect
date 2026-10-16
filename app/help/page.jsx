@@ -36,7 +36,7 @@ export default function HelpPage() {
         password, verifikasi email, dan kirim ulang tautan.
       </p>
 
-      <div className="mt-6 rounded-2xl border border-[#e8e0cf] bg-white p-5 sm:p-6">
+      <div className="mt-6 rounded-3xl border border-[#e8e0cf] bg-white p-5 sm:p-6">
         <h2 className="flex items-center gap-2 font-serif text-xl font-bold text-espresso">
           <CircleHelp size={20} className="text-caramel" /> Pertanyaan umum
         </h2>
@@ -56,7 +56,7 @@ export default function HelpPage() {
       </div>
 
       <div className="mt-4 grid gap-4 sm:grid-cols-2">
-        <div className="rounded-2xl border border-[#e8e0cf] bg-white p-5">
+        <div className="rounded-3xl border border-[#e8e0cf] bg-white p-5">
           <h2 className="flex items-center gap-2 font-serif text-lg font-bold text-espresso">
             <KeyRound size={18} className="text-caramel" /> Lupa password
           </h2>
@@ -65,12 +65,12 @@ export default function HelpPage() {
           </p>
           <Link
             href="/forgot-password"
-            className="mt-3 inline-flex min-h-[44px] items-center justify-center rounded-full bg-coffee px-5 text-sm font-bold text-white hover:bg-[#2e2015]"
+            className="mt-3 inline-flex min-h-[50px] items-center justify-center rounded-xl bg-coffee px-5 text-sm font-bold text-white hover:bg-[#2e2015]"
           >
             Ke halaman Lupa Password
           </Link>
         </div>
-        <div className="rounded-2xl border border-[#e8e0cf] bg-white p-5">
+        <div className="rounded-3xl border border-[#e8e0cf] bg-white p-5">
           <h2 className="flex items-center gap-2 font-serif text-lg font-bold text-espresso">
             <UserPlus size={18} className="text-caramel" /> Belum punya akun
           </h2>
@@ -79,14 +79,14 @@ export default function HelpPage() {
           </p>
           <Link
             href="/signup"
-            className="mt-3 inline-flex min-h-[44px] items-center justify-center rounded-full bg-coffee px-5 text-sm font-bold text-white hover:bg-[#2e2015]"
+            className="mt-3 inline-flex min-h-[50px] items-center justify-center rounded-xl bg-coffee px-5 text-sm font-bold text-white hover:bg-[#2e2015]"
           >
             Daftar sekarang
           </Link>
         </div>
       </div>
 
-      <div className="mt-4 rounded-2xl border border-[#e8e0cf] bg-white p-5 sm:p-6">
+      <div className="mt-4 rounded-3xl border border-[#e8e0cf] bg-white p-5 sm:p-6">
         <h2 className="flex items-center gap-2 font-serif text-lg font-bold text-espresso">
           <Mail size={18} className="text-caramel" /> Hubungi support
         </h2>
@@ -97,7 +97,7 @@ export default function HelpPage() {
         </p>
         <a
           href="mailto:support@kerja.inc"
-          className="mt-3 inline-flex min-h-[44px] items-center justify-center rounded-full border border-coffee px-5 text-sm font-bold text-coffee"
+          className="mt-3 inline-flex min-h-[50px] items-center justify-center rounded-xl border border-coffee px-5 text-sm font-bold text-coffee"
         >
           support@kerja.inc
         </a>

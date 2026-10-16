@@ -120,7 +120,7 @@ export default async function BaristaDashboardPage({ searchParams }) {
       </div>
 
       {total === 0 && (
-        <div className="rounded-2xl border border-caramel/40 bg-caramel/10 p-5">
+        <div className="rounded-3xl border border-caramel/40 bg-caramel/10 p-5">
           <h2 className="text-sm font-black text-espresso">3 langkah mulai kerja 🚀</h2>
           <ol className="mt-3 space-y-2">
             {[
@@ -140,22 +140,22 @@ export default async function BaristaDashboardPage({ searchParams }) {
       )}
 
       <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
-        <div className="rounded-2xl border border-[#e8e0cf] bg-white p-4 shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
+        <div className="rounded-3xl border border-[#e8e0cf] bg-white p-4 shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
           <p className="text-xs font-semibold text-espresso-soft">Lamaran Aktif</p>
           <p className="mt-1 text-3xl font-black text-espresso">{total}</p>
           <p className="mt-1 flex items-center gap-1 text-xs text-espresso-soft"><Briefcase size={12} />terkirim</p>
         </div>
-        <div className="rounded-2xl border border-[#e8e0cf] bg-white p-4 shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
+        <div className="rounded-3xl border border-[#e8e0cf] bg-white p-4 shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
           <p className="text-xs font-semibold text-espresso-soft">Menunggu Kabar</p>
           <p className="mt-1 text-3xl font-black text-espresso">{waiting}</p>
           <p className="mt-1 text-xs text-espresso-soft">terkirim + dilihat</p>
         </div>
-        <div className="rounded-2xl border border-[#e8e0cf] bg-white p-4 shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
+        <div className="rounded-3xl border border-[#e8e0cf] bg-white p-4 shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
           <p className="text-xs font-semibold text-espresso-soft">Diterima</p>
           <p className="mt-1 text-3xl font-black text-espresso">{accepted}</p>
           <p className="mt-1 flex items-center gap-1 text-xs text-espresso-soft"><CheckCheck size={12} />sedang bekerja</p>
         </div>
-        <div className="rounded-2xl border border-[#e8e0cf] bg-white p-4 shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
+        <div className="rounded-3xl border border-[#e8e0cf] bg-white p-4 shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
           <p className="text-xs font-semibold text-espresso-soft">Kelengkapan Profil</p>
           <p className="mt-1 text-3xl font-black text-espresso">{Math.round((profileDone / 4) * 100)}%</p>
           <p className="mt-1 flex items-center gap-1 text-xs text-espresso-soft"><FlagOff size={12} />{profileDone}/4 lengkap · <Link href="/dashboard/barista/profile?edit=1" className="font-bold text-caramel hover:underline">Edit profil</Link></p>
@@ -164,7 +164,7 @@ export default async function BaristaDashboardPage({ searchParams }) {
 
       <JoinTeam />
 
-      <div className="overflow-hidden rounded-2xl border border-latte bg-white">
+      <div className="overflow-hidden rounded-3xl border border-latte bg-white">
         <div className="flex items-center justify-between border-b border-latte px-5 py-4">
           <h2 className="flex items-center gap-2 text-sm font-black text-espresso"><FileText size={16} className="text-caramel" /> Lamaran Terbaru</h2>
           <Link href="/dashboard/barista?tab=lamaran" className="text-xs font-bold text-caramel hover:underline">Lihat semua</Link>
@@ -172,7 +172,7 @@ export default async function BaristaDashboardPage({ searchParams }) {
         {recent.length === 0 ? (
           <div className="px-5 py-6">
             <p className="text-sm text-espresso-soft">Belum ada lamaran. Cari lowongan di bawah dan kirim lamaran pertamamu.</p>
-            <Link href="/jobs" className="mt-3 inline-flex min-h-[40px] items-center rounded-full bg-coffee px-5 text-[13px] font-bold text-white hover:bg-[#2e2015]">
+            <Link href="/jobs" className="mt-3 inline-flex min-h-[50px] items-center rounded-xl bg-coffee px-5 text-[13px] font-bold text-white hover:bg-[#2e2015]">
               Cari lowongan
             </Link>
           </div>
@@ -194,12 +194,12 @@ export default async function BaristaDashboardPage({ searchParams }) {
         )}
       </div>
 
-      <div className="flex items-center gap-4 rounded-2xl border border-[#e8e0cf] bg-white p-5 shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
+      <div className="flex items-center gap-4 rounded-3xl border border-[#e8e0cf] bg-white p-5 shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
         <div className="min-w-0 flex-1">
           <h2 className="text-sm font-extrabold text-espresso">Cari lowongan di job board</h2>
           <p className="mt-0.5 text-xs text-espresso-soft">Jelajahi lowongan aktif, simpan favoritmu, dan lamar langsung.</p>
         </div>
-        <Link href="/jobs" className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-coffee px-5 py-2.5 text-sm font-bold text-white hover:bg-[#2e2015]">
+        <Link href="/jobs" className="inline-flex shrink-0 items-center gap-1.5 rounded-xl bg-coffee px-5 py-3 text-sm font-bold text-white hover:bg-[#2e2015]">
           Buka Loker <ArrowRight size={15} />
         </Link>
       </div>
@@ -225,7 +225,7 @@ export default async function BaristaDashboardPage({ searchParams }) {
   );
 
   const pengaturan = (
-    <div className="rounded-2xl border border-[#e8e0cf] bg-white p-5 shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
+    <div className="rounded-3xl border border-[#e8e0cf] bg-white p-5 shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
       <h2 className="text-sm font-extrabold text-espresso">Kelengkapan Profil ({profileDone}/4)</h2>
       <ul className="mt-3 space-y-2">
         {profileItems.map(([ok, label, href]) => (
@@ -239,7 +239,7 @@ export default async function BaristaDashboardPage({ searchParams }) {
           </li>
         ))}
       </ul>
-      <Link href="/dashboard/barista/profile" className="mt-4 inline-flex min-h-[40px] items-center rounded-full bg-coffee px-5 text-[13px] font-bold text-white hover:bg-[#2e2015]">
+      <Link href="/dashboard/barista/profile" className="mt-4 inline-flex min-h-[50px] items-center rounded-xl bg-coffee px-5 text-[13px] font-bold text-white hover:bg-[#2e2015]">
         Edit Profil
       </Link>
     </div>

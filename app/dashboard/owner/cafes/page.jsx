@@ -63,7 +63,7 @@ export default async function CafesPage() {
           <Link
             key={c.id}
             href={`/dashboard/owner/cafes/${c.id}/edit`}
-            className="flex items-center gap-4 rounded-2xl card-dark p-4 shadow-sm hover:shadow-md transition-shadow"
+            className="flex items-center gap-4 rounded-3xl card-dark p-4 shadow-sm hover:shadow-md transition-shadow"
           >
             {c.photo_urls?.[0] ? (
               <Image src={thumb(c.photo_urls[0], { w: 128 })} alt={c.name} width={64} height={64} className="h-16 w-16 shrink-0 rounded-xl object-cover" />

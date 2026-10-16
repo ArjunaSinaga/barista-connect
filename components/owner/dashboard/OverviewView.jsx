@@ -55,7 +55,7 @@ export default function OverviewView({ overview, onNavigate }) {
 
   if (!o.hasJobs) {
     return (
-      <div className="rounded-2xl border border-[#e8e0cf] bg-white p-8 text-center sm:p-12">
+      <div className="rounded-3xl border border-[#e8e0cf] bg-white p-8 text-center sm:p-12">
         <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-coffee/10 text-coffee">
           <Briefcase size={24} />
         </span>
@@ -63,7 +63,7 @@ export default function OverviewView({ overview, onNavigate }) {
         <p className="mx-auto mt-1 max-w-sm text-sm text-espresso-soft">
           Buat lowongan pertamamu untuk mulai menerima lamaran, memantau pipeline, dan membangun tim.
         </p>
-        <Link href="/dashboard/owner/jobs/new" className="mt-5 inline-flex min-h-[44px] items-center gap-1.5 rounded-full bg-coffee px-6 text-sm font-bold text-white hover:bg-[#2e2015]">
+        <Link href="/dashboard/owner/jobs/new" className="mt-5 inline-flex min-h-[50px] items-center gap-1.5 rounded-xl bg-coffee px-6 text-sm font-bold text-white hover:bg-[#2e2015]">
           <Plus size={16} /> Buat Lowongan Pertama
         </Link>
       </div>
@@ -73,7 +73,7 @@ export default function OverviewView({ overview, onNavigate }) {
   return (
     <div className="min-w-0 space-y-4">
       {/* Hero */}
-      <section className="relative grid overflow-hidden rounded-2xl border border-[#e8e0cf] bg-[#faf6ec] md:grid-cols-[1fr_240px]">
+      <section className="relative grid overflow-hidden rounded-3xl border border-[#e8e0cf] bg-[#faf6ec] md:grid-cols-[1fr_240px]">
         <div className="p-5 sm:p-6">
           <p className="text-sm text-espresso-soft">Selamat datang kembali,</p>
           <h1 className="font-display text-2xl font-extrabold tracking-tight text-espresso sm:text-3xl">{o.businessName}</h1>
@@ -107,7 +107,7 @@ export default function OverviewView({ overview, onNavigate }) {
       {/* Stat cards */}
       <section className="grid grid-cols-2 gap-3 xl:grid-cols-4" aria-label="Ringkasan metrik" role="status">
         {stats.map((s) => (
-          <div key={s.label} className="rounded-2xl border border-[#e8e0cf] bg-white p-4">
+          <div key={s.label} className="rounded-3xl border border-[#e8e0cf] bg-white p-4">
             <p className="flex items-center gap-1.5 text-xs font-bold text-espresso-soft">
               <s.icon size={14} className="text-caramel" />{s.label}
             </p>
@@ -125,7 +125,7 @@ export default function OverviewView({ overview, onNavigate }) {
 
       <div className="grid gap-4 xl:grid-cols-2">
         {/* Pipeline */}
-        <section className="rounded-2xl border border-[#e8e0cf] bg-white p-5">
+        <section className="rounded-3xl border border-[#e8e0cf] bg-white p-5">
           <h2 className="text-sm font-extrabold text-espresso">Pipeline Rekrutmen</h2>
           <ul className="mt-3 space-y-2.5">
             {o.pipeline.map((p) => (
@@ -145,7 +145,7 @@ export default function OverviewView({ overview, onNavigate }) {
         </section>
 
         {/* Aktivitas */}
-        <section className="rounded-2xl border border-[#e8e0cf] bg-white p-5">
+        <section className="rounded-3xl border border-[#e8e0cf] bg-white p-5">
           <div className="flex items-center justify-between">
             <h2 className="text-sm font-extrabold text-espresso">Aktivitas Terbaru</h2>
             <TabLink onNavigate={onNavigate} tab="pelamar" className="inline-flex items-center gap-0.5 text-[11px] font-bold text-link hover:underline">
@@ -176,7 +176,7 @@ export default function OverviewView({ overview, onNavigate }) {
       </div>
 
       {/* Aksi cepat */}
-      <section className="rounded-2xl border border-[#e8e0cf] bg-white p-5">
+      <section className="rounded-3xl border border-[#e8e0cf] bg-white p-5">
         <h2 className="text-sm font-extrabold text-espresso">Aksi Cepat <span className="ml-1 font-medium text-espresso-soft">Lakukan aktivitas rekrutmen dengan cepat.</span></h2>
         <div className="mt-3 grid grid-cols-2 gap-2.5 sm:grid-cols-3 xl:grid-cols-6">
           {quick.map((q) => (
@@ -208,7 +208,7 @@ export default function OverviewView({ overview, onNavigate }) {
 
       <div className="grid gap-4 xl:grid-cols-2">
         {/* Tabel loker */}
-        <section className="min-w-0 rounded-2xl border border-[#e8e0cf] bg-white p-5">
+        <section className="min-w-0 rounded-3xl border border-[#e8e0cf] bg-white p-5">
           <div className="flex items-center justify-between">
             <h2 className="text-sm font-extrabold text-espresso">Lowongan Aktif</h2>
             <TabLink onNavigate={onNavigate} tab="active" className="inline-flex items-center gap-0.5 text-[11px] font-bold text-link hover:underline">
@@ -238,7 +238,7 @@ export default function OverviewView({ overview, onNavigate }) {
         </section>
 
         {/* Butuh tindakan */}
-        <section className="min-w-0 rounded-2xl border border-[#e8e0cf] bg-white p-5">
+        <section className="min-w-0 rounded-3xl border border-[#e8e0cf] bg-white p-5">
           <div className="flex items-center justify-between">
             <h2 className="text-sm font-extrabold text-espresso">
               Kandidat Perlu Tindakan
