@@ -45,7 +45,7 @@ export default function TrustPage() {
   return (
     <main className="mx-auto w-full max-w-[900px] px-4 py-10 sm:px-6">
       <p className="text-xs font-bold tracking-widest text-matcha uppercase">Kepercayaan</p>
-      <h1 className="font-display mt-2 text-3xl font-semibold text-espresso sm:text-4xl">
+      <h1 className="font-serif mt-2 text-3xl font-semibold text-espresso sm:text-4xl">
         Cara kerja kepercayaan di kerja.inc
       </h1>
       <p className="mt-3 max-w-2xl text-sm leading-6 text-espresso-soft">

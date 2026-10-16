@@ -33,7 +33,8 @@ export default async function NotifikasiPage() {
 
   return (
     <div className="mx-auto w-full max-w-[1600px] px-4 sm:px-6 py-8">
-      <h1 className="text-2xl font-extrabold text-espresso">Notifikasi</h1>
+      <p className="text-xs font-bold tracking-widest text-caramel uppercase">Pusat Notifikasi</p>
+      <h1 className="mt-1 text-2xl font-black text-espresso" style={{ fontFamily: "Fraunces, Georgia, serif" }}>Notifikasi</h1>
       <p className="mt-1 text-sm text-espresso-soft">
         Semua update terkait lamaran, interview, dan aktivitas akun Anda.
       </p>

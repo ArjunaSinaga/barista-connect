@@ -105,15 +105,25 @@ function LoginForm() {
   }
 
   return (
-    <div className="auth-light min-h-[calc(100dvh-3.5rem)] text-espresso">
-    <div className="mx-auto max-w-md px-4 py-12">
-      <div className="rounded-2xl border border-[#e8e0cf] bg-white p-6 shadow-[0_2px_12px_rgba(43,33,24,0.10)] sm:p-8">
-      <h1 className="text-center text-2xl font-extrabold tracking-tight text-espresso">
-        Masuk ke akun kamu
-      </h1>
-      <p className="mt-1 text-center text-sm text-espresso-soft">
-        Senang bertemu lagi ☕
-      </p>
+    <div className="min-h-[calc(100dvh-3.5rem)] bg-[#f5f1e8] text-espresso">
+      <div className="border-b border-[#e8e0cf] bg-white">
+        <div className="mx-auto flex w-full max-w-[1600px] items-center justify-between px-4 py-3 sm:px-6">
+          <Link href="/" className="font-display text-xl font-extrabold tracking-tight">
+            kerja<span className="text-caramel">.inc</span>
+          </Link>
+          <Link href="/" className="text-xs font-bold text-link hover:underline">
+            Kembali ke beranda
+          </Link>
+        </div>
+      </div>
+      <div className="mx-auto max-w-md px-4 py-12">
+        <div className="rounded-2xl border border-[#e8e0cf] bg-white p-6 shadow-[0_2px_12px_rgba(43,33,24,0.10)] sm:p-8">
+          <h1 className="font-display text-3xl font-extrabold tracking-tight text-espresso">
+            Masuk
+          </h1>
+          <p className="mt-1 text-sm text-espresso-soft">
+            Lanjutkan ke dashboard barista atau owner kafe.
+          </p>
 
       <form onSubmit={handleSubmit} className="mt-8 space-y-4">
         <Input
@@ -131,29 +141,29 @@ function LoginForm() {
           name="password"
           type="password"
           label="Password"
-          placeholder="••••••••"
+          placeholder="Minimal 8 karakter"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           error={errors.password}
           autoComplete="current-password"
         />
-        <div className="text-right">
+        <Button type="submit" full size="lg" variant="coffee" disabled={busy} className="rounded-full min-h-[44px]">
+          {busy ? "Memproses..." : "Masuk"}
+        </Button>
+        <p className="text-center text-sm">
           <Link
             href="/forgot-password"
-            className="text-xs font-bold text-matcha hover:underline"
+            className="text-xs font-bold text-link hover:underline"
           >
             Lupa password?
           </Link>
-        </div>
-        <Button type="submit" full size="lg" variant="coffee" disabled={busy}>
-          {busy ? "Memproses..." : "Masuk"}
-        </Button>
+        </p>
       </form>
 
-      <p className="mt-6 text-center text-sm text-espresso-soft">
+      <p className="mt-6 border-t border-[#e8e0cf] pt-4 text-center text-sm text-espresso-soft">
         Belum punya akun?{" "}
-        <Link href="/register" className="font-bold text-matcha hover:underline">
-          Daftar gratis
+        <Link href="/register" className="font-bold text-link hover:underline">
+          Daftar
         </Link>
       </p>
       </div>

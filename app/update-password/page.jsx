@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Button from "@/components/ui/Button";
 import { Input } from "@/components/ui/Field";
@@ -12,6 +13,7 @@ export default function UpdatePasswordPage() {
   const toast = useToast();
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
+  const [show, setShow] = useState(false);
   const [busy, setBusy] = useState(false);
   const [ready, setReady] = useState(false);
 
@@ -76,36 +78,85 @@ export default function UpdatePasswordPage() {
 
   if (!ready) return null;
 
+  const hasMin = password.length >= 8;
+  const hasCase = /[A-Z]/.test(password) && /[a-z]/.test(password);
+  const hasNum = /[0-9]/.test(password);
+  const isMatch = password.length > 0 && password === confirm;
+  const score = [hasMin, hasCase, hasNum, isMatch].filter(Boolean).length;
+  const strengthLabel = score <= 1 ? "Lemah" : score === 3 ? "Cukup" : score >= 4 ? "Kuat" : "Sedang";
+  const strengthColor = score <= 1 ? "#b3392f" : score >= 4 ? "#1f6b4a" : "#9a6a2f";
+  const strengthWidth = `${(score / 4) * 100}%`;
+
   return (
-    <div className="mx-auto max-w-md px-4 py-12">
-      <h1 className="text-center text-2xl font-extrabold text-espresso">
-        Password baru
+    <div className="min-h-[calc(100dvh-3.5rem)] bg-[#f5f1e8] text-espresso">
+      <div className="border-b border-[#e8e0cf] bg-white">
+        <div className="mx-auto flex w-full max-w-[1600px] items-center justify-between px-4 py-3 sm:px-6">
+          <span className="font-display text-xl font-extrabold tracking-tight">kerja<span className="text-caramel">.inc</span></span>
+          <Link href="/" className="text-xs font-bold text-link hover:underline">Kembali ke beranda</Link>
+        </div>
+      </div>
+      <div className="mx-auto max-w-md px-4 py-12">
+      <div className="rounded-2xl border border-[#e8e0cf] bg-white p-6 shadow-[0_2px_12px_rgba(43,33,24,0.10)] sm:p-8">
+      <h1 className="font-serif text-3xl font-extrabold tracking-tight text-espresso">
+        Buat password baru
       </h1>
-      <p className="mt-1 mb-8 text-center text-sm text-espresso-soft">
-        Buat password baru untuk akun kamu.
+      <p className="mt-1 mb-8 text-sm text-espresso-soft">
+        Pilih password yang kuat dan belum pernah dipakai di akun lain.
       </p>
       <form onSubmit={handleSubmit} className="space-y-4">
-        <Input
-          name="password"
-          type="password"
-          label="Password baru"
-          placeholder="Minimal 8 karakter"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          autoComplete="new-password"
-        />
+        <div className="relative">
+          <Input
+            name="password"
+            type={show ? "text" : "password"}
+            label="Password baru"
+            placeholder="••••••••••"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            autoComplete="new-password"
+          />
+          <button
+            type="button"
+            onClick={() => setShow((s) => !s)}
+            aria-label={show ? "Sembunyikan password" : "Tampilkan password"}
+            className="absolute right-3 top-9 rounded-full bg-[#f0e4cf] px-3 py-1 text-[11px] font-bold text-espresso"
+          >
+            {show ? "Sembunyi" : "Tampilkan"}
+          </button>
+        </div>
+        <div>
+          <div className="flex items-center gap-2" aria-hidden="true">
+            <span className="text-xs font-bold text-espresso">Kekuatan:</span>
+            <span className="h-2 flex-1 rounded-full bg-[#e8e0cf]">
+              <span className="block h-2 rounded-full" style={{ width: strengthWidth, background: strengthColor }} />
+            </span>
+            <span className="text-xs font-bold" style={{ color: strengthColor }}>{strengthLabel}</span>
+          </div>
+          <ul className="mt-2 space-y-1 text-xs text-espresso-soft">
+            <li><span className={hasMin ? "font-bold text-matcha" : ""}>{hasMin ? "✓" : "○"} Minimal 8 karakter</span></li>
+            <li><span className={hasCase ? "font-bold text-matcha" : ""}>{hasCase ? "✓" : "○"} Ada huruf besar &amp; kecil</span></li>
+            <li><span className={hasNum ? "font-bold text-matcha" : ""}>{hasNum ? "✓" : "○"} Ada angka</span></li>
+            <li><span className={isMatch ? "font-bold text-matcha" : ""}>{isMatch ? "✓" : "○"} Sama dengan konfirmasi</span></li>
+          </ul>
+        </div>
         <Input
           name="confirm"
-          type="password"
-          label="Ulangi password"
+          type={show ? "text" : "password"}
+          label="Konfirmasi password"
+          placeholder="••••••••••"
           value={confirm}
           onChange={(e) => setConfirm(e.target.value)}
           autoComplete="new-password"
         />
-        <Button type="submit" full size="lg" disabled={busy}>
-          {busy ? "Menyimpan..." : "Simpan Password"}
+        <Button type="submit" full size="lg" variant="coffee" disabled={busy} className="rounded-full min-h-[44px]">
+          {busy ? "Menyimpan..." : "Simpan Password Baru"}
         </Button>
+        <p className="text-center text-xs font-bold text-caramel">
+          <Link href="/forgot-password" className="hover:underline">Link kedaluwarsa? Minta link baru</Link>
+        </p>
+        <p className="text-center text-[11px] text-espresso-soft">Link ini hanya dapat dipakai satu kali.</p>
       </form>
+      </div>
+      </div>
     </div>
   );
 }

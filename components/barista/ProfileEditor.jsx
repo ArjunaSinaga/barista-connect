@@ -250,10 +250,11 @@ export default function ProfileEditor({ initial, portfolio = [] }) {
 
   return (
     <div className="mx-auto max-w-2xl space-y-5 px-4 py-8">
-      <h1 className="text-2xl font-extrabold text-espresso">Profil Saya</h1>
+      <h1 className="font-serif text-3xl font-black text-espresso">Edit Profil</h1>
+      <p className="mt-1 text-sm text-espresso-soft">Perbarui informasi yang dilihat pemberi kerja.</p>
 
       {/* completeness meter */}
-      <div className="rounded-2xl card-dark p-5">
+      <div className="rounded-2xl border border-[#e8e0cf] bg-white p-5 shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
         <div className="flex items-center justify-between text-xs font-bold">
           <span className="text-espresso">Kelengkapan profil</span>
           <span className={completeness >= 7 ? "text-matcha" : "text-caramel"}>
@@ -269,7 +270,7 @@ export default function ProfileEditor({ initial, portfolio = [] }) {
       </div>
 
       {/* photo */}
-      <div className="flex flex-col items-center rounded-2xl card-dark p-6">
+      <div className="flex flex-col items-center rounded-2xl border border-[#e8e0cf] bg-white shadow-[0_1px_3px_rgba(43,33,24,0.08)] p-6">
         <div className="relative">
           <Avatar src={photoUrl} name={form.full_name} size="xl" />
           {uploading && (
@@ -297,7 +298,7 @@ export default function ProfileEditor({ initial, portfolio = [] }) {
       </div>
 
       {/* data diri */}
-      <div className="space-y-4 rounded-2xl card-dark p-6">
+      <div className="space-y-4 rounded-2xl border border-[#e8e0cf] bg-white shadow-[0_1px_3px_rgba(43,33,24,0.08)] p-6">
         <p className="font-bold text-espresso">Data Diri</p>
         <Input
           name="full_name"
@@ -348,7 +349,7 @@ export default function ProfileEditor({ initial, portfolio = [] }) {
       </div>
 
       {/* skills */}
-      <div className="rounded-2xl card-dark p-6">
+      <div className="rounded-2xl border border-[#e8e0cf] bg-white shadow-[0_1px_3px_rgba(43,33,24,0.08)] p-6">
         <p className="font-bold text-espresso">Keahlian</p>
         <div className="mt-3 flex flex-wrap gap-2">
           {form.skills.map((s) => (
@@ -393,7 +394,7 @@ export default function ProfileEditor({ initial, portfolio = [] }) {
       </div>
 
       {/* certificates */}
-      <div className="rounded-2xl card-dark p-6">
+      <div className="rounded-2xl border border-[#e8e0cf] bg-white shadow-[0_1px_3px_rgba(43,33,24,0.08)] p-6">
         <p className="font-bold text-espresso">
           Sertifikat{" "}
           <span className="font-medium text-espresso-soft">(opsional)</span>
@@ -440,7 +441,7 @@ export default function ProfileEditor({ initial, portfolio = [] }) {
       </div>
 
       {/* portfolio */}
-      <div className="rounded-2xl card-dark p-6">
+      <div className="rounded-2xl border border-[#e8e0cf] bg-white shadow-[0_1px_3px_rgba(43,33,24,0.08)] p-6">
         <div className="flex items-center justify-between">
           <p className="font-bold text-espresso">
             Portofolio{" "}
@@ -500,7 +501,7 @@ export default function ProfileEditor({ initial, portfolio = [] }) {
       </div>
 
       {/* CV */}
-      <div className="rounded-2xl card-dark p-6">
+      <div className="rounded-2xl border border-[#e8e0cf] bg-white shadow-[0_1px_3px_rgba(43,33,24,0.08)] p-6">
         <div className="flex items-center justify-between gap-3">
           <div>
             <p className="flex items-center gap-1.5 font-bold text-espresso">
@@ -535,7 +536,7 @@ export default function ProfileEditor({ initial, portfolio = [] }) {
       </div>
 
       {/* ideas + toggle */}
-      <div className="space-y-5 rounded-2xl card-dark p-6">
+      <div className="space-y-5 rounded-2xl border border-[#e8e0cf] bg-white shadow-[0_1px_3px_rgba(43,33,24,0.08)] p-6">
         <Textarea
           name="ideas_plus"
           label="Ide & nilai plus"

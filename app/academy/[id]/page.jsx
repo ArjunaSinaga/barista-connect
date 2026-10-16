@@ -48,7 +48,7 @@ export default async function AcademyPublicPage({ params }) {
       <div className="mt-2 flex items-center gap-4">
         <Avatar src={a.logo_url} name={a.name} size="lg" />
         <div className="min-w-0">
-          <h1 className="font-display text-2xl font-semibold tracking-tight text-espresso sm:text-3xl">{a.name}</h1>
+          <h1 className="font-serif text-2xl font-semibold tracking-tight text-espresso sm:text-3xl">{a.name}</h1>
           <p className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-espresso-soft">
             <span className="inline-flex items-center gap-1"><Award size={12} /> {count ?? 0} sertifikat diterbitkan</span>
             <span className="inline-flex items-center gap-1"><Store size={12} /> {(cafes ?? []).length} kafe partner</span>

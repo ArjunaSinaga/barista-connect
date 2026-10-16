@@ -7,7 +7,7 @@ export const dynamic = "force-dynamic";
 // CTA mana pun yang mau memicu alur hiring cukup link ke /hire.
 export default async function HireRedirect() {
   const { user, profile } = await getSessionSafe();
-  if (!user) redirect("/register?role=employer");
+  if (!user) redirect("/signup?role=owner");
   if (profile?.role === "owner") redirect("/dashboard/owner/jobs/new");
   redirect("/find-baristas");
 }

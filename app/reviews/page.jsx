@@ -70,7 +70,7 @@ export default async function ReviewsPage({ searchParams }) {
   return (
     <div className="mx-auto w-full max-w-[1600px] px-4 sm:px-6 py-8">
       <p className="text-[11px] font-bold tracking-[0.18em] text-espresso-soft uppercase">Ulasan komunitas</p>
-      <h1 className="font-display mt-1 text-2xl font-semibold tracking-tight text-espresso">Ulasan</h1>
+      <h1 className="font-serif mt-1 text-2xl font-semibold tracking-tight text-espresso">Ulasan</h1>
       <p className="mt-1 text-sm text-espresso-soft">Top barista berdasarkan penilaian real pemilik kafe. Klik untuk lihat ulasannya.</p>
 
       <form action="/reviews" method="GET" className="mt-4 flex flex-wrap items-center gap-2">

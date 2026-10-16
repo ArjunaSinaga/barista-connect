@@ -37,21 +37,39 @@ function CheckEmailInner() {
   }
 
   return (
-    <div className="auth-light min-h-[calc(100dvh-3.5rem)] text-espresso">
+    <div className="min-h-[calc(100dvh-3.5rem)] bg-[#f5f1e8] text-espresso">
+      <div className="border-b border-[#e8e0cf] bg-white">
+        <div className="mx-auto flex w-full max-w-[1600px] items-center justify-between px-4 py-3 sm:px-6">
+          <Link href="/" className="font-display text-xl font-extrabold tracking-tight">
+            kerja<span className="text-caramel">.inc</span>
+          </Link>
+          <Link href="/" className="text-xs font-bold text-link hover:underline">
+            Kembali ke beranda
+          </Link>
+        </div>
+      </div>
       <div className="mx-auto max-w-md px-4 py-12">
         <div className="rounded-2xl border border-[#e8e0cf] bg-white p-6 text-center shadow-[0_2px_12px_rgba(43,33,24,0.10)] sm:p-8">
-          <MailCheck size={40} className="mx-auto text-matcha" />
-          <h1 className="mt-4 text-2xl font-extrabold tracking-tight">Silakan cek email kamu</h1>
+          <span className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-[#e3f0e8]">
+            <MailCheck size={32} className="text-matcha" />
+          </span>
+          <h1 className="mt-4 font-display text-3xl font-extrabold tracking-tight">Cek email kamu</h1>
           <p className="mt-2 text-sm leading-6 text-espresso-soft">
-            Kami mengirim link verifikasi ke <span className="font-bold text-espresso">{email || "emailmu"}</span>.
-            Klik link itu, lalu masuk seperti biasa. Cek folder spam bila tidak ada.
+            Kami mengirim tautan verifikasi ke <span className="font-bold text-espresso">{email || "emailmu"}</span>.
+            Buka inbox dan klik tautannya untuk mengaktifkan akun.
+          </p>
+          <p className="mt-4 rounded-xl bg-[#faf7ef] px-4 py-3 text-xs text-espresso-soft">
+            Tidak ketemu? Cek folder Spam atau Promosi.
           </p>
           <div className="mt-6 space-y-3">
-            <Button full variant="coffee" disabled={busy || !email} onClick={resend}>
-              {busy ? "Mengirim..." : "Kirim ulang email"}
+            <Button full variant="coffee" disabled={busy || !email} onClick={resend} className="rounded-full min-h-[44px]">
+              {busy ? "Mengirim..." : "Kirim ulang dalam 00:60"}
             </Button>
-            <Link href="/login" className="block text-sm font-bold text-matcha hover:underline">
-              Sudah verifikasi? Masuk
+            <Link href="/register" className="block text-xs font-bold text-link hover:underline">
+              Salah alamat email? Ganti email
+            </Link>
+            <Link href="/login" className="block text-xs font-bold text-link hover:underline">
+              Kembali ke Masuk
             </Link>
           </div>
         </div>

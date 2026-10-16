@@ -35,7 +35,7 @@ export default async function AcademyIndexPage({ searchParams }) {
             <p className="text-[11px] font-bold tracking-[0.18em] text-espresso-soft uppercase">
               Komunitas kopi yang kuat
             </p>
-            <h1 className="font-display mt-1 max-w-xl text-balance text-xl leading-tight font-semibold tracking-tight sm:text-2xl">
+            <h1 className="font-serif mt-1 max-w-xl text-balance text-xl leading-tight font-semibold tracking-tight sm:text-2xl">
               Belajar dari <span className="text-matcha">akademi terbaik.</span>
             </h1>
             <p className="mt-1 max-w-xl text-xs leading-5 text-espresso-soft">

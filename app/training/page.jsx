@@ -82,7 +82,7 @@ export default async function TrainingPage({ searchParams }) {
       <p className="text-[11px] font-bold tracking-[0.18em] text-espresso-soft uppercase">
         Komunitas kopi yang kuat
       </p>
-      <h1 className="font-display mt-1 text-2xl font-semibold tracking-tight text-espresso sm:text-3xl">
+      <h1 className="font-serif mt-1 text-2xl font-semibold tracking-tight text-espresso sm:text-3xl">
         Bangun tim kuat <span className="text-matcha">lewat pelatihan.</span>
       </h1>
       <p className="mt-1 max-w-xl text-sm leading-6 text-espresso-soft">

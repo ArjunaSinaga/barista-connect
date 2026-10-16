@@ -53,7 +53,7 @@ export default async function VerifyCertPage({ searchParams }) {
       <p className="flex items-center gap-1.5 text-[11px] font-bold tracking-[0.18em] text-espresso-soft uppercase">
         <BadgeCheck size={13} /> Cek keaslian
       </p>
-      <h1 className="font-display mt-1 text-2xl font-semibold tracking-tight text-espresso sm:text-3xl">
+      <h1 className="font-serif mt-1 text-2xl font-semibold tracking-tight text-espresso sm:text-3xl">
         Verifikasi sertifikat
       </h1>
       <p className="mt-1 max-w-xl text-sm leading-6 text-espresso-soft">

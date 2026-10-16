@@ -112,9 +112,9 @@ export default async function BaristaDashboardPage({ searchParams }) {
   const ringkasan = (
     <div className="min-w-0 space-y-4">
       <div>
-        <p className="text-xs font-bold tracking-widest text-caramel uppercase">Dasbor Barista</p>
-        <h1 className="mt-1 text-2xl leading-none font-black text-espresso">Halo, {bp?.full_name?.split(" ")[0] ?? "Barista"}! 👋</h1>
-        <p className="mt-2 max-w-xl text-sm text-espresso-soft">
+        <p className="text-xs font-bold tracking-widest text-caramel uppercase">Ringkasan aktivitas pencarian kerjamu hari ini.</p>
+        <h1 className="mt-1 font-serif text-3xl leading-tight font-black text-espresso">Halo, {bp?.full_name?.split(" ")[0] ?? "Barista"}!</h1>
+        <p className="mt-1 max-w-xl text-sm text-espresso-soft">
           Pantau lamaran, lanjutkan yang diterima, dan nilai kafe tempatmu selesai bekerja.
         </p>
       </div>
@@ -139,26 +139,26 @@ export default async function BaristaDashboardPage({ searchParams }) {
         </div>
       )}
 
-      <div className="grid grid-cols-2 gap-2 sm:gap-3 lg:grid-cols-4">
-        <div className="rounded-2xl border border-caramel/40 bg-caramel/10 p-3 sm:p-4">
-          <p className="text-xs font-bold tracking-widest text-caramel uppercase">Total Lamaran</p>
+      <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+        <div className="rounded-2xl border border-[#e8e0cf] bg-white p-4 shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
+          <p className="text-xs font-semibold text-espresso-soft">Lamaran Aktif</p>
           <p className="mt-1 text-3xl font-black text-espresso">{total}</p>
           <p className="mt-1 flex items-center gap-1 text-xs text-espresso-soft"><Briefcase size={12} />terkirim</p>
         </div>
-        <div className="rounded-2xl border border-amber-400/40 bg-amber-400/10 p-3 sm:p-4">
-          <p className="text-xs font-bold tracking-widest text-amber-600 uppercase">Menunggu</p>
+        <div className="rounded-2xl border border-[#e8e0cf] bg-white p-4 shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
+          <p className="text-xs font-semibold text-espresso-soft">Menunggu Kabar</p>
           <p className="mt-1 text-3xl font-black text-espresso">{waiting}</p>
           <p className="mt-1 text-xs text-espresso-soft">terkirim + dilihat</p>
         </div>
-        <div className="rounded-2xl border border-matcha/40 bg-matcha/10 p-3 sm:p-4">
-          <p className="text-xs font-bold tracking-widest text-matcha uppercase">Diterima</p>
+        <div className="rounded-2xl border border-[#e8e0cf] bg-white p-4 shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
+          <p className="text-xs font-semibold text-espresso-soft">Diterima</p>
           <p className="mt-1 text-3xl font-black text-espresso">{accepted}</p>
           <p className="mt-1 flex items-center gap-1 text-xs text-espresso-soft"><CheckCheck size={12} />sedang bekerja</p>
         </div>
-        <div className="rounded-2xl border border-coffee bg-coffee p-3 sm:p-4 text-white">
-          <p className="text-xs font-bold tracking-widest text-latte uppercase">Selesai</p>
-          <p className="mt-1 text-3xl font-black">{done}</p>
-          <p className="mt-1 flex items-center gap-1 text-xs text-latte"><FlagOff size={12} />bisa dinilai</p>
+        <div className="rounded-2xl border border-[#e8e0cf] bg-white p-4 shadow-[0_1px_3px_rgba(43,33,24,0.08)]">
+          <p className="text-xs font-semibold text-espresso-soft">Kelengkapan Profil</p>
+          <p className="mt-1 text-3xl font-black text-espresso">{Math.round((profileDone / 4) * 100)}%</p>
+          <p className="mt-1 flex items-center gap-1 text-xs text-espresso-soft"><FlagOff size={12} />{profileDone}/4 lengkap · <Link href="/dashboard/barista/profile?edit=1" className="font-bold text-caramel hover:underline">Edit profil</Link></p>
         </div>
       </div>
 
