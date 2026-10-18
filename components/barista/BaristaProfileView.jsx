@@ -27,7 +27,7 @@ export default function BaristaProfileView({
               Ini tampilan publik profilmu — begini kafe lain melihatmu.
             </p>
             {editHref && (
-              <Link href={editHref} className="rounded-full bg-[#2b2118] px-4 py-2 text-sm font-bold text-white hover:opacity-90">
+              <Link href={editHref} className="rounded-xl bg-[#3d2c1e] px-4 py-2 text-sm font-bold text-white hover:opacity-90">
                 Edit Profil
               </Link>
             )}
@@ -61,18 +61,19 @@ export default function BaristaProfileView({
                     {isOwner && viewerId && <StartChatButton ownerId={viewerId} baristaId={b.id} />}
                     {!isSelf && viewerId && <ConnectButton targetId={b.id} viewerId={viewerId} />}
                     {!isSelf && viewerId && (
-                      <Link href={`/login?next=/barista/${b.id}`} className="rounded-full border border-[#2b2118] px-4 py-2 text-sm font-bold text-espresso hover:bg-[#faf7ef]">
+                      <Link href={`/login?next=/barista/${b.id}`}
+            className="rounded-xl border border-[#2b2118] px-4 py-2 text-sm font-bold text-espresso hover:bg-[#faf7ef]">
                         Simpan Talenta
                       </Link>
                     )}
                     {!isSelf && !viewerId && (
-                      <Link href={`/login?next=/barista/${b.id}`} className="rounded-full bg-[#2b2118] px-4 py-2 text-sm font-bold text-white hover:opacity-90">
+                      <Link href={`/login?next=/barista/${b.id}`} className="rounded-xl bg-[#3d2c1e] px-4 py-2 text-sm font-bold text-white hover:opacity-90">
                         Masuk untuk Menghubungi
                       </Link>
                     )}
                     {isSelf && !editHref && (
-                      <Link href="/dashboard/barista/profile?edit=1" className="rounded-full bg-[#2b2118] px-4 py-2 text-sm font-bold text-white hover:opacity-90">
-                        Edit profil
+<Link href="/dashboard/barista/profile?edit=1" className="rounded-xl bg-[#3d2c1e] px-4 py-2 text-sm font-bold text-white hover:opacity-90">
+          Edit profil
                       </Link>
                     )}
                   </div>
@@ -185,14 +186,14 @@ export default function BaristaProfileView({
                     href={b.cv_url}
                     target="_blank"
                     rel="noopener"
-                    className="inline-flex items-center gap-1.5 rounded-full bg-[#2b2118] px-4 py-2 text-sm font-bold text-white hover:opacity-90"
-                  >
-                    <ExternalLink size={14} /> Buka di tab baru
+      className="inline-flex items-center gap-1.5 rounded-xl bg-[#3d2c1e] px-4 py-2 text-sm font-bold text-white hover:opacity-90"
+    >
+      <ExternalLink size={14} /> Buka di tab baru
                   </a>
                   <a
                     href={b.cv_url}
                     download
-                    className="inline-flex items-center gap-1.5 rounded-full border border-[#2b2118] px-4 py-2 text-sm font-bold text-espresso hover:bg-[#faf7ef]"
+                    className="inline-flex items-center gap-1.5 rounded-xl border border-[#2b2118] px-4 py-2 text-sm font-bold text-espresso hover:bg-[#faf7ef]"
                   >
                     <Download size={14} /> Unduh
                   </a>

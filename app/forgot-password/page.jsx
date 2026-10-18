@@ -72,7 +72,7 @@ function ForgotPasswordForm() {
               </div>
             </div>
           </div>
-          <p className="absolute inset-x-0 bottom-0 bg-espresso px-8 py-6 font-display text-2xl italic text-white">
+          <p className="absolute inset-x-0 bottom-0 bg-coffee px-8 py-6 font-display text-2xl italic text-white">
             Kerja baik,
             <br />
             lebih banyak kemungkinan.

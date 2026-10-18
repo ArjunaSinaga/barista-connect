@@ -98,7 +98,7 @@ export default function ChatWindow({
   return (
     <div className="mx-auto flex h-[calc(100dvh-3.5rem)] max-w-2xl flex-col px-4">
       {/* header */}
-      <div className="flex items-center gap-3 rounded-2xl card-dark px-4 py-3 border border-latte">
+      <div className="flex items-center gap-3 rounded-3xl card-dark px-4 py-3 border border-latte">
         <Link
           href="/messages"
           aria-label="Kembali"
@@ -142,7 +142,7 @@ export default function ChatWindow({
                 <div
                   className={`group relative rounded-2xl px-4 py-3 text-sm leading-relaxed shadow-sm ${
                     mine
-                      ? "rounded-br-sm bg-gradient-to-br from-[#d4a24e] to-[#b56a2a] text-white"
+                      ? "rounded-xl rounded-br-sm bg-coffee text-white"
                       : "rounded-bl-sm card-dark border border-latte text-espresso"
                   }`}
                 >
@@ -171,7 +171,7 @@ export default function ChatWindow({
       {/* composer */}
       <form
         onSubmit={handleSend}
-        className="sticky bottom-16 space-y-2 rounded-2xl card-dark border border-latte p-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] shadow-lg md:bottom-2"
+        className="sticky bottom-16 space-y-2 rounded-3xl card-dark border border-latte p-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] shadow-lg md:bottom-2"
       >
         {messages.length === 0 && suggestedOpener && !input.trim() && (
           <button
