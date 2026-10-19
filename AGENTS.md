@@ -78,8 +78,11 @@ Gunakan alur kerja terstruktur berikut pada setiap eksekusi prompt:
    - Evaluasi apakah root cause tuntas, diff bersih, dan tanpa orphan. Jika PASS → lanjut push. Jika gagal setelah 3 iterasi → stop, laporkan blocker + bukti.
 8. **Auto-Push (Jika Valid)**:
    - Begitu Lolos Verification & CEO Gate, lakukan commit + push otomatis ke branch `main`.
-9. **Update Memory Delta**:
-   - Tulis delta perkembangan di `memory/MEMORY.md`.
+9. **Update Memory Delta (HOOK OTOMATIS — setara SessionEnd, TANPA PENGECUALIAN)**:
+   - Wajib jalankan skill `hindsight-loop` tiap prompt selesai, tanpa disuruh user.
+   - Tulis delta perkembangan di `memory/MEMORY.md` format ketat `KEP | GAGAL | AJAR`.
+   - DILARANG mengakhiri respons tanpa menulis delta — delta adalah bagian dari respons, bukan opsional tambahan. Prompt cek ringan (`cekcek`, `tes`, `ping`) tetap tulis 1 baris delta singkat.
+   - DILARANG klaim "SELESAI" bila delta belum tertulis di `memory/MEMORY.md`.
 10. **Laporan Final**:
     - Kirim laporan terstruktur ke user.
 
@@ -89,6 +92,11 @@ Gunakan alur kerja terstruktur berikut pada setiap eksekusi prompt:
 - **Master Router**: Wajib panggil `skill-index` terlebih dahulu untuk memetakan skill yang dibutuhkan.
 - **Strict Lazy-Load**: Hanya muat file skill yang benar-benar dipakai. DILARANG membaca/memuat seluruh 601+ skill sekaligus ke dalam konteks.
 - **Dilarang Combined Skill**: HARAM menggabungkan seluruh file `.md` skill menjadi satu master file, menyalin isi skill ke `AGENTS.md`, atau membuat duplikasi skill *always-on*.
+- **Skill Berdampingan (aktif per tema)**:
+  - UI/UX kerja.inc → `impeccable` + `web-design-guidelines` + `react-best-practices`
+  - Fullstack app → `nextjs-developer` + `postgres-patterns` + `fullstack-guardian` + `vercel-optimize`
+  - Dokumentasi → `docs-writer` + `writing-guidelines` + `code-documenter`
+  - Keamanan/debug → `secure-code-guardian` + `security-reviewer` + `security-scan` + `debugging-workflow` + `playwright-expert`
 
 ---
 

@@ -1,9 +1,29 @@
 ﻿{
   "$schema": "https://opencode.ai/config.json",
+  "plugin": ["context-mode"],
+  "instructions": [
+    "AGENTS.md",
+    "BOOTSTRAP.md",
+    "memory/MEMORY.md",
+    "BRAIN.md",
+    "task_plan.md",
+    "findings.md",
+    "progress.md"
+  ],
   "mcp": {
     "supabase": {
       "type": "remote",
       "url": "https://mcp.supabase.com/mcp?project_ref=swvmtyzzhjncfprhglpi&features=docs%2Caccount%2Cdatabase%2Cdebugging%2Cdevelopment%2Cfunctions%2Cbranching",
+      "enabled": true
+    },
+    "supabase-monkas": {
+      "type": "remote",
+      "url": "https://mcp.supabase.com/mcp?project_ref=kfpfgmbuansfggxdqitd&features=docs%2Caccount%2Cdatabase%2Cdebugging%2Cdevelopment%2Cfunctions%2Cbranching",
+      "enabled": true
+    },
+    "rea": {
+      "type": "local",
+      "command": ["rea", "--mcp"],
       "enabled": true
     }
   }
