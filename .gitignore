@@ -45,7 +45,6 @@ next-env.d.ts
 .llm-wiki/
 proxy.js
 
-
 .vercel
 
 memory/
@@ -61,3 +60,10 @@ _vendor/
 # local-only: AI skills & agents (perkakas lokal, jangan push ke GitHub)
 .agents/skills/
 .opencode/
+
+*.key
+*.p12
+*.pfx
+*.bak
+CLAUDE.md
+*.log
