@@ -82,6 +82,7 @@ export default async function AcademyIndexPage({ searchParams }) {
                 Hapus filter
               </Link>
             )}
+
           </p>
         </div>
 
@@ -97,30 +98,107 @@ export default async function AcademyIndexPage({ searchParams }) {
           </div>
         ) : (
           <div className="mt-3 grid gap-2.5 sm:grid-cols-2 lg:grid-cols-3">
-            {academies.map((a) => (
+            {academies.map((a, i) => (
               <Link
                 key={a.id}
                 href={`/academy/${a.id}`}
-                className="flex flex-col rounded-3xl border border-[#e8e0cf] bg-white p-4 shadow-[0_1px_3px_rgba(43,33,24,0.08)] hover:border-coffee"
+                className="flex flex-col overflow-hidden rounded-3xl border border-[#e8e0cf] bg-white shadow-[0_1px_3px_rgba(43,33,24,0.08)] transition hover:-translate-y-0.5 hover:border-coffee"
               >
-                <div className="flex items-center gap-3">
-                  <Avatar src={a.logo_url} name={a.name} size="md" />
-                  <div className="min-w-0">
-                    <h2 className="truncate text-sm font-extrabold tracking-tight text-espresso">{a.name}</h2>
-                    <p className="mt-0.5 flex items-center gap-2 text-[11px] text-espresso-soft">
-                      <span className="inline-flex items-center gap-1"><Award size={11} /> Sertifikat terverifikasi</span>
-                      {(a.partner_cafe_ids ?? []).length > 0 && (
-                        <span className="inline-flex items-center gap-1"><Store size={11} /> {(a.partner_cafe_ids ?? []).length} kafe partner</span>
-                      )}
-                    </p>
-                  </div>
+                <div className="relative h-28 w-full overflow-hidden bg-[#ece2cd]">
+                  <Image
+                    src={a.logo_url || `/images/landing/barista-${(i % 3) + 1}.jpg`}
+                    alt={a.name}
+                    fill
+                    sizes="(max-width: 640px) 100vw, 33vw"
+                    className="object-cover"
+                  />
                 </div>
-                {a.description && <p className="mt-2 line-clamp-2 text-xs leading-5 text-espresso-soft">{a.description}</p>}
-                <span className="mt-auto pt-3 text-xs font-bold text-caramel">Lihat profil →</span>
+                <div className="flex flex-1 flex-col p-4">
+                  <div className="flex items-center gap-3">
+                    <Avatar src={a.logo_url} name={a.name} size="md" />
+                    <div className="min-w-0">
+                      <h2 className="truncate text-sm font-extrabold tracking-tight text-espresso">{a.name}</h2>
+                      <p className="mt-0.5 flex items-center gap-2 text-[11px] text-espresso-soft">
+                        <span className="inline-flex items-center gap-1"><Award size={11} /> Sertifikat terverifikasi</span>
+                        {(a.partner_cafe_ids ?? []).length > 0 && (
+                          <span className="inline-flex items-center gap-1"><Store size={11} /> {(a.partner_cafe_ids ?? []).length} kafe partner</span>
+                        )}
+                      </p>
+                    </div>
+                  </div>
+                  {a.description && <p className="mt-2 line-clamp-2 text-xs leading-5 text-espresso-soft">{a.description}</p>}
+                  <span className="mt-auto pt-3 text-xs font-bold text-caramel">Lihat profil</span>
+                </div>
               </Link>
             ))}
           </div>
+
+
         )}
+        <section className="mt-8">
+          <div className="flex items-end justify-between gap-3">
+            <div>
+              <h2 className="font-display text-xl font-extrabold text-espresso">Kelas yang paling dicari</h2>
+              <p className="mt-1 text-xs text-espresso-soft">
+                Kurikulum singkat, tutor praktis, dan sertifikat yang bisa dicantumkan di profil.
+              </p>
+            </div>
+            <Link href="/training" className="text-xs font-bold text-link hover:underline">
+              Lihat semua pelatihan
+            </Link>
+          </div>
+          <div className="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {[
+              {
+                title: "Espresso & Milk Art",
+                level: "Pemula",
+                photo: "/images/landing/barista-2.jpg",
+                points: ["Dial-in mesin 2 grinder", "Pouring 6 pola dasar", "1 sesi praktik"],
+              },
+              {
+                title: "Manual Brewing Cupping",
+                level: "Menengah",
+                photo: "/images/landing/cafe-3.jpg",
+                points: ["Rasio, suhu, dan waktu seduh", "Mencup 3 batch latihan", "Catatan flavour"],
+              },
+              {
+                title: "Layanan Tamu & Housekeeping",
+                level: "Pemula",
+                photo: "/images/landing/cafe-5.jpg",
+                points: ["Sapaan dan alur order", "Checklist opening shift", "Etika kerja tim"],
+              },
+            ].map((k) => (
+              <article
+                key={k.title}
+                className="flex flex-col overflow-hidden rounded-3xl border border-[#e8e0cf] bg-white shadow-[0_1px_3px_rgba(43,33,24,0.08)] transition hover:-translate-y-0.5 hover:border-coffee"
+              >
+                <div className="relative h-32 w-full overflow-hidden bg-[#ece2cd]">
+                  <Image src={k.photo} alt={k.title} fill sizes="(max-width: 640px) 100vw, 33vw" className="object-cover" />
+                  <span className="absolute left-3 top-3 rounded-full bg-white/95 px-2.5 py-1 text-[11px] font-bold text-caramel uppercase shadow-sm">
+                    {k.level}
+                  </span>
+                </div>
+                <div className="flex flex-1 flex-col p-4">
+                  <h3 className="font-display text-base leading-tight font-extrabold text-espresso">{k.title}</h3>
+                  <ul className="mt-2 space-y-1 text-xs text-espresso-soft">
+                    {k.points.map((pt) => (
+                      <li key={pt} className="flex items-start gap-1.5">
+                        <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-matcha" />
+                        <span>{pt}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <Link
+                    href="/register?role=academy"
+                    className="mt-auto inline-flex min-h-[40px] items-center justify-center rounded-full bg-coffee px-4 py-2.5 text-xs font-bold text-white transition hover:bg-[#2e2015]"
+                  >
+                    Daftar kelas
+                  </Link>
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
       </div>
     </div>
   );
