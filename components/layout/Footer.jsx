@@ -20,6 +20,9 @@ const COLS = [
   {
     title: "Bantuan",
     links: [
+      ["Tentang kerja.inc", "/about"],
+      ["FAQ", "/faq"],
+      ["Pusat Bantuan", "/help"],
       ["Kebijakan Trust", "/trust"],
     ],
   },
