@@ -67,3 +67,6 @@ _vendor/
 *.bak
 CLAUDE.md
 *.log
+.env.local
+.env.production
+.env.development
