@@ -429,3 +429,9 @@ export default async function LandingPage() {
     </div>
   );
 }
+
+
+export const metadata = {
+  title: "kerja.inc - Lowongan Barista",
+  description: "Cari dan lamar lowongan barista, atau rekrut barista terbaik untuk kafe Anda.",
+};

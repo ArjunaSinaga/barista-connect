@@ -11,3 +11,9 @@ export default async function HireRedirect() {
   if (profile?.role === "owner") redirect("/dashboard/owner/jobs/new");
   redirect("/find-baristas");
 }
+
+
+export const metadata = {
+  title: "Rekrut Barista",
+  description: "Mulai rekrut barista dan casual worker lewat kerja.inc.",
+};

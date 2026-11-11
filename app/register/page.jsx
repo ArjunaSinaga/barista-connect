@@ -123,3 +123,9 @@ export default async function RegisterPage() {
     </div>
   );
 }
+
+
+export const metadata = {
+  title: "Daftar kerja.inc",
+  description: "Buat akun kerja.inc untuk barista, kafe, dan akademi.",
+};
