@@ -187,6 +187,53 @@ dialog[open], [data-slot="sheet"], [role="dialog"] { animation: fx-sheet-in .3s 
 /* 22. Gambar: fade-in saat selesai dimuat (tanpa lompatan tata letak) */
 img { animation: fx-page-in .4s ease-out; }
 
+/* Refinement layer: form focus + global microinteractions, same coffee palette. */
+html { scroll-behavior: smooth; }
+main { text-rendering: optimizeLegibility; }
+
+* { -webkit-tap-highlight-color: transparent; }
+::selection { background: rgba(212, 162, 78, 0.42); color: #1a0f09; }
+
+input, textarea, select {
+  transition: border-color .2s ease, box-shadow .2s ease, background-color .2s ease;
+}
+input:focus-visible, textarea:focus-visible, select:focus-visible {
+  border-color: var(--color-caramel) !important;
+  box-shadow: 0 0 0 3px rgba(154, 106, 47, 0.18);
+  outline: none;
+}
+
+a:focus-visible,
+button:focus-visible,
+[role="button"]:focus-visible,
+summary:focus-visible {
+  outline: 2px solid rgba(154, 106, 47, 0.72);
+  outline-offset: 3px;
+  border-radius: inherit;
+}
+
+.card-dark {
+  transition: transform .24s cubic-bezier(.2,.9,.3,1), border-color .2s ease, box-shadow .24s ease, background-color .2s ease;
+}
+.card-dark:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(43, 33, 24, 0.13);
+}
+.bg-coffee { transition: transform .2s ease, box-shadow .2s ease, background-color .2s ease; }
+.bg-coffee:hover { transform: translateY(-1px); box-shadow: 0 8px 22px rgba(43, 33, 24, 0.18); }
+.bg-coffee:active { transform: translateY(0) scale(.97); }
+.bg-caramel { transition: transform .2s ease, box-shadow .2s ease, filter .2s ease; }
+.bg-caramel:hover { transform: translateY(-1px); box-shadow: 0 10px 24px rgba(154, 106, 47, .22); filter: saturate(1.05); }
+.bg-caramel:active { transform: translateY(0) scale(.97); }
+
+input:disabled, textarea:disabled, select:disabled, button:disabled { transition: opacity .2s ease; }
+
+/* Reduced motion: semuanya instan */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .card-dark, .bg-coffee, .bg-caramel { transition: none !important; transform: none !important; }
+}
+
 /* Aksesibilitas: matikan gerak bila pengguna memintanya */
 @media (prefers-reduced-motion: reduce) {
   main, img, dialog[open], [data-slot="sheet"], [role="dialog"],
