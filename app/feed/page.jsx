@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { createClient, getSessionSafe } from "@/lib/supabase/server";
 import Avatar from "@/components/ui/Avatar";
 import PostComposer from "@/components/social/PostComposer";
@@ -65,8 +66,14 @@ export default async function FeedPage() {
                 <p className="px-5 pt-3 text-sm leading-relaxed whitespace-pre-line text-espresso">{p.caption}</p>
               )}
               {p.image_url && (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img src={p.image_url} alt="" loading="lazy" className="mt-3 max-h-[480px] w-full object-cover" />
+                <Image
+                  src={p.image_url}
+                  alt={p.caption ? `Foto dari postingan: ${p.caption.slice(0, 80)}` : "Foto postingan barista"}
+                  width={800}
+                  height={480}
+                  sizes="(min-width: 1024px) 672px, 100vw"
+                  className="mt-3 h-auto max-h-[480px] w-full object-cover"
+                />
               )}
               <div className="h-4" />
             </article>

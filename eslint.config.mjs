@@ -10,6 +10,15 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    ".agents/**",
+    ".opencode/**",
+    ".llm-wiki/**",
+    "_vendor/**",
+    "archify-demo/**",
+    "kopimatch/dist/**",
+    "skills-*/**",
+    "*.log",
+    "*.bak*",
   ]),
 ]);
 

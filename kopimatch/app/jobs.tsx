@@ -21,7 +21,8 @@ type Job = {
 
 const cafeName = (job: Job) => job.cafes?.[0]?.name ?? "";
 
-const JobCard = memo(({ job }: { job: Job }) => (
+const JobCard = memo(function JobCard({ job }: { job: Job }) {
+  return (
   <View style={styles.card}>
     <Text style={styles.title}>{job.title}</Text>
     <Text style={styles.sub}>
@@ -36,7 +37,8 @@ const JobCard = memo(({ job }: { job: Job }) => (
       {job.salary_text ? <Text style={styles.salary}>{job.salary_text}</Text> : null}
     </View>
   </View>
-));
+  );
+});
 
 export default function Jobs() {
   const [jobs, setJobs] = useState<Job[]>([]);
@@ -58,7 +60,8 @@ export default function Jobs() {
   }, []);
 
   useEffect(() => {
-    load();
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    void load();
   }, [load]);
 
   const renderItem = useCallback(({ item }: { item: Job }) => <JobCard job={item} />, []);

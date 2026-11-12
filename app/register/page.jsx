@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Suspense } from "react";
 import { ArrowLeft, Users, Store, MapPin } from "lucide-react";
 import { createClient, isSupabaseConfigured } from "@/lib/supabase/server";
@@ -53,12 +54,13 @@ export default async function RegisterPage() {
             {/* Kolase foto: IMG-01 besar + IMG-02..05 di-crop per slot */}
             <div className="grid grid-cols-2 gap-3">
               <div className="relative min-h-64 overflow-hidden rounded-2xl sm:min-h-80 lg:min-h-full">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
+                <Image
                   src="/images/landing/barista-1.jpg"
                   alt="Barista kerja.inc meracik kopi"
-                  className="absolute inset-0 h-full w-full object-cover object-top"
-                  loading="eager"
+                  fill
+                  sizes="(min-width: 1024px) 50vw, 100vw"
+                  className="object-cover object-top"
+                  priority
                 />
               </div>
               <div className="grid grid-cols-2 gap-3">
@@ -69,12 +71,12 @@ export default async function RegisterPage() {
                   { src: "/images/landing/cafe-2.jpg", alt: "Interior kafe partner", pos: "object-center" },
                 ].map((p) => (
                   <div key={p.src} className="relative aspect-square overflow-hidden rounded-2xl">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
+                    <Image
                       src={p.src}
                       alt={p.alt}
-                      className={`absolute inset-0 h-full w-full object-cover ${p.pos}`}
-                      loading="lazy"
+                      fill
+                      sizes="(min-width: 1024px) 25vw, 50vw"
+                      className={`object-cover ${p.pos}`}
                     />
                   </div>
                 ))}
