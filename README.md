@@ -16,6 +16,17 @@ npm run dev
 
 Buka http://localhost:3000.
 
+## Verifikasi
+
+```bash
+npm run lint
+npm run build
+npm run start
+npm run smoke
+```
+
+Smoke test terkecil ada di `scripts/smoke.mjs` dan mengecek route publik kritis serta `/api/healthz`.
+
 ## Struktur singkat
 
 ```
